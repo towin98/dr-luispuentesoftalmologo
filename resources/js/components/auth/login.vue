@@ -81,7 +81,6 @@ export default {
             formData: {
                 email: "",
                 password: "",
-                device_name: "browser",
             },
             errors: {
                 email: "",
@@ -96,10 +95,10 @@ export default {
         login() {
             this.overlayLoading = true;
             axios
-                .post("ConsultorioOftamologicoLuisPuentes/login", this.formData)
+                .post("consultorio-oftamologico/login", this.formData)
                 .then((response) => {
-                    localStorage.setItem("token", response.data.access_token);
-                    this.$router.push("/inicio/dashboard");
+                    localStorage.setItem("token_Historial_Clinico_Oftamologico", response.data.access_token);
+                    this.$router.push("consultorio/inicio");
                     this.overlayLoading = false;
                     this.$swal("Bienvenido");
                 })

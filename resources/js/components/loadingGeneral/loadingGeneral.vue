@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="text-center">
-            <v-overlay :value="overlayLoading">
+            <v-overlay :value="overlayLoading" :z-index="999">
                 <v-progress-circular
                     indeterminate
                     size="64"
