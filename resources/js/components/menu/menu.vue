@@ -52,48 +52,90 @@
                                 </template>
 
                                 <v-list>
-                                    <v-list-item :to="{ name: 'crear-cliente' }" v-if="crearCliente">
+                                    <v-list-item :to="{ name: 'cliente' }" v-if="moduloCliente">
                                         <v-list-item-title>Crear Cliente</v-list-item-title>
                                     </v-list-item>
                                 </v-list>
                             </v-menu>
 
                         </v-tab>
-                        <v-tab
+                        <!-- <v-tab
                             v-if="crearPaciente"
-                            :to="{ name: 'crear-paciente' }"
+                            :to="{ name: 'paciente' }"
                             class="white--text">
                             Crear Paciente
-                        </v-tab>
+                        </v-tab> -->
                         <v-tab
-                            v-if="historiaClinica"
+                            v-if="moduloHistoriaClinica"
                             :to="{ name: 'historia-clinica' }"
                             class="white--text">
                             Historia Clinica
                         </v-tab>
                         <v-tab
-                            v-if="informe"
+                            v-if="moduloInforme"
                             :to="{ name: 'informe' }"
                             class="white--text">
                             Informe
                         </v-tab>
                         <v-tab
-                            v-if="agendar"
+                            v-if="moduloAgendar"
                             :to="{ name: 'agendar' }"
                             class="white--text">
                             Agendar
                         </v-tab>
                         <v-tab
-                            v-if="turno"
+                            v-if="moduloTurno"
                             :to="{ name: 'turno' }"
                             class="white--text">
                             Turno
+                        </v-tab>
+                        <v-tab class="white--text" v-if="moduloConfiguracionSistema">
+
+                            <v-menu offset-y rounded="lg" close-on-click close-on-content-click content-class>
+                                <template v-slot:activator="{ on, attrs }">
+
+                                    <v-btn
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        style="background: #1000e1"
+                                        elevation="0"
+                                        class="white--text"
+                                        title="Módulos para configuración del sistema">
+                                        Configuración
+                                        <v-icon size="40" color="white"> arrow_drop_down </v-icon>
+                                    </v-btn>
+                                </template>
+
+                                <v-list>
+                                    <v-list-item>
+                                        <v-menu offset-x rounded="lg">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    small
+                                                    elevation="0"
+                                                    plain>
+                                                    Parámetros
+                                                    <v-icon size="40" color="dark"> arrow_right </v-icon>
+                                                </v-btn>
+                                            </template>
+                                            <v-list outlined>
+                                                <v-list-item :to="{ name: 'parametros-ocupacion' }" v-if="moduloParametroOcupacion">
+                                                    <v-list-item-title>Ocupación</v-list-item-title>
+                                                </v-list-item>
+                                            </v-list>
+                                        </v-menu>
+                                    </v-list-item>
+                                </v-list>
+
+                            </v-menu>
                         </v-tab>
                     </v-tabs>
                 </template>
             </v-app-bar>
             <v-main>
-                <v-container>
+                <v-container fluid>
                     <router-view></router-view>
                 </v-container>
             </v-main>
@@ -113,12 +155,18 @@ export default {
             date: "",
 
             // Variables permisos menus start
-            crearCliente    : false,
-            crearPaciente   : false,
-            historiaClinica : false,
-            informe         : false,
-            agendar         : false,
-            turno           : false,
+            moduloCliente    : false,
+            // crearPaciente   : false,
+            moduloHistoriaClinica         : false,
+            moduloInforme                 : false,
+            moduloAgendar                 : false,
+            moduloTurno                   : false,
+
+            /* Variables de configuracion del sistema */
+            moduloConfiguracionSistema    : false,
+            moduloParametroOcupacion      : false,
+            /* fin Variables de configuracion del sistema */
+
             // Variables permisos menus end
 
             infoUser : {
@@ -171,15 +219,21 @@ export default {
 
         switch (this.infoUser.rol) {
             case "SECRETARIA":
-                this.crearCliente   = true;
-                this.crearPaciente  = true;
-                this.historiaClinica= true;
-                this.informe        = true;
-                this.agendar        = true;
-                this.turno          = true;
+                this.moduloCliente           = true;
+                // this.crearPaciente       = true;
+                this.moduloHistoriaClinica        = true;
+                this.moduloInforme                = true;
+                this.moduloAgendar                = true;
+                this.moduloTurno                  = true;
+
+                /* Variables de configuracion del sistema */
+                this.moduloConfiguracionSistema   = true;
+                this.moduloParametroOcupacion     = true;
+                /* fin Variables de configuracion del sistema */
+
                 break;
             case "MEDICO":
-                this.crearCliente   = true;
+                this.moduloCliente   = true;
                 this.turno          = true;
             break;
         }

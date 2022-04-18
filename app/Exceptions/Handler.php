@@ -83,6 +83,9 @@ class Handler extends ExceptionHandler
             $codigo = $exception->errorInfo[1];
             if ($codigo == 1451) {
                 return response()->json(['errors' => 'No se puede eliminar de forma permanente el recurso porque esta relacionado', 'code' => 409], 409);
+            }else{
+                // Descomentar en producción
+                // return response()->json(['errors' => ['Error inesperado en el Sistema'], 'code' => 500], 500);
             }
         }
 
