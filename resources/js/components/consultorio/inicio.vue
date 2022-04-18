@@ -1,5 +1,5 @@
 <template>
     <div>
-        inicio
+        INICIO
     </div>
 </template>
