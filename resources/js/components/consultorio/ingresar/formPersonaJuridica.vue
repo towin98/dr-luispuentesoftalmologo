@@ -179,7 +179,6 @@
                     :loading="loading"
                     class="elevation-1"
                     :items-per-page="5"
-                    item-key="nit"
                     :footer-props="{
                         'items-per-page-options': [5, 10, 15, 50],
                     }"
@@ -255,10 +254,11 @@ export default {
             headers: [
                 { text: "Nit", align: "start", value: "nit" },
                 { text: "Nombre", value: "nombre" },
+                { text: "Apellido", value: "apellido" },
                 { text: "Razón", value: "razon_social" },
                 { text: "Identificación", value: "numero_documento" },
                 { text: "Correo", value: "correo" },
-                { text: "Dirección", value: "direccion" },
+                // { text: "Dirección", value: "direccion" },
                 // { text: "Celular", value: "celular" },
                 { text: "Municipio", value: "municipio" },
                 { text: "Fecha Modificado", value: "updated_at" },
