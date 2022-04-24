@@ -246,7 +246,6 @@
                     :loading="loading"
                     class="elevation-1"
                     :items-per-page="5"
-                    item-key="numero_documento"
                     :footer-props="{
                         'items-per-page-options': [5, 10, 15, 50],
                     }"
@@ -291,7 +290,6 @@ export default {
                 numero_documento: "",
                 nombre: "",
                 apellido: "",
-                razon_social: "",
                 correo: "",
                 celular: "",
                 direccion: "",

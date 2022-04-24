@@ -10,6 +10,7 @@ import login from './components/auth/login.vue'
 import menu from './components/menu/menu.vue'
 import inicio from './components/consultorio/inicio.vue'
 import cliente from './components/consultorio/ingresar/cliente.vue'
+import historiaClinica from './components/consultorio/historiaClinica/historiaClinica.vue'
 import parametrosOcupacion from './components/consultorio/parametros/ocupacion.vue'
 /*Menu end*/
 
@@ -48,7 +49,7 @@ const router = new VueRouter({
                 // },
                 {
                     path: 'historia-clinica',
-                    component: inicio,
+                    component: historiaClinica,
                     name: 'historia-clinica',
                 },
                 {

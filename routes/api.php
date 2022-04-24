@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Cliente\ClienteController;
+use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
 use App\Http\Controllers\Parametro\ParametroController;
 use App\Http\Controllers\PermissionController;
 
@@ -22,6 +23,10 @@ Route::group(['prefix' => 'cliente', /*'middleware' => 'auth:sanctum'*/] , funct
     Route::resource('/', ClienteController::class)->only(['store']);
     Route::post('/actualizar/{id}', [ClienteController::class, 'update']);
     Route::get('/mostrar/{id}', [ClienteController::class, 'show']);
+});
+
+Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/] , function(){
+    Route::get('/buscar/{tipo_persona}', [HistoriaClinicaController::class, 'buscar']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){

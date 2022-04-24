@@ -239,9 +239,10 @@ class Cliente extends Model
                 ->where('nit', 'LIKE', "%$buscar%")
                 ->orWhere('razon_social', 'LIKE', "%$buscar%")
                 ->orWhere('nombre', 'LIKE', "%$buscar%")
+                ->orWhere('apellido', 'LIKE', "%$buscar%")
                 ->orWhere('numero_documento', 'LIKE', "%$buscar%")
                 ->orWhere('correo', 'LIKE', "%$buscar%")
-                ->orWhere('direccion', 'LIKE', "%$buscar%")
+                // ->orWhere('direccion', 'LIKE', "%$buscar%")
                 // ->orWhere('celular', 'LIKE', "%$buscar%")
                 ->orWhere('municipio', 'LIKE', "%$buscar%")
                 ->orWhere('updated_at', 'LIKE', "%$buscar%");
