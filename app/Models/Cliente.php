@@ -38,9 +38,6 @@ class Cliente extends Model
         'numero_documento',
         'nombre',
         'apellido',
-        'tipo_cliente',
-        'razon_social',
-        'nit',
         'correo',
         'celular',
         'direccion',
@@ -48,7 +45,7 @@ class Cliente extends Model
         'municipio',
         'fecha_nacimiento',
         'edad',
-        'id_p_ocupacion',
+        'ocupacion',
         'foto',
         'id_p_eps',
         'fecha_creacion'
@@ -65,9 +62,6 @@ class Cliente extends Model
         'numero_documento',
         'nombre',
         'apellido',
-        'tipo_cliente',
-        'razon_social',
-        'nit',
         'correo',
         'celular',
         'direccion',
@@ -75,7 +69,7 @@ class Cliente extends Model
         'municipio',
         'fecha_nacimiento',
         'edad',
-        'id_p_ocupacion',
+        'ocupacion',
         'foto',
         'id_p_eps',
         'fecha_creacion',
@@ -96,17 +90,6 @@ class Cliente extends Model
         'apellido.required'             => 'El apellido es requerido.',
         'apellido.max'                  => 'El apellido no puede superar los 25 carácteres.',
         'apellido.filled'               => 'El apellido no puede ser vacío.',
-        'tipo_cliente.required'         => 'El tipo de cliente es requerido.',
-        'tipo_cliente.filled'           => 'El tipo de cliente no puede ser vacío.',
-        'tipo_cliente.in'               => 'El tipo de cliente debe ser persona_juridica o persona_natural.',
-        'razon_social.required'         => 'La Razón Social es requerido.',
-        'razon_social.max'              => 'La Razón Social no puede superar los 30 carácteres.',
-        'razon_social.filled'           => 'La Razón Social no puede ser vacía.',
-        'razon_social.unique'           => 'La Razón Social ya existe.',
-        'nit.required'                  => 'El Nit es requerido.',
-        'nit.max'                       => 'El Nit no puede superar los 30 carácteres.',
-        'nit.filled'                    => 'El Nit no puede ser vacío.',
-        'nit.unique'                    => 'El nit ya existe.',
         'correo.required'               => 'El correo es requerido.',
         'correo.max'                    => 'El correo no puede superar los 255 carácteres.',
         'correo.email'                  => 'El correo ingresado no es valido.',
@@ -129,9 +112,8 @@ class Cliente extends Model
         'fecha_nacimiento.date_format'  => 'La fecha de nacimiento debe cumplir el formato: Y-m-d.',
         'edad.required'                 => 'La Edad es requerida.',
         'edad.integer'                  => 'La Edad debe ser un dato númerico.',
-        'id_p_ocupacion.required'       => 'La Ocupación es requerida.',
-        'id_p_ocupacion.integer'        => 'La Ocupación debe ser un dato númerico.',
-        'id_p_ocupacion.filled'         => 'La Ocupación no puede ser vacía.',
+        'ocupacion.required'            => 'La Ocupación es requerida.',
+        'ocupacion.filled'              => 'La Ocupación no puede ser vacía.',
         'foto.max'                      => 'La foto no puede superar los 255 carácteres.',
         'id_p_eps.required'             => 'La EPS es requerida.',
         'id_p_eps.integer'              => 'La EPS debe ser un dato númerico.',
@@ -140,57 +122,11 @@ class Cliente extends Model
         'fecha_creacion.filled'         => 'La fecha de creación no puede ser vacía.',
     ];
 
-    static $rulesStorePersonaJuridica = [
+    static $rulesStore = [
         'tipo_documento'        => 'required|string|max:10',
         'numero_documento'      => 'required|unique:cliente|string|max:20',
         'nombre'                => 'required|string|max:25',
         'apellido'              => 'required|string|max:25',
-        'tipo_cliente'          => 'required|in:persona_juridica,persona_natural',
-        'razon_social'          => 'required|string|unique:cliente|max:30',
-        'nit'                   => 'required|unique:cliente|string|max:30',
-        'correo'                => 'required|unique:cliente|email|max:255',
-        'celular'               => 'required|string|max:15',
-        'direccion'             => 'required|string|max:30',
-        'departamento'          => 'required|string|max:30',
-        'municipio'             => 'required|string|max:30',
-        'fecha_nacimiento'      => 'nullable', // campos no se validan para este tipo de persona.
-        'edad'                  => 'nullable', // campos no se validan para este tipo de persona.
-        'id_p_ocupacion'        => 'nullable', // campos no se validan para este tipo de persona.
-        'foto'                  => 'nullable', // campos no se validan para este tipo de persona.
-        'id_p_eps'              => 'nullable', // campos no se validan para este tipo de persona.
-        'fecha_creacion'        => 'required|date'
-    ];
-
-    static function fnRulesUpdatePersonaJuridica($user) {
-        return [
-            'tipo_documento'        => 'required|filled|string|max:10',
-            'numero_documento'      => 'required|unique:cliente,numero_documento,'.$user->id.'|filled|string|max:20',
-            'nombre'                => 'required|filled|string|max:25',
-            'apellido'              => 'required|filled|string|max:25',
-            'tipo_cliente'          => 'required|filled|in:persona_juridica,persona_natural',
-            'razon_social'          => 'required|unique:cliente,razon_social,'.$user->id.'|filled|string|max:30',
-            'nit'                   => 'required|unique:cliente,nit,'.$user->id.'|filled|string|max:30',
-            'correo'                => 'required|unique:cliente,correo,'.$user->id.'|filled|email|max:255',
-            'celular'               => 'required|filled|string',
-            'direccion'             => 'required|filled|string|max:30',
-            'departamento'          => 'required|filled|string|max:30',
-            'municipio'             => 'required|filled|string|max:30',
-            'fecha_nacimiento'      => 'nullable', // Campos no se validan para este tipo de persona.
-            'edad'                  => 'nullable', // Campos no se validan para este tipo de persona.
-            'id_p_ocupacion'        => 'nullable', // Campos no se validan para este tipo de persona.
-            'foto'                  => 'nullable', // Campos no se validan para este tipo de persona.
-            'id_p_eps'              => 'nullable', // Campos no se validan para este tipo de persona.
-        ];
-    }
-
-    static $rulesStorePersonaNatural = [
-        'tipo_documento'        => 'required|string|max:10',
-        'numero_documento'      => 'required|unique:cliente|string|max:20',
-        'nombre'                => 'required|string|max:25',
-        'apellido'              => 'required|string|max:25',
-        'tipo_cliente'          => 'required|in:persona_juridica,persona_natural',
-        'razon_social'          => 'nullable',
-        'nit'                   => 'nullable',
         'correo'                => 'required|unique:cliente|email|max:255',
         'celular'               => 'required|string|max:15',
         'direccion'             => 'required|string|max:30',
@@ -198,21 +134,18 @@ class Cliente extends Model
         'municipio'             => 'required|string|max:30',
         'fecha_nacimiento'      => 'required|date_format:Y-m-d',
         'edad'                  => 'required|integer',
-        'id_p_ocupacion'        => 'required|integer',
-        // 'foto'                  => 'nullable|string|max:255',
+        'ocupacion'             => 'required|string',
+        'foto'                  => 'nullable|max:255',
         'id_p_eps'              => 'required|integer',
         'fecha_creacion'        => 'required|date'
     ];
 
-    static function fnRulesUpdatePersonaNatural($user) {
+    static function fnRulesUpdate($user) {
         return [
             'tipo_documento'        => 'required|filled|string|max:10',
             'numero_documento'      => 'required|unique:cliente,numero_documento,'.$user->id.'|filled|string|max:20',
             'nombre'                => 'required|filled|string|max:25',
             'apellido'              => 'required|filled|string|max:25',
-            'tipo_cliente'          => 'required|filled|in:persona_juridica,persona_natural',
-            'razon_social'          => 'nullable',
-            'nit'                   => 'nullable',
             'correo'                => 'required|unique:cliente,correo,'.$user->id.'|filled|email|max:255',
             'celular'               => 'required|filled|string|max:15',
             'direccion'             => 'required|filled|string|max:30',
@@ -220,8 +153,8 @@ class Cliente extends Model
             'municipio'             => 'required|filled|string|max:30',
             'fecha_nacimiento'      => 'required|filled|date_format:Y-m-d',
             'edad'                  => 'required|filled|integer',
-            'id_p_ocupacion'        => 'required|filled|integer',
-            'foto'                  => 'nullable',
+            'ocupacion'             => 'required|filled|string',
+            'foto'                  => 'nullable|max:255',
             'id_p_eps'              => 'required|filled|integer',
         ];
     }
@@ -233,30 +166,7 @@ class Cliente extends Model
      * @param string $buscar Valor a buscar
      * @return Illuminate\Database\Eloquent\Builder
      */
-    public function scopeBuscarPersonaJuridica($query, $buscar) {
-        if($buscar) {
-            return $query
-                ->where('nit', 'LIKE', "%$buscar%")
-                ->orWhere('razon_social', 'LIKE', "%$buscar%")
-                ->orWhere('nombre', 'LIKE', "%$buscar%")
-                ->orWhere('apellido', 'LIKE', "%$buscar%")
-                ->orWhere('numero_documento', 'LIKE', "%$buscar%")
-                ->orWhere('correo', 'LIKE', "%$buscar%")
-                // ->orWhere('direccion', 'LIKE', "%$buscar%")
-                // ->orWhere('celular', 'LIKE', "%$buscar%")
-                ->orWhere('municipio', 'LIKE', "%$buscar%")
-                ->orWhere('updated_at', 'LIKE', "%$buscar%");
-        }
-    }
-
-    /**
-     * Scope para realizar una búsqueda mixta.
-     *
-     * @param Illuminate\Database\Eloquent\Builder $query
-     * @param string $buscar Valor a buscar
-     * @return Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeBuscarPersonaNatural($query, $buscar) {
+    public function scopeBuscar($query, $buscar) {
         if($buscar) {
             return $query
                 ->where('numero_documento', 'LIKE', "%$buscar%")

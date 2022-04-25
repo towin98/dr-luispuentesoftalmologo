@@ -35,7 +35,7 @@
                 </v-menu>
                 <template v-slot:extension>
                     <v-tabs centered class="ml-n9" style="background: #1000e1">
-                        <v-tab :to="{ name: 'inicio' }" class="white--text">Inicio</v-tab>
+                        <v-tab :to="{ name: 'inicio' }" v-on:click="titleProceso = 'inicio'" class="white--text">Inicio</v-tab>
                         <v-tab class="white--text">
 
                             <v-menu offset-y rounded="lg">
@@ -52,40 +52,38 @@
                                 </template>
 
                                 <v-list>
-                                    <v-list-item :to="{ name: 'cliente' }" v-if="moduloCliente">
-                                        <v-list-item-title>Crear Cliente</v-list-item-title>
+                                    <v-list-item :to="{ name: 'crear-paciente' }" v-on:click="titleProceso = 'Crear Paciente'" v-if="moduloCrearPaciente">
+                                        <v-list-item-title>Crear Paciente</v-list-item-title>
                                     </v-list-item>
                                 </v-list>
                             </v-menu>
 
                         </v-tab>
-                        <!-- <v-tab
-                            v-if="crearPaciente"
-                            :to="{ name: 'paciente' }"
-                            class="white--text">
-                            Crear Paciente
-                        </v-tab> -->
                         <v-tab
                             v-if="moduloHistoriaClinica"
                             :to="{ name: 'historia-clinica' }"
+                            v-on:click="titleProceso = 'Historia Clinica'"
                             class="white--text">
                             Historia Clinica
                         </v-tab>
                         <v-tab
                             v-if="moduloInforme"
                             :to="{ name: 'informe' }"
+                            v-on:click="titleProceso = 'Informe'"
                             class="white--text">
                             Informe
                         </v-tab>
                         <v-tab
                             v-if="moduloAgendar"
                             :to="{ name: 'agendar' }"
+                            v-on:click="titleProceso = 'Agendar'"
                             class="white--text">
                             Agendar
                         </v-tab>
                         <v-tab
                             v-if="moduloTurno"
                             :to="{ name: 'turno' }"
+                            v-on:click="titleProceso = 'Turno'"
                             class="white--text">
                             Turno
                         </v-tab>
@@ -121,8 +119,11 @@
                                                 </v-btn>
                                             </template>
                                             <v-list outlined>
-                                                <v-list-item :to="{ name: 'parametros-ocupacion' }" v-if="moduloParametroOcupacion">
-                                                    <v-list-item-title>Ocupación</v-list-item-title>
+                                                <v-list-item
+                                                            :to="{ name: 'eps' }"
+                                                            v-on:click="titleProceso = 'Eps'"
+                                                            v-if="moduloParametroEps">
+                                                    <v-list-item-title>Eps</v-list-item-title>
                                                 </v-list-item>
                                             </v-list>
                                         </v-menu>
@@ -135,7 +136,8 @@
                 </template>
             </v-app-bar>
             <v-main>
-                <v-container fluid>
+                <v-container >
+                    <menuHeader v-bind:proceso="titleProceso"></menuHeader>
                     <router-view></router-view>
                 </v-container>
             </v-main>
@@ -143,11 +145,13 @@
     </div>
 </template>
 <script>
+import menuHeader from "./header.vue";
 import loadingGeneral from "../loadingGeneral/loadingGeneral.vue";
 import { rolesPermisos } from "../rolPermission/rolesPermisos.js";
 export default {
     components: {
         loadingGeneral,
+        menuHeader
     },
     data() {
         return {
@@ -155,7 +159,7 @@ export default {
             date: "",
 
             // Variables permisos menus start
-            moduloCliente    : false,
+            moduloCrearPaciente    : false,
             // crearPaciente   : false,
             moduloHistoriaClinica         : false,
             moduloInforme                 : false,
@@ -164,7 +168,7 @@ export default {
 
             /* Variables de configuracion del sistema */
             moduloConfiguracionSistema    : false,
-            moduloParametroOcupacion      : false,
+            moduloParametroEps            : false,
             /* fin Variables de configuracion del sistema */
 
             // Variables permisos menus end
@@ -200,6 +204,11 @@ export default {
         },
     },
     async created() {
+        // Obteniendo nombre de la ruta.
+        if (this.$route.name) {
+            this.titleProceso = this.$route.name.replace("-", " ");
+        }
+
         const fecha = new Date();
         const month = fecha.toLocaleString("es-CO", { month: "long" });
 
@@ -219,7 +228,7 @@ export default {
 
         switch (this.infoUser.rol) {
             case "SECRETARIA":
-                this.moduloCliente           = true;
+                this.moduloCrearPaciente           = true;
                 // this.crearPaciente       = true;
                 this.moduloHistoriaClinica        = true;
                 this.moduloInforme                = true;
@@ -228,12 +237,12 @@ export default {
 
                 /* Variables de configuracion del sistema */
                 this.moduloConfiguracionSistema   = true;
-                this.moduloParametroOcupacion     = true;
+                this.moduloParametroEps           = true;
                 /* fin Variables de configuracion del sistema */
 
                 break;
             case "MEDICO":
-                this.moduloCliente   = true;
+                this.moduloCrearPaciente   = true;
                 this.turno          = true;
             break;
         }
