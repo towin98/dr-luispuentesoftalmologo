@@ -9,9 +9,9 @@ import login from './components/auth/login.vue'
 /*Menu*/
 import menu from './components/menu/menu.vue'
 import inicio from './components/consultorio/inicio.vue'
-import cliente from './components/consultorio/ingresar/cliente.vue'
+import crearPaciente from './components/consultorio/ingresar/crearPaciente.vue'
 import historiaClinica from './components/consultorio/historiaClinica/historiaClinica.vue'
-import parametrosOcupacion from './components/consultorio/parametros/ocupacion.vue'
+import parametrosEps from './components/consultorio/parametros/eps.vue'
 /*Menu end*/
 
 
@@ -38,15 +38,10 @@ const router = new VueRouter({
                     name: 'inicio',
                 },
                 {
-                    path: 'ingresar/cliente',
-                    component: cliente,
-                    name: 'cliente',
+                    path: 'ingresar/crear-paciente',
+                    component: crearPaciente,
+                    name: 'crear-paciente',
                 },
-                // {
-                //     path: 'crear-paciente',
-                //     component: inicio,
-                //     name: 'crear-paciente',
-                // },
                 {
                     path: 'historia-clinica',
                     component: historiaClinica,
@@ -68,9 +63,9 @@ const router = new VueRouter({
                     name: 'turno',
                 },
                 {
-                    path: 'configuracion-sistema/parametros/ocupacion',
-                    component: parametrosOcupacion,
-                    name: 'parametros-ocupacion',
+                    path: 'configuracion-sistema/parametros/eps-prepagada',
+                    component: parametrosEps,
+                    name: 'eps',
                 }
             ]
         },

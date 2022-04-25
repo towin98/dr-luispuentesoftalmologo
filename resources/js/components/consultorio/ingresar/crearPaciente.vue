@@ -1,226 +1,225 @@
 <template>
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
-        <v-row>
-            <v-col cols="12" sm="9">
-                <v-row>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-select
-                            v-model="form.tipo_documento"
-                            ref="tipo_documento"
-                            label="Tipo de Documento"
-                            :items="tiposDocumentos"
-                            item-value="value"
-                            item-text="text"
-                            :error-messages="errors.tipo_documento"
-                            dense
-                        ></v-select>
-                    </v-col>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-text-field
-                            v-model="form.numero_documento"
-                            label="Numero de Documento"
-                            ref="numero_documento"
-                            :error-messages="errors.numero_documento"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-text-field
-                            v-model="form.nombre"
-                            label="Nombre Completo"
-                            ref="nombre"
-                            :error-messages="errors.nombre"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+        <v-card elevation="2" class="pt-5">
+            <v-row class="pl-4 pr-4">
+                <v-col cols="12" sm="9">
+                    <v-row>
+                        <v-col cols="12" sm="4" class="pb-2">
+                            <v-select
+                                v-model="form.tipo_documento"
+                                ref="tipo_documento"
+                                label="Tipo de Documento"
+                                :items="tiposDocumentos"
+                                item-value="value"
+                                item-text="text"
+                                :error-messages="errors.tipo_documento"
+                                dense
+                            ></v-select>
+                        </v-col>
+                        <v-col cols="6" sm="4" class="pb-2">
+                            <v-text-field
+                                v-model="form.numero_documento"
+                                label="Numero de Documento"
+                                ref="numero_documento"
+                                :error-messages="errors.numero_documento"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="6" sm="4" class="pb-2">
+                            <v-text-field
+                                v-model="form.nombre"
+                                label="Nombre Completo"
+                                ref="nombre"
+                                :error-messages="errors.nombre"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
 
-                <v-row>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-text-field
-                            type="date"
-                            v-model="form.fecha_nacimiento"
-                            ref="fecha_nacimiento"
-                            label="Fecha de Nacimiento"
-                            :error-messages="errors.fecha_nacimiento"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-text-field
-                            type="number"
-                            v-model="form.edad"
-                            label="Edad"
-                            ref="edad"
-                            :error-messages="errors.edad"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-text-field
-                            v-model="form.apellido"
-                            label="Apellido Completo"
-                            ref="apellido"
-                            :error-messages="errors.apellido"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+                    <v-row>
+                        <v-col cols="6" sm="4" class="pt-0 pb-2">
+                            <v-text-field
+                                type="date"
+                                v-model="form.fecha_nacimiento"
+                                ref="fecha_nacimiento"
+                                label="Fecha de Nacimiento"
+                                :error-messages="errors.fecha_nacimiento"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="6" sm="4" class="pt-0 pb-2">
+                            <v-text-field
+                                type="number"
+                                v-model="form.edad"
+                                label="Edad"
+                                ref="edad"
+                                :error-messages="errors.edad"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="4" class="pt-0 pb-2">
+                            <v-text-field
+                                v-model="form.apellido"
+                                label="Apellido Completo"
+                                ref="apellido"
+                                :error-messages="errors.apellido"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
 
-                <v-row>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-text-field
-                            v-model="form.direccion"
-                            label="Direccion u Ubicación"
-                            ref="direccion"
-                            :error-messages="errors.direccion"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-autocomplete
-                            v-model="form.departamento"
-                            ref="departamento"
-                            :items="departamentos"
-                            item-value="text"
-                            item-text="text"
-                            :error-messages="errors.departamento"
-                            label="Departamento"
-                            dense
-                            v-on:change="fnBuscarMunicipio(form.departamento)"
-                        ></v-autocomplete>
-                    </v-col>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-autocomplete
-                            v-model="form.municipio"
-                            ref="municipio"
-                            :items="municipios"
-                            item-value="value"
-                            item-text="text"
-                            :error-messages="errors.municipio"
-                            label="Municipio"
-                            dense
-                        ></v-autocomplete>
-                    </v-col>
-                </v-row>
+                    <v-row>
+                        <v-col cols="12" sm="4" class="pt-0 pb-2">
+                            <v-text-field
+                                v-model="form.direccion"
+                                label="Direccion u Ubicación"
+                                ref="direccion"
+                                :error-messages="errors.direccion"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="6" sm="4" class="pt-0 pb-2">
+                            <v-autocomplete
+                                v-model="form.departamento"
+                                ref="departamento"
+                                :items="departamentos"
+                                item-value="text"
+                                item-text="text"
+                                :error-messages="errors.departamento"
+                                label="Departamento"
+                                dense
+                                v-on:change="fnBuscarMunicipio(form.departamento)"
+                            ></v-autocomplete>
+                        </v-col>
+                        <v-col cols="6" sm="4" class="pt-0 pb-2">
+                            <v-autocomplete
+                                v-model="form.municipio"
+                                ref="municipio"
+                                :items="municipios"
+                                item-value="value"
+                                item-text="text"
+                                :error-messages="errors.municipio"
+                                label="Municipio"
+                                dense
+                            ></v-autocomplete>
+                        </v-col>
+                    </v-row>
 
-                <v-row>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-text-field
-                            v-model="form.celular"
-                            label="Celular"
-                            ref="celular"
-                            :error-messages="errors.celular"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-autocomplete
-                            v-model="form.id_p_ocupacion"
-                            ref="id_p_ocupacion"
-                            label="Ocupación"
-                            :items="itemsOcupacion"
-                            item-value="id"
-                            item-text="descripcion"
-                            :error-messages="errors.id_p_ocupacion"
-                            dense
-                        ></v-autocomplete>
-                    </v-col>
-                    <v-col cols="4" sm="4" class="pt-0 pb-2">
-                        <v-text-field
-                            type="email"
-                            v-model="form.correo"
-                            label="Correo"
-                            ref="correo"
-                            :error-messages="errors.correo"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="4" class="pt-0 pb-2">
-                        <v-radio-group v-model="radioGroupEps" row :error-messages="(radioGroupEps == '' || radioGroupEps == null) ? errors.id_p_eps : '' ">
-                            <v-radio
-                                label="Particular"
-                                value="PARTICULAR"
-                            ></v-radio>
-                            <v-radio
-                                label="Prepagada"
-                                value="PREPAGADA"
-                            ></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                    <v-col cols="6" sm="4" class="pt-0 pb-2">
+                    <v-row>
+                        <v-col cols="6" sm="4" class="pt-0 pb-2">
+                            <v-text-field
+                                v-model="form.celular"
+                                label="Celular"
+                                ref="celular"
+                                :error-messages="errors.celular"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="6" sm="4" class="pt-0 pb-2">
+                            <v-text-field
+                                v-model="form.ocupacion"
+                                label="Ocupación"
+                                ref="ocupacion"
+                                :error-messages="errors.ocupacion"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="4" class="pt-0 pb-2">
+                            <v-text-field
+                                type="email"
+                                v-model="form.correo"
+                                label="Correo"
+                                ref="correo"
+                                :error-messages="errors.correo"
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="6" sm="4" class="pt-0 pb-2">
+                            <v-radio-group v-model="radioGroupEps" row :error-messages="(radioGroupEps == '' || radioGroupEps == null) ? errors.id_p_eps : '' ">
+                                <v-radio
+                                    label="Particular"
+                                    value="PARTICULAR"
+                                ></v-radio>
+                                <v-radio
+                                    label="Prepagada"
+                                    value="PREPAGADA"
+                                ></v-radio>
+                            </v-radio-group>
+                        </v-col>
+                        <v-col cols="6" sm="4" class="pt-0 pb-2">
 
-                        <v-select
-                            v-model="form.id_p_eps"
-                            ref="id_p_eps"
-                            label="EPS"
-                            :items="itemsEpsPrepagada"
-                            item-value="id"
-                            item-text="descripcion"
-                            :error-messages="errors.id_p_eps"
-                            dense
-                            v-if="radioGroupEps == 'PREPAGADA'"
-                        ></v-select>
-                    </v-col>
-                    <v-col cols="4" sm="4"></v-col>
-                </v-row>
-            </v-col>
+                            <v-select
+                                v-model="form.id_p_eps"
+                                ref="id_p_eps"
+                                label="EPS"
+                                :items="itemsEpsPrepagada"
+                                item-value="id"
+                                item-text="descripcion"
+                                :error-messages="errors.id_p_eps"
+                                dense
+                                v-if="radioGroupEps == 'PREPAGADA'"
+                            ></v-select>
+                        </v-col>
+                        <v-col cols="4" sm="4"></v-col>
+                    </v-row>
+                </v-col>
 
-            <v-col cols="12" sm="3">
-                <v-card class="mx-auto" max-width="344">
-                    <v-img
-                        :src="(preview != null) ? preview : 'http://jago.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'"
-                        height="200px" alt="Foto paciente">
-                    </v-img>
+                <v-col cols="12" sm="3" class="pt-7">
+                    <v-card class="mx-auto" max-width="344">
+                        <v-img
+                            :src="(preview != null) ? preview : 'http://jago.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'"
+                            height="200px" alt="Foto paciente">
+                        </v-img>
 
-                    <v-card-title>Foto</v-card-title>
+                        <v-card-title>Foto</v-card-title>
 
-                    <v-card-subtitle v-if="!preview">
-                        <input type="file" name="foto" @change="previewImage" accept="image/*" style="width:100%;">
+                        <v-card-subtitle v-if="!preview">
+                            <input type="file" name="foto" @change="previewImage" accept="image/*" style="width:100%;">
 
-                    </v-card-subtitle>
-                    <v-card-text v-if="preview">
-                        <!-- <p class="mb-0" v-if="this.accion != 'Actualizar'">Nombre Archivo: {{ form.foto.name }}</p>
-                        <p class="mb-0" v-if="this.accion != 'Actualizar'">Tamaño: {{ form.foto.size / 1024 }}KB</p> -->
-                        <v-btn
-                            type="click"
-                            small
-                            color="red darken-4"
-                            class="white--text text-none mr-3"
-                            tile
-                            v-on:click="fnResetPhoto"
-                        >
-                            Remover
-                        </v-btn>
-                    </v-card-text>
-                </v-card>
-            </v-col>
+                        </v-card-subtitle>
+                        <v-card-text v-if="preview">
+                            <!-- <p class="mb-0" v-if="this.accion != 'Actualizar'">Nombre Archivo: {{ form.foto.name }}</p>
+                            <p class="mb-0" v-if="this.accion != 'Actualizar'">Tamaño: {{ form.foto.size / 1024 }}KB</p> -->
+                            <v-btn
+                                type="click"
+                                small
+                                color="red darken-4"
+                                class="white--text text-none mr-3"
+                                tile
+                                v-on:click="fnResetPhoto"
+                            >
+                                Remover
+                            </v-btn>
+                        </v-card-text>
+                    </v-card>
+                </v-col>
 
-            <!-- BOTONES ACCIONES  -->
-            <v-col cols="12" class="d-flex justify-end">
-                <v-btn
-                    type="submit"
-                    small
-                    color="red darken-4"
-                    class="white--text text-none mr-3"
-                    tile
-                    v-on:click="limpiarCampo"
-                >
-                    <v-icon> format_clear </v-icon>Limpiar
-                </v-btn>
-                <v-btn
-                    type="submit"
-                    small
-                    color="success"
-                    class="white--text text-none"
-                    tile
-                    v-on:click="fnAccion"
-                >
-                    <v-icon> save </v-icon>{{ accion }}
-                </v-btn>
-            </v-col>
-        </v-row>
+                <!-- BOTONES ACCIONES  -->
+                <v-col cols="12" class="d-flex justify-end">
+                    <v-btn
+                        type="submit"
+                        small
+                        color="red darken-4"
+                        class="white--text text-none mr-3"
+                        tile
+                        v-on:click="limpiarCampo"
+                    >
+                        <v-icon> format_clear </v-icon>Limpiar
+                    </v-btn>
+                    <v-btn
+                        type="submit"
+                        small
+                        color="success"
+                        class="white--text text-none"
+                        tile
+                        v-on:click="fnAccion"
+                    >
+                        <v-icon> save </v-icon>{{ accion }}
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </v-card>
 
         <!-- start Data table -->
         <v-row>
@@ -281,11 +280,9 @@ export default {
         return {
             accion              : 'Guardar',
             radioGroupEps       : '',
-            itemsOcupacion      : [],
             itemsEpsPrepagada   : [],
             form: {
                 id : "",
-                tipo_cliente : "persona_natural",
                 tipo_documento: "",
                 numero_documento: "",
                 nombre: "",
@@ -297,13 +294,14 @@ export default {
                 municipio: "",
                 fecha_nacimiento: "",
                 edad: "",
-                id_p_ocupacion: "",
+                ocupacion: "",
                 foto: "",
                 id_p_eps: "",
                 fecha_creacion: new Date().toISOString().split("T")[0],
             },
             tiposDocumentos: [
                 { value: "CC", text: "CEDULA DE CIUDADANIA" },
+                { value: "RC", text: "REGISTRO CIVIL" },
                 { value: "CE", text: "CEDULA DE EXTRANJERIA" },
                 { value: "NIP", text: "NUMERO DE IDENTIFICACION PERSONAL" },
                 { value: "NIT", text: "NUMERO DE IDENTIFICACION TRIBUTARIA" },
@@ -362,7 +360,6 @@ export default {
 
         fnStore() {
 
-            this.form.tipo_cliente = "persona_natural";
             //CONFIGURACION EPS
             if (this.radioGroupEps == "PARTICULAR") {
                 this.form.id_p_eps = 1;
@@ -381,7 +378,7 @@ export default {
             }
 
             axios
-                .post(`/consultorio-oftamologico/cliente`, formData, {
+                .post(`/consultorio-oftamologico/paciente`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Accept' : 'application/json'
@@ -412,8 +409,6 @@ export default {
 
         fnUpdate(){
 
-            this.form.tipo_cliente = "persona_natural";
-
             //CONFIGURACION EPS
             if (this.radioGroupEps == "PARTICULAR") {
                 this.form.id_p_eps = 1;
@@ -432,7 +427,7 @@ export default {
             }
 
             axios
-                .post(`/consultorio-oftamologico/cliente/actualizar/${this.form.id}`, formData,{
+                .post(`/consultorio-oftamologico/paciente/actualizar/${this.form.id}`, formData,{
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Accept' : 'application/json'
@@ -466,7 +461,7 @@ export default {
             this.overlayLoading = true;
             this.accion = "Actualizar";
             axios
-                .get(`/consultorio-oftamologico/cliente/mostrar/${id}`)
+                .get(`/consultorio-oftamologico/paciente/mostrar/${id}`)
                 .then((response) => {
                     let data = response.data.data;
 
@@ -551,7 +546,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/cliente/listar/persona-natural?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
+                    `/consultorio-oftamologico/paciente/listar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
                 )
                 .then((response) => {
                     this.loading = false;
@@ -599,7 +594,7 @@ export default {
 
             this.form.fecha_nacimiento = "";
             this.$refs["edad"].reset();
-            this.$refs["id_p_ocupacion"].reset();
+            this.form.ocupacion = "";
             this.fnResetPhoto();
             // this.$refs["id_p_eps"].reset();
             this.form.id_p_eps = "";
@@ -629,7 +624,6 @@ export default {
     },
     async created() {
         /* Consultando campos parametros tipo lista. */
-        this.itemsOcupacion    = await this.fnBuscarParametro('p_ocupacion');
         this.itemsEpsPrepagada = await this.fnBuscarParametro('p_eps');
 
         let arrDepartamentos = [];

@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(PermissionsSeeder::class);
         $this->call(epsSeeder::class);
-        $this->call(ocupacionesSeeder::class);
         Cliente::factory(5)->create(); // SOLO PARA PRUEBAS
     }
 }

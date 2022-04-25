@@ -7,9 +7,6 @@ use App\Models\Cliente;
 use Illuminate\Http\Request;
 use App\Traits\metodosComunesTrait;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
-
-// use Illuminate\Http\Testing\File;
 use Illuminate\Support\Facades\Validator;
 
 class ClienteController extends Controller
@@ -21,7 +18,7 @@ class ClienteController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function listar(Request $request, $tipo_cliente)
+    public function listar(Request $request)
     {
 
         // Se válida si envian los parámetros length y start.
@@ -32,27 +29,8 @@ class ClienteController extends Controller
             $length = 15;
             $start  = 0;
         }
-
-        switch ($tipo_cliente) {
-            case 'persona-juridica':
-                $registros = Cliente::where('tipo_cliente', 'persona_juridica')
-                    ->BuscarPersonaJuridica($request->buscar);
-                break;
-            case 'persona-natural':
-                $registros = Cliente::where('tipo_cliente', 'persona_natural')
-                    ->BuscarPersonaNatural($request->buscar);
-                break;
-            default:
-                return response()->json([
-                    'message' => 'Error de Validación de Datos',
-                    'errors'  => [
-                        "El tipo de cliente enviado no ha sido encontrado en el sistema, verifique."
-                    ]
-                ], 422);
-                break;
-        }
-
-        $registros = $registros->Ordenamiento($request->orderColumn, $request->order);
+        $registros = Cliente::Buscar($request->buscar)
+            ->Ordenamiento($request->orderColumn, $request->order);
 
         // consulta para saber cuantos registros hay.
         $totalRegistros = $registros->count();
@@ -76,19 +54,11 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->filled('tipo_cliente')) {
-            return response()->json([
-                'message' => 'Error de Validación de Datos',
-                'errores' => [
-                    'El sistema requiere el parámetro tipo de cliente, verifíque.'
-                ]
-            ], 409);
-        }
 
         $errores = [];
         $validator = Validator::make(
                                     $request->all(),
-                                    $request->tipo_cliente == 'persona_juridica' ? Cliente::$rulesStorePersonaJuridica : Cliente::$rulesStorePersonaNatural,
+                                    Cliente::$rulesStore,
                                     Cliente::$messages);
         if ($validator->fails()) {
             $errores = $validator->errors();
@@ -102,47 +72,26 @@ class ClienteController extends Controller
         }
 
         try {
-            if ($request->tipo_cliente == 'persona_juridica') {
-                Cliente::create([
-                    'tipo_documento'    => trim(strtoupper($request->tipo_documento)),
-                    'numero_documento'  => trim(strtoupper($request->numero_documento)),
-                    'nombre'            => trim(strtoupper($request->nombre)),
-                    'apellido'          => trim(strtoupper($request->apellido)),
-                    'tipo_cliente'      => 'persona_juridica',
-                    'razon_social'      => trim(strtoupper($request->razon_social)),
-                    'nit'               => trim(strtoupper($request->nit)),
-                    'correo'            => trim(strtolower($request->correo)),
-                    'celular'           => trim($request->celular),
-                    'direccion'         => trim(strtoupper($request->direccion)),
-                    'departamento'      => trim(strtoupper($request->departamento)),
-                    'municipio'         => trim(strtoupper($request->municipio)),
-                    'fecha_creacion'    => trim($request->fecha_creacion." ".date('H:i:s'))
-                ]);
-            }else{
-                $urlFotoGuardada = $this->guardarArchivoSubido($request, "foto", "fotos-persona-natural");
+            $urlFotoGuardada = $this->guardarArchivoSubido($request, "foto", "fotos-paciente");
 
-                // Guardados datos para persona natural
-                Cliente::create([
-                    'tipo_documento'    => trim(strtoupper($request->tipo_documento)),
-                    'numero_documento'  => trim(strtoupper($request->numero_documento)),
-                    'nombre'            => trim(strtoupper($request->nombre)),
-                    'apellido'          => trim(strtoupper($request->apellido)),
-                    'tipo_cliente'      => 'persona_natural',
-                    'razon_social'      => trim(strtoupper($request->razon_social)),
-                    'nit'               => trim(strtoupper($request->nit)),
-                    'correo'            => trim(strtolower($request->correo)),
-                    'celular'           => trim($request->celular),
-                    'direccion'         => trim(strtoupper($request->direccion)),
-                    'departamento'      => trim(strtoupper($request->departamento)),
-                    'municipio'         => trim(strtoupper($request->municipio)),
-                    'fecha_nacimiento'  => trim($request->fecha_nacimiento),
-                    'edad'              => trim($request->edad),
-                    'id_p_ocupacion'    => trim(strtoupper($request->id_p_ocupacion)),
-                    'foto'              => $urlFotoGuardada,
-                    'id_p_eps'          => $request->id_p_eps,
-                    'fecha_creacion'    => trim($request->fecha_creacion." ".date('H:i:s'))
-                ]);
-            }
+            // Guardando datos
+            Cliente::create([
+                'tipo_documento'    => trim(strtoupper($request->tipo_documento)),
+                'numero_documento'  => trim(strtoupper($request->numero_documento)),
+                'nombre'            => trim(strtoupper($request->nombre)),
+                'apellido'          => trim(strtoupper($request->apellido)),
+                'correo'            => trim(strtolower($request->correo)),
+                'celular'           => trim($request->celular),
+                'direccion'         => trim(strtoupper($request->direccion)),
+                'departamento'      => trim(strtoupper($request->departamento)),
+                'municipio'         => trim(strtoupper($request->municipio)),
+                'fecha_nacimiento'  => trim($request->fecha_nacimiento),
+                'edad'              => trim($request->edad),
+                'ocupacion'         => trim(strtoupper($request->ocupacion)),
+                'foto'              => $urlFotoGuardada,
+                'id_p_eps'          => $request->id_p_eps,
+                'fecha_creacion'    => trim($request->fecha_creacion." ".date('H:i:s'))
+            ]);
         } catch (Throwable $e) {
             return response()->json([
                 'message' => 'Error inesperado',
@@ -186,21 +135,12 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!$request->filled('tipo_cliente')) {
-            return response()->json([
-                'message' => 'Error de Validación de Datos',
-                'errores' => [
-                    'El sistema requiere el parámetro tipo de cliente, verifíque.'.$request."pk"
-                ]
-            ], 409);
-        }
-
-        $cliente = Cliente::findOrfail($id);
+        $paciente = Cliente::findOrfail($id);
 
         $errores = [];
         $validator = Validator::make(
                                     $request->all(),
-                                    $request->tipo_cliente == 'persona_juridica' ? Cliente::fnRulesUpdatePersonaJuridica($cliente) : Cliente::fnRulesUpdatePersonaNatural($cliente),
+                                    Cliente::fnRulesUpdate($paciente),
                                     Cliente::$messages);
         if ($validator->fails()) {
             $errores = $validator->errors();
@@ -213,78 +153,45 @@ class ClienteController extends Controller
             ], 422);
         }
 
-        if ($cliente) {
-            if ($request->tipo_cliente == 'persona_juridica') {
-
-                try {
-                    $cliente->update([
-                        'tipo_documento'    => trim(strtoupper($request->tipo_documento)),
-                        'numero_documento'  => trim(strtoupper($request->numero_documento)),
-                        'nombre'            => trim(strtoupper($request->nombre)),
-                        'apellido'          => trim(strtoupper($request->apellido)),
-                        'tipo_cliente'      => 'persona_juridica',
-                        'razon_social'      => trim(strtoupper($request->razon_social)),
-                        'nit'               => trim(strtoupper($request->nit)),
-                        'correo'            => trim(strtolower($request->correo)),
-                        'celular'           => trim($request->celular),
-                        'direccion'         => trim(strtoupper($this->fnEliminarTildes($request->direccion))),
-                        'departamento'      => trim(strtoupper($this->fnEliminarTildes($request->departamento))),
-                        'municipio'         => trim(strtoupper($this->fnEliminarTildes($request->municipio))),
-                        'fecha_creacion'    => trim($request->fecha_creacion." ".date('H:i:s'))
-                    ]);
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'message' => 'Error en el Sistema',
-                        'errors'  => [
-                            "Error al actualizar Cliente Persona Juridica, por favor comuniquese con el area de Tecnología de Sajona, Gracias"
-                        ]
-                    ], 500);
-                }
-
-            }else{
-
-                if ($cliente->foto != $request->foto) {
-                    if($request->foto != "" && $request->foto != null){
-                        $urlFoto = $this->guardarArchivoSubido($request, "foto", "fotos-persona-natural");
-                    }else{
-                        if (file_exists(public_path($cliente->foto))) {
-                            // eliminando si existe archivo y si no se envia ninguna imagen.
-                            unlink(public_path($cliente->foto));
-                        }
-                        $urlFoto = "";
-                    }
+        if ($paciente) {
+            if ($paciente->foto != $request->foto) {
+                if($request->foto != "" && $request->foto != null){
+                    $urlFoto = $this->guardarArchivoSubido($request, "foto", "fotos-paciente");
                 }else{
-                    $urlFoto = $cliente->foto;
+                    if (file_exists(public_path($paciente->foto))) {
+                        // eliminando si existe archivo y si no se envia ninguna imagen.
+                        unlink(public_path($paciente->foto));
+                    }
+                    $urlFoto = "";
                 }
+            }else{
+                $urlFoto = $paciente->foto;
+            }
 
-                try {
-                    $cliente->update([
-                        'tipo_documento'    => trim(strtoupper($request->tipo_documento)),
-                        'numero_documento'  => trim(strtoupper($request->numero_documento)),
-                        'nombre'            => trim(strtoupper($request->nombre)),
-                        'apellido'          => trim(strtoupper($request->apellido)),
-                        'tipo_cliente'      => 'persona_natural',
-                        'razon_social'      => trim(strtoupper($request->razon_social)),
-                        'nit'               => trim(strtoupper($request->nit)),
-                        'correo'            => trim(strtolower($request->correo)),
-                        'celular'           => trim($request->celular),
-                        'departamento'      => trim(strtoupper($this->fnEliminarTildes($request->departamento))),
-                        'municipio'         => trim(strtoupper($this->fnEliminarTildes($request->municipio))),
-                        'municipio'         => trim(strtoupper($request->municipio)),
-                        'fecha_nacimiento'  => trim($request->fecha_nacimiento),
-                        'edad'              => trim($request->edad),
-                        'id_p_ocupacion'    => trim(strtoupper($request->id_p_ocupacion)),
-                        'foto'              => $urlFoto,
-                        'id_p_eps'          => $request->id_p_eps,
-                    ]);
-                } catch (\Exception $e) {
-                    return response()->json([
-                        'message' => 'Error en el Sistema',
-                        'errors'  => [
-                            "Error al actualizar cliente Persona Natural, por favor comuniquese con el area de Tecnología de Sajona, Gracias".$e
-                        ]
-                    ], 500);
-                }
+            try {
+                $paciente->update([
+                    'tipo_documento'    => trim(strtoupper($request->tipo_documento)),
+                    'numero_documento'  => trim(strtoupper($request->numero_documento)),
+                    'nombre'            => trim(strtoupper($request->nombre)),
+                    'apellido'          => trim(strtoupper($request->apellido)),
+                    'correo'            => trim(strtolower($request->correo)),
+                    'celular'           => trim($request->celular),
+                    'departamento'      => trim(strtoupper($this->fnEliminarTildes($request->departamento))),
+                    'municipio'         => trim(strtoupper($this->fnEliminarTildes($request->municipio))),
+                    'municipio'         => trim(strtoupper($request->municipio)),
+                    'fecha_nacimiento'  => trim($request->fecha_nacimiento),
+                    'edad'              => trim($request->edad),
+                    'ocupacion'         => trim(strtoupper($request->ocupacion)),
+                    'foto'              => $urlFoto,
+                    'id_p_eps'          => $request->id_p_eps,
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => 'Error en el Sistema',
+                    'errors'  => [
+                        "Error al actualizar paciente, por favor comuniquese con el area de Tecnología de Sajona, Gracias".$e
+                    ]
+                ], 500);
             }
         }
 

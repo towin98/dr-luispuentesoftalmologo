@@ -17,9 +17,9 @@ Route::get('/informacion-usuario', [PermissionController::class, 'informacionUsu
 
 
 /*Rutas MENU*/
-Route::group(['prefix' => 'cliente', /*'middleware' => 'auth:sanctum'*/] , function(){
+Route::group(['prefix' => 'paciente', /*'middleware' => 'auth:sanctum'*/] , function(){
     // Artisan::call('cache:clear');
-    Route::get('/listar/{tipo_persona}', [ClienteController::class, 'listar']);
+    Route::get('/listar', [ClienteController::class, 'listar']);
     Route::resource('/', ClienteController::class)->only(['store']);
     Route::post('/actualizar/{id}', [ClienteController::class, 'update']);
     Route::get('/mostrar/{id}', [ClienteController::class, 'show']);
