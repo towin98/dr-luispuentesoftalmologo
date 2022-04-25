@@ -2321,36 +2321,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2358,13 +2328,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      tipoPersona: 'SI',
       overlayLoading: false,
-      formPersonaJuridica: {
-        razon_social: "",
-        nit: ""
-      },
-      formPersonaNatural: {
+      form: {
         tipo_documento: "",
         numero_documento: "",
         nombre: "",
@@ -2373,6 +2338,9 @@ __webpack_require__.r(__webpack_exports__);
       tiposDocumentos: [{
         value: "CC",
         text: "CEDULA DE CIUDADANIA"
+      }, {
+        value: "RC",
+        text: "REGISTRO CIVIL"
       }, {
         value: "CE",
         text: "CEDULA DE EXTRANJERIA"
@@ -2401,30 +2369,9 @@ __webpack_require__.r(__webpack_exports__);
       numberOfPages: 0,
       loading: false,
       options: {},
-      headers_PersonaNatural: [{
+      headers: [{
         text: "Identificación",
         value: "numero_documento"
-      }, {
-        text: "Nombre Completo",
-        value: "nombre"
-      }, {
-        text: "Apellido Completo",
-        value: "apellido"
-      }, {
-        text: "Fecha Modificado",
-        value: "updated_at"
-      }, {
-        text: "Acciones",
-        value: "acciones",
-        sortable: false
-      }],
-      headers_PersonaJuridica: [{
-        text: "Razón",
-        value: "razon_social"
-      }, {
-        text: "Nit",
-        align: "start",
-        value: "nit"
       }, {
         text: "Nombre Completo",
         value: "nombre"
@@ -2469,30 +2416,14 @@ __webpack_require__.r(__webpack_exports__);
       } // Contruyendo data request enviar por get.
 
 
-      var dataRequest = "";
+      var dataRequest = ""; // Si se envia SI es porque se quiere listar todos los registros.
 
-      if (this.tipoPersona == "SI") {
-        // Si se envia SI es porque se quiere listar todos los registros.
-        if (listar_todos == 'SI') {
-          dataRequest += "&listar_todos=SI";
-        } else {
-          for (var key in this.formPersonaJuridica) {
-            dataRequest += "&" + key + "=" + this.formPersonaJuridica[key];
-          }
-        }
-
-        this.tipo_cliente = "persona-juridica";
+      if (listar_todos == 'SI') {
+        dataRequest += "&listar_todos=SI";
       } else {
-        // Si se envia SI es porque se quiere listar todos los registros.
-        if (listar_todos == 'SI') {
-          dataRequest += "&listar_todos=SI";
-        } else {
-          for (var _key in this.formPersonaNatural) {
-            dataRequest += "&" + _key + "=" + this.formPersonaNatural[_key];
-          }
+        for (var key in this.form) {
+          dataRequest += "&" + key + "=" + this.form[key];
         }
-
-        this.tipo_cliente = "persona-natural";
       }
 
       var _this$options = this.options,
@@ -2515,7 +2446,7 @@ __webpack_require__.r(__webpack_exports__);
         sortDesc = "";
       }
 
-      axios.get("/consultorio-oftamologico/historia-clinica/buscar/".concat(this.tipo_cliente, "?length=").concat(this.length, "&start=").concat(this.start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc).concat(dataRequest)).then(function (response) {
+      axios.get("/consultorio-oftamologico/historia-clinica/buscar?length=".concat(this.length, "&start=").concat(this.start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc).concat(dataRequest)).then(function (response) {
         _this.loading = false;
         _this.dataSet = response.data.data;
         _this.totalRegistros = response.data.total;
@@ -2543,12 +2474,10 @@ __webpack_require__.r(__webpack_exports__);
       }, 600);
     },
     limpiarCampo: function limpiarCampo() {
-      this.formPersonaNatural.tipo_documento = "";
-      this.formPersonaNatural.numero_documento = "";
-      this.formPersonaNatural.nombre = "";
-      this.formPersonaNatural.apellido = "";
-      this.formPersonaJuridica.razon_social = "";
-      this.formPersonaJuridica.nit = "";
+      this.form.tipo_documento = "";
+      this.form.numero_documento = "";
+      this.form.nombre = "";
+      this.form.apellido = "";
     }
   }
 });
@@ -23878,219 +23807,114 @@ var render = function () {
     [
       _c("loadingGeneral", { attrs: { overlayLoading: _vm.overlayLoading } }),
       _vm._v(" "),
-      _c("v-checkbox", {
-        attrs: { label: "Persona Juridica", color: "indigo", value: "SI" },
-        on: {
-          click: function ($event) {
-            _vm.dataSet = []
-          },
-        },
-        model: {
-          value: _vm.tipoPersona,
-          callback: function ($$v) {
-            _vm.tipoPersona = $$v
-          },
-          expression: "tipoPersona",
-        },
-      }),
-      _vm._v(" "),
       _c(
         "v-row",
+        { staticClass: "pt-7" },
         [
           _c(
             "v-col",
             { attrs: { cols: "12", sm: "9" } },
             [
-              _vm.tipoPersona != "SI"
-                ? _c(
-                    "v-row",
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    { staticClass: "pt-0 pb-2", attrs: { cols: "6", sm: "3" } },
                     [
-                      _c(
-                        "v-col",
-                        {
-                          staticClass: "pt-0 pb-2",
-                          attrs: { cols: "6", sm: "3" },
+                      _c("v-select", {
+                        ref: "tipo_documento",
+                        attrs: {
+                          label: "Tipo de Documento",
+                          items: _vm.tiposDocumentos,
+                          "item-value": "value",
+                          "item-text": "text",
+                          "error-messages": _vm.errors.tipo_documento,
+                          dense: "",
                         },
-                        [
-                          _c("v-select", {
-                            ref: "tipo_documento",
-                            attrs: {
-                              label: "Tipo de Documento",
-                              items: _vm.tiposDocumentos,
-                              "item-value": "value",
-                              "item-text": "text",
-                              "error-messages": _vm.errors.tipo_documento,
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.formPersonaNatural.tipo_documento,
-                              callback: function ($$v) {
-                                _vm.$set(
-                                  _vm.formPersonaNatural,
-                                  "tipo_documento",
-                                  $$v
-                                )
-                              },
-                              expression: "formPersonaNatural.tipo_documento",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        {
-                          staticClass: "pt-0 pb-2",
-                          attrs: { cols: "6", sm: "3" },
+                        model: {
+                          value: _vm.form.tipo_documento,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.form, "tipo_documento", $$v)
+                          },
+                          expression: "form.tipo_documento",
                         },
-                        [
-                          _c("v-text-field", {
-                            ref: "numero_documento",
-                            attrs: {
-                              label: "Numero de Documento",
-                              "error-messages": _vm.errors.numero_documento,
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.formPersonaNatural.numero_documento,
-                              callback: function ($$v) {
-                                _vm.$set(
-                                  _vm.formPersonaNatural,
-                                  "numero_documento",
-                                  $$v
-                                )
-                              },
-                              expression: "formPersonaNatural.numero_documento",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        {
-                          staticClass: "pt-0 pb-2",
-                          attrs: { cols: "4", sm: "3" },
-                        },
-                        [
-                          _c("v-text-field", {
-                            ref: "nombre",
-                            attrs: {
-                              label: "Nombre Completo",
-                              "error-messages": _vm.errors.nombre,
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.formPersonaNatural.nombre,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.formPersonaNatural, "nombre", $$v)
-                              },
-                              expression: "formPersonaNatural.nombre",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        {
-                          staticClass: "pt-0 pb-2",
-                          attrs: { cols: "6", sm: "3" },
-                        },
-                        [
-                          _c("v-text-field", {
-                            ref: "apellido",
-                            attrs: {
-                              label: "Apellido Completo",
-                              "error-messages": _vm.errors.apellido,
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.formPersonaNatural.apellido,
-                              callback: function ($$v) {
-                                _vm.$set(
-                                  _vm.formPersonaNatural,
-                                  "apellido",
-                                  $$v
-                                )
-                              },
-                              expression: "formPersonaNatural.apellido",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
+                      }),
                     ],
                     1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.tipoPersona == "SI"
-                ? _c(
-                    "v-row",
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { staticClass: "pt-0 pb-2", attrs: { cols: "6", sm: "3" } },
                     [
-                      _c(
-                        "v-col",
-                        {
-                          staticClass: "pt-0 pb-2",
-                          attrs: { cols: "6", sm: "3" },
+                      _c("v-text-field", {
+                        ref: "numero_documento",
+                        attrs: {
+                          label: "Numero de Documento",
+                          "error-messages": _vm.errors.numero_documento,
+                          dense: "",
                         },
-                        [
-                          _c("v-text-field", {
-                            ref: "razon_social",
-                            attrs: {
-                              label: "Razón Social",
-                              "error-messages": _vm.errors.razon_social,
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.formPersonaJuridica.razon_social,
-                              callback: function ($$v) {
-                                _vm.$set(
-                                  _vm.formPersonaJuridica,
-                                  "razon_social",
-                                  $$v
-                                )
-                              },
-                              expression: "formPersonaJuridica.razon_social",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        {
-                          staticClass: "pt-0 pb-2",
-                          attrs: { cols: "6", sm: "3" },
+                        model: {
+                          value: _vm.form.numero_documento,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.form, "numero_documento", $$v)
+                          },
+                          expression: "form.numero_documento",
                         },
-                        [
-                          _c("v-text-field", {
-                            ref: "nit",
-                            attrs: {
-                              label: "Nit",
-                              "error-messages": _vm.errors.nit,
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.formPersonaJuridica.nit,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.formPersonaJuridica, "nit", $$v)
-                              },
-                              expression: "formPersonaJuridica.nit",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
+                      }),
                     ],
                     1
-                  )
-                : _vm._e(),
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { staticClass: "pt-0 pb-2", attrs: { cols: "4", sm: "3" } },
+                    [
+                      _c("v-text-field", {
+                        ref: "nombre",
+                        attrs: {
+                          label: "Nombre Completo",
+                          "error-messages": _vm.errors.nombre,
+                          dense: "",
+                        },
+                        model: {
+                          value: _vm.form.nombre,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.form, "nombre", $$v)
+                          },
+                          expression: "form.nombre",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { staticClass: "pt-0 pb-2", attrs: { cols: "6", sm: "3" } },
+                    [
+                      _c("v-text-field", {
+                        ref: "apellido",
+                        attrs: {
+                          label: "Apellido Completo",
+                          "error-messages": _vm.errors.apellido,
+                          dense: "",
+                        },
+                        model: {
+                          value: _vm.form.apellido,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.form, "apellido", $$v)
+                          },
+                          expression: "form.apellido",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
             ],
             1
           ),
@@ -24172,10 +23996,7 @@ var render = function () {
                 attrs: {
                   page: _vm.page,
                   pageCount: _vm.numberOfPages,
-                  headers:
-                    _vm.tipoPersona == "SI"
-                      ? _vm.headers_PersonaJuridica
-                      : _vm.headers_PersonaNatural,
+                  headers: _vm.headers,
                   items: _vm.dataSet,
                   options: _vm.options,
                   "server-items-length": _vm.totalRegistros,

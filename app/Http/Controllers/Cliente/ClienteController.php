@@ -47,7 +47,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Crear cliente.
+     * Crear paciente.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -127,7 +127,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza un paciente
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
