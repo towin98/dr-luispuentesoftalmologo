@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 class HistoriaClinicaController extends Controller
 {
     /**
-     * Método que busca registros de cliente tipo persona juridica o natural.
+     * Método que busca registros de un paciente.
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function buscar(Request $request, $tipo_cliente)
+    public function buscar(Request $request)
     {
 
         // Se válida si envian los parámetros length y start.
@@ -27,47 +27,23 @@ class HistoriaClinicaController extends Controller
         }
 
         $bRequestVacio = true;
+        $registros = Cliente::select('*');
 
-        switch ($tipo_cliente) {
-            case 'persona-juridica':
-                $registros = Cliente::where('tipo_cliente', 'persona_juridica');
-                if ($request->razon_social != "") {
-                    $bRequestVacio = false;
-                    $registros = $registros->where('razon_social', 'LIKE', "%$request->razon_social%");
-                }
-                if ($request->nit != "") {
-                    $bRequestVacio = false;
-                    $registros = $registros->where('nit','LIKE', "%$request->nit%");
-                }
-            break;
-            case 'persona-natural':
-                $registros = Cliente::where('tipo_cliente', 'persona_natural');
-
-                if ($request->tipo_documento != "") {
-                    $bRequestVacio = false;
-                    $registros = $registros->where('tipo_documento','LIKE', "%$request->tipo_documento%");
-                }
-                if ($request->numero_documento != "") {
-                    $bRequestVacio = false;
-                    $registros = $registros->where('numero_documento','LIKE', "%$request->numero_documento%");
-                }
-                if ($request->nombre != "") {
-                    $bRequestVacio = false;
-                    $registros = $registros->where('nombre','LIKE', "%$request->nombre%");
-                }
-                if ($request->apellido != "") {
-                    $bRequestVacio = false;
-                    $registros = $registros->where('apellido','LIKE', "%$request->apellido%");
-                }
-            break;
-            default:
-                return response()->json([
-                    'message' => 'Error de Validación de Datos',
-                    'errors'  => [
-                        "El tipo de cliente enviado[$tipo_cliente] no ha sido encontrado en el sistema, verifique."
-                    ]
-                ], 422);
-            break;
+        if ($request->tipo_documento != "") {
+            $bRequestVacio = false;
+            $registros = $registros->where('tipo_documento','LIKE', "%$request->tipo_documento%");
+        }
+        if ($request->numero_documento != "") {
+            $bRequestVacio = false;
+            $registros = $registros->where('numero_documento','LIKE', "%$request->numero_documento%");
+        }
+        if ($request->nombre != "") {
+            $bRequestVacio = false;
+            $registros = $registros->where('nombre','LIKE', "%$request->nombre%");
+        }
+        if ($request->apellido != "") {
+            $bRequestVacio = false;
+            $registros = $registros->where('apellido','LIKE', "%$request->apellido%");
         }
 
         // Si no se envia ningun request.

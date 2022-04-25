@@ -1,22 +1,15 @@
 <template>
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading"/>
-        <v-checkbox
-            v-model="tipoPersona"
-            label="Persona Juridica"
-            color="indigo"
-            value="SI"
-            @click="dataSet = []"
-        ></v-checkbox>
 
-        <v-row>
+        <v-row class="pt-7">
             <v-col cols="12" sm="9">
 
-                <!-- Campos para persona juridica -INICIO -->
-                <v-row v-if="tipoPersona != 'SI'">
+                <!-- Campos de busqueda paciente -INICIO -->
+                <v-row>
                     <v-col cols="6" sm="3" class="pt-0 pb-2">
                         <v-select
-                            v-model="formPersonaNatural.tipo_documento"
+                            v-model="form.tipo_documento"
                             ref="tipo_documento"
                             label="Tipo de Documento"
                             :items="tiposDocumentos"
@@ -28,7 +21,7 @@
                     </v-col>
                     <v-col cols="6" sm="3" class="pt-0 pb-2">
                         <v-text-field
-                            v-model="formPersonaNatural.numero_documento"
+                            v-model="form.numero_documento"
                             label="Numero de Documento"
                             ref="numero_documento"
                             :error-messages="errors.numero_documento"
@@ -37,7 +30,7 @@
                     </v-col>
                     <v-col cols="4" sm="3" class="pt-0 pb-2">
                         <v-text-field
-                            v-model="formPersonaNatural.nombre"
+                            v-model="form.nombre"
                             label="Nombre Completo"
                             ref="nombre"
                             :error-messages="errors.nombre"
@@ -46,7 +39,7 @@
                     </v-col>
                     <v-col cols="6" sm="3" class="pt-0 pb-2">
                         <v-text-field
-                            v-model="formPersonaNatural.apellido"
+                            v-model="form.apellido"
                             label="Apellido Completo"
                             ref="apellido"
                             :error-messages="errors.apellido"
@@ -54,30 +47,7 @@
                         ></v-text-field>
                     </v-col>
                 </v-row>
-                <!-- Campos para persona juridica -FIN -->
-
-                <!-- Campos para persona natural -INI -->
-                <v-row v-if="tipoPersona == 'SI'">
-                    <v-col cols="6" sm="3" class="pt-0 pb-2">
-                        <v-text-field
-                            v-model="formPersonaJuridica.razon_social"
-                            label="Razón Social"
-                            ref="razon_social"
-                            :error-messages="errors.razon_social"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="3" class="pt-0 pb-2">
-                        <v-text-field
-                            v-model="formPersonaJuridica.nit"
-                            label="Nit"
-                            ref="nit"
-                            :error-messages="errors.nit"
-                            dense
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
-                <!-- Campos para persona natural -FIN -->
+                <!-- Campos de busqueda paciente -FIN -->
 
             </v-col>
             <v-col cols="12" sm="3" class="d-flex justify-center">
@@ -104,7 +74,7 @@
                 <v-data-table
                     :page="page"
                     :pageCount="numberOfPages"
-                    :headers="tipoPersona == 'SI' ? headers_PersonaJuridica : headers_PersonaNatural"
+                    :headers="headers"
                     :items="dataSet"
                     :options.sync="options"
                     :server-items-length="totalRegistros"
@@ -136,15 +106,9 @@ export default {
     },
     data() {
         return {
-            tipoPersona         : 'SI',
             overlayLoading      : false,
 
-            formPersonaJuridica: {
-                razon_social: "",
-                nit: ""
-            },
-
-            formPersonaNatural: {
+            form: {
                 tipo_documento: "",
                 numero_documento : "",
                 nombre: "",
@@ -153,6 +117,7 @@ export default {
 
             tiposDocumentos: [
                 { value: "CC", text: "CEDULA DE CIUDADANIA" },
+                { value: "RC", text: "REGISTRO CIVIL" },
                 { value: "CE", text: "CEDULA DE EXTRANJERIA" },
                 { value: "NIP", text: "NUMERO DE IDENTIFICACION PERSONAL" },
                 { value: "NIT", text: "NUMERO DE IDENTIFICACION TRIBUTARIA" },
@@ -172,16 +137,8 @@ export default {
             numberOfPages: 0,
             loading: false,
             options: {},
-            headers_PersonaNatural: [
+            headers: [
                 { text: "Identificación", value: "numero_documento" },
-                { text: "Nombre Completo", value: "nombre" },
-                { text: "Apellido Completo", value: "apellido" },
-                { text: "Fecha Modificado", value: "updated_at" },
-                { text: "Acciones", value: "acciones", sortable: false },
-            ],
-            headers_PersonaJuridica: [
-                { text: "Razón", value: "razon_social" },
-                { text: "Nit", align: "start", value: "nit" },
                 { text: "Nombre Completo", value: "nombre" },
                 { text: "Apellido Completo", value: "apellido" },
                 { text: "Fecha Modificado", value: "updated_at" },
@@ -215,26 +172,13 @@ export default {
 
             // Contruyendo data request enviar por get.
             var dataRequest = "";
-            if (this.tipoPersona == "SI") {
-                // Si se envia SI es porque se quiere listar todos los registros.
-                if (listar_todos == 'SI') {
-                    dataRequest += "&listar_todos=SI";
-                }else{
-                    for (let key in this.formPersonaJuridica) {
-                        dataRequest += "&"+key+"="+this.formPersonaJuridica[key]
-                    }
+            // Si se envia SI es porque se quiere listar todos los registros.
+            if (listar_todos == 'SI') {
+                dataRequest += "&listar_todos=SI";
+            }else{
+                for (let key in this.form) {
+                    dataRequest += "&"+key+"="+this.form[key]
                 }
-                this.tipo_cliente = "persona-juridica";
-            } else {
-                // Si se envia SI es porque se quiere listar todos los registros.
-                if (listar_todos == 'SI') {
-                    dataRequest += "&listar_todos=SI";
-                }else{
-                    for (let key in this.formPersonaNatural) {
-                        dataRequest += "&"+key+"="+this.formPersonaNatural[key]
-                    }
-                }
-                this.tipo_cliente = "persona-natural";
             }
 
             let { page, itemsPerPage, sortBy, sortDesc } = this.options;
@@ -256,7 +200,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/historia-clinica/buscar/${this.tipo_cliente}?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}${dataRequest}`
+                    `/consultorio-oftamologico/historia-clinica/buscar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}${dataRequest}`
                 )
                 .then((response) => {
                     this.loading = false;
@@ -286,13 +230,10 @@ export default {
         },
 
         limpiarCampo() {
-            this.formPersonaNatural.tipo_documento = "";
-            this.formPersonaNatural.numero_documento = "";
-            this.formPersonaNatural.nombre = "";
-            this.formPersonaNatural.apellido = "";
-
-            this.formPersonaJuridica.razon_social = "";
-            this.formPersonaJuridica.nit = "";
+            this.form.tipo_documento    = "";
+            this.form.numero_documento  = "";
+            this.form.nombre            = "";
+            this.form.apellido          = "";
         }
     },
 

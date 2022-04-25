@@ -26,7 +26,7 @@ Route::group(['prefix' => 'paciente', /*'middleware' => 'auth:sanctum'*/] , func
 });
 
 Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/] , function(){
-    Route::get('/buscar/{tipo_persona}', [HistoriaClinicaController::class, 'buscar']);
+    Route::get('/buscar', [HistoriaClinicaController::class, 'buscar']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){
