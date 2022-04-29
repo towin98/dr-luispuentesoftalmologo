@@ -1,28 +1,28 @@
 <?php
 
-namespace Tests\Feature\Controllers\CrearCliente;
+namespace Tests\Feature\Controllers\Paciente;
 
-use App\Models\Cliente;
+use App\Models\Paciente;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class PersonaJuridicaControllerTest extends TestCase
+class PacienteControllerTest extends TestCase
 {
-        /**
+    /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_listar_registros_de_transplante_a_bolsa_por_un_rango_de_fechas_correctamente()
+    public function test_listar_registros_correctamente()
     {
         $this->withoutExceptionHandling();
 
         // Crando registros para pruebas.
-        Cliente::factory(5)->create();
+        Paciente::factory(5)->create();
 
         // Creando registros temporales en memoria para realizar consulta.
-        $response = $this->get('/consultorio-oftamologico/crear-cliente/persona-juridica/listar');
+        $response = $this->get('/consultorio-oftamologico/paciente/listar');
 
         $response->assertJsonStructure([
             'current_page',
@@ -61,15 +61,15 @@ class PersonaJuridicaControllerTest extends TestCase
     }
 
     /**
-     * Test para comprobar que se guarda una persona jurifica correctamente.
+     * Test para comprobar que se guarda paciente correctamente.
      *
      * @return void
      */
-    public function test_guardar_persona_jurifica_correctamente()
+    public function test_guardar_paciente_correctamente()
     {
         $this->withoutExceptionHandling();
 
-        $response = $this->post('consultorio-oftamologico/crear-cliente/persona-juridica',[
+        $response = $this->post('consultorio-oftamologico/paciente',[
             ''                => "100",
         ]);
 
