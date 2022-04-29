@@ -10,7 +10,8 @@ import login from './components/auth/login.vue'
 import menu from './components/menu/menu.vue'
 import inicio from './components/consultorio/inicio.vue'
 import crearPaciente from './components/consultorio/ingresar/crearPaciente.vue'
-import historiaClinica from './components/consultorio/historiaClinica/historiaClinica.vue'
+import busquedaHistoriaClinica from './components/consultorio/historiaClinica/busquedaHistoriaClinica.vue'
+import evolucion from './components/consultorio/historiaClinica/evolucion.vue'
 import parametrosEps from './components/consultorio/parametros/eps.vue'
 /*Menu end*/
 
@@ -42,11 +43,18 @@ const router = new VueRouter({
                     component: crearPaciente,
                     name: 'crear-paciente',
                 },
+                // Historia clinica INICIO
                 {
                     path: 'historia-clinica',
-                    component: historiaClinica,
+                    component: busquedaHistoriaClinica,
                     name: 'historia-clinica',
                 },
+                {
+                    path: 'historia-clinica/evolucion/:numero_documento',
+                    component: evolucion,
+                    name: 'historia-clinica/evolucion',
+                },
+                // Historia clinica FIN
                 {
                     path: 'informe',
                     component: inicio,

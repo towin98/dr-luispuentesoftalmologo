@@ -35,7 +35,7 @@
                 </v-menu>
                 <template v-slot:extension>
                     <v-tabs centered class="ml-n9" style="background: #1000e1">
-                        <v-tab :to="{ name: 'inicio' }" v-on:click="titleProceso = 'inicio'" class="white--text">Inicio</v-tab>
+                        <v-tab :to="{ name: 'inicio' }" class="white--text" v-on:click="titleProceso = 'Inicio'">Inicio</v-tab>
                         <v-tab class="white--text">
 
                             <v-menu offset-y rounded="lg">
@@ -52,7 +52,7 @@
                                 </template>
 
                                 <v-list>
-                                    <v-list-item :to="{ name: 'crear-paciente' }" v-on:click="titleProceso = 'Crear Paciente'" v-if="moduloCrearPaciente">
+                                    <v-list-item :to="{ name: 'crear-paciente' }" v-if="moduloCrearPaciente" v-on:click="titleProceso = 'Crear Paciente'">
                                         <v-list-item-title>Crear Paciente</v-list-item-title>
                                     </v-list-item>
                                 </v-list>
@@ -62,28 +62,27 @@
                         <v-tab
                             v-if="moduloHistoriaClinica"
                             :to="{ name: 'historia-clinica' }"
-                            v-on:click="titleProceso = 'Historia Clinica'"
-                            class="white--text">
+                            class="white--text"
+                            v-on:click="titleProceso = 'Historia Clinica'">
                             Historia Clinica
                         </v-tab>
                         <v-tab
                             v-if="moduloInforme"
                             :to="{ name: 'informe' }"
-                            v-on:click="titleProceso = 'Informe'"
-                            class="white--text">
+                            class="white--text"
+                            v-on:click="titleProceso = 'Informe'">
                             Informe
                         </v-tab>
                         <v-tab
                             v-if="moduloAgendar"
                             :to="{ name: 'agendar' }"
-                            v-on:click="titleProceso = 'Agendar'"
-                            class="white--text">
+                            class="white--text"
+                            v-on:click="titleProceso = 'Agendar'">
                             Agendar
                         </v-tab>
                         <v-tab
                             v-if="moduloTurno"
                             :to="{ name: 'turno' }"
-                            v-on:click="titleProceso = 'Turno'"
                             class="white--text">
                             Turno
                         </v-tab>
@@ -121,7 +120,6 @@
                                             <v-list outlined>
                                                 <v-list-item
                                                             :to="{ name: 'eps' }"
-                                                            v-on:click="titleProceso = 'Eps'"
                                                             v-if="moduloParametroEps">
                                                     <v-list-item-title>Eps</v-list-item-title>
                                                 </v-list-item>
@@ -202,12 +200,9 @@ export default {
                     this.overlayLoading = false;
                 });
         },
+
     },
     async created() {
-        // Obteniendo nombre de la ruta.
-        if (this.$route.name) {
-            this.titleProceso = this.$route.name.replace("-", " ");
-        }
 
         const fecha = new Date();
         const month = fecha.toLocaleString("es-CO", { month: "long" });

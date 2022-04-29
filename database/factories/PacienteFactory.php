@@ -3,18 +3,18 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
-use App\Models\Cliente;
+use App\Models\Paciente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Date;
 
-class ClienteFactory extends Factory
+class PacienteFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Cliente::class;
+    protected $model = Paciente::class;
 
     /**
      * Define the model's default state.

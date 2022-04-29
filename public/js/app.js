@@ -2209,10 +2209,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2221,6 +2221,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+//
+//
+//
 //
 //
 //
@@ -2479,6 +2482,305 @@ __webpack_require__.r(__webpack_exports__);
       this.form.nombre = "";
       this.form.apellido = "";
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    loadingGeneral: _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      myFiles: ['cat.jpeg'],
+
+      /* Variables Table. */
+      buscar: "",
+      page: 1,
+      totalRegistros: 0,
+      loading: false,
+      overlayLoading: false,
+      options: {},
+      headers: [{
+        text: "Historia Número",
+        value: "numero_evolucion"
+      }, {
+        text: "Fecha Historia",
+        value: "fecha"
+      }, {
+        text: "Hora Historia",
+        value: "hora"
+      }, {
+        text: "Fecha Modificado",
+        value: "updated_at"
+      }, {
+        text: "Acciones",
+        value: "acciones",
+        sortable: false
+      }],
+      dataSet: [],
+
+      /* VARIABLES FORMULARIO */
+      form: {
+        fecha: '',
+        hora: '',
+        refraccion: '',
+        descripcion: ''
+      },
+      cAccion: 'Guardar',
+      errors: {},
+      foto_paciente: null,
+      numero_documento: '',
+      nombre: '',
+      apellido: ''
+      /* FIN */
+
+    };
+  },
+  methods: {
+    fnBuscar: function fnBuscar() {
+      var _this = this;
+
+      this.overlayLoading = true;
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage,
+          sortBy = _this$options.sortBy,
+          sortDesc = _this$options.sortDesc; // Obteniendo rangos de consultado paginación.
+
+      var start = itemsPerPage * (page - 1);
+      var length = itemsPerPage;
+
+      if (sortDesc[0] == true) {
+        sortBy = sortBy[0];
+        sortDesc = "DESC";
+      } else if (sortDesc[0] == false) {
+        sortBy = sortBy[0];
+        sortDesc = "ASC";
+      } else {
+        sortBy = "";
+        sortDesc = "";
+      }
+
+      axios.get("/consultorio-oftamologico/historia-clinica/buscar/evolucion/".concat(this.$route.params.numero_documento, "?length=").concat(length, "&start=").concat(start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc)).then(function (response) {
+        _this.loading = false;
+        var getDataPaciente = response.data.data[0].get_paciente;
+
+        if (getDataPaciente.foto != "") {
+          // Si la foto existe.
+          _this.foto_paciente = "../../../" + getDataPaciente.foto;
+        } else {
+          // Si no existe.
+          _this.foto_paciente = null;
+        }
+
+        _this.numero_documento = getDataPaciente.numero_documento;
+        _this.nombre = getDataPaciente.nombre;
+        _this.apellido = getDataPaciente.apellido;
+        _this.dataSet = response.data.data;
+        _this.totalRegistros = response.data.total;
+        _this.overlayLoading = false;
+      })["catch"](function (errors) {
+        _this.overlayLoading = false;
+        _this.loading = false;
+        _this.dataSet = [];
+
+        _this.$swal({
+          icon: 'error',
+          title: "".concat(errors.response.data.message),
+          text: "".concat(errors.response.data.errors[0])
+        });
+      });
+    },
+    filterSearch: function filterSearch() {
+      var _this2 = this;
+
+      this.overlayLoading = true;
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(function () {
+        _this2.fnBuscar(_this2.buscar);
+      }, 600);
+    }
+  },
+  mounted: function mounted() {
+    this.fnBuscar();
   }
 });
 
@@ -3272,7 +3574,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["proceso"]
+  data: function data() {
+    return {
+      local_proceso: this.proceso
+    };
+  },
+  props: ["proceso"],
+  watch: {
+    proceso: function proceso() {
+      this.local_proceso = this.proceso;
+    }
+  },
+  methods: {},
+  created: function created() {
+    // Obteniendo nombre de la ruta.
+    if (this.$route.name) {
+      this.local_proceso = this.$route.name.replace("-", " ");
+    }
+  }
 });
 
 /***/ }),
@@ -3299,8 +3618,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
 //
 //
 //
@@ -3512,11 +3829,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              // Obteniendo nombre de la ruta.
-              if (_this2.$route.name) {
-                _this2.titleProceso = _this2.$route.name.replace("-", " ");
-              }
-
               fecha = new Date();
               month = fecha.toLocaleString("es-CO", {
                 month: "long"
@@ -3526,10 +3838,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               /* DEPENDIENDO DEL ROL DEL USUARIO SE MUESTRA MENU. */
 
               _this2.overlayLoading = true;
-              _context2.next = 8;
+              _context2.next = 7;
               return _this2.informacionUsuario();
 
-            case 8:
+            case 7:
               _this2.overlayLoading = false;
               _this2.intervalId = setInterval( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
                 return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -3547,10 +3859,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }, _callee);
               })), 20000);
               _context2.t0 = _this2.infoUser.rol;
-              _context2.next = _context2.t0 === "SECRETARIA" ? 13 : _context2.t0 === "MEDICO" ? 21 : 24;
+              _context2.next = _context2.t0 === "SECRETARIA" ? 12 : _context2.t0 === "MEDICO" ? 20 : 23;
               break;
 
-            case 13:
+            case 12:
               _this2.moduloCrearPaciente = true; // this.crearPaciente       = true;
 
               _this2.moduloHistoriaClinica = true;
@@ -3563,14 +3875,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this2.moduloParametroEps = true;
               /* fin Variables de configuracion del sistema */
 
-              return _context2.abrupt("break", 24);
+              return _context2.abrupt("break", 23);
 
-            case 21:
+            case 20:
               _this2.moduloCrearPaciente = true;
               _this2.turno = true;
-              return _context2.abrupt("break", 24);
+              return _context2.abrupt("break", 23);
 
-            case 24:
+            case 23:
             case "end":
               return _context2.stop();
           }
@@ -3840,9 +4152,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_menu_menu_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/menu/menu.vue */ "./resources/js/components/menu/menu.vue");
 /* harmony import */ var _components_consultorio_inicio_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/consultorio/inicio.vue */ "./resources/js/components/consultorio/inicio.vue");
 /* harmony import */ var _components_consultorio_ingresar_crearPaciente_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/consultorio/ingresar/crearPaciente.vue */ "./resources/js/components/consultorio/ingresar/crearPaciente.vue");
-/* harmony import */ var _components_consultorio_historiaClinica_historiaClinica_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/historiaClinica.vue */ "./resources/js/components/consultorio/historiaClinica/historiaClinica.vue");
-/* harmony import */ var _components_consultorio_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/consultorio/parametros/eps.vue */ "./resources/js/components/consultorio/parametros/eps.vue");
-/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
+/* harmony import */ var _components_consultorio_historiaClinica_busquedaHistoriaClinica_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/busquedaHistoriaClinica.vue */ "./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue");
+/* harmony import */ var _components_consultorio_historiaClinica_evolucion_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/evolucion.vue */ "./resources/js/components/consultorio/historiaClinica/evolucion.vue");
+/* harmony import */ var _components_consultorio_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/consultorio/parametros/eps.vue */ "./resources/js/components/consultorio/parametros/eps.vue");
+/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -3850,6 +4163,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 
 
 /*Menu*/
+
 
 
 
@@ -3882,11 +4196,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: 'ingresar/crear-paciente',
       component: _components_consultorio_ingresar_crearPaciente_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
       name: 'crear-paciente'
-    }, {
+    }, // Historia clinica INICIO
+    {
       path: 'historia-clinica',
-      component: _components_consultorio_historiaClinica_historiaClinica_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+      component: _components_consultorio_historiaClinica_busquedaHistoriaClinica_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
       name: 'historia-clinica'
     }, {
+      path: 'historia-clinica/evolucion/:numero_documento',
+      component: _components_consultorio_historiaClinica_evolucion_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+      name: 'historia-clinica/evolucion'
+    }, // Historia clinica FIN
+    {
       path: 'informe',
       component: _components_consultorio_inicio_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
       name: 'informe'
@@ -3900,12 +4220,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'turno'
     }, {
       path: 'configuracion-sistema/parametros/eps-prepagada',
-      component: _components_consultorio_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+      component: _components_consultorio_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
       name: 'eps'
     }]
   }, {
     path: '*',
-    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
   }]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -22900,10 +23220,10 @@ component.options.__file = "resources/js/components/auth/login.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/consultorio/historiaClinica/historiaClinica.vue":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/consultorio/historiaClinica/historiaClinica.vue ***!
-  \*********************************************************************************/
+/***/ "./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue ***!
+  \*****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22911,8 +23231,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _historiaClinica_vue_vue_type_template_id_6c895054___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./historiaClinica.vue?vue&type=template&id=6c895054& */ "./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=template&id=6c895054&");
-/* harmony import */ var _historiaClinica_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./historiaClinica.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=script&lang=js&");
+/* harmony import */ var _busquedaHistoriaClinica_vue_vue_type_template_id_41cada14___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./busquedaHistoriaClinica.vue?vue&type=template&id=41cada14& */ "./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=template&id=41cada14&");
+/* harmony import */ var _busquedaHistoriaClinica_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./busquedaHistoriaClinica.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -22922,9 +23242,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _historiaClinica_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _historiaClinica_vue_vue_type_template_id_6c895054___WEBPACK_IMPORTED_MODULE_0__.render,
-  _historiaClinica_vue_vue_type_template_id_6c895054___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _busquedaHistoriaClinica_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _busquedaHistoriaClinica_vue_vue_type_template_id_41cada14___WEBPACK_IMPORTED_MODULE_0__.render,
+  _busquedaHistoriaClinica_vue_vue_type_template_id_41cada14___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -22934,7 +23254,46 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/consultorio/historiaClinica/historiaClinica.vue"
+component.options.__file = "resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/historiaClinica/evolucion.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/evolucion.vue ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./evolucion.vue?vue&type=template&id=28b3d424& */ "./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424&");
+/* harmony import */ var _evolucion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./evolucion.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _evolucion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__.render,
+  _evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/consultorio/historiaClinica/evolucion.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -23224,10 +23583,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************/
+/***/ "./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -23235,8 +23594,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_historiaClinica_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./historiaClinica.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_historiaClinica_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_busquedaHistoriaClinica_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./busquedaHistoriaClinica.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_busquedaHistoriaClinica_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./evolucion.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -23367,19 +23742,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=template&id=6c895054&":
-/*!****************************************************************************************************************!*\
-  !*** ./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=template&id=6c895054& ***!
-  \****************************************************************************************************************/
+/***/ "./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=template&id=41cada14&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=template&id=41cada14& ***!
+  \************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_historiaClinica_vue_vue_type_template_id_6c895054___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_historiaClinica_vue_vue_type_template_id_6c895054___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_busquedaHistoriaClinica_vue_vue_type_template_id_41cada14___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_busquedaHistoriaClinica_vue_vue_type_template_id_41cada14___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_historiaClinica_vue_vue_type_template_id_6c895054___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./historiaClinica.vue?vue&type=template&id=6c895054& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=template&id=6c895054&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_busquedaHistoriaClinica_vue_vue_type_template_id_41cada14___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./busquedaHistoriaClinica.vue?vue&type=template&id=41cada14& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=template&id=41cada14&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424& ***!
+  \**********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./evolucion.vue?vue&type=template&id=28b3d424& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424&");
 
 
 /***/ }),
@@ -23786,10 +24178,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=template&id=6c895054&":
-/*!*******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/historiaClinica.vue?vue&type=template&id=6c895054& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=template&id=41cada14&":
+/*!***************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=template&id=41cada14& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -23869,7 +24261,7 @@ var render = function () {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { staticClass: "pt-0 pb-2", attrs: { cols: "4", sm: "3" } },
+                    { staticClass: "pt-0 pb-2", attrs: { cols: "6", sm: "3" } },
                     [
                       _c("v-text-field", {
                         ref: "nombre",
@@ -24020,7 +24412,425 @@ var render = function () {
                     fn: function (ref) {
                       var item = ref.item
                       return [
-                        _c("a", { attrs: { href: "#" } }, [_vm._v("Crear")]),
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                path:
+                                  "/consultorio/historia-clinica/evolucion/" +
+                                  item.numero_documento,
+                                params: {
+                                  numero_documento: item.numero_documento,
+                                },
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                    Evolución\n                    "
+                            ),
+                          ]
+                        ),
+                      ]
+                    },
+                  },
+                ]),
+              }),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("loadingGeneral", { attrs: { overlayLoading: _vm.overlayLoading } }),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticClass: "mt-7", attrs: { elevation: "2" } },
+        [
+          _c(
+            "v-row",
+            { staticClass: "pl-4 pr-4 pt-5" },
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "9", sm: "9" } },
+                [
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        { staticClass: "pb-2", attrs: { cols: "6", sm: "4" } },
+                        [
+                          _c("v-text-field", {
+                            ref: "fecha",
+                            attrs: {
+                              type: "date",
+                              label: "Fecha Historia",
+                              "error-messages": _vm.errors.fecha,
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fecha,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fecha", $$v)
+                              },
+                              expression: "form.fecha",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pb-2", attrs: { cols: "6", sm: "4" } },
+                        [
+                          _c("v-text-field", {
+                            ref: "hora",
+                            attrs: {
+                              type: "time",
+                              label: "Hora Historia",
+                              "error-messages": _vm.errors.hora,
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.hora,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "hora", $$v)
+                              },
+                              expression: "form.hora",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        { staticClass: "pb-2", attrs: { cols: "4", sm: "4" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "Número de Documento",
+                              dense: "",
+                              readonly: "",
+                            },
+                            model: {
+                              value: _vm.numero_documento,
+                              callback: function ($$v) {
+                                _vm.numero_documento = $$v
+                              },
+                              expression: "numero_documento",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pb-2", attrs: { cols: "4", sm: "4" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "Nombre", dense: "", readonly: "" },
+                            model: {
+                              value: _vm.nombre,
+                              callback: function ($$v) {
+                                _vm.nombre = $$v
+                              },
+                              expression: "nombre",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pb-2", attrs: { cols: "4", sm: "4" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "Apellido",
+                              dense: "",
+                              readonly: "",
+                            },
+                            model: {
+                              value: _vm.apellido,
+                              callback: function ($$v) {
+                                _vm.apellido = $$v
+                              },
+                              expression: "apellido",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", { attrs: { cols: "12", sm: "12" } }, [
+                        _c("label", { attrs: { for: "id_refracciones" } }, [
+                          _vm._v("Subir Refracciones:"),
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticStyle: { width: "50%" },
+                          attrs: {
+                            type: "file",
+                            id: "id_refracciones",
+                            name: "url_refraccion",
+                            accept: "image/*",
+                            multiple: "",
+                            title: "Subir Refracciones, solo imagenes",
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", sm: "12" } },
+                        [
+                          _c("v-textarea", {
+                            ref: "descripcion",
+                            attrs: {
+                              label: "Describa la Historia Clinica",
+                              outlined: "",
+                              dense: "",
+                              "error-messages": _vm.errors.descripcion,
+                              rows: "2",
+                            },
+                            model: {
+                              value: _vm.form.descripcion,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "descripcion", $$v)
+                              },
+                              expression: "form.descripcion",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-2", attrs: { cols: "3", sm: "3" } },
+                [
+                  _c(
+                    "v-card",
+                    { staticClass: "mx-auto", attrs: { "max-width": "200" } },
+                    [
+                      _c("v-img", {
+                        attrs: {
+                          src:
+                            _vm.foto_paciente != null
+                              ? _vm.foto_paciente
+                              : "http://jago.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png",
+                          height: "150px",
+                          alt: "Foto paciente",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("v-card-title", [_vm._v("Foto Cliente")]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "pl-4 pr-4" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "d-flex justify-end", attrs: { cols: "12" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text text-none mr-3",
+                      attrs: {
+                        type: "submit",
+                        small: "",
+                        color: "red darken-4",
+                        tile: "",
+                      },
+                    },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [
+                        _vm._v(" format_clear "),
+                      ]),
+                      _vm._v("Limpiar\n                "),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text text-none",
+                      attrs: {
+                        type: "submit",
+                        small: "",
+                        color: "success",
+                        tile: "",
+                      },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.cAccion) +
+                          "\n                    "
+                      ),
+                      _c("v-icon", { attrs: { right: "" } }, [
+                        _vm._v(" save "),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c(
+                "v-card-title",
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      type: "text",
+                      "append-icon": "mdi-magnify",
+                      label: "Buscar",
+                      "single-line": "",
+                      "hide-details": "",
+                    },
+                    on: { input: _vm.filterSearch },
+                    model: {
+                      value: _vm.buscar,
+                      callback: function ($$v) {
+                        _vm.buscar = $$v
+                      },
+                      expression: "buscar",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  page: _vm.page,
+                  headers: _vm.headers,
+                  items: _vm.dataSet,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalRegistros,
+                  loading: _vm.loading,
+                  "items-per-page": 5,
+                  "footer-props": {
+                    "items-per-page-options": [5, 10, 15, 50],
+                  },
+                  "sort-by": "updated_at",
+                  "sort-desc": true,
+                  "no-data-text": "Sin registros",
+                },
+                on: {
+                  "update:options": function ($event) {
+                    _vm.options = $event
+                  },
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.acciones",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            staticClass: "mr-2",
+                            attrs: {
+                              color: "primary",
+                              title: "Editar paciente",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnShow(item.id)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-pencil\n                    "
+                            ),
+                          ]
+                        ),
                       ]
                     },
                   },
@@ -24880,11 +25690,11 @@ var render = function () {
           _vm._v(" "),
           _c("h4", [_vm._v("Inicio")]),
           _vm._v(" "),
-          _vm.proceso != "inicio" ? _c("h4", [_vm._v(" / ")]) : _vm._e(),
+          _vm.local_proceso != "inicio" ? _c("h4", [_vm._v(" / ")]) : _vm._e(),
           _vm._v(" "),
-          _vm.proceso != "inicio"
+          _vm.local_proceso != "inicio"
             ? _c("h4", { staticClass: "text-capitalize" }, [
-                _vm._v(_vm._s(_vm.proceso)),
+                _vm._v(_vm._s(_vm.local_proceso)),
               ])
             : _vm._e(),
         ],
@@ -24957,7 +25767,7 @@ var render = function () {
                               attrs: { to: { name: "inicio" } },
                               on: {
                                 click: function ($event) {
-                                  _vm.titleProceso = "inicio"
+                                  _vm.titleProceso = "Inicio"
                                 },
                               },
                             },
@@ -25121,11 +25931,6 @@ var render = function () {
                                 {
                                   staticClass: "white--text",
                                   attrs: { to: { name: "turno" } },
-                                  on: {
-                                    click: function ($event) {
-                                      _vm.titleProceso = "Turno"
-                                    },
-                                  },
                                 },
                                 [
                                   _vm._v(
@@ -25296,15 +26101,6 @@ var render = function () {
                                                                 to: {
                                                                   name: "eps",
                                                                 },
-                                                              },
-                                                              on: {
-                                                                click:
-                                                                  function (
-                                                                    $event
-                                                                  ) {
-                                                                    _vm.titleProceso =
-                                                                      "Eps"
-                                                                  },
                                                               },
                                                             },
                                                             [

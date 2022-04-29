@@ -28,7 +28,7 @@
                             dense
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="4" sm="3" class="pt-0 pb-2">
+                    <v-col cols="6" sm="3" class="pt-0 pb-2">
                         <v-text-field
                             v-model="form.nombre"
                             label="Nombre Completo"
@@ -89,7 +89,10 @@
                     no-data-text="Sin registros"
                 >
                     <template v-slot:item.acciones="{ item }">
-                        <a href="#">Crear</a>
+                        <router-link
+                            :to="{ path: `/consultorio/historia-clinica/evolucion/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
+                        Evolución
+                        </router-link>
                     </template>
                 </v-data-table>
             </v-col>

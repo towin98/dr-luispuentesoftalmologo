@@ -62,5 +62,9 @@ trait metodosComunesTrait {
             return "";
         }
     }
+
+    public function fnBuscarUltimoNumeroDisponible(){
+
+    }
 }
 ?>

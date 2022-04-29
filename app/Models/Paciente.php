@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Paciente extends Model
 {
     use HasFactory;
 
-    protected $table = 'cliente';
+    protected $table = 'paciente';
     protected $primaryKey = 'id';
 
     public function getdepartamentoAttribute($value)
@@ -77,13 +77,14 @@ class Cliente extends Model
     ];
 
     static $messages = [
-        'tipo_documento.required'       => 'El tipo de documento es requerido.',
-        'tipo_documento.max'            => 'El tipo de documento no puede superar los 10 carácteres.',
-        'tipo_documento.filled'         => 'El tipo de documento no puede ser vacío.',
-        'numero_documento.required'     => 'El número de documento es requerido.',
-        'numero_documento.max'          => 'El número de documento no puede superar los 20 carácteres.',
-        'numero_documento.filled'       => 'El número de documento no puede ser vacío.',
-        'numero_documento.unique'       => 'El número de documento ya existe.',
+        'tipo_documento.required'       => 'El Tipo de Documento es requerido.',
+        'tipo_documento.max'            => 'El Tipo de Documento no puede superar los 10 carácteres.',
+        'tipo_documento.filled'         => 'El Tipo de Documento no puede ser vacío.',
+        'numero_documento.required'     => 'El Número de Documento es requerido.',
+        'numero_documento.numeric'      => 'El Número de Documento debe ser un número.',
+        'numero_documento.filled'       => 'El Número de Documento no puede ser vacío.',
+        'numero_documento.unique'       => 'El Número de Documento ya existe.',
+        'numero_documento.digits_between'=> 'El Número de Documento debe tener entre 5 y 20 dígitos.',
         'nombre.required'               => 'El nombre es requerido.',
         'nombre.max'                    => 'El nombre no puede superar los 25 carácteres.',
         'nombre.filled'                 => 'El nombre no puede ser vacío.',
@@ -124,10 +125,10 @@ class Cliente extends Model
 
     static $rulesStore = [
         'tipo_documento'        => 'required|string|max:10',
-        'numero_documento'      => 'required|unique:cliente|string|max:20',
+        'numero_documento'      => 'required|unique:paciente|numeric|digits_between:5,20',
         'nombre'                => 'required|string|max:25',
         'apellido'              => 'required|string|max:25',
-        'correo'                => 'required|unique:cliente|email|max:255',
+        'correo'                => 'required|unique:paciente|email|max:255',
         'celular'               => 'required|string|max:15',
         'direccion'             => 'required|string|max:30',
         'departamento'          => 'required|string|max:30',
@@ -143,10 +144,10 @@ class Cliente extends Model
     static function fnRulesUpdate($user) {
         return [
             'tipo_documento'        => 'required|filled|string|max:10',
-            'numero_documento'      => 'required|unique:cliente,numero_documento,'.$user->id.'|filled|string|max:20',
+            'numero_documento'      => 'required|unique:paciente,numero_documento,'.$user->id.'|filled|numeric|digits_between:5,20',
             'nombre'                => 'required|filled|string|max:25',
             'apellido'              => 'required|filled|string|max:25',
-            'correo'                => 'required|unique:cliente,correo,'.$user->id.'|filled|email|max:255',
+            'correo'                => 'required|unique:paciente,correo,'.$user->id.'|filled|email|max:255',
             'celular'               => 'required|filled|string|max:15',
             'direccion'             => 'required|filled|string|max:30',
             'departamento'          => 'required|filled|string|max:30',

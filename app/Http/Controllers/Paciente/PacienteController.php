@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Cliente;
+namespace App\Http\Controllers\Paciente;
 
 use Throwable;
-use App\Models\Cliente;
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Traits\metodosComunesTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class ClienteController extends Controller
+class PacienteController extends Controller
 {
     use metodosComunesTrait;
     /**
@@ -29,7 +29,7 @@ class ClienteController extends Controller
             $length = 15;
             $start  = 0;
         }
-        $registros = Cliente::Buscar($request->buscar)
+        $registros = Paciente::Buscar($request->buscar)
             ->Ordenamiento($request->orderColumn, $request->order);
 
         // consulta para saber cuantos registros hay.
@@ -58,8 +58,8 @@ class ClienteController extends Controller
         $errores = [];
         $validator = Validator::make(
                                     $request->all(),
-                                    Cliente::$rulesStore,
-                                    Cliente::$messages);
+                                    Paciente::$rulesStore,
+                                    Paciente::$messages);
         if ($validator->fails()) {
             $errores = $validator->errors();
         }
@@ -75,7 +75,7 @@ class ClienteController extends Controller
             $urlFotoGuardada = $this->guardarArchivoSubido($request, "foto", "fotos-paciente");
 
             // Guardando datos
-            Cliente::create([
+            Paciente::create([
                 'tipo_documento'    => trim(strtoupper($request->tipo_documento)),
                 'numero_documento'  => trim(strtoupper($request->numero_documento)),
                 'nombre'            => trim(strtoupper($request->nombre)),
@@ -114,15 +114,15 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        $cliente = Cliente::findOrfail($id);
+        $paciente = Paciente::findOrfail($id);
 
-        $cliente->fecha_creacion    = substr($cliente->fecha_creacion,0,10);
-        if ($cliente->fecha_nacimiento != "") {
-            $cliente->fecha_nacimiento  = substr($cliente->fecha_nacimiento,0,10);
+        $paciente->fecha_creacion    = substr($paciente->fecha_creacion,0,10);
+        if ($paciente->fecha_nacimiento != "") {
+            $paciente->fecha_nacimiento  = substr($paciente->fecha_nacimiento,0,10);
         }
 
         return response()->json([
-            'data'      => $cliente,
+            'data'      => $paciente,
         ], 200);
     }
 
@@ -135,13 +135,13 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $paciente = Cliente::findOrfail($id);
+        $paciente = Paciente::findOrfail($id);
 
         $errores = [];
         $validator = Validator::make(
                                     $request->all(),
-                                    Cliente::fnRulesUpdate($paciente),
-                                    Cliente::$messages);
+                                    Paciente::fnRulesUpdate($paciente),
+                                    Paciente::$messages);
         if ($validator->fails()) {
             $errores = $validator->errors();
         }

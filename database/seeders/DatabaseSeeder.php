@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Cliente;
+use App\Models\Paciente;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(PermissionsSeeder::class);
         $this->call(epsSeeder::class);
-        Cliente::factory(5)->create(); // SOLO PARA PRUEBAS
+        Paciente::factory(5)->create(); // SOLO PARA PRUEBAS
     }
 }
