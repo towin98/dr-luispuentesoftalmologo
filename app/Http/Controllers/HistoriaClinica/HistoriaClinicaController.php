@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 use App\Traits\metodosComunesTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class HistoriaClinicaController extends Controller
 {
@@ -31,43 +36,29 @@ class HistoriaClinicaController extends Controller
             $start  = 0;
         }
 
-        $bRequestVacio = true;
         $registros = Paciente::select('*');
 
         if ($request->tipo_documento != "") {
-            $bRequestVacio = false;
             $registros = $registros->where('tipo_documento','LIKE', "%$request->tipo_documento%");
         }
         if ($request->numero_documento != "") {
-            $bRequestVacio = false;
             $registros = $registros->where('numero_documento','LIKE', "%$request->numero_documento%");
         }
         if ($request->nombre != "") {
-            $bRequestVacio = false;
             $registros = $registros->where('nombre','LIKE', "%$request->nombre%");
         }
         if ($request->apellido != "") {
-            $bRequestVacio = false;
             $registros = $registros->where('apellido','LIKE', "%$request->apellido%");
         }
 
-        // Si no se envia ningun request.
-        if ($bRequestVacio == true && $request->listar_todos != "SI") {
-            return response()->json([
-                'data'      => [],
-                'filtrados' => 0,
-                'total'     => 0
-            ], 200);
-        }else{
-            $registros = $registros->Ordenamiento($request->orderColumn, $request->order);
+        $registros = $registros->Ordenamiento($request->orderColumn, $request->order);
 
-            // consulta para saber cuantos registros hay.
-            $totalRegistros = $registros->count();
+        // consulta para saber cuantos registros hay.
+        $totalRegistros = $registros->count();
 
-            $registros = $registros->skip($start)
-                ->take($length)
-                ->get();
-        }
+        $registros = $registros->skip($start)
+            ->take($length)
+            ->get();
 
         return response()->json([
             'data'      => $registros,
@@ -156,7 +147,7 @@ class HistoriaClinicaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar evolucion.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -172,40 +163,86 @@ class HistoriaClinicaController extends Controller
             $errores = $validator->errors();
         }
 
-        if (count($errores) > 0) {
-            return response()->json([
-                'message' => 'Error de Validación de Datos',
-                'errores' => $errores
-            ], 422);
-        }
-
         // consultando que exista el paciente
         $paciente = Paciente::select('id')->where('numero_documento', $request->numero_documento)->first();
         if (!$paciente) {
             return response()->json([
                 'message' => 'Validación de Datos',
-                'errores' => "No existe un paciente con el Número de Documento[$request->numero_documento]."
+                'errors' => "No existe un paciente con el Número de Documento[$request->numero_documento]."
             ], 409);
+        }
+
+        // Validando refracciones.
+        if($request->hasFile('refracciones')){
+            foreach($request->file('refracciones') as $file){
+                $validator = Validator::make(
+                                    [
+                                        "url_refraccion" => $file
+                                    ],
+                                    [
+                                        'url_refraccion' => 'mimes:jpg,jpeg,bmp,png'
+                                    ],
+                                    Evolucion::$messages);
+                if ($validator->fails()) {
+                    $errores = $validator->errors();
+                }
+            }
+        }else{
+            if (empty($errores)) {
+                $errores['url_refraccion'] = [
+                    'La refracción es requerida.'
+                ];
+            }else{
+                $errores->add('url_refraccion', 'La refracción es requerida.');
+            }
+        }
+
+        if (count($errores) > 0) {
+            return response()->json([
+                'message' => 'Error de Validación de Datos',
+                'errors' => $errores
+            ], 422);
         }
 
         try {
 
-            $urlRefraccion = $this->guardarArchivoSubido($request, "foto", "historia-clinica/refracciones");
+            if (!file_exists(public_path('storage/img-refracciones-temporal'))) {
+                File::makeDirectory(public_path('storage/img-refracciones-temporal'));
+            }
+            if (!file_exists(public_path('storage/refracciones'))) {
+                File::makeDirectory(public_path('storage/refracciones'));
+            }
+
+            if($request->hasFile('refracciones')){
+
+                $numeroEvolucion = $this->obtenerNumeroEvolucion($paciente->id);
+
+                // Procesando imagenes para crear pdf con refracciones subida.
+                $returnfnPdfRefracciones = $this->fnPdfRefracciones($request, $numeroEvolucion);
+                if ($returnfnPdfRefracciones === false) {
+                    return response()->json([
+                        'message' => 'Error de Validación de Datos',
+                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias."
+                    ], 500);
+                }else{
+                    $nombrePdf = $returnfnPdfRefracciones;
+                }
+            }
 
             Evolucion::create([
                 "id_paciente"       => $paciente->id,
-                "numero_evolucion"  => $this->obtenerNumeroEvolucion($paciente->id),
-                "url_refraccion"    => "babarasbasada",
+                "numero_evolucion"  => $numeroEvolucion,
+                "url_refraccion"    => $nombrePdf,
                 "fecha"             => $request->fecha,
-                "hora"              => $request->hora,
-                "descripcion"       => $request->descripcion
+                "hora"              => $request->hora.":00",
+                "descripcion"       => trim(strtoupper($this->fnEliminarTildes($request->descripcion)))
             ]);
 
         } catch (Throwable $e) {
             return response()->json([
                 'message' => 'Error inesperado',
-                'errores' => [
-                    'Error al Guardar datos.'
+                'errors' => [
+                    'Error al Guardar datos.'.$e
                 ]
             ], 500);
         }
@@ -215,25 +252,32 @@ class HistoriaClinicaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra una evolucion.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showEvolucion($id)
     {
-        //
+        $evolucion = Evolucion::findOrfail($id);
+        $evolucion->hora = substr($evolucion->hora,0,5);
+
+        return response()->json([
+            'data'      => $evolucion,
+        ], 200);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Método que descarga un archivo.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return string
      */
-    public function edit($id)
+    public function descargar(Request $request)
     {
-        //
+        // Ruta archivo
+        $path = public_path($request->path).$request->nombreArchivo;
+        return response()->download($path, $request->nombreArchivo);
     }
 
     /**
@@ -243,9 +287,84 @@ class HistoriaClinicaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateEvolucion(Request $request, $id)
     {
-        //
+        $errores = [];
+        $validator = Validator::make(
+                                    $request->all(),
+                                    Evolucion::fnRulesUpdate(),
+                                    Evolucion::$messages);
+        if ($validator->fails()) {
+            $errores = $validator->errors();
+        }
+
+        // Validando refracciones.
+        if($request->hasFile('refracciones')){
+            foreach($request->file('refracciones') as $file){
+                $validator = Validator::make(
+                                    [
+                                        "url_refraccion" => $file
+                                    ],
+                                    [
+                                        'url_refraccion' => 'mimes:jpg,jpeg,bmp,png'
+                                    ],
+                                    Evolucion::$messages);
+                if ($validator->fails()) {
+                    $errores = $validator->errors();
+                }
+            }
+        }
+
+        if (count($errores) > 0) {
+            return response()->json([
+                'message' => 'Error de Validación de Datos',
+                'errors' => $errores
+            ], 422);
+        }
+
+        $evolucion = Evolucion::findOrfail($id);
+
+        if ($evolucion) {
+            $nombrePdf = $evolucion->url_refraccion;
+
+            if($request->hasFile('refracciones')){
+
+                // Eliminando PDF, porque se enviaron archivos.
+                File::delete(public_path('storage/refracciones/').$evolucion->url_refraccion);
+
+                // Procesando imagenes para crear pdf con refracciones subida.
+                $returnfnPdfRefracciones = $this->fnPdfRefracciones($request, $evolucion->numero_evolucion);
+                if ($returnfnPdfRefracciones === false) {
+                    return response()->json([
+                        'message' => 'Error de Validación de Datos',
+                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias."
+                    ], 500);
+                }else{
+                    $nombrePdf = $returnfnPdfRefracciones;
+                }
+            }
+
+            try {
+                // UPDATE
+                $evolucion->update([
+                    "fecha"          => $request->fecha,
+                    "hora"           => $request->hora.":00",
+                    "descripcion"    => trim(strtoupper($this->fnEliminarTildes($request->descripcion))),
+                    "url_refraccion" => $nombrePdf,
+                ]);
+
+            } catch (Throwable $e) {
+                return response()->json([
+                    'message' => 'Error inesperado',
+                    'errors' => [
+                        'Error al Actualizar datos.'
+                    ]
+                ], 500);
+            }
+        }
+        return response()->json([
+            'message' => "Datos Actualizados con exito.",
+        ], 201);
     }
 
     /**
@@ -254,9 +373,25 @@ class HistoriaClinicaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyEvolucion($id)
     {
-        //
+        $evolucion = Evolucion::findOrfail($id);
+        if ($evolucion) {
+            try {
+                // Eliminando PDF Refracciones.
+                File::delete(public_path('storage/refracciones/').$evolucion->url_refraccion);
+                $evolucion->delete();
+            } catch (Throwable $e) {
+                return response()->json([
+                    'message' => 'Error inesperado en el Sistema',
+                    'errors' => "Error al eliminar Evolucion del paciente."
+                ], 500);
+            }
+
+            return response()->json([
+                'message' => "La Historia No.[$evolucion->numero_evolucion] ha sido eliminada.",
+            ], 201);
+        }
     }
 
     /**
@@ -271,7 +406,13 @@ class HistoriaClinicaController extends Controller
             ->orderBy('id', 'desc')
             ->first();
 
-        $consecutivoNumeroEvolucion = intval($numeroEvoluciones->numero_evolucion)+1;
+        if(!$numeroEvoluciones){
+            $numero_evolucion = "0000";
+        }else{
+            $numero_evolucion = $numeroEvoluciones->numero_evolucion;
+        }
+
+        $consecutivoNumeroEvolucion = intval($numero_evolucion)+1;
         return str_pad(strval($consecutivoNumeroEvolucion), 4,"0",STR_PAD_LEFT);
     }
 }

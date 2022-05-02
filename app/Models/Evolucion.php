@@ -58,24 +58,24 @@ class Evolucion extends Model
         'fecha.required'             => 'La Fecha es requerida.',
         'fecha.date_format'          => 'La fecha debe cumplir el formato: Y-m-d.',
         'hora.required'              => 'La Hora es requerida.',
-        'hora.date_format'           => 'La Hora debe cumplir el formato: H:i:s.',
+        'hora.date_format'           => 'La Hora debe cumplir el formato: H:i.',
         'descripcion.max'            => 'La descripción de la Historia Clinica no puede superar lo 255 carácteres.'
     ];
 
     static $rulesStore = [
         'numero_documento'  => 'required',
-        'url_refraccion'    => 'required|mimes:jpg,jpeg,bmp,png',
+        // 'url_refraccion'    => 'required|mimes:jpg,jpeg,bmp,png',
         'fecha'             => 'required|date_format:Y-m-d',
-        'hora'              => 'required|date_format:H:i:s',
+        'hora'              => 'required|date_format:H:i',
         'descripcion'       => 'nullable|string|max:255'
     ];
 
     static function fnRulesUpdate() {
         return [
-            'numero_documento'  => 'required',
-            'url_refraccion'    => 'required',
+            // 'numero_documento'  => 'required',
+            // 'url_refraccion'    => 'required|mimes:jpg,jpeg,bmp,png',
             'fecha'             => 'required|date_format:Y-m-d',
-            'hora'              => 'required|date_format:H:i:s',
+            'hora'              => 'required|date_format:H:i',
             'descripcion'       => 'nullable|string|max:255'
         ];
     }
@@ -91,7 +91,8 @@ class Evolucion extends Model
         if($buscar) {
             return $query
                 ->where('numero_evolucion', 'LIKE', "%$buscar%")
-                ->orWhere('fecha_historia', 'LIKE', "%$buscar%")
+                ->orWhere('fecha', 'LIKE', "%$buscar%")
+                ->orWhere('hora', 'LIKE', "%$buscar%")
                 ->orWhere('updated_at', 'LIKE', "%$buscar%");
         }
     }

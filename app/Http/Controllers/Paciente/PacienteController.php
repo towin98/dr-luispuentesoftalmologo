@@ -189,7 +189,7 @@ class PacienteController extends Controller
                 return response()->json([
                     'message' => 'Error en el Sistema',
                     'errors'  => [
-                        "Error al actualizar paciente, por favor comuniquese con el area de Tecnología de Sajona, Gracias".$e
+                        "Error al actualizar paciente, por favor comuniquese con el area de Tecnología, Gracias."
                     ]
                 ], 500);
             }

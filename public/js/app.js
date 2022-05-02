@@ -2313,17 +2313,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2365,7 +2354,6 @@ __webpack_require__.r(__webpack_exports__);
       /* Variables Table. */
       // Tabla filtro.
       debounce: null,
-      buscar: "",
       // Table listar
       page: 1,
       totalRegistros: 0,
@@ -2396,11 +2384,7 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     options: {
       handler: function handler() {
-        if (this.contador > 0) {
-          this.fnBuscar();
-        }
-
-        this.contador++;
+        this.fnBuscar();
       }
     },
     deep: true
@@ -2455,26 +2439,17 @@ __webpack_require__.r(__webpack_exports__);
         _this.totalRegistros = response.data.total;
         _this.numberOfPages = response.data.totalPages;
         _this.overlayLoading = false;
-      })["catch"](function (errors) {
+      })["catch"](function (errores) {
         _this.overlayLoading = false;
         _this.loading = false;
         _this.dataSet = [];
 
         _this.$swal({
           icon: 'error',
-          title: "".concat(errors.response.data.message),
-          text: "".concat(errors.response.data.errors[0])
+          title: "",
+          text: "No fue posible realizar la operaci\xF3n solicitada"
         });
       });
-    },
-    filterSearch: function filterSearch() {
-      var _this2 = this;
-
-      this.overlayLoading = true;
-      clearTimeout(this.debounce);
-      this.debounce = setTimeout(function () {
-        _this2.fnBuscar(_this2.buscar);
-      }, 600);
     },
     limpiarCampo: function limpiarCampo() {
       this.form.tipo_documento = "";
@@ -2482,6 +2457,9 @@ __webpack_require__.r(__webpack_exports__);
       this.form.nombre = "";
       this.form.apellido = "";
     }
+  },
+  mounted: function mounted() {
+    this.fnBuscar('SI');
   }
 });
 
@@ -2499,6 +2477,48 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2700,22 +2720,239 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         fecha: '',
         hora: '',
-        refraccion: '',
         descripcion: ''
       },
       cAccion: 'Guardar',
       errors: {},
+      id_paciente: '',
       foto_paciente: null,
       numero_documento: '',
       nombre: '',
-      apellido: ''
-      /* FIN */
+      apellido: '',
+      numero_evolucion: '',
+      url_refraccion: '',
 
+      /* FIN */
+      contador: 0
     };
   },
+  watch: {
+    options: {
+      handler: function handler() {
+        this.fnBuscar();
+      }
+    },
+    deep: true
+  },
   methods: {
-    fnBuscar: function fnBuscar() {
+    fnAccion: function fnAccion() {
+      if (this.cAccion === "Guardar") {
+        this.fnStore();
+      } else {
+        this.fnUpdate();
+      }
+    },
+    fnStore: function fnStore() {
       var _this = this;
+
+      this.overlayLoading = true;
+      var $inputArchivos = document.querySelector("#inputArchivos");
+      var archivosParaSubir = $inputArchivos.files;
+      var formData = new FormData();
+
+      for (var key in this.form) {
+        if (this.form[key] == null) {
+          this.form[key] = '';
+        }
+
+        formData.append(key, this.form[key]);
+      }
+
+      formData.append('numero_documento', this.numero_documento);
+
+      if (archivosParaSubir.length <= 0) {
+        formData.append("refracciones[]", "");
+      } else {
+        var _iterator = _createForOfIteratorHelper(archivosParaSubir),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var archivo = _step.value;
+            formData.append("refracciones[]", archivo);
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      }
+
+      axios.post("/consultorio-oftamologico/historia-clinica/guardar/evolucion", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        _this.errors = "";
+
+        _this.$swal(response.data.message, '', 'success');
+
+        _this.fnBuscar();
+
+        _this.limpiarCampos();
+
+        _this.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this.errors = _this.fnResponseError(errores);
+        _this.overlayLoading = false;
+      });
+    },
+    fnShowEvolucion: function fnShowEvolucion(id) {
+      var _this2 = this;
+
+      this.overlayLoading = true;
+      this.cAccion = "Actualizar";
+      axios.get("/consultorio-oftamologico/historia-clinica/mostrar/evolucion/".concat(id)).then(function (response) {
+        var data = response.data.data;
+        _this2.form.fecha = data.fecha;
+        _this2.form.hora = data.hora;
+        _this2.form.descripcion = data.descripcion;
+        _this2.id = data.id;
+        _this2.numero_evolucion = data.numero_evolucion;
+        _this2.url_refraccion = data.url_refraccion;
+        _this2.errors = "";
+        _this2.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this2.errors = _this2.fnResponseError(errores);
+        _this2.overlayLoading = false;
+      });
+    },
+    fnDescargarRefraccion: function fnDescargarRefraccion() {
+      var _this3 = this;
+
+      this.overlayLoading = true;
+      var data = {
+        nombreArchivo: this.url_refraccion,
+        path: 'storage/refracciones/'
+      };
+      axios.post("/consultorio-oftamologico/historia-clinica/descargar/evolucion/refracciones", data, {
+        responseType: 'blob'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', _this3.url_refraccion);
+        document.body.appendChild(link);
+        link.click();
+        _this3.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this3.errors = _this3.fnResponseError(errores);
+        _this3.overlayLoading = false;
+      });
+    },
+    fnUpdate: function fnUpdate() {
+      var _this4 = this;
+
+      this.overlayLoading = true;
+      var formData = new FormData();
+
+      for (var key in this.form) {
+        if (this.form[key] == null) {
+          this.form[key] = '';
+        }
+
+        formData.append(key, this.form[key]);
+      }
+
+      formData.append('numero_documento', this.numero_documento); // Si url_refraccion es vacio es porque se esta mostrando el input para subir archivos
+
+      if (this.url_refraccion == "") {
+        var $inputArchivos = document.querySelector("#inputArchivos");
+        var archivosParaSubir = $inputArchivos.files;
+
+        if (archivosParaSubir.length <= 0) {
+          formData.append("refracciones[]", "");
+        } else {
+          var _iterator2 = _createForOfIteratorHelper(archivosParaSubir),
+              _step2;
+
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var archivo = _step2.value;
+              formData.append("refracciones[]", archivo);
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+        }
+      }
+
+      axios.post("/consultorio-oftamologico/historia-clinica/actualizar/evolucion/".concat(this.id), formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        _this4.errors = "";
+
+        _this4.$swal(response.data.message, '', 'success');
+
+        _this4.fnBuscar();
+
+        _this4.limpiarCampos();
+
+        _this4.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this4.errors = _this4.fnResponseError(errores);
+        _this4.overlayLoading = false;
+      });
+    },
+    fnHistoriaNumero: function fnHistoriaNumero() {
+      var _this5 = this;
+
+      this.overlayLoading = true;
+      axios.get("/consultorio-oftamologico/historia-clinica/numero-evolucion/".concat(this.id_paciente)).then(function (response) {
+        _this5.numero_evolucion = response.data;
+        _this5.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this5.errors = _this5.fnResponseError(errores);
+        _this5.overlayLoading = false;
+      });
+    },
+    fnDelete: function fnDelete(item) {
+      var _this6 = this;
+
+      this.$swal({
+        title: 'Quiere eliminar la Historia?',
+        text: "Se removera la Historia No.".concat(item.numero_evolucion, "!"),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this6.overlayLoading = true;
+          axios.post("/consultorio-oftamologico/historia-clinica/delete/evolucion/".concat(item.id)).then(function (response) {
+            _this6.errors = "";
+
+            _this6.$swal(response.data.message, '', 'success');
+
+            _this6.fnBuscar();
+
+            _this6.limpiarCampos();
+
+            _this6.overlayLoading = false;
+          })["catch"](function (errores) {
+            _this6.errors = _this6.fnResponseError(errores);
+            _this6.overlayLoading = false;
+          });
+        }
+      });
+    },
+    fnBuscar: function fnBuscar() {
+      var _this7 = this;
 
       this.overlayLoading = true;
       this.loading = true;
@@ -2739,44 +2976,65 @@ __webpack_require__.r(__webpack_exports__);
         sortDesc = "";
       }
 
-      axios.get("/consultorio-oftamologico/historia-clinica/buscar/evolucion/".concat(this.$route.params.numero_documento, "?length=").concat(length, "&start=").concat(start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc)).then(function (response) {
-        _this.loading = false;
+      axios.get("/consultorio-oftamologico/historia-clinica/buscar/evolucion/".concat(this.$route.params.numero_documento, "?length=").concat(length, "&start=").concat(start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc, "&buscar=").concat(this.buscar)).then(function (response) {
+        _this7.loading = false;
         var getDataPaciente = response.data.data[0].get_paciente;
 
         if (getDataPaciente.foto != "") {
           // Si la foto existe.
-          _this.foto_paciente = "../../../" + getDataPaciente.foto;
+          _this7.foto_paciente = "/" + getDataPaciente.foto;
         } else {
           // Si no existe.
-          _this.foto_paciente = null;
+          _this7.foto_paciente = null;
         }
 
-        _this.numero_documento = getDataPaciente.numero_documento;
-        _this.nombre = getDataPaciente.nombre;
-        _this.apellido = getDataPaciente.apellido;
-        _this.dataSet = response.data.data;
-        _this.totalRegistros = response.data.total;
-        _this.overlayLoading = false;
-      })["catch"](function (errors) {
-        _this.overlayLoading = false;
-        _this.loading = false;
-        _this.dataSet = [];
+        _this7.id_paciente = getDataPaciente.id;
+        _this7.numero_documento = getDataPaciente.numero_documento;
+        _this7.nombre = getDataPaciente.nombre;
+        _this7.apellido = getDataPaciente.apellido;
+        _this7.dataSet = response.data.data;
+        _this7.totalRegistros = response.data.total;
+        _this7.overlayLoading = false;
 
-        _this.$swal({
+        if (_this7.contador == 0) {
+          _this7.contador++;
+
+          _this7.fnHistoriaNumero();
+        }
+      })["catch"](function (errors) {
+        _this7.overlayLoading = false;
+        _this7.loading = false;
+        _this7.dataSet = [];
+
+        _this7.$swal({
           icon: 'error',
-          title: "".concat(errors.response.data.message),
-          text: "".concat(errors.response.data.errors[0])
+          title: "",
+          text: "No fue posible realizar la operaci\xF3n solicitada"
         });
       });
     },
     filterSearch: function filterSearch() {
-      var _this2 = this;
+      var _this8 = this;
 
       this.overlayLoading = true;
       clearTimeout(this.debounce);
       this.debounce = setTimeout(function () {
-        _this2.fnBuscar(_this2.buscar);
+        _this8.fnBuscar(_this8.buscar);
       }, 600);
+    },
+    limpiarCampos: function limpiarCampos() {
+      if (this.cAccion == "Guardar" || this.url_refraccion == "") {
+        var $inputArchivos = document.querySelector("#inputArchivos");
+        $inputArchivos.value = "";
+      }
+
+      this.fnHistoriaNumero();
+      this.cAccion = "Guardar";
+      this.form.fecha = "";
+      this.form.hora = "";
+      this.form.descripcion = "";
+      this.id = "";
+      this.url_refraccion = "";
     }
   },
   mounted: function mounted() {
@@ -2801,7 +3059,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _json_colombia_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../json/colombia.json */ "./resources/js/components/json/colombia.json");
 /* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
-/* harmony import */ var _commons_commons_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../commons/commons.js */ "./resources/js/components/commons/commons.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3086,7 +3343,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     loadingGeneral: _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -3191,7 +3447,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     deep: true
   },
-  mixins: [_commons_commons_js__WEBPACK_IMPORTED_MODULE_3__.commons],
   methods: {
     fnAccion: function fnAccion() {
       if (this.accion === "Guardar") {
@@ -3250,7 +3505,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fnUpdate: function fnUpdate() {
       var _this2 = this;
 
-      //CONFIGURACION EPS
+      this.overlayLoading = true; //CONFIGURACION EPS
+
       if (this.radioGroupEps == "PARTICULAR") {
         this.form.id_p_eps = 1;
       } else {
@@ -3282,6 +3538,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.fnBuscar();
 
         _this2.limpiarCampo();
+
+        _this2.overlayLoading = false;
       })["catch"](function (errores) {
         if (errores.response.status == 409 || errores.response.status == 500) {
           _this2.$swal({
@@ -3292,6 +3550,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           _this2.errors = errores.response.data.errores;
         }
+
+        _this2.overlayLoading = false;
       });
     },
     fnShow: function fnShow(id) {
@@ -3398,9 +3658,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.dataSet = [];
 
         _this5.$swal({
-          icon: "error",
-          title: "".concat(errors.response.data.message),
-          text: "".concat(errors.response.data.errors[0])
+          icon: 'error',
+          title: "",
+          text: "No fue posible realizar la operaci\xF3n solicitada"
         });
       });
     },
@@ -3573,25 +3833,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      local_proceso: this.proceso
-    };
-  },
-  props: ["proceso"],
-  watch: {
-    proceso: function proceso() {
-      this.local_proceso = this.proceso;
-    }
-  },
-  methods: {},
-  created: function created() {
-    // Obteniendo nombre de la ruta.
-    if (this.$route.name) {
-      this.local_proceso = this.$route.name.replace("-", " ");
-    }
-  }
+  props: ["proceso", "pathPrevious"]
 });
 
 /***/ }),
@@ -3612,6 +3859,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _header_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header.vue */ "./resources/js/components/menu/header.vue");
 /* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
 /* harmony import */ var _rolPermission_rolesPermisos_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../rolPermission/rolesPermisos.js */ "./resources/js/components/rolPermission/rolesPermisos.js");
+/* harmony import */ var _commons_commons_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../commons/commons.js */ "./resources/js/components/commons/commons.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3762,9 +4010,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 
 
 
+
+Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     loadingGeneral: _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -3794,6 +4045,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       intervalId: 0,
       titleProceso: "",
+      pathPrevious: "",
       overlayLoading: false
     };
   },
@@ -3829,6 +4081,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
+              // Obteniendo nombre de la ruta.
+              if (_this2.$route.name) {
+                _this2.titleProceso = _this2.$route.name.replace("-", " ");
+              }
+
               fecha = new Date();
               month = fecha.toLocaleString("es-CO", {
                 month: "long"
@@ -3838,10 +4095,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               /* DEPENDIENDO DEL ROL DEL USUARIO SE MUESTRA MENU. */
 
               _this2.overlayLoading = true;
-              _context2.next = 7;
+              _context2.next = 8;
               return _this2.informacionUsuario();
 
-            case 7:
+            case 8:
               _this2.overlayLoading = false;
               _this2.intervalId = setInterval( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
                 return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -3859,10 +4116,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }, _callee);
               })), 20000);
               _context2.t0 = _this2.infoUser.rol;
-              _context2.next = _context2.t0 === "SECRETARIA" ? 12 : _context2.t0 === "MEDICO" ? 20 : 23;
+              _context2.next = _context2.t0 === "SECRETARIA" ? 13 : _context2.t0 === "MEDICO" ? 21 : 24;
               break;
 
-            case 12:
+            case 13:
               _this2.moduloCrearPaciente = true; // this.crearPaciente       = true;
 
               _this2.moduloHistoriaClinica = true;
@@ -3875,14 +4132,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this2.moduloParametroEps = true;
               /* fin Variables de configuracion del sistema */
 
-              return _context2.abrupt("break", 23);
+              return _context2.abrupt("break", 24);
 
-            case 20:
+            case 21:
               _this2.moduloCrearPaciente = true;
               _this2.turno = true;
-              return _context2.abrupt("break", 23);
+              return _context2.abrupt("break", 24);
 
-            case 23:
+            case 24:
             case "end":
               return _context2.stop();
           }
@@ -4020,11 +4277,7 @@ var commons = {
     fnRemoveAccents: function fnRemoveAccents(str) {
       return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     },
-
-    /* METODOS PARA OBTENER INFORMACION DE CAMPOS PARAMETROS - INICIO */
     fnBuscarParametro: function fnBuscarParametro(parametrica) {
-      var _this = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -4042,25 +4295,36 @@ var commons = {
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
-
-                _this.$swal({
-                  icon: "error",
-                  title: _context.t0.response.data.message,
-                  text: _context.t0.response.data.errores[0]
-                });
-
                 return _context.abrupt("return", []);
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee, null, [[0, 7]]);
       }))();
-    }
-    /* METODOS CAMPOS PARAMETROS FIN */
+    },
+    fnResponseError: function fnResponseError(errores) {
+      if (errores.response.status == 500 || errores.response.status == 403 || errores.response.status == 409 || errores.response.status == 405 || errores.response.status == 404) {
+        var mensaje = "El sistema a generado un Error.";
 
+        if (errores.response.data.message != undefined) {
+          mensaje = errores.response.data.message;
+        }
+
+        this.$swal({
+          icon: 'error',
+          title: "".concat(mensaje),
+          text: "".concat(errores.response.data.errors)
+        });
+        return '';
+      } else {
+        if (errores.response.status == 422) {
+          return errores.response.data.errors;
+        }
+      }
+    }
   }
 };
 
@@ -4114,12 +4378,18 @@ var rolesPermisos = {
                 _context.prev = 9;
                 _context.t0 = _context["catch"](0);
 
-                if (_context.t0.response.status == 401 || _context.t0.response.status == 500) {
+                if (_context.t0.response != undefined) {
+                  if (_context.t0.response.status == 401 || _context.t0.response.status == 500) {
+                    _this.logout();
+
+                    clearInterval(_this.intervalId);
+
+                    _this.$swal("La Sesión ha caducado.", "", "info");
+                  }
+                } else {
                   _this.logout();
 
                   clearInterval(_this.intervalId);
-
-                  _this.$swal('La Sesión ha caducado.', '', 'info');
                 }
 
               case 12:
@@ -24354,35 +24624,12 @@ var render = function () {
       _vm._v(" "),
       _c(
         "v-row",
+        { staticClass: "mt-3" },
         [
           _c(
             "v-col",
             { attrs: { cols: "12" } },
             [
-              _c(
-                "v-card-title",
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      type: "text",
-                      "append-icon": "mdi-magnify",
-                      label: "Buscar",
-                      "single-line": "",
-                      "hide-details": "",
-                    },
-                    on: { input: _vm.filterSearch },
-                    model: {
-                      value: _vm.buscar,
-                      callback: function ($$v) {
-                        _vm.buscar = $$v
-                      },
-                      expression: "buscar",
-                    },
-                  }),
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c("v-data-table", {
                 staticClass: "elevation-1",
                 attrs: {
@@ -24415,6 +24662,7 @@ var render = function () {
                         _c(
                           "router-link",
                           {
+                            staticStyle: { "text-decoration": "none" },
                             attrs: {
                               to: {
                                 path:
@@ -24613,27 +24861,103 @@ var render = function () {
                     "v-row",
                     [
                       _c("v-col", { attrs: { cols: "12", sm: "12" } }, [
-                        _c("label", { attrs: { for: "id_refracciones" } }, [
-                          _vm._v("Subir Refracciones:"),
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticStyle: { width: "50%" },
-                          attrs: {
-                            type: "file",
-                            id: "id_refracciones",
-                            name: "url_refraccion",
-                            accept: "image/*",
-                            multiple: "",
-                            title: "Subir Refracciones, solo imagenes",
-                          },
-                        }),
+                        _vm.url_refraccion == ""
+                          ? _c("div", [
+                              _c(
+                                "label",
+                                { attrs: { for: "id_refracciones" } },
+                                [_vm._v("Subir Refracciones:")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticStyle: { width: "50%" },
+                                attrs: {
+                                  type: "file",
+                                  id: "inputArchivos",
+                                  accept: "image/*",
+                                  multiple: "",
+                                  title: "Subir Refracciones, solo imagenes",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.url_refraccion != undefined
+                                ? _c(
+                                    "div",
+                                    { staticStyle: { color: "#b71c1c" } },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.errors.url_refraccion[0])
+                                      ),
+                                    ]
+                                  )
+                                : _vm._e(),
+                            ])
+                          : _c(
+                              "div",
+                              [
+                                _vm._v(
+                                  "\n                            Refracción:\n                            "
+                                ),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticClass: "white--text text-none",
+                                    attrs: {
+                                      type: "submit",
+                                      small: "",
+                                      color: "red",
+                                      tile: "",
+                                    },
+                                    on: { click: _vm.fnDescargarRefraccion },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Descargar\n                                "
+                                    ),
+                                    _c("v-icon", { attrs: { right: "" } }, [
+                                      _vm._v(" picture_as_pdf "),
+                                    ]),
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticClass: "white--text text-none mr-3",
+                                    attrs: {
+                                      type: "click",
+                                      small: "",
+                                      color: "primary",
+                                      tile: "",
+                                    },
+                                    on: {
+                                      click: function ($event) {
+                                        _vm.url_refraccion = ""
+                                      },
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Remover\n                            "
+                                    ),
+                                  ]
+                                ),
+                              ],
+                              1
+                            ),
                       ]),
                       _vm._v(" "),
                       _c(
                         "v-col",
                         { attrs: { cols: "12", sm: "12" } },
                         [
+                          _c("v-subheader", [
+                            _vm._v(
+                              "Historia No. " + _vm._s(_vm.numero_evolucion)
+                            ),
+                          ]),
+                          _vm._v(" "),
                           _c("v-textarea", {
                             ref: "descripcion",
                             attrs: {
@@ -24674,7 +24998,7 @@ var render = function () {
                           src:
                             _vm.foto_paciente != null
                               ? _vm.foto_paciente
-                              : "http://jago.co.nz/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png",
+                              : "/img/sistema/image_not_found.png",
                           height: "150px",
                           alt: "Foto paciente",
                         },
@@ -24709,6 +25033,7 @@ var render = function () {
                         color: "red darken-4",
                         tile: "",
                       },
+                      on: { click: _vm.limpiarCampos },
                     },
                     [
                       _c("v-icon", { attrs: { left: "" } }, [
@@ -24729,6 +25054,7 @@ var render = function () {
                         color: "success",
                         tile: "",
                       },
+                      on: { click: _vm.fnAccion },
                     },
                     [
                       _vm._v(
@@ -24817,17 +25143,37 @@ var render = function () {
                             staticClass: "mr-2",
                             attrs: {
                               color: "primary",
-                              title: "Editar paciente",
+                              title: "Editar Evolución",
                             },
                             on: {
                               click: function ($event) {
-                                return _vm.fnShow(item.id)
+                                return _vm.fnShowEvolucion(item.id)
                               },
                             },
                           },
                           [
                             _vm._v(
                               "\n                        mdi-pencil\n                    "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: {
+                              small: "",
+                              title: "Eliminar Evolucion Seleccionada.",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnDelete(item)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-delete\n                    "
                             ),
                           ]
                         ),
@@ -25690,12 +26036,26 @@ var render = function () {
           _vm._v(" "),
           _c("h4", [_vm._v("Inicio")]),
           _vm._v(" "),
-          _vm.local_proceso != "inicio" ? _c("h4", [_vm._v(" / ")]) : _vm._e(),
+          _vm.proceso != "inicio" ? _c("h4", [_vm._v(" / ")]) : _vm._e(),
           _vm._v(" "),
-          _vm.local_proceso != "inicio"
+          _vm.proceso != "inicio"
             ? _c("h4", { staticClass: "text-capitalize" }, [
-                _vm._v(_vm._s(_vm.local_proceso)),
+                _vm._v(_vm._s(_vm.proceso)),
               ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _vm.pathPrevious != ""
+            ? _c(
+                "router-link",
+                {
+                  staticClass: "mr-3",
+                  staticStyle: { "text-decoration": "none" },
+                  attrs: { to: { name: _vm.pathPrevious } },
+                },
+                [_vm._v("\n            Salir\n        ")]
+              )
             : _vm._e(),
         ],
         1
@@ -25768,6 +26128,7 @@ var render = function () {
                               on: {
                                 click: function ($event) {
                                   _vm.titleProceso = "Inicio"
+                                  _vm.pathPrevious = ""
                                 },
                               },
                             },
@@ -25844,6 +26205,7 @@ var render = function () {
                                                 click: function ($event) {
                                                   _vm.titleProceso =
                                                     "Crear Paciente"
+                                                  _vm.pathPrevious = ""
                                                 },
                                               },
                                             },
@@ -25874,6 +26236,7 @@ var render = function () {
                                   on: {
                                     click: function ($event) {
                                       _vm.titleProceso = "Historia Clinica"
+                                      _vm.pathPrevious = "historia-clinica"
                                     },
                                   },
                                 },
@@ -25894,6 +26257,7 @@ var render = function () {
                                   on: {
                                     click: function ($event) {
                                       _vm.titleProceso = "Informe"
+                                      _vm.pathPrevious = ""
                                     },
                                   },
                                 },
@@ -25914,6 +26278,7 @@ var render = function () {
                                   on: {
                                     click: function ($event) {
                                       _vm.titleProceso = "Agendar"
+                                      _vm.pathPrevious = ""
                                     },
                                   },
                                 },
@@ -26262,7 +26627,12 @@ var render = function () {
               _c(
                 "v-container",
                 [
-                  _c("menuHeader", { attrs: { proceso: _vm.titleProceso } }),
+                  _c("menuHeader", {
+                    attrs: {
+                      proceso: _vm.titleProceso,
+                      pathPrevious: _vm.pathPrevious,
+                    },
+                  }),
                   _vm._v(" "),
                   _c("router-view"),
                 ],

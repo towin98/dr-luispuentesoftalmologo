@@ -58,19 +58,8 @@
         <v-btn color="success" class="white--text" @click="fnBuscar()">Buscar</v-btn>
 
         <!-- start Data table -->
-        <v-row>
+        <v-row class="mt-3">
             <v-col cols="12">
-                <v-card-title>
-                    <v-text-field
-                        type="text"
-                        append-icon="mdi-magnify"
-                        label="Buscar"
-                        single-line
-                        hide-details
-                        v-model="buscar"
-                        @input="filterSearch"
-                    ></v-text-field>
-                </v-card-title>
                 <v-data-table
                     :page="page"
                     :pageCount="numberOfPages"
@@ -89,7 +78,7 @@
                     no-data-text="Sin registros"
                 >
                     <template v-slot:item.acciones="{ item }">
-                        <router-link
+                        <router-link style="text-decoration: none;"
                             :to="{ path: `/consultorio/historia-clinica/evolucion/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
                         Evolución
                         </router-link>
@@ -133,7 +122,6 @@ export default {
             /* Variables Table. */
             // Tabla filtro.
             debounce: null,
-            buscar: "",
             // Table listar
             page: 1,
             totalRegistros: 0,
@@ -154,10 +142,7 @@ export default {
     watch: {
         options: {
             handler() {
-                if (this.contador > 0) {
-                    this.fnBuscar();
-                }
-                this.contador ++;
+                this.fnBuscar();
             },
         },
         deep: true,
@@ -213,23 +198,16 @@ export default {
 
                     this.overlayLoading = false;
                 })
-                .catch((errors) => {
+                .catch((errores) => {
                     this.overlayLoading = false;
                     this.loading = false;
                     this.dataSet = [];
                     this.$swal({
                         icon: 'error',
-                        title: `${errors.response.data.message}`,
-                        text: `${errors.response.data.errors[0]}`,
-                    })
+                        title: ``,
+                        text: `No fue posible realizar la operación solicitada`,
+                    });
                 });
-        },
-        filterSearch() {
-            this.overlayLoading = true;
-            clearTimeout(this.debounce);
-            this.debounce = setTimeout(() => {
-                this.fnBuscar(this.buscar);
-            }, 600);
         },
 
         limpiarCampo() {
@@ -239,6 +217,9 @@ export default {
             this.form.apellido          = "";
         }
     },
+    mounted(){
+        this.fnBuscar('SI')
+    }
 
 }
 </script>
