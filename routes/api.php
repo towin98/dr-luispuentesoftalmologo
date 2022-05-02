@@ -27,9 +27,15 @@ Route::group(['prefix' => 'paciente', /*'middleware' => 'auth:sanctum'*/] , func
 
 Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/] , function(){
     Route::get('/buscar', [HistoriaClinicaController::class, 'buscar']);
+
+    // Evolucion
     Route::get('/buscar/evolucion/{numero_documento}', [HistoriaClinicaController::class, 'buscarEvolucion']);
     Route::post('/guardar/evolucion', [HistoriaClinicaController::class, 'storeEvolucion']);
     Route::get('/numero-evolucion/{id_paciente}', [HistoriaClinicaController::class, 'obtenerNumeroEvolucion']);
+    Route::get('/mostrar/evolucion/{id}', [HistoriaClinicaController::class, 'showEvolucion']);
+    Route::post('/descargar/evolucion/refracciones', [HistoriaClinicaController::class, 'descargar']);
+    Route::post('/actualizar/evolucion/{id}', [HistoriaClinicaController::class, 'updateEvolucion']);
+    Route::post('/delete/evolucion/{id}', [HistoriaClinicaController::class, 'destroyEvolucion']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){
@@ -38,3 +44,7 @@ Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , f
     Route::get('/buscar', [ParametroController::class, 'buscar']);
     Route::get('/{parametrica}/{id}', [ParametroController::class, 'show']);
 });
+
+
+
+Route::get('/imprimir', [HistoriaClinicaController::class, 'imprimir']);

@@ -271,7 +271,6 @@
 <script>
 import departamentos_municipios from "../../json/colombia.json";
 import loadingGeneral from "../../loadingGeneral/loadingGeneral.vue";
-import { commons } from "../../commons/commons.js";
 export default {
     components: {
         loadingGeneral,
@@ -348,7 +347,6 @@ export default {
         },
         deep: true,
     },
-    mixins: [commons],
     methods: {
         fnAccion(){
             if (this.accion === "Guardar") {
@@ -408,7 +406,7 @@ export default {
         },
 
         fnUpdate(){
-
+            this.overlayLoading = true;
             //CONFIGURACION EPS
             if (this.radioGroupEps == "PARTICULAR") {
                 this.form.id_p_eps = 1;
@@ -442,6 +440,7 @@ export default {
                     );
                     this.fnBuscar();
                     this.limpiarCampo();
+                    this.overlayLoading = false;
                 })
                 .catch((errores) => {
                     if (errores.response.status == 409 || errores.response.status == 500 ) {
@@ -453,6 +452,7 @@ export default {
                     }else{
                         this.errors = errores.response.data.errores;
                     }
+                    this.overlayLoading = false;
                 });
         },
 
@@ -564,9 +564,9 @@ export default {
                     this.loading = false;
                     this.dataSet = [];
                     this.$swal({
-                        icon: "error",
-                        title: `${errors.response.data.message}`,
-                        text: `${errors.response.data.errors[0]}`,
+                        icon: 'error',
+                        title: ``,
+                        text: `No fue posible realizar la operación solicitada`,
                     });
                 });
         },

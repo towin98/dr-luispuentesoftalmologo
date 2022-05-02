@@ -2,7 +2,11 @@
 
 namespace App\Traits;
 
+use Throwable;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManagerStatic as Image;
 
 trait metodosComunesTrait {
 
@@ -65,6 +69,49 @@ trait metodosComunesTrait {
 
     public function fnBuscarUltimoNumeroDisponible(){
 
+    }
+
+    /**
+     * Método que proceso imagenes subidas de refracciones y las agrega a un pdf.
+     *
+     * @param Request $request
+     * @param integer $numero_evolucion
+     * @return string|boolean Si es false el retorno es porque sucedio un error en el proceso.
+     */
+    public function fnPdfRefracciones(Request $request, $numero_evolucion){
+        $html = "";
+        $arrPathArchivos = [];
+        try {
+            foreach($request->file('refracciones') as $file){
+
+                $nombreArchivo = uniqid()."_".$file->getClientOriginalName();
+                $pathArchivo = public_path('storage/img-refracciones-temporal/').$nombreArchivo;
+
+                // Reduciendo tamaño de imagen. (null =>ancho automatico)
+                Image::make($file)->resize(null,700, function ($constraint){
+                                $constraint->aspectRatio();
+                            })
+                            ->save($pathArchivo,90); // valor 0 minima calidad, maxima 100
+
+                // Guardando ruta de iamgen en array para al final de proceso eliminarla.
+                $arrPathArchivos[] = $pathArchivo;
+
+                $html .= "<center><img src='".$pathArchivo."' style='max-width: 700px;
+                                                                    max-height: 1000px;
+                                                                    border: 2px solid black'></center>";
+                $html .= "<br><br>";
+            }
+
+            $pdf = PDF::loadHTML($html)->output();
+            $nombrePdf = date('YmdHis')."_refracciones_$numero_evolucion.pdf";
+            file_put_contents(public_path('storage/refracciones/').$nombrePdf, $pdf);
+
+            // Eliminando archivos subidos de la carpeta img-refracciones-temporal
+            File::delete($arrPathArchivos);
+        } catch (Throwable $e) {
+            return false;
+        }
+        return $nombrePdf;
     }
 }
 ?>
