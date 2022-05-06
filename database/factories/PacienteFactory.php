@@ -37,7 +37,7 @@ class PacienteFactory extends Factory
             'edad'              => 22,
             'ocupacion'         => "ABOGADO",
             'foto'              => "",
-            'id_p_eps'          => 2,
+            'id_p_eps'          => 1,
             'fecha_creacion'    => date('Y-m-d H:i:s'),
         ];
     }

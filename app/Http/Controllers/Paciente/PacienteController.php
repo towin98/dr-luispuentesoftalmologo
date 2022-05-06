@@ -7,6 +7,7 @@ use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Traits\metodosComunesTrait;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 
 class PacienteController extends Controller
@@ -92,7 +93,7 @@ class PacienteController extends Controller
                 'id_p_eps'          => $request->id_p_eps,
                 'fecha_creacion'    => trim($request->fecha_creacion." ".date('H:i:s'))
             ]);
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',
                 'errores' => [
@@ -103,7 +104,7 @@ class PacienteController extends Controller
 
         return response()->json([
             'message' => 'Datos Guardados.',
-        ], 200);
+        ], 201);
     }
 
     /**

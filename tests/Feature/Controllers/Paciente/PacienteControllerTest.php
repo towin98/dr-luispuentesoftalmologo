@@ -3,12 +3,15 @@
 namespace Tests\Feature\Controllers\Paciente;
 
 use App\Models\Paciente;
+use App\Models\Parametro\Eps;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PacienteControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -18,6 +21,13 @@ class PacienteControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        Eps::create([
+            "id"  => 1,
+            "codigo" => "PRUEBA",
+            "descripcion" => "prueba descripcion",
+            "estado" => "ACTIVO"
+        ]);
+
         // Crando registros para pruebas.
         Paciente::factory(5)->create();
 
@@ -25,34 +35,11 @@ class PacienteControllerTest extends TestCase
         $response = $this->get('/consultorio-oftamologico/paciente/listar');
 
         $response->assertJsonStructure([
-            'current_page',
             'data'=> [
                 '*' => [
-                    'id_lote',
-                    'fecha_propagacion',
-                    'fecha_transplante',
-                    'accion',
-                    'estado_lote',
-                    'dias_transcurridos',
-                    'color'
                 ]
             ],
-            'first_page_url',
-            'from',
-            'last_page',
-            'last_page_url',
-            'links' => [
-                '*' => [
-                    "url",
-                    "label",
-                    "active",
-                ]
-            ],
-            'next_page_url',
-            'path',
-            'per_page',
-            'prev_page_url',
-            'to',
+            'filtrados',
             'total'
         ]);
 
@@ -69,8 +56,28 @@ class PacienteControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        $eps = Eps::create([
+            "codigo" => "PRUEBA",
+            "descripcion" => "prueba descripcion",
+            "estado" => "ACTIVO"
+        ]);
+
         $response = $this->post('consultorio-oftamologico/paciente',[
-            ''                => "100",
+            'tipo_documento'    => 'CC',
+            'numero_documento'  => '728232',
+            'nombre'            => 'cristian',
+            'apellido'          => 'segura',
+            'correo'            => 'cristian@gmail.com',
+            'celular'           => '23728328',
+            'direccion'         => 'cra 20',
+            'departamento'      => 'HUILA',
+            'municipio'         => 'GARZON',
+            'fecha_nacimiento'  => '1998-01-16',
+            'edad'              => '24',
+            'ocupacion'         => 'NADA',
+            'foto'              => '',
+            'id_p_eps'          => $eps->id,
+            'fecha_creacion'    => '2022-10-10'
         ]);
 
         // $response->assertValid();
