@@ -18,6 +18,7 @@ class Eps extends Model
      * @var string[]
      */
     protected $fillable = [
+        'id',
         'codigo',
         'descripcion',
         'estado',
