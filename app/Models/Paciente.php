@@ -138,7 +138,7 @@ class Paciente extends Model
         'ocupacion'             => 'required|string',
         'foto'                  => 'nullable|max:255',
         'id_p_eps'              => 'required|integer',
-        // 'fecha_creacion'        => 'required|date'
+        'fecha_creacion'        => 'required|date'
     ];
 
     static function fnRulesUpdate($user) {
