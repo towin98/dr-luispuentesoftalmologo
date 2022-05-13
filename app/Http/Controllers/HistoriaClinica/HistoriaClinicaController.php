@@ -218,17 +218,15 @@ class HistoriaClinicaController extends Controller
                 $numeroEvolucion = $this->obtenerNumeroEvolucion($paciente->id);
 
                 // Procesando imagenes para crear pdf con refracciones subida.
-                $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $numeroEvolucion);
-
-                if ($vReturnPdfRefracciones[0] == "false") {
+                $returnfnPdfRefracciones = $this->fnPdfRefracciones($request, $numeroEvolucion);
+                if ($returnfnPdfRefracciones === false) {
                     return response()->json([
-                        'message' => 'Error inesperado.',
-                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
+                        'message' => 'Error de Validación de Datos',
+                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias."
                     ], 500);
                 }else{
-                    $nombrePdf = $vReturnPdfRefracciones[1];
+                    $nombrePdf = $returnfnPdfRefracciones;
                 }
-
             }
 
             Evolucion::create([
@@ -335,15 +333,14 @@ class HistoriaClinicaController extends Controller
                 File::delete(public_path('storage/refracciones/').$evolucion->url_refraccion);
 
                 // Procesando imagenes para crear pdf con refracciones subida.
-                $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $evolucion->numero_evolucion);
-
-                if ($vReturnPdfRefracciones[0] == "false") {
+                $returnfnPdfRefracciones = $this->fnPdfRefracciones($request, $evolucion->numero_evolucion);
+                if ($returnfnPdfRefracciones === false) {
                     return response()->json([
-                        'message' => 'Error inesperado.',
-                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
+                        'message' => 'Error de Validación de Datos',
+                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias."
                     ], 500);
                 }else{
-                    $nombrePdf = $vReturnPdfRefracciones[1];
+                    $nombrePdf = $returnfnPdfRefracciones;
                 }
             }
 

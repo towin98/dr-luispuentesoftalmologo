@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use Throwable;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -76,15 +76,11 @@ trait metodosComunesTrait {
      *
      * @param Request $request
      * @param integer $numero_evolucion
-     * @return array Si es false el retorno es porque sucedio un error en el proceso.
+     * @return string|boolean Si es false el retorno es porque sucedio un error en el proceso.
      */
     public function fnPdfRefracciones(Request $request, $numero_evolucion){
         $html = "";
         $arrPathArchivos = [];
-
-        $vReturn[0] = ""; // String "true" o "false", si es false ocurrio error en el proceso.
-        $vReturn[1] = ""; // Retorno de nombre pdf generado.
-
         try {
             foreach($request->file('refracciones') as $file){
 
@@ -107,18 +103,15 @@ trait metodosComunesTrait {
             }
 
             $pdf = PDF::loadHTML($html)->output();
-            $nombrePdf  = date('YmdHis')."_refracciones_$numero_evolucion.pdf";
-            $vReturn[1] = $nombrePdf;
+            $nombrePdf = date('YmdHis')."_refracciones_$numero_evolucion.pdf";
             file_put_contents(public_path('storage/refracciones/').$nombrePdf, $pdf);
 
             // Eliminando archivos subidos de la carpeta img-refracciones-temporal
             File::delete($arrPathArchivos);
-            $vReturn[0] = "true";
         } catch (Throwable $e) {
-            $vReturn[0] = "false";
-            $vReturn[2] = $e;
+            return false;
         }
-        return $vReturn;
+        return $nombrePdf;
     }
 }
 ?>
