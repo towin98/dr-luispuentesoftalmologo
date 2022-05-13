@@ -218,15 +218,17 @@ class HistoriaClinicaController extends Controller
                 $numeroEvolucion = $this->obtenerNumeroEvolucion($paciente->id);
 
                 // Procesando imagenes para crear pdf con refracciones subida.
-                $returnfnPdfRefracciones = $this->fnPdfRefracciones($request, $numeroEvolucion);
-                if ($returnfnPdfRefracciones === false) {
+                $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $numeroEvolucion);
+
+                if ($vReturnPdfRefracciones[0] == "false") {
                     return response()->json([
-                        'message' => 'Error de Validación de Datos',
-                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias."
+                        'message' => 'Error inesperado.',
+                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
                     ], 500);
                 }else{
-                    $nombrePdf = $returnfnPdfRefracciones;
+                    $nombrePdf = $vReturnPdfRefracciones[1];
                 }
+
             }
 
             Evolucion::create([
@@ -333,14 +335,15 @@ class HistoriaClinicaController extends Controller
                 File::delete(public_path('storage/refracciones/').$evolucion->url_refraccion);
 
                 // Procesando imagenes para crear pdf con refracciones subida.
-                $returnfnPdfRefracciones = $this->fnPdfRefracciones($request, $evolucion->numero_evolucion);
-                if ($returnfnPdfRefracciones === false) {
+                $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $evolucion->numero_evolucion);
+
+                if ($vReturnPdfRefracciones[0] == "false") {
                     return response()->json([
-                        'message' => 'Error de Validación de Datos',
-                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias."
+                        'message' => 'Error inesperado.',
+                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
                     ], 500);
                 }else{
-                    $nombrePdf = $returnfnPdfRefracciones;
+                    $nombrePdf = $vReturnPdfRefracciones[1];
                 }
             }
 
@@ -416,4 +419,3 @@ class HistoriaClinicaController extends Controller
         return str_pad(strval($consecutivoNumeroEvolucion), 4,"0",STR_PAD_LEFT);
     }
 }
-
