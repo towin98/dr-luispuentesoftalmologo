@@ -1,0 +1,61 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: rc7
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: oftalmologia
+    container_name: oftalmologia-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - oftalmologia
+
+  db:
+    image: mysql:5.7
+    container_name: oftalmologia-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql/data:/var/lib/mysql
+    networks:
+      - oftalmologia
+
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: oftalmologia-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - oftalmologia
+
+  node:
+    image: node:14-alpine
+    working_dir: /app
+    container_name: node
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    depends_on:
+      - 'app'
+    command: sh -c "npm install && npm run watch"
+    networks:
+      - oftalmologia
+networks:
+  oftalmologia:
+    driver: bridge
