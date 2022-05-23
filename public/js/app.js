@@ -24676,7 +24676,7 @@ var render = function () {
                           },
                           [
                             _vm._v(
-                              "\n                    Evolución\n                    "
+                              "\n                    Motivo Consulta\n                    "
                             ),
                           ]
                         ),
@@ -25633,7 +25633,7 @@ var render = function () {
                             ? _c("v-select", {
                                 ref: "id_p_eps",
                                 attrs: {
-                                  label: "EPS",
+                                  label: "MP",
                                   items: _vm.itemsEpsPrepagada,
                                   "item-value": "id",
                                   "item-text": "descripcion",

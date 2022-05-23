@@ -50,9 +50,7 @@ class Evolucion extends Model
     ];
 
     static $messages = [
-
         'numero_documento.required'  => 'El Número de Documento del paciente es requerido.',
-        // 'numero_documento.string'    => 'El Número de Documento del paciente debe ser númerico.',
         'url_refraccion.required'    => 'La refracción es requerida.',
         'url_refraccion.mimes'       => 'La refracción debe ser un archivo de tipo: jpg, jpeg, bmp, png.',
         'fecha.required'             => 'La Fecha es requerida.',
@@ -64,7 +62,6 @@ class Evolucion extends Model
 
     static $rulesStore = [
         'numero_documento'  => 'required',
-        // 'url_refraccion'    => 'required|mimes:jpg,jpeg,bmp,png',
         'fecha'             => 'required|date_format:Y-m-d',
         'hora'              => 'required|date_format:H:i',
         'descripcion'       => 'nullable|string|max:255'
@@ -72,8 +69,6 @@ class Evolucion extends Model
 
     static function fnRulesUpdate() {
         return [
-            // 'numero_documento'  => 'required',
-            // 'url_refraccion'    => 'required|mimes:jpg,jpeg,bmp,png',
             'fecha'             => 'required|date_format:Y-m-d',
             'hora'              => 'required|date_format:H:i',
             'descripcion'       => 'nullable|string|max:255'

@@ -27,7 +27,7 @@ class CreatePacienteTable extends Migration
             $table->date('fecha_nacimiento');
             $table->integer('edad');
             $table->string('ocupacion', 100);
-            $table->string('foto', 255) ->nullable();
+            $table->string('foto') ->nullable();
             $table->unsignedBigInteger('id_p_eps');
             $table->dateTime('fecha_creacion');
             $table->timestamps();
