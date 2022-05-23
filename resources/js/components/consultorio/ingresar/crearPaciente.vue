@@ -152,7 +152,7 @@
                             <v-select
                                 v-model="form.id_p_eps"
                                 ref="id_p_eps"
-                                label="EPS"
+                                label="MP"
                                 :items="itemsEpsPrepagada"
                                 item-value="id"
                                 item-text="descripcion"

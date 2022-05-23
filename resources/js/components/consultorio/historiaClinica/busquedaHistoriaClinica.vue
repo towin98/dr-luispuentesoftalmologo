@@ -80,7 +80,7 @@
                     <template v-slot:item.acciones="{ item }">
                         <router-link style="text-decoration: none;"
                             :to="{ path: `/consultorio/historia-clinica/evolucion/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
-                        Evolución
+                        Motivo Consulta
                         </router-link>
                     </template>
                 </v-data-table>
