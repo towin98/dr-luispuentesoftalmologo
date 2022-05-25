@@ -1,28 +1,7 @@
 <template>
     <v-app id="inspire">
         <v-container fluid fill-height style="background: #f8f8f8">
-
-            <v-app-bar app class="elevation-0" style="background: #1000e1">
-                <v-row>
-                    <v-col cols="4">
-                    </v-col>
-                    <v-col cols="4" class="d-flex justify-center">
-                        <div>
-                            <v-icon size="50" dark> account_circle </v-icon>
-                        </div>
-                        <div style="align-self: center;" class="white--text">
-                            <h2>LOGIN</h2>
-                        </div>
-                    </v-col>
-
-                    <v-col cols="4" class="d-flex justify-end align-self-center">
-                        <v-btn color="white" class="black--text">
-                            {{ date }}<v-icon> date_range </v-icon>
-                        </v-btn>
-                    </v-col>
-                </v-row>
-
-            </v-app-bar>
+            <headerAuth title="LOGIN"></headerAuth>
 
             <v-layout align-center justify-center>
                 <v-flex xs12 sm8 md4>
@@ -52,7 +31,12 @@
                         </v-card-text>
                         <v-layout justify-end>
                             <v-card-actions class="mt-4">
-                                <a class="pr-4" href="" style="text-decoration: none;color:#61d3e1;">He olvidado mi contraseña</a>
+                                <router-link
+                                    :to="{ name: 'recuperar-clave' }"
+                                    class="pr-4 text-decoration-none text-subtitle-2"
+                                    style="color:#61d3e1;">
+                                    <span>He olvidado mi contraseña</span>
+                                </router-link>
                                 <v-spacer></v-spacer>
                                 <v-btn
                                     color="success"
@@ -74,13 +58,16 @@
 </template>
 <script>
 import loadingGeneral from "../loadingGeneral/loadingGeneral.vue";
+import headerAuth from "./headerAuth.vue";
 export default {
-    components: { loadingGeneral },
+    components: { loadingGeneral, headerAuth },
     data() {
         return {
             formData: {
                 email: "",
                 password: "",
+                device_name: "browser",
+                closeSesion: "NO"
             },
             errors: {
                 email: "",
@@ -92,26 +79,40 @@ export default {
         };
     },
     methods: {
-        login() {
+        login(closeSesion = 'NO') {
+            this.formData.closeSesion = closeSesion;
             this.overlayLoading = true;
             axios
-                .post("consultorio-oftamologico/login", this.formData)
+                .post("/consultorio-oftamologico/login", this.formData)
                 .then((response) => {
                     localStorage.setItem("token_Historial_Clinico_Oftamologico", response.data.access_token);
-                    this.$router.push("consultorio/inicio");
+                    this.$router.push("/consultorio/inicio");
                     this.overlayLoading = false;
-                    this.$swal("Bienvenido");
                 })
                 .catch((errors) => {
-                    if (errors.response.status == 500) {
-                        this.overlayLoading = false;
+                    this.overlayLoading = false;
+                    if (errors.response.status == 423) {
+                        this.$swal({
+                            title: errors.response.data.message,
+                            text: errors.response.data.errors,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'N0',
+                            confirmButtonText: 'SI'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    this.login('SI');
+                                }
+                            });
+                    }else if(errors.response.status == 409 || errors.response.status == 422){
+                        this.errors = errors.response.data.errors;
+                    }else if (errors.response.status == 500) {
                         this.$swal({
                             icon: "error",
                             title: "Intentalo más tarde.",
                         });
-                    } else {
-                        this.overlayLoading = false;
-                        this.errors = errors.response.data.errors;
                     }
                 });
         },

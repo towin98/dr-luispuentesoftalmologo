@@ -494,7 +494,7 @@ export default {
                     this.$swal({
                         icon: 'error',
                         title: `Error al mostrar la información.`,
-                        text: `Por favor comunicate con el área de Desarrollo Sajona.`,
+                        text: `Por favor comunicate con el área de Tecnología.`,
                     })
                     this.overlayLoading = false;
                 });
@@ -638,3 +638,4 @@ export default {
     mounted() {},
 };
 </script>
+

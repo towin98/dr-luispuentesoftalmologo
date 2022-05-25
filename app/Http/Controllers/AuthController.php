@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RecuperarPassMailable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -39,6 +44,18 @@ class AuthController extends Controller
                     'Las credenciales proporcionadas son incorrectas.'
                 ],
             ],409);
+        }else{
+            if (count($user->tokens) > 0) {
+                if ($request->closeSesion != "SI") {
+                    return response()->json([
+                        'message' => 'Ya existe una sesión iniciada',
+                        'errors'  => "¿Quieres iniciar sesión aquí?"
+                    ], 423);
+                }else{
+                    // Si ya hay una sesion iniciada y se envia como parametro SI se cierra sesión.
+                    $user->tokens()->delete();
+                }
+            }
         }
 
         $token = $user->createToken('token')->plainTextToken;
@@ -60,5 +77,93 @@ class AuthController extends Controller
         return [
             'message' => 'logged out'
         ];
+    }
+
+    /**
+     * Meétodo que permite el cambio de contraseña.
+     *
+     * @return void
+     */
+    public function passwordChange(Request $request){
+        $reglas =  [
+            'claveActual'            => 'required|min:8',
+            'password'               => 'required|confirmed|min:8',
+            'password_confirmation'  => 'required|min:8',
+        ];
+
+        $objValidator = Validator::make($request->all(),  $reglas, User::$messagesValidatorsCambioClave);
+        if($objValidator->fails()){
+            return response()->json([
+                'message' => 'Error de Validación de Datos',
+                'errors'  => $objValidator->errors()
+            ], 422);
+        }
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->claveActual, $user->password)) {
+            return response()->json([
+                "message" => "Error de Validación de Datos",
+                "errors" => [
+                        "claveActual" => [
+                            "Contraseña actual Ingresada Incorrecta."
+                        ]
+                    ]
+            ], 422);
+        }
+
+        User::findOrFail($user->id)->update([
+            "password" => Hash::make($request->password)
+        ]);
+
+        return response()->json([
+            "message" => "Se cambio exitosamente la contraseña."
+        ], 200);
+    }
+
+    /**
+     * Método que envia correo electronico con informacion para resetear password.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function resetPassword(Request $request){
+        $reglas =  [
+            'email'     => 'required|email|max:50'
+        ];
+
+        $objValidator = Validator::make($request->all(),  $reglas, User::$messagesValidators);
+        if($objValidator->fails()){
+            return response()->json([
+                'message' => 'Error de Validación de Datos',
+                'errors'  => $objValidator->errors()
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json([
+                'errors' => "NO fue posible realizar la operación solicitada."
+            ], 401);
+        }
+
+        try {
+            $password = Str::random(8);
+            $user->update([
+                'password' => Hash::make($password),
+            ]);
+
+            $correo = new RecuperarPassMailable($password, $user);
+            Mail::to($request->email)->send($correo);
+
+            return response()->json([
+                "message" => "Se envío información importante a su correo en relación con los datos de acceso a la plataforma de CONSULTORIO OFTAMOLOGICO LUIS PUENTES."
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                "errors" => "No fue posible realizar la operación solicitada."
+            ], 500);
+        }
     }
 }
