@@ -112,7 +112,7 @@ class ParametroController extends Controller
             return response()->json([
                 'message' => 'Error de Validación de Datos',
                 'errors' => [
-                    "Error al crear registros, por favor comuniquese con el area de Tecnología Sajona."
+                    "Error al crear registros, por favor comuniquese con el area de Tecnología."
                 ],
             ], 500);
         }
@@ -176,7 +176,7 @@ class ParametroController extends Controller
             return response()->json([
                 'message' => 'Error en el sistema.',
                 'errors' => [
-                    "Error al actualizar registros, por favor comuniquese con el area de Tecnología Sajona."
+                    "Error al actualizar registros, por favor comuniquese con el area de Tecnología."
                 ],
             ], 500);
         }

@@ -11,10 +11,12 @@ use App\Http\Controllers\PermissionController;
 /*Rutas de autenticacacion*/
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/password/change', [AuthController::class, 'passwordChange'])->middleware('auth:sanctum');
 
 /*Rutas Controlador PermissionController*/
 Route::get('/informacion-usuario', [PermissionController::class, 'informacionUsuario'])->middleware('auth:sanctum');
 
+Route::post('/password/email', [AuthController::class, 'resetPassword']);
 
 /*Rutas MENU*/
 Route::group(['prefix' => 'paciente', /*'middleware' => 'auth:sanctum'*/] , function(){
