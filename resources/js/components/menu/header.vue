@@ -7,7 +7,7 @@
             <h4 v-if="proceso != 'inicio'" class="text-capitalize">{{ proceso }}</h4>
             <v-spacer></v-spacer>
             <router-link  style="text-decoration: none;" v-if="pathPrevious != ''" :to="{ name: pathPrevious}" class="mr-3">
-                Salir
+                <v-icon color="black" title="Salir">close</v-icon>
             </router-link>
         </div>
         <v-progress-linear

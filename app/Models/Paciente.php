@@ -115,7 +115,6 @@ class Paciente extends Model
         'edad.integer'                  => 'La Edad debe ser un dato númerico.',
         'ocupacion.required'            => 'La Ocupación es requerida.',
         'ocupacion.filled'              => 'La Ocupación no puede ser vacía.',
-        'foto.max'                      => 'La foto no puede superar los 255 carácteres.',
         'id_p_eps.required'             => 'La EPS es requerida.',
         'id_p_eps.integer'              => 'La EPS debe ser un dato númerico.',
         'fecha_creacion.required'       => 'La fecha de creación es requerida.',
@@ -136,7 +135,6 @@ class Paciente extends Model
         'fecha_nacimiento'      => 'required|date_format:Y-m-d',
         'edad'                  => 'required|integer',
         'ocupacion'             => 'required|string',
-        'foto'                  => 'nullable|max:255',
         'id_p_eps'              => 'required|integer',
         'fecha_creacion'        => 'required|date'
     ];
@@ -155,7 +153,6 @@ class Paciente extends Model
             'fecha_nacimiento'      => 'required|filled|date_format:Y-m-d',
             'edad'                  => 'required|filled|integer',
             'ocupacion'             => 'required|filled|string',
-            'foto'                  => 'nullable|max:255',
             'id_p_eps'              => 'required|filled|integer',
         ];
     }

@@ -5,6 +5,7 @@ Vue.use(VueRouter);
 
 /*auth*/
 import login from './components/auth/login.vue'
+import recuperarPass from './components/auth/recuperarPass.vue'
 
 /*Menu*/
 import menu from './components/menu/menu.vue'
@@ -12,7 +13,9 @@ import inicio from './components/consultorio/inicio.vue'
 import crearPaciente from './components/consultorio/ingresar/crearPaciente.vue'
 import busquedaHistoriaClinica from './components/consultorio/historiaClinica/busquedaHistoriaClinica.vue'
 import evolucion from './components/consultorio/historiaClinica/evolucion.vue'
-import parametrosEps from './components/consultorio/parametros/eps.vue'
+
+import parametrosEps from './components/config/parametros/eps.vue' // Medicina Prepagada.
+import cambioClave from './components/config/cambioClave.vue'
 /*Menu end*/
 
 
@@ -25,6 +28,12 @@ const router = new VueRouter({
             path: '/',
             component: login,
             name: 'login',
+            meta: {guest: true}
+        },
+        {
+            path: '/auth/recuperar-clave',
+            component: recuperarPass,
+            name: 'recuperar-clave',
             meta: {guest: true}
         },
         {
@@ -70,12 +79,24 @@ const router = new VueRouter({
                     component: inicio,
                     name: 'turno',
                 },
+            ],
+        },
+        {
+            path: '/configuracion-sistema',
+            component: menu,
+            meta: {requiresAuth: true},
+            children:[
                 {
-                    path: 'configuracion-sistema/parametros/eps-prepagada',
+                    path: 'parametros/medicina-prepagada',
                     component: parametrosEps,
-                    name: 'eps',
+                    name: 'medicina-prepagada',
+                },
+                {
+                    path: 'cambio-clave',
+                    component: cambioClave,
+                    name: 'cambio-clave',
                 }
-            ]
+            ],
         },
         { path: '*', component: errors }
     ]

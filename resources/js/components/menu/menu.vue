@@ -21,9 +21,9 @@
                         </v-btn>
                     </template>
                     <v-list>
-                        <v-list-item link>
+                        <v-list-item link :to="{name: 'cambio-clave'}" v-on:click="titleProceso = 'Cambio contraseña'; pathPrevious = ''">
                             <v-list-item-title>
-                                <v-icon size="20"> people </v-icon> Cambio Usuario
+                                <v-icon size="20"> password </v-icon> Cambiar contraseña
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item v-on:click="logout">
@@ -36,29 +36,27 @@
                 <template v-slot:extension>
                     <v-tabs centered class="ml-n9" style="background: #1000e1">
                         <v-tab :to="{ name: 'inicio' }" class="white--text" v-on:click="titleProceso = 'Inicio'; pathPrevious = ''">Inicio</v-tab>
-                        <v-tab class="white--text">
 
-                            <v-menu offset-y rounded="lg">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        style="background: #1000e1"
-                                        elevation="0"
-                                        class="white--text">
-                                        Ingresar
-                                        <v-icon size="40" color="white"> arrow_drop_down </v-icon>
-                                    </v-btn>
-                                </template>
+                        <!-- Ingresar -->
+                        <v-menu offset-y rounded="lg"  v-if="moduloCrearPaciente">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-tab
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    class="white--text">
+                                    Ingresar
+                                    <v-icon right color="white">
+                                        mdi-menu-down
+                                    </v-icon>
+                                </v-tab>
+                            </template>
 
-                                <v-list>
-                                    <v-list-item :to="{ name: 'crear-paciente' }" v-if="moduloCrearPaciente" v-on:click="titleProceso = 'Crear Paciente'; pathPrevious = ''">
-                                        <v-list-item-title>Crear Paciente</v-list-item-title>
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
-
-                        </v-tab>
+                            <v-list>
+                                <v-list-item :to="{ name: 'crear-paciente' }" v-if="moduloCrearPaciente" v-on:click="titleProceso = 'Crear Paciente'; pathPrevious = ''">
+                                    <v-list-item-title>Crear Paciente</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
                         <v-tab
                             v-if="moduloHistoriaClinica"
                             :to="{ name: 'historia-clinica' }"
@@ -86,50 +84,33 @@
                             class="white--text">
                             Turno
                         </v-tab>
-                        <v-tab class="white--text" v-if="moduloConfiguracionSistema">
 
-                            <v-menu offset-y rounded="lg" close-on-click close-on-content-click content-class>
-                                <template v-slot:activator="{ on, attrs }">
+                        <!-- Parametros -->
+                        <v-menu
+                            v-if="moduloParametros"
+                            offset-y rounded="lg"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-tab
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    class="white--text"
+                                    title="Campos Parámetros del Sistema">
+                                    Parametros
+                                    <v-icon right color="white">
+                                        mdi-menu-down
+                                    </v-icon>
+                                </v-tab>
+                            </template>
 
-                                    <v-btn
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        style="background: #1000e1"
-                                        elevation="0"
-                                        class="white--text"
-                                        title="Módulos para configuración del sistema">
-                                        Configuración
-                                        <v-icon size="40" color="white"> arrow_drop_down </v-icon>
-                                    </v-btn>
-                                </template>
-
-                                <v-list>
-                                    <v-list-item>
-                                        <v-menu offset-x rounded="lg">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-btn
-                                                    v-bind="attrs"
-                                                    v-on="on"
-                                                    small
-                                                    elevation="0"
-                                                    plain>
-                                                    Parámetros
-                                                    <v-icon size="40" color="dark"> arrow_right </v-icon>
-                                                </v-btn>
-                                            </template>
-                                            <v-list outlined>
-                                                <v-list-item
-                                                            :to="{ name: 'eps' }"
-                                                            v-if="moduloParametroEps">
-                                                    <v-list-item-title>Eps</v-list-item-title>
-                                                </v-list-item>
-                                            </v-list>
-                                        </v-menu>
-                                    </v-list-item>
-                                </v-list>
-
-                            </v-menu>
-                        </v-tab>
+                            <v-list class=" lighten-3">
+                                <v-list-item
+                                    :to="{ name: 'medicina-prepagada' }"
+                                    v-on:click="titleProceso = 'Medicina Prepagada'; pathPrevious = ''">
+                                    <v-list-item-title>Medicina Prepagada</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
                     </v-tabs>
                 </template>
             </v-app-bar>
@@ -156,6 +137,7 @@ export default {
     },
     data() {
         return {
+
             token: localStorage.getItem("token_Historial_Clinico_Oftamologico"),
             date: "",
 
@@ -168,8 +150,7 @@ export default {
             moduloTurno                   : false,
 
             /* Variables de configuracion del sistema */
-            moduloConfiguracionSistema    : false,
-            moduloParametroEps            : false,
+            moduloParametros              : false,
             /* fin Variables de configuracion del sistema */
 
             // Variables permisos menus end
@@ -240,8 +221,7 @@ export default {
                 this.moduloTurno                  = true;
 
                 /* Variables de configuracion del sistema */
-                this.moduloConfiguracionSistema   = true;
-                this.moduloParametroEps           = true;
+                this.moduloParametros             = true;
                 /* fin Variables de configuracion del sistema */
 
                 break;

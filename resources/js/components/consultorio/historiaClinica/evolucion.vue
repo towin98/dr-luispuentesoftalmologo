@@ -4,7 +4,7 @@
         <!-- FORMULARIO -->
         <v-card elevation="2" class="mt-7">
             <v-row class="pl-4 pr-4 pt-5">
-                <v-col cols="9" sm="9">
+                <v-col cols="12" sm="9">
 
                     <v-row>
                         <v-col cols="6" sm="4" class="pb-2">
@@ -102,14 +102,14 @@
                         </v-col>
                     </v-row>
                 </v-col>
-                <v-col cols="3" sm="3" class="pb-2">
+                <v-col cols="12" sm="3" class="pb-2 pt-0">
                     <v-card class="mx-auto" max-width="200">
                         <v-img
                             :src="(foto_paciente != null) ? foto_paciente : '/img/sistema/image_not_found.png'"
                             height="150px" alt="Foto paciente">
                         </v-img>
 
-                        <v-card-title>Foto Cliente</v-card-title>
+                        <v-card-title><h6>Foto Cliente</h6></v-card-title>
                         </v-card>
                 </v-col>
             </v-row>

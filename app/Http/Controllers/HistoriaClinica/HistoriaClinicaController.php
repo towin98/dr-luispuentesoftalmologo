@@ -419,4 +419,3 @@ class HistoriaClinicaController extends Controller
         return str_pad(strval($consecutivoNumeroEvolucion), 4,"0",STR_PAD_LEFT);
     }
 }
-

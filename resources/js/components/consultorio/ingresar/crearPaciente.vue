@@ -152,7 +152,7 @@
                             <v-select
                                 v-model="form.id_p_eps"
                                 ref="id_p_eps"
-                                label="EPS"
+                                label="MP"
                                 :items="itemsEpsPrepagada"
                                 item-value="id"
                                 item-text="descripcion"
@@ -494,7 +494,7 @@ export default {
                     this.$swal({
                         icon: 'error',
                         title: `Error al mostrar la información.`,
-                        text: `Por favor comunicate con el área de Desarrollo Sajona.`,
+                        text: `Por favor comunicate con el área de Tecnología.`,
                     })
                     this.overlayLoading = false;
                 });
@@ -638,3 +638,4 @@ export default {
     mounted() {},
 };
 </script>
+
