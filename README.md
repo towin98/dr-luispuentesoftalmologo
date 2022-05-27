@@ -22,3 +22,6 @@ With docker and docker-compose installed and Git global already configured, use 
 3. Run the app in detach mode
 
 ` docker-compose up -d `
+
+4. Execute run.sh on the docker folder
+` source source docker/run.sh `
