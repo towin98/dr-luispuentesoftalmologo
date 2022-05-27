@@ -19,9 +19,13 @@ With docker and docker-compose installed and Git global already configured, use 
    
 ` cd dr-luispuentesoftalmologo `
 
-3. Run the app in detach mode
+3. Get in to the app folder
+   
+` cd dr-luispuentesoftalmologo `
 
-` docker-compose up -d `
+4. Copy the example environment
+
+` cp .env.prod .env `
 
 4. Execute run.sh on the docker folder
 ` source source docker/run.sh `
