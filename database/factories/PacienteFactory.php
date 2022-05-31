@@ -26,8 +26,8 @@ class PacienteFactory extends Factory
         return [
             'tipo_documento'    => "CC",
             'numero_documento'  => rand(1,1000),
-            'nombre'            => $this->faker->name(),
-            'apellido'          => $this->faker->lastName(),
+            'nombre'            => substr($this->faker->name(),0,25),
+            'apellido'          => substr($this->faker->lastName(),0,25),
             'correo'            => $this->faker->unique()->safeEmail(),
             'celular'           => rand(1,1000),
             'direccion'         => Str::random(10),
