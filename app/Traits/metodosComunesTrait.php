@@ -67,10 +67,6 @@ trait metodosComunesTrait {
         }
     }
 
-    public function fnBuscarUltimoNumeroDisponible(){
-
-    }
-
     /**
      * Método que proceso imagenes subidas de refracciones y las agrega a un pdf.
      *

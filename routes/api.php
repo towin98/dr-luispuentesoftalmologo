@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HistoriaClinica\FormulaAnteojosController;
 use App\Http\Controllers\Paciente\PacienteController;
 use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
 use App\Http\Controllers\Parametro\ParametroController;
@@ -38,6 +39,13 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
     Route::post('/descargar/evolucion/refracciones', [HistoriaClinicaController::class, 'descargar']);
     Route::post('/actualizar/evolucion/{id}', [HistoriaClinicaController::class, 'updateEvolucion']);
     Route::post('/delete/evolucion/{id}', [HistoriaClinicaController::class, 'destroyEvolucion']);
+
+    // Formula Anteojos
+    Route::post('/guardar/formula-anteojos', [FormulaAnteojosController::class, 'store']);
+    Route::put('/actualizar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'update']);
+    Route::get('/mostrar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'show']);
+    Route::post('/delete/formula-anteojos/{id}', [FormulaAnteojosController::class, 'destroy']);
+    Route::get('/listar/formula-anteojos', [FormulaAnteojosController::class, 'listar']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){
@@ -46,7 +54,3 @@ Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , f
     Route::get('/buscar', [ParametroController::class, 'buscar']);
     Route::get('/{parametrica}/{id}', [ParametroController::class, 'show']);
 });
-
-
-
-Route::get('/imprimir', [HistoriaClinicaController::class, 'imprimir']);
