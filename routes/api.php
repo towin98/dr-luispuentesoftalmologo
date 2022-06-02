@@ -8,6 +8,7 @@ use App\Http\Controllers\Paciente\PacienteController;
 use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
 use App\Http\Controllers\Parametro\ParametroController;
 use App\Http\Controllers\PermissionController;
+use Illuminate\Support\Facades\Artisan;
 
 /*Rutas de autenticacacion*/
 Route::post('/login', [AuthController::class, 'login']);
@@ -18,6 +19,7 @@ Route::post('/password/change', [AuthController::class, 'passwordChange'])->midd
 Route::get('/informacion-usuario', [PermissionController::class, 'informacionUsuario'])->middleware('auth:sanctum');
 
 Route::post('/password/email', [AuthController::class, 'resetPassword']);
+Artisan::call('cache:clear');
 
 /*Rutas MENU*/
 Route::group(['prefix' => 'paciente', /*'middleware' => 'auth:sanctum'*/] , function(){
@@ -45,7 +47,8 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
     Route::put('/actualizar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'update']);
     Route::get('/mostrar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'show']);
     Route::post('/delete/formula-anteojos/{id}', [FormulaAnteojosController::class, 'destroy']);
-    Route::get('/listar/formula-anteojos', [FormulaAnteojosController::class, 'listar']);
+    Route::get('/listar/formula-anteojos/{numero_documento}', [FormulaAnteojosController::class, 'listar']);
+    Route::get('/cosecutivo-formula-anteojos/{id_paciente}', [FormulaAnteojosController::class, 'obtenerNumeroFormulaAnteojos']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){

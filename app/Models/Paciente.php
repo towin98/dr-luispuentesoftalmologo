@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,10 +23,25 @@ class Paciente extends Model
         return strtoupper($value);
     }
 
-    public function getUpdatedAtAttribute($value)
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
     {
-        $date = date_create($value);
-        return date_format($date,"Y-m-d H:i:s");
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**

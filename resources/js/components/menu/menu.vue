@@ -191,7 +191,17 @@ export default {
 
         // Obteniendo nombre de la ruta.
         if (this.$route.name) {
-            this.titleProceso = this.$route.name.replace("-", " ");
+            switch (this.$route.name) {
+                case 'historia-clinica':
+                case 'historia-clinica/motivo-consulta':
+                case 'historia-clinica/formula-anteojos':
+                    this.pathPrevious = 'historia-clinica';
+                    this.titleProceso = 'Historia Clinica';
+                break;
+                default:
+                    this.titleProceso = this.$route.name.replace("-", " ");
+                break;
+            }
         }
 
         const fecha = new Date();

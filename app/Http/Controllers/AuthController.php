@@ -149,12 +149,13 @@ class AuthController extends Controller
 
         try {
             $password = Str::random(8);
-            $user->update([
-                'password' => Hash::make($password),
-            ]);
 
             $correo = new RecuperarPassMailable($password, $user);
             Mail::to($request->email)->send($correo);
+
+            $user->update([
+                'password' => Hash::make($password),
+            ]);
 
             return response()->json([
                 "message" => "Se envío información importante a su correo en relación con los datos de acceso a la plataforma de CONSULTORIO OFTAMOLOGICO LUIS PUENTES."
