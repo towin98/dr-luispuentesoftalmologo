@@ -12,7 +12,8 @@ import menu from './components/menu/menu.vue'
 import inicio from './components/consultorio/inicio.vue'
 import crearPaciente from './components/consultorio/ingresar/crearPaciente.vue'
 import busquedaHistoriaClinica from './components/consultorio/historiaClinica/busquedaHistoriaClinica.vue'
-import evolucion from './components/consultorio/historiaClinica/evolucion.vue'
+import motivoConsulta from './components/consultorio/historiaClinica/motivoConsulta.vue'
+import formulaAnteojos from './components/consultorio/historiaClinica/formulaAnteojos.vue'
 
 import parametrosEps from './components/config/parametros/eps.vue' // Medicina Prepagada.
 import cambioClave from './components/config/cambioClave.vue'
@@ -59,9 +60,14 @@ const router = new VueRouter({
                     name: 'historia-clinica',
                 },
                 {
-                    path: 'historia-clinica/evolucion/:numero_documento',
-                    component: evolucion,
-                    name: 'historia-clinica/evolucion',
+                    path: 'historia-clinica/motivo-consulta/:numero_documento',
+                    component: motivoConsulta,
+                    name: 'historia-clinica/motivo-consulta',
+                },
+                {
+                    path: 'historia-clinica/formula-anteojos/:numero_documento',
+                    component: formulaAnteojos,
+                    name: 'historia-clinica/formula-anteojos',
                 },
                 // Historia clinica FIN
                 {

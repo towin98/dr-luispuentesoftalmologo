@@ -16,7 +16,7 @@ class CreateFormulaAnteojosTable extends Migration
         Schema::create('formula_anteojos', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('id_paciente')->comment('Id Paciente');
-            $table->string('numero_formula_anteojos',6);
+            $table->string('numero_formula_anteojos', 6)->comment('Numero formula anteojos consecutivo');
 
             // Campos AVSC
             $table->string('avsc_od', 25)->comment('AVSC ojo derecho');
@@ -40,7 +40,7 @@ class CreateFormulaAnteojosTable extends Migration
             $table->string('hirschberg', 25)->comment('hirschberg');
             $table->string('cover_test', 25)->comment('Cover Test');
             $table->string('ppc', 25)->comment('Punto Próximo de Convergencia');
-            $table->string('motilidad_ocular', 25)->comment('Motilidad ocular ');
+            $table->string('motilidad_ocular', 25)->comment('Motilidad ocular');
             $table->string('dilatacion_pupilar', 25)->comment('Dilatacion pupilar');
             $table->string('pupilas', 25)->comment('Pupilas');
 

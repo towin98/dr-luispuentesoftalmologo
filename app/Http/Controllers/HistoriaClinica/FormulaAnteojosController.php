@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\HistoriaClinica;
 
 use Exception;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\FormulaAnteojosListarCollection;
-use App\Models\FormulaAnteojos;
 use App\Models\Paciente;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Models\FormulaAnteojos;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class FormulaAnteojosController extends Controller
 {
@@ -18,9 +17,9 @@ class FormulaAnteojosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function listar(Request $request){
+    public function listar(Request $request, $numero_documento){
 
-        if (!$request->filled('numero_documento')) {
+        if ($numero_documento == "") {
             return response()->json([
                 'message' => 'Error de Validación',
                 'errors'  => "El No Documento del paciente no puede ser vacío."
@@ -39,17 +38,18 @@ class FormulaAnteojosController extends Controller
         $paciente = Paciente::select([
             'id',
         ])
-        ->where('numero_documento', $request->numero_documento)
+        ->where('numero_documento', $numero_documento)
         ->first();
 
         if (!$paciente) {
             return response()->json([
                 'message' => 'Error de Validación',
-                'errors'  => "El Paciente con No Documento $request->numero_documento no existe."
+                'errors'  => "El Paciente con No Documento $numero_documento no existe."
             ], 404);
         }
 
         $formulaAnteojos = FormulaAnteojos::select([
+                'formula_anteojos.id',
                 'id_paciente',
                 'numero_formula_anteojos',
                 'fecha_formula',
@@ -117,16 +117,20 @@ class FormulaAnteojosController extends Controller
         }
 
         try {
-            $numeroFormulaAnteojos = $this->obtenerNumeroFormulaAnteojos($paciente->id);
+            $numeroFormulaAnteojos = $this->obtenerNumeroFormulaAnteojos($request->numero_documento);
 
             $request->merge([
                 'id_paciente'               => $paciente->id,
                 'numero_formula_anteojos'   => $numeroFormulaAnteojos
             ]);
-
             $input = $request->except(['numero_documento']);
+            $input = $request->collect();
 
-            FormulaAnteojos::create($input);
+            $data = $input->map(function ($valor) {
+                return trim($valor);
+            })->all();
+
+            FormulaAnteojos::create($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',
@@ -204,8 +208,13 @@ class FormulaAnteojosController extends Controller
             ]);
 
             $input = $request->except(['numero_documento']);
+            $input = $request->collect();
 
-            $formulaAnteojos->update($input);
+            $data = $input->map(function ($valor) {
+                return trim($valor);
+            })->all();
+
+            $formulaAnteojos->update($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',
@@ -255,22 +264,30 @@ class FormulaAnteojosController extends Controller
     /**
      * Método que retorna el consecutivo de numero formula anteojos para la historia clinica del paciente.
      *
-     * @param integer $id_paciente
+     * @param integer $numero_documento Numero de documento del paciente.
      * @return string consecutivo Historia clinica Formula anteojos.
      */
-    public function obtenerNumeroFormulaAnteojos($id_paciente){
-        $numeroFormulaAnteojos = FormulaAnteojos::select('numero_formula_anteojos')
-            ->where('id_paciente', $id_paciente)
-            ->orderBy('id', 'desc')
-            ->first();
+    public function obtenerNumeroFormulaAnteojos($numero_documento){
+        $id_paciente = Paciente::select('id')->where('numero_documento',$numero_documento)->first();
+        try {
+            $numeroFormulaAnteojos = FormulaAnteojos::select('numero_formula_anteojos')
+                ->where('id_paciente', $id_paciente)
+                ->orderBy('id', 'desc')
+                ->first();
 
-        if(!$numeroFormulaAnteojos){
-            $numero_formula_anteojos = "0000";
-        }else{
-            $numero_formula_anteojos = $numeroFormulaAnteojos->numero_formula_anteojos;
+            if(!$numeroFormulaAnteojos){
+                $numero_formula_anteojos = "0000";
+            }else{
+                $numero_formula_anteojos = $numeroFormulaAnteojos->numero_formula_anteojos;
+            }
+
+            $numero_formula_anteojos = intval($numero_formula_anteojos)+1;
+            return str_pad(strval($numero_formula_anteojos), 4,"0",STR_PAD_LEFT);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Error inesperado en el Sistema',
+                'errors' => "Error al obtener Número formula anteojos consecutivo."
+            ], 500);
         }
-
-        $numero_formula_anteojos = intval($numero_formula_anteojos)+1;
-        return str_pad(strval($numero_formula_anteojos), 4,"0",STR_PAD_LEFT);
     }
 }

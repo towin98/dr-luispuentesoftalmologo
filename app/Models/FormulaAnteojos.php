@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
@@ -22,10 +23,25 @@ class FormulaAnteojos extends Model
         return $this->where('deleted_at', '<=', now()->subWeek())->whereNotNull('deleted_at');
     }
 
-    public function getUpdatedAtAttribute($value)
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
     {
-        $date = date_create($value);
-        return date_format($date,"Y-m-d H:i:s");
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
@@ -208,68 +224,68 @@ class FormulaAnteojos extends Model
         'pupilas.required'              => 'Las Pupilas es requerida.',
         'pupilas.string'                => 'Las Pupilas debe ser un string.',
         'pupilas.max'                   => 'Las Pupilas es máximo 25 carácteres.',
-        // Biomicroscopia ojo derecho
-        'bio_od_par.required'           => 'La Biomicroscopia ojo Derecho parpados es requerida.',
-        'bio_od_par.string'             => 'La Biomicroscopia ojo Derecho parpados debe ser un string.',
-        'bio_od_par.max'                => 'La Biomicroscopia ojo Derecho parpados es máximo 25 carácteres.',
-        'bio_od_gra.required'           => 'La Biomicroscopia ojo Derecho grado es requerida.',
-        'bio_od_gra.string'             => 'La Biomicroscopia ojo Derecho grado debe ser un string.',
-        'bio_od_gra.max'                => 'La Biomicroscopia ojo Derecho grado es máximo 25 carácteres.',
-        'bio_od_cri.required'           => 'La Biomicroscopia ojo Derecho cristalino es requerida.',
-        'bio_od_cri.string'             => 'La Biomicroscopia ojo Derecho cristalino debe ser un string.',
-        'bio_od_cri.max'                => 'La Biomicroscopia ojo Derecho cristalino es máximo 25 carácteres.',
-        'bio_od_con.required'           => 'La Biomicroscopia ojo Derecho conjuntiva es requerida.',
-        'bio_od_con.string'             => 'La Biomicroscopia ojo Derecho conjuntiva debe ser un string.',
-        'bio_od_con.max'                => 'La Biomicroscopia ojo Derecho conjuntiva es máximo 25 carácteres.',
-        'bio_od_iris.required'          => 'La Biomicroscopia ojo Derecho iris es requerida.',
-        'bio_od_iris.string'            => 'La Biomicroscopia ojo Derecho iris debe ser un string.',
-        'bio_od_iris.max'               => 'La Biomicroscopia ojo Derecho iris es máximo 25 carácteres.',
-        'bio_od_pre.required'           => 'La Biomicroscopia ojo Derecho Presión es requerida.',
-        'bio_od_pre.string'             => 'La Biomicroscopia ojo Derecho Presión debe ser un string.',
-        'bio_od_pre.max'                => 'La Biomicroscopia ojo Derecho Presión es máximo 25 carácteres.',
-        'bio_od_cor.required'           => 'La Biomicroscopia ojo Derecho Cornea es requerida.',
-        'bio_od_cor.string'             => 'La Biomicroscopia ojo Derecho Cornea debe ser un string.',
-        'bio_od_cor.max'                => 'La Biomicroscopia ojo Derecho Cornea es máximo 25 carácteres.',
-        'bio_od_ref.required'           => 'La Biomicroscopia ojo Derecho Reflejo es requerida.',
-        'bio_od_ref.string'             => 'La Biomicroscopia ojo Derecho Reflejo debe ser un string.',
-        'bio_od_ref.max'                => 'La Biomicroscopia ojo Derecho Reflejo es máximo 25 carácteres.',
-        'bio_od_ocu.required'           => 'La Biomicroscopia ojo Derecho Ocular es requerida.',
-        'bio_od_ocu.string'             => 'La Biomicroscopia ojo Derecho Ocular debe ser un string.',
-        'bio_od_ocu.max'                => 'La Biomicroscopia ojo Derecho Ocular es máximo 25 carácteres.',
-        'bio_od_pup.required'           => 'La Biomicroscopia ojo Derecho Pupilar es requerida.',
-        'bio_od_pup.string'             => 'La Biomicroscopia ojo Derecho Pupilar debe ser un string.',
-        'bio_od_pup.max'                => 'La Biomicroscopia ojo Derecho Pupilar es máximo 25 carácteres.',
-        // Biomicroscopia ojo Izquierdo
-        'bio_oi_par.required'           => 'La Biomicroscopia ojo Izquierdo parpados es requerida.',
-        'bio_oi_par.string'             => 'La Biomicroscopia ojo Izquierdo parpados debe ser un string.',
-        'bio_oi_par.max'                => 'La Biomicroscopia ojo Izquierdo parpados es máximo 25 carácteres.',
-        'bio_oi_gra.required'           => 'La Biomicroscopia ojo Izquierdo grado es requerida.',
-        'bio_oi_gra.string'             => 'La Biomicroscopia ojo Izquierdo grado debe ser un string.',
-        'bio_oi_gra.max'                => 'La Biomicroscopia ojo Izquierdo grado es máximo 25 carácteres.',
-        'bio_oi_cri.required'           => 'La Biomicroscopia ojo Izquierdo cristalino es requerida.',
-        'bio_oi_cri.string'             => 'La Biomicroscopia ojo Izquierdo cristalino debe ser un string.',
-        'bio_oi_cri.max'                => 'La Biomicroscopia ojo Izquierdo cristalino es máximo 25 carácteres.',
-        'bio_oi_con.required'           => 'La Biomicroscopia ojo Izquierdo conjuntiva es requerida.',
-        'bio_oi_con.string'             => 'La Biomicroscopia ojo Izquierdo conjuntiva debe ser un string.',
-        'bio_oi_con.max'                => 'La Biomicroscopia ojo Izquierdo conjuntiva es máximo 25 carácteres.',
-        'bio_oi_iris.required'          => 'La Biomicroscopia ojo Izquierdo iris es requerida.',
-        'bio_oi_iris.string'            => 'La Biomicroscopia ojo Izquierdo iris debe ser un string.',
-        'bio_oi_iris.max'               => 'La Biomicroscopia ojo Izquierdo iris es máximo 25 carácteres.',
-        'bio_oi_pre.required'           => 'La Biomicroscopia ojo Izquierdo Presión es requerida.',
-        'bio_oi_pre.string'             => 'La Biomicroscopia ojo Izquierdo Presión debe ser un string.',
-        'bio_oi_pre.max'                => 'La Biomicroscopia ojo Izquierdo Presión es máximo 25 carácteres.',
-        'bio_oi_cor.required'           => 'La Biomicroscopia ojo Izquierdo Cornea es requerida.',
-        'bio_oi_cor.string'             => 'La Biomicroscopia ojo Izquierdo Cornea debe ser un string.',
-        'bio_oi_cor.max'                => 'La Biomicroscopia ojo Izquierdo Cornea es máximo 25 carácteres.',
-        'bio_oi_ref.required'           => 'La Biomicroscopia ojo Izquierdo Reflejo es requerida.',
-        'bio_oi_ref.string'             => 'La Biomicroscopia ojo Izquierdo Reflejo debe ser un string.',
-        'bio_oi_ref.max'                => 'La Biomicroscopia ojo Izquierdo Reflejo es máximo 25 carácteres.',
-        'bio_oi_ocu.required'           => 'La Biomicroscopia ojo Izquierdo Ocular es requerida.',
-        'bio_oi_ocu.string'             => 'La Biomicroscopia ojo Izquierdo Ocular debe ser un string.',
-        'bio_oi_ocu.max'                => 'La Biomicroscopia ojo Izquierdo Ocular es máximo 25 carácteres.',
-        'bio_oi_pup.required'           => 'La Biomicroscopia ojo Izquierdo Pupilar es requerida.',
-        'bio_oi_pup.string'             => 'La Biomicroscopia ojo Izquierdo Pupilar debe ser un string.',
-        'bio_oi_pup.max'                => 'La Biomicroscopia ojo Izquierdo Pupilar es máximo 25 carácteres.',
+        // Biomicroscopia Ojo Derecho
+        'bio_od_par.required'           => 'La Bio. O.D parpados es requerida.',
+        'bio_od_par.string'             => 'La Bio. O.D parpados debe ser un string.',
+        'bio_od_par.max'                => 'La Bio. O.D parpados es máximo 25 carácteres.',
+        'bio_od_gra.required'           => 'La Bio. O.D grado es requerida.',
+        'bio_od_gra.string'             => 'La Bio. O.D grado debe ser un string.',
+        'bio_od_gra.max'                => 'La Bio. O.D grado es máximo 25 carácteres.',
+        'bio_od_cri.required'           => 'La Bio. O.D cristalino es requerida.',
+        'bio_od_cri.string'             => 'La Bio. O.D cristalino debe ser un string.',
+        'bio_od_cri.max'                => 'La Bio. O.D cristalino es máximo 25 carácteres.',
+        'bio_od_con.required'           => 'La Bio. O.D conjuntiva es requerida.',
+        'bio_od_con.string'             => 'La Bio. O.D conjuntiva debe ser un string.',
+        'bio_od_con.max'                => 'La Bio. O.D conjuntiva es máximo 25 carácteres.',
+        'bio_od_iris.required'          => 'La Bio. O.D iris es requerida.',
+        'bio_od_iris.string'            => 'La Bio. O.D iris debe ser un string.',
+        'bio_od_iris.max'               => 'La Bio. O.D iris es máximo 25 carácteres.',
+        'bio_od_pre.required'           => 'La Bio. O.D Presión es requerida.',
+        'bio_od_pre.string'             => 'La Bio. O.D Presión debe ser un string.',
+        'bio_od_pre.max'                => 'La Bio. O.D Presión es máximo 25 carácteres.',
+        'bio_od_cor.required'           => 'La Bio. O.D Cornea es requerida.',
+        'bio_od_cor.string'             => 'La Bio. O.D Cornea debe ser un string.',
+        'bio_od_cor.max'                => 'La Bio. O.D Cornea es máximo 25 carácteres.',
+        'bio_od_ref.required'           => 'La Bio. O.D Reflejo es requerida.',
+        'bio_od_ref.string'             => 'La Bio. O.D Reflejo debe ser un string.',
+        'bio_od_ref.max'                => 'La Bio. O.D Reflejo es máximo 25 carácteres.',
+        'bio_od_ocu.required'           => 'La Bio. O.D Ocular es requerida.',
+        'bio_od_ocu.string'             => 'La Bio. O.D Ocular debe ser un string.',
+        'bio_od_ocu.max'                => 'La Bio. O.D Ocular es máximo 25 carácteres.',
+        'bio_od_pup.required'           => 'La Bio. O.D Pupilar es requerida.',
+        'bio_od_pup.string'             => 'La Bio. O.D Pupilar debe ser un string.',
+        'bio_od_pup.max'                => 'La Bio. O.D Pupilar es máximo 25 carácteres.',
+        // Bio. Ojo Izquierdo
+        'bio_oi_par.required'           => 'La Bio. O.I parpados es requerida.',
+        'bio_oi_par.string'             => 'La Bio. O.I parpados debe ser un string.',
+        'bio_oi_par.max'                => 'La Bio. O.I parpados es máximo 25 carácteres.',
+        'bio_oi_gra.required'           => 'La Bio. O.I grado es requerida.',
+        'bio_oi_gra.string'             => 'La Bio. O.I grado debe ser un string.',
+        'bio_oi_gra.max'                => 'La Bio. O.I grado es máximo 25 carácteres.',
+        'bio_oi_cri.required'           => 'La Bio. O.I cristalino es requerida.',
+        'bio_oi_cri.string'             => 'La Bio. O.I cristalino debe ser un string.',
+        'bio_oi_cri.max'                => 'La Bio. O.I cristalino es máximo 25 carácteres.',
+        'bio_oi_con.required'           => 'La Bio. O.I conjuntiva es requerida.',
+        'bio_oi_con.string'             => 'La Bio. O.I conjuntiva debe ser un string.',
+        'bio_oi_con.max'                => 'La Bio. O.I conjuntiva es máximo 25 carácteres.',
+        'bio_oi_iris.required'          => 'La Bio. O.I iris es requerida.',
+        'bio_oi_iris.string'            => 'La Bio. O.I iris debe ser un string.',
+        'bio_oi_iris.max'               => 'La Bio. O.I iris es máximo 25 carácteres.',
+        'bio_oi_pre.required'           => 'La Bio. O.I Presión es requerida.',
+        'bio_oi_pre.string'             => 'La Bio. O.I Presión debe ser un string.',
+        'bio_oi_pre.max'                => 'La Bio. O.I Presión es máximo 25 carácteres.',
+        'bio_oi_cor.required'           => 'La Bio. O.I Cornea es requerida.',
+        'bio_oi_cor.string'             => 'La Bio. O.I Cornea debe ser un string.',
+        'bio_oi_cor.max'                => 'La Bio. O.I Cornea es máximo 25 carácteres.',
+        'bio_oi_ref.required'           => 'La Bio. O.I Reflejo es requerida.',
+        'bio_oi_ref.string'             => 'La Bio. O.I Reflejo debe ser un string.',
+        'bio_oi_ref.max'                => 'La Bio. O.I Reflejo es máximo 25 carácteres.',
+        'bio_oi_ocu.required'           => 'La Bio. O.I Ocular es requerida.',
+        'bio_oi_ocu.string'             => 'La Bio. O.I Ocular debe ser un string.',
+        'bio_oi_ocu.max'                => 'La Bio. O.I Ocular es máximo 25 carácteres.',
+        'bio_oi_pup.required'           => 'La Bio. O.I Pupilar es requerida.',
+        'bio_oi_pup.string'             => 'La Bio. O.I Pupilar debe ser un string.',
+        'bio_oi_pup.max'                => 'La Bio. O.I Pupilar es máximo 25 carácteres.',
         // Campos Fondo de Ojo ojo derecho
         'fon_od_pap.required'           => 'El Fondo del Ojo Derecho Papila es requerido.',
         'fon_od_pap.string'             => 'El Fondo del Ojo Derecho Papila debe ser un string.',
@@ -318,6 +334,7 @@ class FormulaAnteojos extends Model
         'diagnostico.string'            => 'El Diagnostico debe ser un string.',
         'tratamiento.required'          => 'El Tratamiento es requerido.',
         'tratamiento.string'            => 'El Tratamiento debe ser un string.',
+        'fecha_formula.required'        => 'La fecha de la formula es requerida.',
         'fecha_formula.date_format'     => 'La fecha de formula debe ser ej: Y-m-d.',
     ];
 
@@ -387,13 +404,13 @@ class FormulaAnteojos extends Model
      */
     public function scopeBuscar($query, $buscar) {
         if($buscar){
-            return $query->where('formula_anteojos.numero_formula_anteojos', 'like', '%'.$buscar.'%')
-                        ->orWhere('formula_anteojos.fecha_formula', 'like', '%'.$buscar.'%')
-                        ->orWhere('formula_anteojos.updated_at', 'like', '%'.$buscar.'%')
+            return $query->where('formula_anteojos.numero_formula_anteojos', 'like', '%'.trim($buscar).'%')
+                        ->orWhere('formula_anteojos.fecha_formula', 'like', '%'.trim($buscar).'%')
+                        ->orWhere('formula_anteojos.updated_at', 'like', '%'.trim($buscar).'%')
                         ->orWhereHas('getPaciente', function($queryHas) use ($buscar) {
-                            $queryHas->where('numero_documento', 'LIKE', "%$buscar%")
-                                    ->orWhere('nombre', 'LIKE', "%$buscar%")
-                                    ->orWhere('apellido', 'LIKE', "%$buscar%");
+                            $queryHas->where('numero_documento', 'LIKE', "%".trim($buscar)."%")
+                                    ->orWhere('nombre', 'LIKE', "%".trim($buscar)."%")
+                                    ->orWhere('apellido', 'LIKE', "%".trim($buscar)."%");
                         });
         }
     }

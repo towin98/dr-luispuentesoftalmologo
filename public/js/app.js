@@ -2642,6 +2642,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2702,9 +2714,15 @@ __webpack_require__.r(__webpack_exports__);
         text: "Fecha Modificado",
         value: "updated_at"
       }, {
-        text: "Acciones",
-        value: "acciones",
-        sortable: false
+        text: "Motivo Consulta",
+        value: "motivoConsulta",
+        sortable: false,
+        width: 20
+      }, {
+        text: "Formula Anteojos",
+        value: "formulaAnteojos",
+        sortable: false,
+        width: 20
       }],
       dataSet: [],
       contador: 0
@@ -2794,10 +2812,1012 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    loadingGeneral: _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      /* Variables Table. */
+      debounce: null,
+      buscar: "",
+      page: 1,
+      totalRegistros: 0,
+      loading: false,
+      overlayLoading: false,
+      options: {},
+      headers: [{
+        text: "Historia Número",
+        value: "numero_formula_anteojos"
+      }, {
+        text: "Fecha Formula",
+        value: "fecha_formula"
+      }, {
+        text: "Nombre del Paciente",
+        value: "nombre",
+        sortable: false
+      }, {
+        text: "Apellidos del Paciente",
+        value: "apellido",
+        sortable: false
+      }, {
+        text: "Identificacion",
+        value: "numero_documento",
+        sortable: false
+      }, {
+        text: "Fecha Modificado",
+        value: "updated_at"
+      }, {
+        text: "Acciones",
+        value: "acciones",
+        sortable: false
+      }],
+      dataSet: [],
+      contador: 0,
+      // Variables de formulario.
+      numero_formula_anteojos: '0000',
+      cAccion: 'Guardar',
+      errors: "",
+      form: {
+        id: '',
+        avsc_od: '',
+        avsc_oi: '',
+        rx_od: '',
+        rx_oi: '',
+        ref_obj_od: '',
+        ref_obj_oi: '',
+        ref_sub_od: '',
+        ref_sub_oi: '',
+        que_od: '',
+        que_oi: '',
+        hirschberg: '',
+        cover_test: '',
+        ppc: '',
+        motilidad_ocular: '',
+        dilatacion_pupilar: '',
+        pupilas: '',
+        bio_od_par: '',
+        bio_od_gra: '',
+        bio_od_cri: '',
+        bio_od_con: '',
+        bio_od_iris: '',
+        bio_od_pre: '',
+        bio_od_cor: '',
+        bio_od_ref: '',
+        bio_od_ocu: '',
+        bio_od_pup: '',
+        bio_oi_par: '',
+        bio_oi_gra: '',
+        bio_oi_cri: '',
+        bio_oi_con: '',
+        bio_oi_iris: '',
+        bio_oi_pre: '',
+        bio_oi_cor: '',
+        bio_oi_ref: '',
+        bio_oi_ocu: '',
+        bio_oi_pup: '',
+        fon_od_pap: '',
+        fon_od_vit: '',
+        fon_od_mac: '',
+        fon_od_per: '',
+        fon_od_vas: '',
+        fon_od_retina: '',
+        fon_od_retinales: '',
+        fon_oi_pap: '',
+        fon_oi_vit: '',
+        fon_oi_mac: '',
+        fon_oi_per: '',
+        fon_oi_vas: '',
+        fon_oi_retina: '',
+        fon_oi_retinales: '',
+        diagnostico: '',
+        tratamiento: ''
+      }
+    };
+  },
+  watch: {
+    options: {
+      handler: function handler() {
+        this.fnBuscar();
+      }
+    },
+    deep: true
+  },
+  methods: {
+    filterSearch: function filterSearch() {
+      var _this = this;
+
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(function () {
+        _this.fnBuscar(_this.buscar);
+      }, 600);
+    },
+    fnBuscar: function fnBuscar() {
+      var _this2 = this;
+
+      this.overlayLoading = true;
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage,
+          sortBy = _this$options.sortBy,
+          sortDesc = _this$options.sortDesc; // Obteniendo rangos de consultado paginación.
+
+      var start = itemsPerPage * (page - 1);
+      var length = itemsPerPage;
+
+      if (sortDesc[0] == true) {
+        sortBy = sortBy[0];
+        sortDesc = "DESC";
+      } else if (sortDesc[0] == false) {
+        sortBy = sortBy[0];
+        sortDesc = "ASC";
+      } else {
+        sortBy = "";
+        sortDesc = "";
+      }
+
+      axios.get("/consultorio-oftamologico/historia-clinica/listar/formula-anteojos/".concat(this.$route.params.numero_documento, "?length=").concat(length, "&start=").concat(start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc, "&buscar=").concat(this.buscar)).then(function (response) {
+        _this2.loading = false;
+        _this2.totalRegistros = response.data.total;
+        var data = response.data.data;
+        _this2.form.numero_documento = _this2.$route.params.numero_documento;
+
+        for (var i = 0; i < _this2.totalRegistros; i++) {
+          data[i].id_paciente = data[i].get_paciente.id;
+          data[i].numero_documento = data[i].get_paciente.numero_documento;
+          data[i].nombre = data[i].get_paciente.nombre;
+          data[i].apellido = data[i].get_paciente.apellido;
+          delete data[i].get_paciente;
+        }
+
+        _this2.dataSet = data;
+        _this2.overlayLoading = false;
+
+        if (_this2.contador == 0) {
+          _this2.contador++;
+
+          _this2.fnObtenerNumeroFormulaAnteojos();
+        }
+      })["catch"](function (errors) {
+        _this2.overlayLoading = false;
+        _this2.loading = false;
+        _this2.dataSet = [];
+      });
+    },
+    fnObtenerNumeroFormulaAnteojos: function fnObtenerNumeroFormulaAnteojos() {
+      var _this3 = this;
+
+      this.overlayLoading = true;
+      axios.get("/consultorio-oftamologico/historia-clinica/cosecutivo-formula-anteojos/".concat(this.form.numero_documento)).then(function (response) {
+        _this3.numero_formula_anteojos = response.data;
+        _this3.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this3.fnResponseError(errores);
+
+        _this3.overlayLoading = false;
+      });
+    },
+    fnAccion: function fnAccion() {
+      if (this.cAccion === "Guardar") {
+        this.fnStore();
+      } else {
+        this.fnUpdate();
+      }
+    },
+    fnStore: function fnStore() {
+      var _this4 = this;
+
+      this.form.numero_documento = this.$route.params.numero_documento;
+      this.overlayLoading = true;
+      axios.post("/consultorio-oftamologico/historia-clinica/guardar/formula-anteojos", this.form).then(function (response) {
+        _this4.errors = "";
+
+        _this4.$swal(response.data.message, '', 'success');
+
+        _this4.fnBuscar();
+
+        _this4.limpiarCampos();
+
+        _this4.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this4.errors = _this4.fnResponseError(errores);
+        _this4.overlayLoading = false;
+      });
+    },
+    fnUpdate: function fnUpdate() {
+      var _this5 = this;
+
+      this.overlayLoading = true;
+      this.form.numero_documento = this.$route.params.numero_documento;
+      axios.put("/consultorio-oftamologico/historia-clinica/actualizar/formula-anteojos/".concat(this.form.id), this.form).then(function (response) {
+        _this5.errors = "";
+
+        _this5.$swal(response.data.message, '', 'success');
+
+        _this5.fnBuscar();
+
+        _this5.limpiarCampos();
+
+        _this5.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this5.errors = _this5.fnResponseError(errores);
+        _this5.overlayLoading = false;
+      });
+    },
+    fnShow: function fnShow(id) {
+      var _this6 = this;
+
+      this.overlayLoading = true;
+      this.cAccion = "Actualizar";
+      axios.get("/consultorio-oftamologico/historia-clinica/mostrar/formula-anteojos/".concat(id)).then(function (response) {
+        var data = response.data.data;
+        _this6.form = data;
+        _this6.numero_formula_anteojos = data.numero_formula_anteojos;
+        _this6.errors = "";
+        _this6.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this6.errors = _this6.fnResponseError(errores);
+        _this6.overlayLoading = false;
+      });
+    },
+    fnDelete: function fnDelete(item) {
+      var _this7 = this;
+
+      this.$swal({
+        title: 'Quiere eliminar la Formula Anteojos?',
+        text: "Eliminar la Formula Anteojos N\xB0".concat(item.numero_formula_anteojos, "!"),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this7.overlayLoading = true;
+          axios.post("/consultorio-oftamologico/historia-clinica/delete/formula-anteojos/".concat(item.id)).then(function (response) {
+            _this7.errors = "";
+
+            _this7.$swal(response.data.message, '', 'success');
+
+            _this7.fnBuscar();
+
+            _this7.limpiarCampos();
+
+            _this7.overlayLoading = false;
+          })["catch"](function (errores) {
+            _this7.fnResponseError(errores);
+
+            _this7.overlayLoading = false;
+          });
+        }
+      });
+    },
+    limpiarCampos: function limpiarCampos() {
+      this.errors = "";
+      this.fnObtenerNumeroFormulaAnteojos();
+      this.cAccion = "Guardar";
+      this.form.id = '';
+      this.form.fecha_formula = '';
+      this.form.avsc_od = '';
+      this.form.avsc_oi = '';
+      this.form.rx_od = '';
+      this.form.rx_oi = '';
+      this.form.ref_obj_od = '';
+      this.form.ref_obj_oi = '';
+      this.form.ref_sub_od = '';
+      this.form.ref_sub_oi = '';
+      this.form.que_od = '';
+      this.form.que_oi = '';
+      this.form.hirschberg = '';
+      this.form.cover_test = '';
+      this.form.ppc = '';
+      this.form.motilidad_ocular = '';
+      this.form.dilatacion_pupilar = '';
+      this.form.pupilas = '';
+      this.form.bio_od_par = '';
+      this.form.bio_od_gra = '';
+      this.form.bio_od_cri = '';
+      this.form.bio_od_con = '';
+      this.form.bio_od_iris = '';
+      this.form.bio_od_pre = '';
+      this.form.bio_od_cor = '';
+      this.form.bio_od_ref = '';
+      this.form.bio_od_ocu = '';
+      this.form.bio_od_pup = '';
+      this.form.bio_oi_par = '';
+      this.form.bio_oi_gra = '';
+      this.form.bio_oi_cri = '';
+      this.form.bio_oi_con = '';
+      this.form.bio_oi_iris = '';
+      this.form.bio_oi_pre = '';
+      this.form.bio_oi_cor = '';
+      this.form.bio_oi_ref = '';
+      this.form.bio_oi_ocu = '';
+      this.form.bio_oi_pup = '';
+      this.form.fon_od_pap = '';
+      this.form.fon_od_vit = '';
+      this.form.fon_od_mac = '';
+      this.form.fon_od_per = '';
+      this.form.fon_od_vas = '';
+      this.form.fon_od_retina = '';
+      this.form.fon_od_retinales = '';
+      this.form.fon_oi_pap = '';
+      this.form.fon_oi_vit = '';
+      this.form.fon_oi_mac = '';
+      this.form.fon_oi_per = '';
+      this.form.fon_oi_vas = '';
+      this.form.fon_oi_retina = '';
+      this.form.fon_oi_retinales = '';
+      this.form.diagnostico = '';
+      this.form.tratamiento = '';
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3010,6 +4030,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -3017,9 +4039,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   data: function data() {
     return {
-      myFiles: ['cat.jpeg'],
-
       /* Variables Table. */
+      debounce: null,
       buscar: "",
       page: 1,
       totalRegistros: 0,
@@ -3053,6 +4074,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       },
       cAccion: 'Guardar',
       errors: {},
+      id: '',
       id_paciente: '',
       foto_paciente: null,
       numero_documento: '',
@@ -3345,7 +4367,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     filterSearch: function filterSearch() {
       var _this8 = this;
 
-      this.overlayLoading = true;
       clearTimeout(this.debounce);
       this.debounce = setTimeout(function () {
         _this8.fnBuscar(_this8.buscar);
@@ -4390,11 +5411,25 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              // Obteniendo nombre de la ruta.
-              if (_this2.$route.name) {
-                _this2.titleProceso = _this2.$route.name.replace("-", " ");
+              if (!_this2.$route.name) {
+                _context2.next = 9;
+                break;
               }
 
+              _context2.t0 = _this2.$route.name;
+              _context2.next = _context2.t0 === 'historia-clinica' ? 4 : _context2.t0 === 'historia-clinica/motivo-consulta' ? 4 : _context2.t0 === 'historia-clinica/formula-anteojos' ? 4 : 7;
+              break;
+
+            case 4:
+              _this2.pathPrevious = 'historia-clinica';
+              _this2.titleProceso = 'Historia Clinica';
+              return _context2.abrupt("break", 9);
+
+            case 7:
+              _this2.titleProceso = _this2.$route.name.replace("-", " ");
+              return _context2.abrupt("break", 9);
+
+            case 9:
               fecha = new Date();
               month = fecha.toLocaleString("es-CO", {
                 month: "long"
@@ -4404,10 +5439,10 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
               /* DEPENDIENDO DEL ROL DEL USUARIO SE MUESTRA MENU. */
 
               _this2.overlayLoading = true;
-              _context2.next = 8;
+              _context2.next = 16;
               return _this2.informacionUsuario();
 
-            case 8:
+            case 16:
               _this2.overlayLoading = false;
               _this2.intervalId = setInterval( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
                 return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -4424,11 +5459,11 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
                   }
                 }, _callee);
               })), 20000);
-              _context2.t0 = _this2.infoUser.rol;
-              _context2.next = _context2.t0 === "SECRETARIA" ? 13 : _context2.t0 === "MEDICO" ? 20 : 23;
+              _context2.t1 = _this2.infoUser.rol;
+              _context2.next = _context2.t1 === "SECRETARIA" ? 21 : _context2.t1 === "MEDICO" ? 28 : 31;
               break;
 
-            case 13:
+            case 21:
               _this2.moduloCrearPaciente = true; // this.crearPaciente       = true;
 
               _this2.moduloHistoriaClinica = true;
@@ -4440,14 +5475,14 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
               _this2.moduloParametros = true;
               /* fin Variables de configuracion del sistema */
 
-              return _context2.abrupt("break", 23);
+              return _context2.abrupt("break", 31);
 
-            case 20:
+            case 28:
               _this2.moduloCrearPaciente = true;
               _this2.turno = true;
-              return _context2.abrupt("break", 23);
+              return _context2.abrupt("break", 31);
 
-            case 23:
+            case 31:
             case "end":
               return _context2.stop();
           }
@@ -4732,10 +5767,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_consultorio_inicio_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/consultorio/inicio.vue */ "./resources/js/components/consultorio/inicio.vue");
 /* harmony import */ var _components_consultorio_ingresar_crearPaciente_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/consultorio/ingresar/crearPaciente.vue */ "./resources/js/components/consultorio/ingresar/crearPaciente.vue");
 /* harmony import */ var _components_consultorio_historiaClinica_busquedaHistoriaClinica_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/busquedaHistoriaClinica.vue */ "./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue");
-/* harmony import */ var _components_consultorio_historiaClinica_evolucion_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/evolucion.vue */ "./resources/js/components/consultorio/historiaClinica/evolucion.vue");
-/* harmony import */ var _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/config/parametros/eps.vue */ "./resources/js/components/config/parametros/eps.vue");
-/* harmony import */ var _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/config/cambioClave.vue */ "./resources/js/components/config/cambioClave.vue");
-/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
+/* harmony import */ var _components_consultorio_historiaClinica_motivoConsulta_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/motivoConsulta.vue */ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue");
+/* harmony import */ var _components_consultorio_historiaClinica_formulaAnteojos_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/formulaAnteojos.vue */ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue");
+/* harmony import */ var _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/config/parametros/eps.vue */ "./resources/js/components/config/parametros/eps.vue");
+/* harmony import */ var _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/config/cambioClave.vue */ "./resources/js/components/config/cambioClave.vue");
+/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -4744,6 +5780,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 
 
 /*Menu*/
+
 
 
 
@@ -4792,9 +5829,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: _components_consultorio_historiaClinica_busquedaHistoriaClinica_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
       name: 'historia-clinica'
     }, {
-      path: 'historia-clinica/evolucion/:numero_documento',
-      component: _components_consultorio_historiaClinica_evolucion_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-      name: 'historia-clinica/evolucion'
+      path: 'historia-clinica/motivo-consulta/:numero_documento',
+      component: _components_consultorio_historiaClinica_motivoConsulta_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+      name: 'historia-clinica/motivo-consulta'
+    }, {
+      path: 'historia-clinica/formula-anteojos/:numero_documento',
+      component: _components_consultorio_historiaClinica_formulaAnteojos_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+      name: 'historia-clinica/formula-anteojos'
     }, // Historia clinica FIN
     {
       path: 'informe',
@@ -4817,16 +5858,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     },
     children: [{
       path: 'parametros/medicina-prepagada',
-      component: _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+      component: _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
       name: 'medicina-prepagada'
     }, {
       path: 'cambio-clave',
-      component: _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+      component: _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
       name: 'cambio-clave'
     }]
   }, {
     path: '*',
-    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
   }]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -4974,7 +6015,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ninput {\n    padding-left: 10px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ninput {\r\n    padding-left: 10px !important;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-subheader[data-v-5c80d85b]{\n    font-size: 13px !important;\n}\n.v-input[data-v-5c80d85b]  {\n    font-size: 13px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23464,6 +24529,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_style_index_0_id_5c80d85b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_style_index_0_id_5c80d85b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_style_index_0_id_5c80d85b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -24014,10 +25109,10 @@ component.options.__file = "resources/js/components/consultorio/historiaClinica/
 
 /***/ }),
 
-/***/ "./resources/js/components/consultorio/historiaClinica/evolucion.vue":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/consultorio/historiaClinica/evolucion.vue ***!
-  \***************************************************************************/
+/***/ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue ***!
+  \*********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -24025,8 +25120,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./evolucion.vue?vue&type=template&id=28b3d424& */ "./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424&");
-/* harmony import */ var _evolucion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./evolucion.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js&");
+/* harmony import */ var _formulaAnteojos_vue_vue_type_template_id_5c80d85b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./formulaAnteojos.vue?vue&type=template&id=5c80d85b&scoped=true& */ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=template&id=5c80d85b&scoped=true&");
+/* harmony import */ var _formulaAnteojos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./formulaAnteojos.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=script&lang=js&");
+/* harmony import */ var _formulaAnteojos_vue_vue_type_style_index_0_id_5c80d85b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css& */ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _formulaAnteojos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _formulaAnteojos_vue_vue_type_template_id_5c80d85b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _formulaAnteojos_vue_vue_type_template_id_5c80d85b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "5c80d85b",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _motivoConsulta_vue_vue_type_template_id_5752b85d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./motivoConsulta.vue?vue&type=template&id=5752b85d& */ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=template&id=5752b85d&");
+/* harmony import */ var _motivoConsulta_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./motivoConsulta.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -24036,9 +25172,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _evolucion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__.render,
-  _evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _motivoConsulta_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _motivoConsulta_vue_vue_type_template_id_5752b85d___WEBPACK_IMPORTED_MODULE_0__.render,
+  _motivoConsulta_vue_vue_type_template_id_5752b85d___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -24048,7 +25184,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/consultorio/historiaClinica/evolucion.vue"
+component.options.__file = "resources/js/components/consultorio/historiaClinica/motivoConsulta.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -24365,10 +25501,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************/
+/***/ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -24376,8 +25512,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./evolucion.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./formulaAnteojos.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motivoConsulta_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motivoConsulta.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_motivoConsulta_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -24470,6 +25622,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_login_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./login.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/login.vue?vue&type=style&index=0&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_style_index_0_id_5c80d85b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -24593,19 +25758,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424& ***!
-  \**********************************************************************************************************/
+/***/ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=template&id=5c80d85b&scoped=true&":
+/*!****************************************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=template&id=5c80d85b&scoped=true& ***!
+  \****************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_template_id_5c80d85b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_template_id_5c80d85b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_evolucion_vue_vue_type_template_id_28b3d424___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./evolucion.vue?vue&type=template&id=28b3d424& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_formulaAnteojos_vue_vue_type_template_id_5c80d85b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./formulaAnteojos.vue?vue&type=template&id=5c80d85b&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=template&id=5c80d85b&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=template&id=5752b85d&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=template&id=5752b85d& ***!
+  \***************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motivoConsulta_vue_vue_type_template_id_5752b85d___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motivoConsulta_vue_vue_type_template_id_5752b85d___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_motivoConsulta_vue_vue_type_template_id_5752b85d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./motivoConsulta.vue?vue&type=template&id=5752b85d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=template&id=5752b85d&");
 
 
 /***/ }),
@@ -25619,7 +26801,7 @@ var render = function () {
                 },
                 scopedSlots: _vm._u([
                   {
-                    key: "item.acciones",
+                    key: "item.motivoConsulta",
                     fn: function (ref) {
                       var item = ref.item
                       return [
@@ -25628,9 +26810,10 @@ var render = function () {
                           {
                             staticStyle: { "text-decoration": "none" },
                             attrs: {
+                              title: "Motivo Consulta (subir refracciones)",
                               to: {
                                 path:
-                                  "/consultorio/historia-clinica/evolucion/" +
+                                  "/consultorio/historia-clinica/motivo-consulta/" +
                                   item.numero_documento,
                                 params: {
                                   numero_documento: item.numero_documento,
@@ -25639,8 +26822,1703 @@ var render = function () {
                             },
                           },
                           [
+                            _c("v-icon", { attrs: { color: "primary" } }, [
+                              _vm._v(
+                                "\n                            query_stats\n                        "
+                              ),
+                            ]),
+                          ],
+                          1
+                        ),
+                      ]
+                    },
+                  },
+                  {
+                    key: "item.formulaAnteojos",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "router-link",
+                          {
+                            staticStyle: { "text-decoration": "none" },
+                            attrs: {
+                              title: "Formula Anteojos",
+                              to: {
+                                path:
+                                  "/consultorio/historia-clinica/formula-anteojos/" +
+                                  item.numero_documento,
+                                params: {
+                                  numero_documento: item.numero_documento,
+                                },
+                              },
+                            },
+                          },
+                          [
+                            _c("v-icon", { attrs: { color: "light-green" } }, [
+                              _vm._v(
+                                "\n                            fact_check\n                        "
+                              ),
+                            ]),
+                          ],
+                          1
+                        ),
+                      ]
+                    },
+                  },
+                ]),
+              }),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=template&id=5c80d85b&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=template&id=5c80d85b&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("loadingGeneral", { attrs: { overlayLoading: _vm.overlayLoading } }),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticClass: "mt-7", attrs: { elevation: "2" } },
+        [
+          _c("h3", { staticClass: "text-center" }, [
+            _vm._v("FORMULA ANTEOJOS - " + _vm._s(_vm.numero_formula_anteojos)),
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2 pt-5" },
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "12", sm: "3" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      type: "date",
+                      "error-messages": _vm.errors.fecha_formula,
+                      title: "Fecha Formula",
+                      dense: "",
+                      label: "Fecha Formula",
+                    },
+                    model: {
+                      value: _vm.form.fecha_formula,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "fecha_formula", $$v)
+                      },
+                      expression: "form.fecha_formula",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-left-radius": "14px",
+                    "border-bottom-left-radius": "14px",
+                  },
+                  attrs: { sm: "1", cols: "6" },
+                },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _c("strong", [_vm._v("AVSC ")]),
+                    _vm._v("OD*"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("OI*"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-right-radius": "14px",
+                    "border-bottom-right-radius": "14px",
+                  },
+                  attrs: { sm: "2", cols: "6" },
+                },
+                [
+                  _c("v-text-field", {
+                    staticStyle: { "min-height": "20px" },
+                    attrs: {
+                      "error-messages": _vm.errors.avsc_od,
+                      title: "AVSC ojo derecho",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.avsc_od,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "avsc_od", $$v)
+                      },
+                      expression: "form.avsc_od",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.avsc_oi,
+                      title: "AVSC ojo Izquierdo",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.avsc_oi,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "avsc_oi", $$v)
+                      },
+                      expression: "form.avsc_oi",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-3 pb-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _c("strong", [_vm._v("RX")]),
+                    _vm._v(" OD*"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("OI*"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-3 pb-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.rx_od,
+                      title: "RX ojo derecho",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.rx_od,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "rx_od", $$v)
+                      },
+                      expression: "form.rx_od",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.rx_oi,
+                      title: "RX ojo Izquierdo",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.rx_oi,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "rx_oi", $$v)
+                      },
+                      expression: "form.rx_oi",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-left-radius": "14px",
+                    "border-bottom-left-radius": "14px",
+                  },
+                  attrs: { sm: "1", cols: "6" },
+                },
+                [
+                  _c(
+                    "v-subheader",
+                    { staticClass: "pl-0 mb-4 font-weight-bold" },
+                    [_vm._v("Quera-"), _c("br"), _vm._v("trometria OD*")]
+                  ),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("OI*"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-right-radius": "14px",
+                    "border-bottom-right-radius": "14px",
+                  },
+                  attrs: { sm: "2", cols: "6" },
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.que_od,
+                      title: "Queratometría Ojo Derecho",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.que_od,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "que_od", $$v)
+                      },
+                      expression: "form.que_od",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.que_oi,
+                      title: "Queratometría Ojo Izquierdo",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.que_oi,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "que_oi", $$v)
+                      },
+                      expression: "form.que_oi",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-1 pb-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0" }, [
+                    _vm._v("Hirschberg"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0" }, [
+                    _vm._v("Cover Test"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-1 pb-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.hirschberg,
+                      title: "Hirschberg",
+                      "single-line": "",
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.hirschberg,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "hirschberg", $$v)
+                      },
+                      expression: "form.hirschberg",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.cover_test,
+                      title: "Cover Test",
+                      "single-line": "",
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.cover_test,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "cover_test", $$v)
+                      },
+                      expression: "form.cover_test",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2 pt-5" },
+            [
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-left-radius": "14px",
+                    "border-bottom-left-radius": "14px",
+                  },
+                  attrs: { sm: "1", cols: "6" },
+                },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("Refracción Objetiva OD*"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("OI*"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-right-radius": "14px",
+                    "border-bottom-right-radius": "14px",
+                  },
+                  attrs: { sm: "2", cols: "6" },
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ref_obj_od,
+                      title: "Refracción Objetiva Ojo Derecho",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.ref_obj_od,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ref_obj_od", $$v)
+                      },
+                      expression: "form.ref_obj_od",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ref_obj_oi,
+                      title: "Refracción Objetiva Ojo izquierdo",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.ref_obj_oi,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ref_obj_oi", $$v)
+                      },
+                      expression: "form.ref_obj_oi",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-3 pb-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("Refracción Subjetiva OD*"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("OI*"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-3 pb-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ref_sub_od,
+                      title: "Refracción Subjetiva Ojo Derecho",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.ref_sub_od,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ref_sub_od", $$v)
+                      },
+                      expression: "form.ref_sub_od",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ref_sub_oi,
+                      title: "Refracción Subjetiva Ojo izquierdo",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.ref_sub_oi,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ref_sub_oi", $$v)
+                      },
+                      expression: "form.ref_sub_oi",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2 mt-5" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("PPC:"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ppc,
+                      title: "Punto Próximo de Convergencia",
+                      "single-line": "",
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.ppc,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ppc", $$v)
+                      },
+                      expression: "form.ppc",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("Motilidad ocular"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.motilidad_ocular,
+                      title: "Motilidad ocular",
+                      "single-line": "",
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.motilidad_ocular,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "motilidad_ocular", $$v)
+                      },
+                      expression: "form.motilidad_ocular",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("Dilatación Pupilar"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.dilatacion_pupilar,
+                      title: "Dilatación Pupilar",
+                      "single-line": "",
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.dilatacion_pupilar,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "dilatacion_pupilar", $$v)
+                      },
+                      expression: "form.dilatacion_pupilar",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                    _vm._v("Pupilas"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.pupilas,
+                      title: "Pupilas",
+                      "single-line": "",
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.pupilas,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "pupilas", $$v)
+                      },
+                      expression: "form.pupilas",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c(
+                "v-col",
+                {
+                  staticStyle: {
+                    border: "solid 1px #000",
+                    "border-radius": "22px",
+                  },
+                  attrs: { sm: "6", cols: "12" },
+                },
+                [
+                  _c("h4", [_vm._v("BIOMICROSCOPIA OD:*")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    { staticClass: "pt-4" },
+                    [
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "pt-0 pl-1 pr-1",
+                          attrs: { sm: "4", cols: "12" },
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_par,
+                              label: "Parpados",
+                              title: "Parpados ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_par,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_par", $$v)
+                              },
+                              expression: "form.bio_od_par",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_con,
+                              label: "Conjuntiva",
+                              title: "Conjuntiva ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_con,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_con", $$v)
+                              },
+                              expression: "form.bio_od_con",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_cor,
+                              label: "Cornea",
+                              title: "Cornea ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_cor,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_cor", $$v)
+                              },
+                              expression: "form.bio_od_cor",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_pup,
+                              label: "Pupilar",
+                              title: "Pupilar ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_pup,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_pup", $$v)
+                              },
+                              expression: "form.bio_od_pup",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "pt-0 pl-1 pr-1",
+                          attrs: { sm: "4", cols: "12" },
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_gra,
+                              label: "Grado",
+                              title: "Grado ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_gra,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_gra", $$v)
+                              },
+                              expression: "form.bio_od_gra",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_iris,
+                              label: "Iris",
+                              title: "Iris ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_iris,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_iris", $$v)
+                              },
+                              expression: "form.bio_od_iris",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_ref,
+                              label: "Reflejo",
+                              title: "Reflejo ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_ref,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_ref", $$v)
+                              },
+                              expression: "form.bio_od_ref",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "pt-0 pl-1 pr-1",
+                          attrs: { sm: "4", cols: "12" },
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_cri,
+                              label: "Cristalino",
+                              title: "Cristalino ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_cri,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_cri", $$v)
+                              },
+                              expression: "form.bio_od_cri",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_pre,
+                              label: "Presión",
+                              title: "Presión ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_pre,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_pre", $$v)
+                              },
+                              expression: "form.bio_od_pre",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_od_ocu,
+                              label: "Ocular",
+                              title: "Ocular ojo derecho",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_od_ocu,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_od_ocu", $$v)
+                              },
+                              expression: "form.bio_od_ocu",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticStyle: {
+                    border: "solid 1px #000",
+                    "border-radius": "22px",
+                  },
+                  attrs: { sm: "6", cols: "12" },
+                },
+                [
+                  _c("h4", [_vm._v("BIOMICROSCOPIA OI:*")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    { staticClass: "pt-4" },
+                    [
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "pt-0 pl-1 pr-1",
+                          attrs: { sm: "4", cols: "12" },
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_par,
+                              title: "Parpados ojo izquierdo",
+                              label: "Parpados",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_par,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_par", $$v)
+                              },
+                              expression: "form.bio_oi_par",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_con,
+                              title: "Conjuntiva ojo izquierdo",
+                              label: "Conjuntiva",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_con,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_con", $$v)
+                              },
+                              expression: "form.bio_oi_con",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_cor,
+                              title: "Cornea ojo izquierdo",
+                              label: "Cornea",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_cor,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_cor", $$v)
+                              },
+                              expression: "form.bio_oi_cor",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_pup,
+                              title: "Pupilar ojo izquierdo",
+                              label: "Pupilar",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_pup,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_pup", $$v)
+                              },
+                              expression: "form.bio_oi_pup",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "pt-0 pl-1 pr-1",
+                          attrs: { sm: "4", cols: "12" },
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_gra,
+                              title: "Grado ojo izquierdo",
+                              label: "Grado",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_gra,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_gra", $$v)
+                              },
+                              expression: "form.bio_oi_gra",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_iris,
+                              title: "Iris ojo izquierdo",
+                              label: "Iris",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_iris,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_iris", $$v)
+                              },
+                              expression: "form.bio_oi_iris",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_ref,
+                              title: "Reflejo ojo izquierdo",
+                              label: "Reflejo",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_ref,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_ref", $$v)
+                              },
+                              expression: "form.bio_oi_ref",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        {
+                          staticClass: "pt-0 pl-1 pr-1",
+                          attrs: { sm: "4", cols: "12" },
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_cri,
+                              title: "Cristalino ojo izquierdo",
+                              label: "Cristalino",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_cri,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_cri", $$v)
+                              },
+                              expression: "form.bio_oi_cri",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_pre,
+                              title: "Presión ojo izquierdo",
+                              label: "Presión",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_pre,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_pre", $$v)
+                              },
+                              expression: "form.bio_oi_pre",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.bio_oi_ocu,
+                              title: "Ocular ojo izquierdo",
+                              label: "Ocular",
+                              outlined: "",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.bio_oi_ocu,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "bio_oi_ocu", $$v)
+                              },
+                              expression: "form.bio_oi_ocu",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("h4", { staticClass: "text-center pt-4" }, [
+            _vm._v("FONDO DE OJO"),
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2 pt-4" },
+            [
+              _c(
+                "v-col",
+                {
+                  staticStyle: {
+                    border: "solid 1px #000",
+                    "border-radius": "22px",
+                  },
+                  attrs: { sm: "6", cols: "12" },
+                },
+                [
+                  _c("h4", [_vm._v("OD*")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        { staticClass: "pt-0", attrs: { sm: "2", cols: "6" } },
+                        [
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Papila"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Macula"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Vasos"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Retinales"),
+                          ]),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pt-0", attrs: { sm: "4", cols: "6" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_od_pap,
+                              title: "Papila ojo derecho",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_od_pap,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_od_pap", $$v)
+                              },
+                              expression: "form.fon_od_pap",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_od_mac,
+                              title: "Macula ojo derecho",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_od_mac,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_od_mac", $$v)
+                              },
+                              expression: "form.fon_od_mac",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_od_vas,
+                              title: "Vasos ojo derecho",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_od_vas,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_od_vas", $$v)
+                              },
+                              expression: "form.fon_od_vas",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_od_retinales,
+                              title: "Retinales ojo derecho",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_od_retinales,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_od_retinales", $$v)
+                              },
+                              expression: "form.fon_od_retinales",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pt-0", attrs: { sm: "2", cols: "6" } },
+                        [
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Vitreo"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Periferia"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Retina"),
+                          ]),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pt-0", attrs: { sm: "4", cols: "6" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_od_vit,
+                              title: "Vitreo ojo derecho",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_od_vit,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_od_vit", $$v)
+                              },
+                              expression: "form.fon_od_vit",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_od_per,
+                              title: "Periferia ojo derecho",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_od_per,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_od_per", $$v)
+                              },
+                              expression: "form.fon_od_per",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_od_retina,
+                              title: "Retina ojo derecho",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_od_retina,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_od_retina", $$v)
+                              },
+                              expression: "form.fon_od_retina",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticStyle: {
+                    border: "solid 1px #000",
+                    "border-radius": "22px",
+                  },
+                  attrs: { sm: "6", cols: "12" },
+                },
+                [
+                  _c("h4", [_vm._v("OI:*")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        { staticClass: "pt-0", attrs: { sm: "2", cols: "6" } },
+                        [
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Papila"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Macula"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Vasos"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Retinales"),
+                          ]),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pt-0", attrs: { sm: "4", cols: "6" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_oi_pap,
+                              title: "Papila Ojo izquierdo",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_oi_pap,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_oi_pap", $$v)
+                              },
+                              expression: "form.fon_oi_pap",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_oi_mac,
+                              title: "Macula ojo izquierdo",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_oi_mac,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_oi_mac", $$v)
+                              },
+                              expression: "form.fon_oi_mac",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_oi_vas,
+                              title: "Vasos ojo izquierdo",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_oi_vas,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_oi_vas", $$v)
+                              },
+                              expression: "form.fon_oi_vas",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_oi_retinales,
+                              title: "Retinales ojo izquierdo",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_oi_retinales,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_oi_retinales", $$v)
+                              },
+                              expression: "form.fon_oi_retinales",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pt-0", attrs: { sm: "2", cols: "6" } },
+                        [
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Vitreo"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Periferia"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-subheader", { staticClass: "pl-0" }, [
+                            _vm._v("Retina"),
+                          ]),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "pt-0", attrs: { sm: "4", cols: "6" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_oi_vit,
+                              title: "Vitreo ojo derecho",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_oi_vit,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_oi_vit", $$v)
+                              },
+                              expression: "form.fon_oi_vit",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_oi_per,
+                              title: "Periferia ojo izquierdo",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_oi_per,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_oi_per", $$v)
+                              },
+                              expression: "form.fon_oi_per",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "error-messages": _vm.errors.fon_oi_retina,
+                              title: "Retina ojo izquierdo",
+                              dense: "",
+                            },
+                            model: {
+                              value: _vm.form.fon_oi_retina,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.form, "fon_oi_retina", $$v)
+                              },
+                              expression: "form.fon_oi_retina",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-1 mr-1 pt-4" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "12", sm: "6" } },
+                [
+                  _c("v-textarea", {
+                    attrs: { rows: "2", outlined: "", label: "Diagnostico" },
+                    model: {
+                      value: _vm.form.diagnostico,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "diagnostico", $$v)
+                      },
+                      expression: "form.diagnostico",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "12", sm: "6" } },
+                [
+                  _c("v-textarea", {
+                    attrs: { rows: "2", outlined: "", label: "Tratamiento" },
+                    model: {
+                      value: _vm.form.tratamiento,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "tratamiento", $$v)
+                      },
+                      expression: "form.tratamiento",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "pl-4 pr-4" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "d-flex justify-end", attrs: { cols: "12" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text text-none mr-3",
+                      attrs: {
+                        type: "submit",
+                        small: "",
+                        color: "red darken-4",
+                        title:
+                          "Vacía campos del formulario para crear nueva formula anteojos.",
+                        tile: "",
+                      },
+                      on: { click: _vm.limpiarCampos },
+                    },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [
+                        _vm._v(" format_clear "),
+                      ]),
+                      _vm._v("Limpiar\n                "),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text text-none",
+                      attrs: {
+                        type: "submit",
+                        small: "",
+                        color: "success",
+                        tile: "",
+                      },
+                      on: { click: _vm.fnAccion },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.cAccion) +
+                          "\n                    "
+                      ),
+                      _c("v-icon", { attrs: { right: "" } }, [
+                        _vm._v(" save "),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c(
+                "v-card-title",
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      type: "text",
+                      "append-icon": "mdi-magnify",
+                      label: "Buscar",
+                      "single-line": "",
+                      "hide-details": "",
+                    },
+                    on: { input: _vm.filterSearch },
+                    model: {
+                      value: _vm.buscar,
+                      callback: function ($$v) {
+                        _vm.buscar = $$v
+                      },
+                      expression: "buscar",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  page: _vm.page,
+                  headers: _vm.headers,
+                  items: _vm.dataSet,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalRegistros,
+                  loading: _vm.loading,
+                  "items-per-page": 5,
+                  "footer-props": {
+                    "items-per-page-options": [5, 10, 15, 50],
+                  },
+                  "sort-by": "updated_at",
+                  "sort-desc": true,
+                  "no-data-text": "Sin registros",
+                },
+                on: {
+                  "update:options": function ($event) {
+                    _vm.options = $event
+                  },
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.acciones",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            staticClass: "mr-2",
+                            attrs: {
+                              color: "primary",
+                              title: "Editar Formula Anteojos",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnShow(item.id)
+                              },
+                            },
+                          },
+                          [
                             _vm._v(
-                              "\n                    Motivo Consulta\n                    "
+                              "\n                        mdi-pencil\n                    "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: {
+                              color: "red",
+                              title: "Eliminar Formula Anteojos.",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnDelete(item)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-delete\n                    "
                             ),
                           ]
                         ),
@@ -25666,10 +28544,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424&":
-/*!*************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/evolucion.vue?vue&type=template&id=28b3d424& ***!
-  \*************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=template&id=5752b85d&":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue?vue&type=template&id=5752b85d& ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -25691,6 +28569,8 @@ var render = function () {
         "v-card",
         { staticClass: "mt-7", attrs: { elevation: "2" } },
         [
+          _c("h3", { staticClass: "text-center" }, [_vm._v("Motivo Consulta")]),
+          _vm._v(" "),
           _c(
             "v-row",
             { staticClass: "pl-4 pr-4 pt-5" },
