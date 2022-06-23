@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\HistoriaClinica;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Models\FormulaAnteojos;
 use App\Http\Controllers\Controller;
+use App\Traits\metodosComunesTrait;
 use Illuminate\Support\Facades\Validator;
 
 class FormulaAnteojosController extends Controller
 {
+    use metodosComunesTrait;
 
     /**
      * Muestra historial clinico formula anteojos de paciente.
@@ -126,8 +129,13 @@ class FormulaAnteojosController extends Controller
             $input = $request->except(['numero_documento']);
             $input = $request->collect();
 
-            $data = $input->map(function ($valor) {
-                return trim($valor);
+            $data = $input->map(function ($valor, $key) {
+                if ($key == "diagnostico" || $key == "tratamiento" || $key == "observacion" || $key == "orden_medica") {
+                    $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
+                }else{
+                    $valor = trim($valor);
+                }
+                return $valor;
             })->all();
 
             FormulaAnteojos::create($data);
@@ -201,25 +209,24 @@ class FormulaAnteojosController extends Controller
         }
 
         try {
-            $numeroFormulaAnteojos = $this->obtenerNumeroFormulaAnteojos($paciente->id);
-
-            $request->merge([
-                'numero_formula_anteojos'   => $numeroFormulaAnteojos
-            ]);
 
             $input = $request->except(['numero_documento']);
             $input = $request->collect();
 
-            $data = $input->map(function ($valor) {
-                return trim($valor);
+            $data = $input->map(function ($valor, $key) {
+                if ($key == "diagnostico" || $key == "tratamiento" || $key == "observacion" || $key == "orden_medica") {
+                    $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
+                }else{
+                    $valor = trim($valor);
+                }
+                return $valor;
             })->all();
-
             $formulaAnteojos->update($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',
                 'errors' => [
-                    'Error al Actualizar datos.'
+                    'Error al Actualizar datos.'.$e
                 ]
             ], 500);
         }
@@ -269,9 +276,15 @@ class FormulaAnteojosController extends Controller
      */
     public function obtenerNumeroFormulaAnteojos($numero_documento){
         $id_paciente = Paciente::select('id')->where('numero_documento',$numero_documento)->first();
+        if (!$id_paciente) {
+            return response()->json([
+                'message' => 'Error de Validación',
+                'errors'  => "El Paciente con No Documento $numero_documento no existe."
+            ], 404);
+        }
         try {
             $numeroFormulaAnteojos = FormulaAnteojos::select('numero_formula_anteojos')
-                ->where('id_paciente', $id_paciente)
+                ->where('id_paciente', $id_paciente->id)
                 ->orderBy('id', 'desc')
                 ->first();
 
@@ -289,5 +302,75 @@ class FormulaAnteojosController extends Controller
                 'errors' => "Error al obtener Número formula anteojos consecutivo."
             ], 500);
         }
+    }
+
+    /**
+     * Método que genera reporte en PDF de Formula Anteojos
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reportePdf(Request $request){
+        $mData = [];
+
+        $paciente = Paciente::select([
+            'id',
+            'numero_documento',
+            'nombre',
+            'apellido',
+        ])
+        ->where('numero_documento', $request->numero_documento)
+        ->first();
+
+        if (!$paciente) {
+            return response()->json([
+                'message' => 'Error de Validación',
+                'errors'  => "El Paciente con No Documento $request->numero_documento no existe."
+            ], 404);
+        }
+
+        $formulaAnteojos = FormulaAnteojos::findOrFail($request->id_formula);
+
+        switch ($request->tipo_reporte) {
+            case 'formula':
+                $mData['tipo_rerporte'] = 'formula';
+                $data = [
+                    "tratamiento"       => $formulaAnteojos->tratamiento,
+                    "pacienteCc"        => $paciente->numero_documento,
+                    "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido
+                ];
+                $mData['data'] = $data;
+            break;
+            case 'orden_medica':
+                $mData['tipo_rerporte'] = 'orden_medica';
+                $data = [
+                    "orden_medica"      => $formulaAnteojos->orden_medica,
+                    "pacienteCc"        => $paciente->numero_documento,
+                    "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido
+                ];
+                $mData['data'] = $data;
+            break;
+            case 'rx':
+                $mData['tipo_rerporte'] = 'rx';
+                $data = [
+                    "pacienteCc"        => $paciente->numero_documento,
+                    "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido,
+                    "rx_od"             => $formulaAnteojos->rx_od,
+                    "rx_oi"             => $formulaAnteojos->rx_oi,
+                    "adicion"           => $formulaAnteojos->adicion,
+                    "dp"                => $formulaAnteojos->dp,
+                    "observacion"       => $formulaAnteojos->observacion
+                ];
+                $mData['data'] = $data;
+            break;
+            default:
+                return response()->json([
+                    'message' => 'Validación de Datos',
+                    'errors' => "No se encontro parámetrizado el tipo de reporte."
+                ], 404);
+            break;
+        }
+        $pdf = PDF::loadView('pdf.formulaAnteojos', ['mData' => $mData]);
+        return $pdf->output();
     }
 }

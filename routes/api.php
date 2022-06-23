@@ -49,6 +49,7 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
     Route::post('/delete/formula-anteojos/{id}', [FormulaAnteojosController::class, 'destroy']);
     Route::get('/listar/formula-anteojos/{numero_documento}', [FormulaAnteojosController::class, 'listar']);
     Route::get('/cosecutivo-formula-anteojos/{id_paciente}', [FormulaAnteojosController::class, 'obtenerNumeroFormulaAnteojos']);
+    Route::post('/pdf/formula-anteojos', [FormulaAnteojosController::class, 'reportePdf']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){

@@ -18,13 +18,20 @@ class CreateFormulaAnteojosTable extends Migration
             $table->unsignedBigInteger('id_paciente')->comment('Id Paciente');
             $table->string('numero_formula_anteojos', 6)->comment('Numero formula anteojos consecutivo');
 
-            // Campos AVSC
-            $table->string('avsc_od', 25)->comment('AVSC ojo derecho');
-            $table->string('avsc_oi', 25)->comment('AVSC ojo izquierdo');
+            // Campos AVS CC
+            $table->string('avs_cc_od', 25)->comment('Agudeza Visual con correccion ojo derecho');
+            $table->string('avs_cc_oi', 25)->comment('Agudeza Visual con correccion ojo izquierdo');
+
+            // Campos AVS SC
+            $table->string('avs_sc_od', 25)->comment('Agudeza Visual sin correccion ojo derecho');
+            $table->string('avs_sc_oi', 25)->comment('Agudeza Visual sin correccion ojo izquierdo');
 
             // Campos RX
             $table->string('rx_od', 25)->comment('RX ojo derecho');
             $table->string('rx_oi', 25)->comment('RX ojo izquierdo');
+            $table->string('adicion', 25)->comment('adicion');
+            $table->string('dp', 25)->comment('Distancia Pupilar');
+            $table->text('observacion')->comment('Observacion');
 
             // Campos Refraccion Objetiva
             $table->string('ref_obj_od', 25)->comment('Refraccion Objetiva ojo derecho');
@@ -42,55 +49,52 @@ class CreateFormulaAnteojosTable extends Migration
             $table->string('ppc', 25)->comment('Punto Próximo de Convergencia');
             $table->string('motilidad_ocular', 25)->comment('Motilidad ocular');
             $table->string('dilatacion_pupilar', 25)->comment('Dilatacion pupilar');
-            $table->string('pupilas', 25)->comment('Pupilas');
+            $table->string('papilas', 25)->comment('Papilas');
 
             // Campos Biomicroscopia ojo derecho
             $table->string('bio_od_par', 25)->comment('Biomicroscopia ojo derecho parpados');
-            $table->string('bio_od_gra', 25)->comment('Biomicroscopia ojo derecho grado');// PREGUNTAR NOMBRE
+            $table->string('bio_od_ang', 25)->comment('Biomicroscopia ojo derecho angulo');
             $table->string('bio_od_cri', 25)->comment('Biomicroscopia ojo derecho cristalino');
             $table->string('bio_od_con', 25)->comment('Biomicroscopia ojo derecho conjuntiva');
             $table->string('bio_od_iris', 25)->comment('Biomicroscopia ojo derecho iris');
-            $table->string('bio_od_pre', 25)->comment('Biomicroscopia ojo derecho presion');
+            $table->string('bio_od_pro', 25)->comment('Biomicroscopia ojo derecho presion Ocular');
             $table->string('bio_od_cor', 25)->comment('Biomicroscopia ojo derecho cornea');
-            $table->string('bio_od_ref', 25)->comment('Biomicroscopia ojo derecho reflejo');
-            $table->string('bio_od_ocu', 25)->comment('Biomicroscopia ojo derecho ocular');
-            $table->string('bio_od_pup', 25)->comment('Biomicroscopia ojo derecho pupilar');
+            $table->string('bio_od_rpa', 25)->comment('Biomicroscopia ojo derecho Reflejo Papilar');
 
             // Campos Biomicroscopia ojo izquierdo
             $table->string('bio_oi_par', 25)->comment('Biomicroscopia ojo izquierdo parpados');
-            $table->string('bio_oi_gra', 25)->comment('Biomicroscopia ojo izquierdo grado');// PREGUNTAR NOMBRE
+            $table->string('bio_oi_ang', 25)->comment('Biomicroscopia ojo izquierdo angulo');
             $table->string('bio_oi_cri', 25)->comment('Biomicroscopia ojo izquierdo cristalino');
             $table->string('bio_oi_con', 25)->comment('Biomicroscopia ojo izquierdo conjuntiva');
             $table->string('bio_oi_iris', 25)->comment('Biomicroscopia ojo izquierdo iris');
-            $table->string('bio_oi_pre', 25)->comment('Biomicroscopia ojo izquierdo presion');
+            $table->string('bio_oi_pro', 25)->comment('Biomicroscopia ojo izquierdo presion Ocular');
             $table->string('bio_oi_cor', 25)->comment('Biomicroscopia ojo izquierdo cornea');
-            $table->string('bio_oi_ref', 25)->comment('Biomicroscopia ojo izquierdo reflejo');
-            $table->string('bio_oi_ocu', 25)->comment('Biomicroscopia ojo izquierdo ocular');
-            $table->string('bio_oi_pup', 25)->comment('Biomicroscopia ojo izquierdo pupilar');
+            $table->string('bio_oi_rpa', 25)->comment('Biomicroscopia ojo izquierdo Reflejo Papilar');
 
             // Campos Fondo de Ojo ojo derecho
             $table->string('fon_od_pap', 25)->comment('Fondo de ojo derecho papila');
             $table->string('fon_od_vit', 25)->comment('Fondo de ojo derecho vitreo');
             $table->string('fon_od_mac', 25)->comment('Fondo de ojo derecho macula');
             $table->string('fon_od_per', 25)->comment('Fondo de ojo derecho periferia');
-            $table->string('fon_od_vas', 25)->comment('Fondo de ojo derecho vasos');
+            $table->string('fon_od_vre', 25)->comment('Fondo de ojo derecho Vasos Retinales');
             $table->string('fon_od_retina', 25)->comment('Fondo de ojo derecho retina');
-            $table->string('fon_od_retinales', 25)->comment('Fondo de ojo derecho retinales');
 
             // Campos Fondo de Ojo ojo izquierdo
             $table->string('fon_oi_pap', 25)->comment('Fondo de ojo izquierdo papila');
             $table->string('fon_oi_vit', 25)->comment('Fondo de ojo izquierdo vitreo');
             $table->string('fon_oi_mac', 25)->comment('Fondo de ojo izquierdo macula');
             $table->string('fon_oi_per', 25)->comment('Fondo de ojo izquierdo periferia');
-            $table->string('fon_oi_vas', 25)->comment('Fondo de ojo izquierdo vasos');
+            $table->string('fon_oi_vre', 25)->comment('Fondo de ojo izquierdo Vasos Retinales');
             $table->string('fon_oi_retina', 25)->comment('Fondo de ojo izquierdo retina');
-            $table->string('fon_oi_retinales', 25)->comment('Fondo de ojo izquierdo retinales');
 
             // Diagnostico
-            $table->string('diagnostico')->comment('Diagnostico');
+            $table->text('diagnostico')->comment('Diagnostico');
 
             // Tratamiento
-            $table->string('tratamiento')->comment('Tratamiento');
+            $table->text('tratamiento')->comment('Tratamiento');
+
+            // Tratamiento
+            $table->text('orden_medica')->comment('Orden Medica');
 
             $table->date('fecha_formula')->comment('Fecha Formula');
             $table->softDeletes();
