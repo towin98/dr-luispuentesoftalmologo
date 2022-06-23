@@ -91,7 +91,12 @@ export default {
                 })
                 .catch((errors) => {
                     this.overlayLoading = false;
-                    if (errors.response.status == 423) {
+                    if (errors.response == undefined) {
+                        this.$swal({
+                            icon: "error",
+                            title: "Intentalo más tarde.",
+                        });
+                    }else if (errors.response.status == 423) {
                         this.$swal({
                             title: errors.response.data.message,
                             text: errors.response.data.errors,

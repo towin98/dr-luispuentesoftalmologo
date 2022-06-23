@@ -2225,7 +2225,12 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (errors) {
         _this.overlayLoading = false;
 
-        if (errors.response.status == 423) {
+        if (errors.response == undefined) {
+          _this.$swal({
+            icon: "error",
+            title: "Intentalo más tarde."
+          });
+        } else if (errors.response.status == 423) {
           _this.$swal({
             title: errors.response.data.message,
             text: errors.response.data.errors,
@@ -3468,6 +3473,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -3484,7 +3552,7 @@ __webpack_require__.r(__webpack_exports__);
       overlayLoading: false,
       options: {},
       headers: [{
-        text: "Historia Número",
+        text: "Número Formula Anteojos",
         value: "numero_formula_anteojos"
       }, {
         text: "Fecha Formula",
@@ -3517,10 +3585,15 @@ __webpack_require__.r(__webpack_exports__);
       errors: "",
       form: {
         id: '',
-        avsc_od: '',
-        avsc_oi: '',
+        avs_cc_od: '',
+        avs_cc_oi: '',
+        avs_sc_od: '',
+        avs_sc_oi: '',
         rx_od: '',
         rx_oi: '',
+        adicion: '',
+        dp: '',
+        observacion: '',
         ref_obj_od: '',
         ref_obj_oi: '',
         ref_sub_od: '',
@@ -3532,43 +3605,38 @@ __webpack_require__.r(__webpack_exports__);
         ppc: '',
         motilidad_ocular: '',
         dilatacion_pupilar: '',
-        pupilas: '',
+        papilas: '',
         bio_od_par: '',
-        bio_od_gra: '',
+        bio_od_ang: '',
         bio_od_cri: '',
         bio_od_con: '',
         bio_od_iris: '',
-        bio_od_pre: '',
+        bio_od_pro: '',
         bio_od_cor: '',
-        bio_od_ref: '',
-        bio_od_ocu: '',
-        bio_od_pup: '',
+        bio_od_rpa: '',
         bio_oi_par: '',
-        bio_oi_gra: '',
+        bio_oi_ang: '',
         bio_oi_cri: '',
         bio_oi_con: '',
         bio_oi_iris: '',
-        bio_oi_pre: '',
+        bio_oi_pro: '',
         bio_oi_cor: '',
-        bio_oi_ref: '',
-        bio_oi_ocu: '',
-        bio_oi_pup: '',
+        bio_oi_rpa: '',
         fon_od_pap: '',
         fon_od_vit: '',
         fon_od_mac: '',
         fon_od_per: '',
-        fon_od_vas: '',
+        fon_od_vre: '',
         fon_od_retina: '',
-        fon_od_retinales: '',
         fon_oi_pap: '',
         fon_oi_vit: '',
         fon_oi_mac: '',
         fon_oi_per: '',
-        fon_oi_vas: '',
+        fon_oi_vre: '',
         fon_oi_retina: '',
-        fon_oi_retinales: '',
         diagnostico: '',
-        tratamiento: ''
+        tratamiento: '',
+        orden_medica: ''
       }
     };
   },
@@ -3645,6 +3713,7 @@ __webpack_require__.r(__webpack_exports__);
     fnObtenerNumeroFormulaAnteojos: function fnObtenerNumeroFormulaAnteojos() {
       var _this3 = this;
 
+      this.form.numero_documento = this.$route.params.numero_documento;
       this.overlayLoading = true;
       axios.get("/consultorio-oftamologico/historia-clinica/cosecutivo-formula-anteojos/".concat(this.form.numero_documento)).then(function (response) {
         _this3.numero_formula_anteojos = response.data;
@@ -3756,10 +3825,15 @@ __webpack_require__.r(__webpack_exports__);
       this.cAccion = "Guardar";
       this.form.id = '';
       this.form.fecha_formula = '';
-      this.form.avsc_od = '';
-      this.form.avsc_oi = '';
+      this.form.avs_cc_od = '';
+      this.form.avs_cc_oi = '';
+      this.form.avs_sc_od = '';
+      this.form.avs_sc_oi = '';
       this.form.rx_od = '';
       this.form.rx_oi = '';
+      this.form.adicion = '';
+      this.form.dp = '';
+      this.form.observacion = '';
       this.form.ref_obj_od = '';
       this.form.ref_obj_oi = '';
       this.form.ref_sub_od = '';
@@ -3771,43 +3845,72 @@ __webpack_require__.r(__webpack_exports__);
       this.form.ppc = '';
       this.form.motilidad_ocular = '';
       this.form.dilatacion_pupilar = '';
-      this.form.pupilas = '';
+      this.form.papilas = '';
       this.form.bio_od_par = '';
-      this.form.bio_od_gra = '';
+      this.form.bio_od_ang = '';
       this.form.bio_od_cri = '';
       this.form.bio_od_con = '';
       this.form.bio_od_iris = '';
-      this.form.bio_od_pre = '';
+      this.form.bio_od_pro = '';
       this.form.bio_od_cor = '';
-      this.form.bio_od_ref = '';
-      this.form.bio_od_ocu = '';
-      this.form.bio_od_pup = '';
+      this.form.bio_od_rpa = '';
       this.form.bio_oi_par = '';
-      this.form.bio_oi_gra = '';
+      this.form.bio_oi_ang = '';
       this.form.bio_oi_cri = '';
       this.form.bio_oi_con = '';
       this.form.bio_oi_iris = '';
-      this.form.bio_oi_pre = '';
+      this.form.bio_oi_pro = '';
       this.form.bio_oi_cor = '';
-      this.form.bio_oi_ref = '';
-      this.form.bio_oi_ocu = '';
-      this.form.bio_oi_pup = '';
+      this.form.bio_oi_rpa = '';
       this.form.fon_od_pap = '';
       this.form.fon_od_vit = '';
       this.form.fon_od_mac = '';
       this.form.fon_od_per = '';
-      this.form.fon_od_vas = '';
+      this.form.fon_od_vre = '';
       this.form.fon_od_retina = '';
-      this.form.fon_od_retinales = '';
       this.form.fon_oi_pap = '';
       this.form.fon_oi_vit = '';
       this.form.fon_oi_mac = '';
       this.form.fon_oi_per = '';
-      this.form.fon_oi_vas = '';
+      this.form.fon_oi_vre = '';
       this.form.fon_oi_retina = '';
-      this.form.fon_oi_retinales = '';
       this.form.diagnostico = '';
       this.form.tratamiento = '';
+      this.form.orden_medica = '';
+    },
+    fnImprimir: function fnImprimir() {
+      var _this8 = this;
+
+      var reporte = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      this.overlayLoading = true;
+      var data = {
+        tipo_reporte: reporte,
+        numero_documento: this.$route.params.numero_documento,
+        id_formula: this.form.id
+      };
+      axios.post("/consultorio-oftamologico/historia-clinica/pdf/formula-anteojos", data, {
+        responseType: 'blob'
+      }).then(function (response) {
+        var hoy = new Date();
+        var fecha = hoy.getDate() + "" + (hoy.getMonth() + 1) + "" + hoy.getFullYear();
+        var hora = hoy.getHours() + "" + hoy.getMinutes() + "" + hoy.getSeconds();
+        var nombrePDF = reporte + "_" + fecha + "" + hora + ".pdf";
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', nombrePDF);
+        document.body.appendChild(link);
+        link.click();
+        _this8.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this8.$swal({
+          icon: 'error',
+          title: "",
+          text: "Error inesperado al generar PDF."
+        });
+
+        _this8.overlayLoading = false;
+      });
     }
   }
 });
@@ -6015,7 +6118,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ninput {\r\n    padding-left: 10px !important;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ninput {\n    padding-left: 10px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26961,12 +27064,11 @@ var render = function () {
                   attrs: { sm: "1", cols: "6" },
                 },
                 [
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
-                    _c("strong", [_vm._v("AVSC ")]),
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
                     _vm._v("OD*"),
                   ]),
                   _vm._v(" "),
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
                     _vm._v("OI*"),
                   ]),
                 ],
@@ -26985,38 +27087,39 @@ var render = function () {
                   attrs: { sm: "2", cols: "6" },
                 },
                 [
+                  _c("h5", { staticClass: "pb-2" }, [_vm._v("AVS CC")]),
+                  _vm._v(" "),
                   _c("v-text-field", {
-                    staticStyle: { "min-height": "20px" },
                     attrs: {
-                      "error-messages": _vm.errors.avsc_od,
-                      title: "AVSC ojo derecho",
+                      "error-messages": _vm.errors.avs_cc_od,
+                      title: "Agudeza Visual con correccion ojo derecho",
                       "single-line": "",
                       dense: "",
                       solo: "",
                     },
                     model: {
-                      value: _vm.form.avsc_od,
+                      value: _vm.form.avs_cc_od,
                       callback: function ($$v) {
-                        _vm.$set(_vm.form, "avsc_od", $$v)
+                        _vm.$set(_vm.form, "avs_cc_od", $$v)
                       },
-                      expression: "form.avsc_od",
+                      expression: "form.avs_cc_od",
                     },
                   }),
                   _vm._v(" "),
                   _c("v-text-field", {
                     attrs: {
-                      "error-messages": _vm.errors.avsc_oi,
-                      title: "AVSC ojo Izquierdo",
+                      "error-messages": _vm.errors.avs_cc_oi,
+                      title: "Agudeza Visual con correccion ojo izquierdo",
                       "single-line": "",
                       dense: "",
                       solo: "",
                     },
                     model: {
-                      value: _vm.form.avsc_oi,
+                      value: _vm.form.avs_cc_oi,
                       callback: function ($$v) {
-                        _vm.$set(_vm.form, "avsc_oi", $$v)
+                        _vm.$set(_vm.form, "avs_cc_oi", $$v)
                       },
-                      expression: "form.avsc_oi",
+                      expression: "form.avs_cc_oi",
                     },
                   }),
                 ],
@@ -27027,12 +27130,11 @@ var render = function () {
                 "v-col",
                 { staticClass: "pt-3 pb-0", attrs: { sm: "1", cols: "6" } },
                 [
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
-                    _c("strong", [_vm._v("RX")]),
-                    _vm._v(" OD*"),
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("OD*"),
                   ]),
                   _vm._v(" "),
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
                     _vm._v("OI*"),
                   ]),
                 ],
@@ -27043,6 +27145,82 @@ var render = function () {
                 "v-col",
                 { staticClass: "pt-3 pb-0", attrs: { sm: "2", cols: "6" } },
                 [
+                  _c("h5", { staticClass: "pb-2" }, [_vm._v("AVS SC")]),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.avs_sc_od,
+                      title: "Agudeza Visual sin correccion ojo derecho",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.avs_sc_od,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "avs_sc_od", $$v)
+                      },
+                      expression: "form.avs_sc_od",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.avs_sc_oi,
+                      title: "Agudeza Visual sin correccion ojo Izquierdo",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.avs_sc_oi,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "avs_sc_oi", $$v)
+                      },
+                      expression: "form.avs_sc_oi",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-left-radius": "14px",
+                    "border-bottom-left-radius": "14px",
+                  },
+                  attrs: { sm: "1", cols: "6" },
+                },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("OD*"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("OI*"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-right-radius": "14px",
+                    "border-bottom-right-radius": "14px",
+                  },
+                  attrs: { sm: "2", cols: "6" },
+                },
+                [
+                  _c("h5", { staticClass: "pb-2" }, [_vm._v("RX")]),
+                  _vm._v(" "),
                   _c("v-text-field", {
                     attrs: {
                       "error-messages": _vm.errors.rx_od,
@@ -27082,6 +27260,81 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "v-col",
+                { staticClass: "pt-1 pb-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0" }, [
+                    _vm._v("Adicion"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0" }, [_vm._v("DP")]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-1 pb-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.adicion,
+                      title: "Adición",
+                      "single-line": "",
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.adicion,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "adicion", $$v)
+                      },
+                      expression: "form.adicion",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.dp,
+                      title: "Distancia Pupilar",
+                      "single-line": "",
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.dp,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "dp", $$v)
+                      },
+                      expression: "form.dp",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-textarea", {
+                    attrs: {
+                      "error-messages": _vm.errors.observacion,
+                      rows: "4",
+                      outlined: "",
+                      label: "Observación",
+                    },
+                    model: {
+                      value: _vm.form.observacion,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "observacion", $$v)
+                      },
+                      expression: "form.observacion",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2 pt-5" },
+            [
+              _c(
+                "v-col",
                 {
                   staticClass: "pt-3 pb-0",
                   staticStyle: {
@@ -27092,13 +27345,11 @@ var render = function () {
                   attrs: { sm: "1", cols: "6" },
                 },
                 [
-                  _c(
-                    "v-subheader",
-                    { staticClass: "pl-0 mb-4 font-weight-bold" },
-                    [_vm._v("Quera-"), _c("br"), _vm._v("trometria OD*")]
-                  ),
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("OD*"),
+                  ]),
                   _vm._v(" "),
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
                     _vm._v("OI*"),
                   ]),
                 ],
@@ -27117,6 +27368,144 @@ var render = function () {
                   attrs: { sm: "2", cols: "6" },
                 },
                 [
+                  _c("h5", { staticClass: "pb-2" }, [
+                    _vm._v("Refracción Objetiva"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ref_obj_od,
+                      title: "Refracción Objetiva Ojo Derecho",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.ref_obj_od,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ref_obj_od", $$v)
+                      },
+                      expression: "form.ref_obj_od",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ref_obj_oi,
+                      title: "Refracción Objetiva Ojo izquierdo",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.ref_obj_oi,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ref_obj_oi", $$v)
+                      },
+                      expression: "form.ref_obj_oi",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-3 pb-0", attrs: { sm: "1", cols: "6" } },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("OD*"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("OI*"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-3 pb-0", attrs: { sm: "2", cols: "6" } },
+                [
+                  _c("h5", { staticClass: "pb-2" }, [
+                    _vm._v("Refracción Subjetiva"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ref_sub_od,
+                      title: "Refracción Subjetiva Ojo Derecho",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.ref_sub_od,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ref_sub_od", $$v)
+                      },
+                      expression: "form.ref_sub_od",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "error-messages": _vm.errors.ref_sub_oi,
+                      title: "Refracción Subjetiva Ojo izquierdo",
+                      "single-line": "",
+                      dense: "",
+                      solo: "",
+                    },
+                    model: {
+                      value: _vm.form.ref_sub_oi,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "ref_sub_oi", $$v)
+                      },
+                      expression: "form.ref_sub_oi",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-left-radius": "14px",
+                    "border-bottom-left-radius": "14px",
+                  },
+                  attrs: { sm: "1", cols: "6" },
+                },
+                [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("OD*"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("OI*"),
+                  ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "pt-3 pb-0",
+                  staticStyle: {
+                    "background-color": "#f0f0f0",
+                    "border-top-right-radius": "14px",
+                    "border-bottom-right-radius": "14px",
+                  },
+                  attrs: { sm: "2", cols: "6" },
+                },
+                [
+                  _c("h5", { staticClass: "pb-2" }, [_vm._v("Queratrometria")]),
+                  _vm._v(" "),
                   _c("v-text-field", {
                     attrs: {
                       "error-messages": _vm.errors.que_od,
@@ -27213,148 +27602,13 @@ var render = function () {
           _vm._v(" "),
           _c(
             "v-row",
-            { staticClass: "ml-2 mr-2 pt-5" },
-            [
-              _c(
-                "v-col",
-                {
-                  staticClass: "pt-3 pb-0",
-                  staticStyle: {
-                    "background-color": "#f0f0f0",
-                    "border-top-left-radius": "14px",
-                    "border-bottom-left-radius": "14px",
-                  },
-                  attrs: { sm: "1", cols: "6" },
-                },
-                [
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
-                    _vm._v("Refracción Objetiva OD*"),
-                  ]),
-                  _vm._v(" "),
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
-                    _vm._v("OI*"),
-                  ]),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                {
-                  staticClass: "pt-3 pb-0",
-                  staticStyle: {
-                    "background-color": "#f0f0f0",
-                    "border-top-right-radius": "14px",
-                    "border-bottom-right-radius": "14px",
-                  },
-                  attrs: { sm: "2", cols: "6" },
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      "error-messages": _vm.errors.ref_obj_od,
-                      title: "Refracción Objetiva Ojo Derecho",
-                      "single-line": "",
-                      dense: "",
-                      solo: "",
-                    },
-                    model: {
-                      value: _vm.form.ref_obj_od,
-                      callback: function ($$v) {
-                        _vm.$set(_vm.form, "ref_obj_od", $$v)
-                      },
-                      expression: "form.ref_obj_od",
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: {
-                      "error-messages": _vm.errors.ref_obj_oi,
-                      title: "Refracción Objetiva Ojo izquierdo",
-                      "single-line": "",
-                      dense: "",
-                      solo: "",
-                    },
-                    model: {
-                      value: _vm.form.ref_obj_oi,
-                      callback: function ($$v) {
-                        _vm.$set(_vm.form, "ref_obj_oi", $$v)
-                      },
-                      expression: "form.ref_obj_oi",
-                    },
-                  }),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { staticClass: "pt-3 pb-0", attrs: { sm: "1", cols: "6" } },
-                [
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
-                    _vm._v("Refracción Subjetiva OD*"),
-                  ]),
-                  _vm._v(" "),
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
-                    _vm._v("OI*"),
-                  ]),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { staticClass: "pt-3 pb-0", attrs: { sm: "2", cols: "6" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      "error-messages": _vm.errors.ref_sub_od,
-                      title: "Refracción Subjetiva Ojo Derecho",
-                      "single-line": "",
-                      dense: "",
-                      solo: "",
-                    },
-                    model: {
-                      value: _vm.form.ref_sub_od,
-                      callback: function ($$v) {
-                        _vm.$set(_vm.form, "ref_sub_od", $$v)
-                      },
-                      expression: "form.ref_sub_od",
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: {
-                      "error-messages": _vm.errors.ref_sub_oi,
-                      title: "Refracción Subjetiva Ojo izquierdo",
-                      "single-line": "",
-                      dense: "",
-                      solo: "",
-                    },
-                    model: {
-                      value: _vm.form.ref_sub_oi,
-                      callback: function ($$v) {
-                        _vm.$set(_vm.form, "ref_sub_oi", $$v)
-                      },
-                      expression: "form.ref_sub_oi",
-                    },
-                  }),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
             { staticClass: "ml-2 mr-2 mt-5" },
             [
               _c(
                 "v-col",
                 { staticClass: "pt-0", attrs: { sm: "1", cols: "6" } },
                 [
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
                     _vm._v("PPC:"),
                   ]),
                 ],
@@ -27388,7 +27642,7 @@ var render = function () {
                 "v-col",
                 { staticClass: "pt-0", attrs: { sm: "1", cols: "6" } },
                 [
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
                     _vm._v("Motilidad ocular"),
                   ]),
                 ],
@@ -27422,7 +27676,7 @@ var render = function () {
                 "v-col",
                 { staticClass: "pt-0", attrs: { sm: "1", cols: "6" } },
                 [
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
                     _vm._v("Dilatación Pupilar"),
                   ]),
                 ],
@@ -27456,8 +27710,8 @@ var render = function () {
                 "v-col",
                 { staticClass: "pt-0", attrs: { sm: "1", cols: "6" } },
                 [
-                  _c("v-subheader", { staticClass: "pl-0 mb-4" }, [
-                    _vm._v("Pupilas"),
+                  _c("v-subheader", { staticClass: "pl-0 mt-4" }, [
+                    _vm._v("Papilas"),
                   ]),
                 ],
                 1
@@ -27469,17 +27723,17 @@ var render = function () {
                 [
                   _c("v-text-field", {
                     attrs: {
-                      "error-messages": _vm.errors.pupilas,
-                      title: "Pupilas",
+                      "error-messages": _vm.errors.papilas,
+                      title: "Papilas",
                       "single-line": "",
                       dense: "",
                     },
                     model: {
-                      value: _vm.form.pupilas,
+                      value: _vm.form.papilas,
                       callback: function ($$v) {
-                        _vm.$set(_vm.form, "pupilas", $$v)
+                        _vm.$set(_vm.form, "papilas", $$v)
                       },
-                      expression: "form.pupilas",
+                      expression: "form.papilas",
                     },
                   }),
                 ],
@@ -27503,7 +27757,7 @@ var render = function () {
                   attrs: { sm: "6", cols: "12" },
                 },
                 [
-                  _c("h4", [_vm._v("BIOMICROSCOPIA OD:*")]),
+                  _c("h5", [_vm._v("BIOMICROSCOPIA OD:*")]),
                   _vm._v(" "),
                   _c(
                     "v-row",
@@ -27566,23 +27820,6 @@ var render = function () {
                               expression: "form.bio_od_cor",
                             },
                           }),
-                          _vm._v(" "),
-                          _c("v-text-field", {
-                            attrs: {
-                              "error-messages": _vm.errors.bio_od_pup,
-                              label: "Pupilar",
-                              title: "Pupilar ojo derecho",
-                              outlined: "",
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.form.bio_od_pup,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_od_pup", $$v)
-                              },
-                              expression: "form.bio_od_pup",
-                            },
-                          }),
                         ],
                         1
                       ),
@@ -27596,18 +27833,18 @@ var render = function () {
                         [
                           _c("v-text-field", {
                             attrs: {
-                              "error-messages": _vm.errors.bio_od_gra,
-                              label: "Grado",
-                              title: "Grado ojo derecho",
+                              "error-messages": _vm.errors.bio_od_ang,
+                              label: "Angulo",
+                              title: "Angulo ojo derecho",
                               outlined: "",
                               dense: "",
                             },
                             model: {
-                              value: _vm.form.bio_od_gra,
+                              value: _vm.form.bio_od_ang,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_od_gra", $$v)
+                                _vm.$set(_vm.form, "bio_od_ang", $$v)
                               },
-                              expression: "form.bio_od_gra",
+                              expression: "form.bio_od_ang",
                             },
                           }),
                           _vm._v(" "),
@@ -27630,18 +27867,18 @@ var render = function () {
                           _vm._v(" "),
                           _c("v-text-field", {
                             attrs: {
-                              "error-messages": _vm.errors.bio_od_ref,
-                              label: "Reflejo",
-                              title: "Reflejo ojo derecho",
+                              "error-messages": _vm.errors.bio_od_rpa,
+                              label: "Reflejo Papilar",
+                              title: "Reflejo Papilar ojo derecho",
                               outlined: "",
                               dense: "",
                             },
                             model: {
-                              value: _vm.form.bio_od_ref,
+                              value: _vm.form.bio_od_rpa,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_od_ref", $$v)
+                                _vm.$set(_vm.form, "bio_od_rpa", $$v)
                               },
-                              expression: "form.bio_od_ref",
+                              expression: "form.bio_od_rpa",
                             },
                           }),
                         ],
@@ -27674,35 +27911,18 @@ var render = function () {
                           _vm._v(" "),
                           _c("v-text-field", {
                             attrs: {
-                              "error-messages": _vm.errors.bio_od_pre,
-                              label: "Presión",
-                              title: "Presión ojo derecho",
+                              "error-messages": _vm.errors.bio_od_pro,
+                              label: "Presión Ocular",
+                              title: "Presión Ocular ojo derecho",
                               outlined: "",
                               dense: "",
                             },
                             model: {
-                              value: _vm.form.bio_od_pre,
+                              value: _vm.form.bio_od_pro,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_od_pre", $$v)
+                                _vm.$set(_vm.form, "bio_od_pro", $$v)
                               },
-                              expression: "form.bio_od_pre",
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("v-text-field", {
-                            attrs: {
-                              "error-messages": _vm.errors.bio_od_ocu,
-                              label: "Ocular",
-                              title: "Ocular ojo derecho",
-                              outlined: "",
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.form.bio_od_ocu,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_od_ocu", $$v)
-                              },
-                              expression: "form.bio_od_ocu",
+                              expression: "form.bio_od_pro",
                             },
                           }),
                         ],
@@ -27725,7 +27945,7 @@ var render = function () {
                   attrs: { sm: "6", cols: "12" },
                 },
                 [
-                  _c("h4", [_vm._v("BIOMICROSCOPIA OI:*")]),
+                  _c("h5", [_vm._v("BIOMICROSCOPIA OI:*")]),
                   _vm._v(" "),
                   _c(
                     "v-row",
@@ -27788,23 +28008,6 @@ var render = function () {
                               expression: "form.bio_oi_cor",
                             },
                           }),
-                          _vm._v(" "),
-                          _c("v-text-field", {
-                            attrs: {
-                              "error-messages": _vm.errors.bio_oi_pup,
-                              title: "Pupilar ojo izquierdo",
-                              label: "Pupilar",
-                              outlined: "",
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.form.bio_oi_pup,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_oi_pup", $$v)
-                              },
-                              expression: "form.bio_oi_pup",
-                            },
-                          }),
                         ],
                         1
                       ),
@@ -27818,18 +28021,18 @@ var render = function () {
                         [
                           _c("v-text-field", {
                             attrs: {
-                              "error-messages": _vm.errors.bio_oi_gra,
-                              title: "Grado ojo izquierdo",
-                              label: "Grado",
+                              "error-messages": _vm.errors.bio_oi_ang,
+                              title: "Angulo ojo izquierdo",
+                              label: "Angulo",
                               outlined: "",
                               dense: "",
                             },
                             model: {
-                              value: _vm.form.bio_oi_gra,
+                              value: _vm.form.bio_oi_ang,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_oi_gra", $$v)
+                                _vm.$set(_vm.form, "bio_oi_ang", $$v)
                               },
-                              expression: "form.bio_oi_gra",
+                              expression: "form.bio_oi_ang",
                             },
                           }),
                           _vm._v(" "),
@@ -27852,18 +28055,18 @@ var render = function () {
                           _vm._v(" "),
                           _c("v-text-field", {
                             attrs: {
-                              "error-messages": _vm.errors.bio_oi_ref,
-                              title: "Reflejo ojo izquierdo",
-                              label: "Reflejo",
+                              "error-messages": _vm.errors.bio_oi_rpa,
+                              title: "Reflejo Papilar ojo izquierdo",
+                              label: "Reflejo Papilar",
                               outlined: "",
                               dense: "",
                             },
                             model: {
-                              value: _vm.form.bio_oi_ref,
+                              value: _vm.form.bio_oi_rpa,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_oi_ref", $$v)
+                                _vm.$set(_vm.form, "bio_oi_rpa", $$v)
                               },
-                              expression: "form.bio_oi_ref",
+                              expression: "form.bio_oi_rpa",
                             },
                           }),
                         ],
@@ -27896,35 +28099,18 @@ var render = function () {
                           _vm._v(" "),
                           _c("v-text-field", {
                             attrs: {
-                              "error-messages": _vm.errors.bio_oi_pre,
-                              title: "Presión ojo izquierdo",
-                              label: "Presión",
+                              "error-messages": _vm.errors.bio_oi_pro,
+                              title: "Presión Ocular ojo izquierdo",
+                              label: "Presión Ocular",
                               outlined: "",
                               dense: "",
                             },
                             model: {
-                              value: _vm.form.bio_oi_pre,
+                              value: _vm.form.bio_oi_pro,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_oi_pre", $$v)
+                                _vm.$set(_vm.form, "bio_oi_pro", $$v)
                               },
-                              expression: "form.bio_oi_pre",
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("v-text-field", {
-                            attrs: {
-                              "error-messages": _vm.errors.bio_oi_ocu,
-                              title: "Ocular ojo izquierdo",
-                              label: "Ocular",
-                              outlined: "",
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.form.bio_oi_ocu,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "bio_oi_ocu", $$v)
-                              },
-                              expression: "form.bio_oi_ocu",
+                              expression: "form.bio_oi_pro",
                             },
                           }),
                         ],
@@ -27940,7 +28126,7 @@ var render = function () {
             1
           ),
           _vm._v(" "),
-          _c("h4", { staticClass: "text-center pt-4" }, [
+          _c("h5", { staticClass: "text-center pt-4" }, [
             _vm._v("FONDO DE OJO"),
           ]),
           _vm._v(" "),
@@ -27958,7 +28144,7 @@ var render = function () {
                   attrs: { sm: "6", cols: "12" },
                 },
                 [
-                  _c("h4", [_vm._v("OD*")]),
+                  _c("h5", [_vm._v("OD*")]),
                   _vm._v(" "),
                   _c(
                     "v-row",
@@ -27976,11 +28162,7 @@ var render = function () {
                           ]),
                           _vm._v(" "),
                           _c("v-subheader", { staticClass: "pl-0" }, [
-                            _vm._v("Vasos"),
-                          ]),
-                          _vm._v(" "),
-                          _c("v-subheader", { staticClass: "pl-0" }, [
-                            _vm._v("Retinales"),
+                            _vm._v("Vasos Retinales"),
                           ]),
                         ],
                         1
@@ -28022,31 +28204,16 @@ var render = function () {
                           _vm._v(" "),
                           _c("v-text-field", {
                             attrs: {
-                              "error-messages": _vm.errors.fon_od_vas,
-                              title: "Vasos ojo derecho",
+                              "error-messages": _vm.errors.fon_od_vre,
+                              title: "Vasos Retinales ojo derecho",
                               dense: "",
                             },
                             model: {
-                              value: _vm.form.fon_od_vas,
+                              value: _vm.form.fon_od_vre,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "fon_od_vas", $$v)
+                                _vm.$set(_vm.form, "fon_od_vre", $$v)
                               },
-                              expression: "form.fon_od_vas",
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("v-text-field", {
-                            attrs: {
-                              "error-messages": _vm.errors.fon_od_retinales,
-                              title: "Retinales ojo derecho",
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.form.fon_od_retinales,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "fon_od_retinales", $$v)
-                              },
-                              expression: "form.fon_od_retinales",
+                              expression: "form.fon_od_vre",
                             },
                           }),
                         ],
@@ -28140,7 +28307,7 @@ var render = function () {
                   attrs: { sm: "6", cols: "12" },
                 },
                 [
-                  _c("h4", [_vm._v("OI:*")]),
+                  _c("h5", [_vm._v("OI:*")]),
                   _vm._v(" "),
                   _c(
                     "v-row",
@@ -28158,11 +28325,7 @@ var render = function () {
                           ]),
                           _vm._v(" "),
                           _c("v-subheader", { staticClass: "pl-0" }, [
-                            _vm._v("Vasos"),
-                          ]),
-                          _vm._v(" "),
-                          _c("v-subheader", { staticClass: "pl-0" }, [
-                            _vm._v("Retinales"),
+                            _vm._v("Vasos Retinales"),
                           ]),
                         ],
                         1
@@ -28204,31 +28367,16 @@ var render = function () {
                           _vm._v(" "),
                           _c("v-text-field", {
                             attrs: {
-                              "error-messages": _vm.errors.fon_oi_vas,
-                              title: "Vasos ojo izquierdo",
+                              "error-messages": _vm.errors.fon_oi_vre,
+                              title: "Vasos Retinales ojo izquierdo",
                               dense: "",
                             },
                             model: {
-                              value: _vm.form.fon_oi_vas,
+                              value: _vm.form.fon_oi_vre,
                               callback: function ($$v) {
-                                _vm.$set(_vm.form, "fon_oi_vas", $$v)
+                                _vm.$set(_vm.form, "fon_oi_vre", $$v)
                               },
-                              expression: "form.fon_oi_vas",
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("v-text-field", {
-                            attrs: {
-                              "error-messages": _vm.errors.fon_oi_retinales,
-                              title: "Retinales ojo izquierdo",
-                              dense: "",
-                            },
-                            model: {
-                              value: _vm.form.fon_oi_retinales,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.form, "fon_oi_retinales", $$v)
-                              },
-                              expression: "form.fon_oi_retinales",
+                              expression: "form.fon_oi_vre",
                             },
                           }),
                         ],
@@ -28324,7 +28472,12 @@ var render = function () {
                 { staticClass: "pb-0", attrs: { cols: "12", sm: "6" } },
                 [
                   _c("v-textarea", {
-                    attrs: { rows: "2", outlined: "", label: "Diagnostico" },
+                    attrs: {
+                      "error-messages": _vm.errors.diagnostico,
+                      rows: "2",
+                      outlined: "",
+                      label: "Diagnostico",
+                    },
                     model: {
                       value: _vm.form.diagnostico,
                       callback: function ($$v) {
@@ -28342,13 +28495,41 @@ var render = function () {
                 { staticClass: "pb-0", attrs: { cols: "12", sm: "6" } },
                 [
                   _c("v-textarea", {
-                    attrs: { rows: "2", outlined: "", label: "Tratamiento" },
+                    attrs: {
+                      "error-messages": _vm.errors.tratamiento,
+                      rows: "2",
+                      outlined: "",
+                      label: "Tratamiento",
+                    },
                     model: {
                       value: _vm.form.tratamiento,
                       callback: function ($$v) {
                         _vm.$set(_vm.form, "tratamiento", $$v)
                       },
                       expression: "form.tratamiento",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-0 pt-0", attrs: { cols: "12", sm: "6" } },
+                [
+                  _c("v-textarea", {
+                    attrs: {
+                      "error-messages": _vm.errors.orden_medica,
+                      rows: "2",
+                      outlined: "",
+                      label: "Orden Medica",
+                    },
+                    model: {
+                      value: _vm.form.orden_medica,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "orden_medica", $$v)
+                      },
+                      expression: "form.orden_medica",
                     },
                   }),
                 ],
@@ -28364,16 +28545,113 @@ var render = function () {
             [
               _c(
                 "v-col",
-                { staticClass: "d-flex justify-end", attrs: { cols: "12" } },
+                { attrs: { cols: "12", sm: "6" } },
+                [
+                  _vm.cAccion == "Actualizar"
+                    ? _c(
+                        "v-btn",
+                        {
+                          staticClass: "white--text text-none",
+                          attrs: {
+                            type: "submit",
+                            small: "",
+                            color: "red darken-4",
+                            tile: "",
+                          },
+                          on: {
+                            click: function ($event) {
+                              return _vm.fnImprimir("formula")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Imprimir formula\n                    "
+                          ),
+                          _c("v-icon", { attrs: { right: "" } }, [
+                            _vm._v(" picture_as_pdf "),
+                          ]),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.cAccion == "Actualizar"
+                    ? _c(
+                        "v-btn",
+                        {
+                          staticClass: "white--text text-none",
+                          attrs: {
+                            type: "submit",
+                            small: "",
+                            color: "red darken-4",
+                            tile: "",
+                          },
+                          on: {
+                            click: function ($event) {
+                              return _vm.fnImprimir("orden_medica")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Imprimir Orden Medica\n                    "
+                          ),
+                          _c("v-icon", { attrs: { right: "" } }, [
+                            _vm._v(" picture_as_pdf "),
+                          ]),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.cAccion == "Actualizar"
+                    ? _c(
+                        "v-btn",
+                        {
+                          staticClass: "white--text text-none",
+                          attrs: {
+                            type: "submit",
+                            small: "",
+                            color: "red darken-4",
+                            tile: "",
+                          },
+                          on: {
+                            click: function ($event) {
+                              return _vm.fnImprimir("rx")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Imprimir RX\n                    "
+                          ),
+                          _c("v-icon", { attrs: { right: "" } }, [
+                            _vm._v(" picture_as_pdf "),
+                          ]),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  staticClass: "d-flex justify-end",
+                  attrs: { cols: "12", sm: "6" },
+                },
                 [
                   _c(
                     "v-btn",
                     {
-                      staticClass: "white--text text-none mr-3",
+                      staticClass: "text-none mr-3",
                       attrs: {
                         type: "submit",
                         small: "",
-                        color: "red darken-4",
+                        color: "yellow",
                         title:
                           "Vacía campos del formulario para crear nueva formula anteojos.",
                         tile: "",
