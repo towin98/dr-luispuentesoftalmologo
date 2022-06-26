@@ -95,6 +95,15 @@
                             </v-icon>
                         </router-link>
                     </template>
+                    <template v-slot:item.antecedentes="{ item }">
+                        <router-link style="text-decoration: none;"
+                            title="Antecedentes del Paciente"
+                            :to="{ path: `/consultorio/historia-clinica/antecedentes/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
+                            <v-icon color="orange lighten-1">
+                                find_in_page
+                            </v-icon>
+                        </router-link>
+                    </template>
                 </v-data-table>
             </v-col>
         </v-row>
@@ -147,6 +156,7 @@ export default {
                 { text: "Fecha Modificado", value: "updated_at" },
                 { text: "Motivo Consulta", value: "motivoConsulta", sortable: false, width:20 },
                 { text: "Formula Anteojos", value: "formulaAnteojos", sortable: false, width:20 },
+                { text: "Antecedentes", value: "antecedentes", sortable: false, width:20 },
             ],
             dataSet: [],
             contador: 0
