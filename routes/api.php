@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HistoriaClinica\AntecedentesController;
 use App\Http\Controllers\HistoriaClinica\FormulaAnteojosController;
 use App\Http\Controllers\Paciente\PacienteController;
 use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
@@ -50,6 +51,14 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
     Route::get('/listar/formula-anteojos/{numero_documento}', [FormulaAnteojosController::class, 'listar']);
     Route::get('/cosecutivo-formula-anteojos/{id_paciente}', [FormulaAnteojosController::class, 'obtenerNumeroFormulaAnteojos']);
     Route::post('/pdf/formula-anteojos', [FormulaAnteojosController::class, 'reportePdf']);
+
+    // Antecedentes
+    Route::post('/guardar/antecedentes', [AntecedentesController::class, 'store']);
+    Route::put('/actualizar/antecedentes/{id}', [AntecedentesController::class, 'update']);
+    Route::get('/mostrar/antecedentes/{id}', [AntecedentesController::class, 'show']);
+    Route::post('/delete/antecedentes/{id}', [AntecedentesController::class, 'destroy']);
+    Route::get('/listar/antecedentes/{numero_documento}', [AntecedentesController::class, 'listar']);
+    Route::get('/cosecutivo-antecedentes/{id_paciente}', [AntecedentesController::class, 'obtenerNumeroAntecedente']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){
