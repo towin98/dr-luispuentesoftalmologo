@@ -489,10 +489,10 @@ export default {
                         this.foto_paciente = null;
                     }
 
-                    this.id_paciente = getDataPaciente.id;
-                    this.numero_documento = getDataPaciente.numero_documento;
-                    this.nombre = getDataPaciente.nombre;
-                    this.apellido = getDataPaciente.apellido;
+                    this.id_paciente        = getDataPaciente.id;
+                    this.numero_documento   = getDataPaciente.numero_documento;
+                    this.nombre             = getDataPaciente.nombre;
+                    this.apellido           = getDataPaciente.apellido;
 
                     this.dataSet = response.data.data;
                     this.totalRegistros = response.data.total;

@@ -59,7 +59,7 @@ trait metodosComunesTrait {
     public function guardarArchivoSubido(Request $request, $nombreCampo, $carpetaMover){
         if ($request->$nombreCampo != "") {
             $file = $request->file($nombreCampo);
-            $fileName = uniqid() . $file->getClientOriginalName();
+            $fileName = uniqid() ."_". $file->getClientOriginalName();
             $file->move($carpetaMover,  $fileName);
             return  $carpetaMover ."/".$fileName;
         }else{
@@ -115,6 +115,19 @@ trait metodosComunesTrait {
             $vReturn[2] = $e;
         }
         return $vReturn;
+    }
+
+    /**
+     * Método que verifica si existe directorio dentro de public, si no esta lo crea.
+     *
+     * @param string $path Ruta a comprobar si existe
+     * @param integer $permisos con que se crea directorio si no existe.
+     * @return void
+     */
+    public function fnCheckDirectoryPublic($path, $permisos = 0777){
+        if (!file_exists(public_path($path))) {
+            File::makeDirectory(public_path($path), $permisos);
+        }
     }
 }
 ?>

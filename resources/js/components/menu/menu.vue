@@ -196,6 +196,7 @@ export default {
                 case 'historia-clinica/motivo-consulta':
                 case 'historia-clinica/formula-anteojos':
                 case 'historia-clinica/antecedentes':
+                case 'historia-clinica/cargar-archivo':
                     this.pathPrevious = 'historia-clinica';
                     this.titleProceso = 'Historia Clinica';
                 break;

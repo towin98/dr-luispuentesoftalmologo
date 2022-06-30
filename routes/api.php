@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HistoriaClinica\AntecedentesController;
+use App\Http\Controllers\HistoriaClinica\CargarArchivosController;
 use App\Http\Controllers\HistoriaClinica\FormulaAnteojosController;
 use App\Http\Controllers\Paciente\PacienteController;
 use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
@@ -59,6 +60,15 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
     Route::post('/delete/antecedentes/{id}', [AntecedentesController::class, 'destroy']);
     Route::get('/listar/antecedentes/{numero_documento}', [AntecedentesController::class, 'listar']);
     Route::get('/cosecutivo-antecedentes/{id_paciente}', [AntecedentesController::class, 'obtenerNumeroAntecedente']);
+
+    // cargar archivo
+    Route::post('/guardar/cargar-archivo', [CargarArchivosController::class, 'store']);
+    Route::post('/actualizar/cargar-archivo/{id}', [CargarArchivosController::class, 'update']);
+    Route::get('/mostrar/cargar-archivo/{id}', [CargarArchivosController::class, 'show']);
+    Route::post('/delete/cargar-archivo/{id}', [CargarArchivosController::class, 'destroy']);
+    Route::get('/listar/cargar-archivo/{numero_documento}', [CargarArchivosController::class, 'listar']);
+    Route::get('/cosecutivo-cargar-archivo/{id_paciente}', [CargarArchivosController::class, 'obtenerConsecutivo']);
+    Route::post('/descargar/archivo', [CargarArchivosController::class, 'descargar']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){

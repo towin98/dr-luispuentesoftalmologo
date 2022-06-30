@@ -104,6 +104,15 @@
                             </v-icon>
                         </router-link>
                     </template>
+                    <template v-slot:item.cargarArchivo="{ item }">
+                        <router-link style="text-decoration: none;"
+                            title="Cargar archivo"
+                            :to="{ path: `/consultorio/historia-clinica/cargar-archivo/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
+                            <v-icon color="grey">
+                                file_upload
+                            </v-icon>
+                        </router-link>
+                    </template>
                 </v-data-table>
             </v-col>
         </v-row>
@@ -157,6 +166,7 @@ export default {
                 { text: "Motivo Consulta", value: "motivoConsulta", sortable: false, width:20 },
                 { text: "Formula Anteojos", value: "formulaAnteojos", sortable: false, width:20 },
                 { text: "Antecedentes", value: "antecedentes", sortable: false, width:20 },
+                { text: "Cargar Archivo", value: "cargarArchivo", sortable: false, width:20 },
             ],
             dataSet: [],
             contador: 0
