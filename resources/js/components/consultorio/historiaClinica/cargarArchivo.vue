@@ -1,64 +1,93 @@
+
 <template>
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
         <!-- FORMULARIO -->
         <v-card elevation="2" class="mt-7">
-            <h3 class="text-center pt-2 pb-2">Antecedente - {{ numero_antecedente }}</h3>
+            <h3 class="text-center pt-2 pb-2">Carga Archivo - {{ consecutivo_archivo }}</h3>
+
             <v-row class="ml-2 mr-2">
-                <v-col cols="6" sm="4" class="pb-0">
-                    <v-checkbox
-                        v-model="form.antecedentes"
-                        label="Diabético"
-                        value="DIABETICO"
-                        dense
-                    ></v-checkbox>
-                </v-col>
-                <v-col cols="6" sm="4" class="pb-0">
-                    <v-checkbox
-                        v-model="form.antecedentes"
-                        label="CardioPulmonar"
-                        value="CARDIOPULMONAR"
-                        dense
-                    ></v-checkbox>
-                </v-col>
-                <v-col cols="6" sm="4" class="pb-0">
-                    <v-checkbox
-                        v-model="form.antecedentes"
-                        label="Alérgico"
-                        value="ALERGICO"
-                        dense
-                    ></v-checkbox>
-                </v-col>
-                <v-col cols="6" sm="4" class="pb-0 pt-0">
-                    <v-checkbox
-                        v-model="form.antecedentes"
-                        label="Hipertenso"
-                        value="HIPERTENSO"
-                        dense
-                    ></v-checkbox>
-                </v-col>
-                <v-col cols="6" sm="4" class="pb-0 pt-0">
-                    <v-checkbox
-                        v-model="form.antecedentes"
-                        label="CX Oculares"
-                        value="CXOCULARES"
-                        dense
-                    ></v-checkbox>
-                </v-col>
-                <v-col cols="6" sm="4" class="pb-0 pt-0">
+                <v-col cols="6" sm="4" class="pb-2">
                     <v-text-field
-                        v-model="form.otro"
-                        label="Otro"
-                        placeholder="cuales"
+                        v-model="numero_documento"
+                        label="Número de Documento"
                         dense
+                        readonly
                     ></v-text-field>
                 </v-col>
+                <v-col cols="6" sm="4" class="pb-2">
+                    <v-text-field
+                        v-model="nombre"
+                        label="Nombre"
+                        dense
+                        readonly
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="6" sm="4" class="pb-2">
+                    <v-text-field
+                        v-model="apellido"
+                        label="Apellido"
+                        dense
+                        readonly
+                    ></v-text-field>
+                </v-col>
+            </v-row>
+
+            <v-row class="ml-2 mr-2">
+                <v-col cols="12" sm="6">
+                    <div v-if="form.ruta_archivo == ''">
+                        <label for="archivo">Cargar Archivo:</label>
+                        <input type="file" id="archivo" accept="application/pdf" style="width:100%;">
+                        <div style="color:#b71c1c;" class="pl-4" v-if="errors.ruta_archivo != undefined ">{{ errors.ruta_archivo[0] }}</div>
+                    </div>
+                    <div v-else>
+                        Archivo Cargado:
+                        <v-btn
+                            type="submit"
+                            small
+                            color="red"
+                            class="white--text text-none"
+                            tile
+                            v-on:click="fnDescargarArchivo"
+                        >
+                            Descargar
+                            <v-icon right> picture_as_pdf </v-icon>
+                        </v-btn>
+                        <v-btn
+                            type="click"
+                            small
+                            color="primary"
+                            class="white--text text-none mr-3"
+                            tile
+                            v-on:click="form.ruta_archivo = ''">
+                            Remover
+                        </v-btn>
+                    </div>
+                </v-col>
+                <v-col cols="12" sm="12">
+                    <v-subheader>Consecutivo Archivo: {{ consecutivo_archivo }}</v-subheader>
+                    <v-textarea
+                        v-model="form.observacion"
+                        ref="observacion"
+                        label="Observación"
+                        placeholder="Añade aquí alguna observación para el Archivo a Cargar."
+                        outlined
+                        dense
+                        :error-messages="errors.observacion"
+                        rows="2"
+                        >
+                    </v-textarea>
+                </v-col>
+            </v-row>
+
+            <v-row class="pl-4 pr-4">
+                <!-- BOTONES ACCIONES  -->
                 <v-col cols="12" class="d-flex justify-end">
                     <v-btn
                         type="submit"
-                        color="yellow"
-                        class="text-none mr-3"
-                        title="Vacía campos del formulario para crear nuevo antecedente."
+                        small
+                        color="red darken-4"
+                        class="white--text text-none mr-3"
                         tile
                         @click="limpiarCampos"
                     >
@@ -66,6 +95,7 @@
                     </v-btn>
                     <v-btn
                         type="submit"
+                        small
                         color="success"
                         class="white--text text-none"
                         tile
@@ -75,11 +105,6 @@
                         <v-icon right> save </v-icon>
                     </v-btn>
                 </v-col>
-                <pre>
-                    {{
-                        errors
-                    }}
-                </pre>
             </v-row>
         </v-card>
         <!-- start Data table -->
@@ -153,10 +178,9 @@ export default {
             overlayLoading : false,
             options: {},
             headers: [
-                { text: "Id Antecedente", value: "numero_antecedente" },
+                { text: "Id Carga Archivo", value: "consecutivo_archivo" },
                 { text: "Identificacion", value: "numero_documento", sortable: false },
-                { text: "Nombre", value: "nombre", sortable: false },
-                { text: "Apellidos", value: "apellido", sortable: false },
+                { text: "Observación", value: "observacion", sortable: false },
                 { text: "Fecha Creación", value: "created_at" },
                 { text: "Fecha Modificado", value: "updated_at" },
                 { text: "Editar", value: "editar", sortable: false },
@@ -165,20 +189,22 @@ export default {
             dataSet: [],
             contador : 0,
 
-            // Formulario
-            numero_antecedente      : '0000',
+            // Variables Formulario
+            consecutivo_archivo     : '0000',
             cAccion                 : 'Guardar',
             errors:"",
             form : {
                 id               : '',
                 numero_documento : '',
-                antecedentes     : [],
-                otro             : ''
+                ruta_archivo     : '',
+                observacion      : ''
             },
-
+            numero_documento     : '',
+            nombre               : '',
+            apellido             : '',
         }
     },
-    watch: {
+        watch: {
         options: {
             handler() {
                 this.fnBuscar();
@@ -217,19 +243,25 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/historia-clinica/listar/antecedentes/${this.$route.params.numero_documento}?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
+                    `/consultorio-oftamologico/historia-clinica/listar/cargar-archivo/${this.$route.params.numero_documento}?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
                 )
                 .then((response) => {
                     this.loading = false;
                     this.totalRegistros = response.data.total;
 
                     let data = response.data.data
+                    let getDataPaciente   = data[0].get_paciente;
+                    this.numero_documento = getDataPaciente.numero_documento;
+                    this.nombre           = getDataPaciente.nombre;
+                    this.apellido         = getDataPaciente.apellido;
+
                     this.form.numero_documento   = this.$route.params.numero_documento;
                     for (let i = 0; i < this.totalRegistros; i++) {
+                        if ( data[i].observacion != null) {
+                            data[i].observacion  = data[i].observacion.substr(0,15);
+                        }
                         data[i].id_paciente      = data[i].get_paciente.id;
                         data[i].numero_documento = data[i].get_paciente.numero_documento;
-                        data[i].nombre           = data[i].get_paciente.nombre;
-                        data[i].apellido         = data[i].get_paciente.apellido;
                         delete data[i].get_paciente;
                     }
 
@@ -238,7 +270,7 @@ export default {
                     this.overlayLoading = false;
                     if (this.contador == 0) {
                         this.contador++;
-                        this.fnObtenerNumeroAntecedente();
+                        this.obtenerConsecutivo();
                     }
 
                 })
@@ -248,14 +280,14 @@ export default {
                     this.dataSet = [];
                 });
         },
-        fnObtenerNumeroAntecedente(){
+        obtenerConsecutivo(){
             this.form.numero_documento = this.$route.params.numero_documento;
-            this.overlayLoading = true;
+            this.overlayLoading        = true;
             axios
-                .get(`/consultorio-oftamologico/historia-clinica/cosecutivo-antecedentes/${this.form.numero_documento}`)
+                .get(`/consultorio-oftamologico/historia-clinica/cosecutivo-cargar-archivo/${this.form.numero_documento}`)
                 .then((response) => {
-                    this.numero_antecedente = response.data;
-                    this.overlayLoading = false;
+                    this.consecutivo_archivo = response.data;
+                    this.overlayLoading      = false;
                 })
                 .catch((errores) => {
                     this.fnResponseError(errores);
@@ -270,11 +302,28 @@ export default {
             }
         },
         fnStore(){
-            this.form.numero_documento = this.$route.params.numero_documento;
-            this.form.antecedentes = this.form.antecedentes.toString();
             this.overlayLoading = true;
+
+            // files es una lista
+            const formData  = new FormData()
+            const files     = document.getElementById('archivo').files;
+            if (files[0] == undefined) {
+                formData.append('ruta_archivo', '');
+            }else{
+                formData.append('ruta_archivo', files[0]);
+            }
+
+            // Agregar archivo a formData, índice cero (primer archivo... o único)
+            formData.append('observacion', this.form.observacion);
+            formData.append('numero_documento', this.$route.params.numero_documento);
+
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/guardar/antecedentes`, this.form)
+                .post(`/consultorio-oftamologico/historia-clinica/guardar/cargar-archivo`,formData,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Accept' : 'application/json'
+                    },
+                })
                 .then((response) => {
                     this.errors = "";
                     this.$swal(
@@ -293,10 +342,29 @@ export default {
         },
         fnUpdate(){
             this.overlayLoading = true;
-            this.form.numero_documento = this.$route.params.numero_documento;
-            this.form.antecedentes = this.form.antecedentes.toString();
+
+            const formData  = new FormData()
+            if (this.form.ruta_archivo == "") {
+                // files es una lista
+                const files     = document.getElementById('archivo').files;
+                if (files[0] == undefined) {
+                    formData.append('ruta_archivo', '');
+                }else{
+                    formData.append('ruta_archivo', files[0]);
+                }
+            }else{
+                formData.append('ruta_archivo', this.form.ruta_archivo);
+            }
+            formData.append('observacion', this.form.observacion);
+            formData.append('numero_documento', this.$route.params.numero_documento);
+
             axios
-                .put(`/consultorio-oftamologico/historia-clinica/actualizar/antecedentes/${this.form.id}`, this.form)
+                .post(`/consultorio-oftamologico/historia-clinica/actualizar/cargar-archivo/${this.form.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Accept' : 'application/json'
+                    },
+                })
                 .then((response) => {
                     this.errors = "";
                     this.$swal(
@@ -317,13 +385,12 @@ export default {
             this.overlayLoading = true;
             this.cAccion = "Actualizar";
             axios
-                .get(`/consultorio-oftamologico/historia-clinica/mostrar/antecedentes/${id}`)
+                .get(`/consultorio-oftamologico/historia-clinica/mostrar/cargar-archivo/${id}`)
                 .then((response) => {
                     let data = response.data.data;
-                    data.antecedentes = data.antecedentes.split(',');
 
                     this.form = data;
-                    this.numero_antecedente = data.numero_antecedente;
+                    this.consecutivo_archivo = data.consecutivo_archivo;
 
                     this.errors = "";
                     this.overlayLoading = false;
@@ -335,8 +402,8 @@ export default {
         },
         fnDelete(item){
             this.$swal({
-            title: '¿Seguro que quiere eliminar el Antecedente?',
-            text: `Eliminar el Antecedente N°${item.numero_antecedente}!`,
+            title: '¿Seguro que quiere eliminar el Archivo Cargado?',
+            text: `Eliminar el Carga Archivo N°${item.consecutivo_archivo}!`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -347,7 +414,7 @@ export default {
 
                     this.overlayLoading = true;
 
-                    axios.post(`/consultorio-oftamologico/historia-clinica/delete/antecedentes/${item.id}`)
+                    axios.post(`/consultorio-oftamologico/historia-clinica/delete/cargar-archivo/${item.id}`)
                     .then((response) => {
                         this.errors = "";
                         this.$swal(
@@ -367,14 +434,47 @@ export default {
                 }
             });
         },
+        fnDescargarArchivo(){
+            this.overlayLoading = true;
+
+            let vRutaArchivo = this.form.ruta_archivo.split("/");
+            const cNombreArchivo = vRutaArchivo[vRutaArchivo.length-1]; // Obteniendo ultima posicion de arreglo para el nombre de archivo.
+            vRutaArchivo = vRutaArchivo.slice(0,-1);
+            const cRuta  = vRutaArchivo.join('/');
+
+            const data = {
+                path          : cRuta+"/",
+                nombreArchivo : cNombreArchivo
+            };
+            axios
+                .post(`/consultorio-oftamologico/historia-clinica/descargar/archivo`,data,  {responseType: 'blob',})
+                .then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]))
+                    const link = document.createElement('a')
+                    link.href= url
+                    link.setAttribute('download', cNombreArchivo)
+                    document.body.appendChild(link)
+                    link.click();
+
+                    this.overlayLoading = false;
+                })
+                .catch((errores) => {
+                    this.errors = this.fnResponseError(errores);
+                    this.overlayLoading = false;
+                });
+        },
         limpiarCampos(){
+            if (this.cAccion == "Guardar" || this.form.ruta_archivo == "") {
+                // Solo se limpia campo donde se carga el archivo si esta por modo Guardar que es donde existe el campo input.
+                document.getElementById('archivo').value = ""
+            }
             this.errors                = "";
-            this.fnObtenerNumeroAntecedente();
+            this.obtenerConsecutivo();
             this.cAccion               = "Guardar";
             this.form.id               = '';
             this.form.numero_documento = '';
-            this.form.antecedentes     = [];
-            this.form.otro             = '';
+            this.form.observacion      = '';
+            this.form.ruta_archivo     = '';
         }
     }
 }

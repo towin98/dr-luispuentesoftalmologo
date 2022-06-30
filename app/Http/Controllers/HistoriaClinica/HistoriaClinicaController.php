@@ -203,10 +203,10 @@ class HistoriaClinicaController extends Controller
         try {
 
             if (!file_exists(public_path('storage/img-refracciones-temporal'))) {
-                File::makeDirectory(public_path('storage/img-refracciones-temporal'));
+                File::makeDirectory(public_path('storage/img-refracciones-temporal'), 0777);
             }
             if (!file_exists(public_path('storage/refracciones'))) {
-                File::makeDirectory(public_path('storage/refracciones'));
+                File::makeDirectory(public_path('storage/refracciones'), 0777);
             }
 
             if($request->hasFile('refracciones')){

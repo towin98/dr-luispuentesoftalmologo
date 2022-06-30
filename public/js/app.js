@@ -2938,7 +2938,10 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = "";
       this.fnObtenerNumeroAntecedente();
       this.cAccion = "Guardar";
-      this.form.id = '', this.form.numero_documento = '', this.form.antecedentes = [], this.form.otro = '';
+      this.form.id = '';
+      this.form.numero_documento = '';
+      this.form.antecedentes = [];
+      this.form.otro = '';
     }
   }
 });
@@ -2957,6 +2960,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3144,6 +3156,11 @@ __webpack_require__.r(__webpack_exports__);
         value: "antecedentes",
         sortable: false,
         width: 20
+      }, {
+        text: "Cargar Archivo",
+        value: "cargarArchivo",
+        sortable: false,
+        width: 20
       }],
       dataSet: [],
       contador: 0
@@ -3228,6 +3245,509 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.fnBuscar('SI');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    loadingGeneral: _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      /* Variables Table. */
+      debounce: null,
+      buscar: "",
+      page: 1,
+      totalRegistros: 0,
+      loading: false,
+      overlayLoading: false,
+      options: {},
+      headers: [{
+        text: "Id Carga Archivo",
+        value: "consecutivo_archivo"
+      }, {
+        text: "Identificacion",
+        value: "numero_documento",
+        sortable: false
+      }, {
+        text: "Observación",
+        value: "observacion",
+        sortable: false
+      }, {
+        text: "Fecha Creación",
+        value: "created_at"
+      }, {
+        text: "Fecha Modificado",
+        value: "updated_at"
+      }, {
+        text: "Editar",
+        value: "editar",
+        sortable: false
+      }, {
+        text: "Eliminar",
+        value: "eliminar",
+        sortable: false
+      }],
+      dataSet: [],
+      contador: 0,
+      // Variables Formulario
+      consecutivo_archivo: '0000',
+      cAccion: 'Guardar',
+      errors: "",
+      form: {
+        id: '',
+        numero_documento: '',
+        ruta_archivo: '',
+        observacion: ''
+      },
+      numero_documento: '',
+      nombre: '',
+      apellido: ''
+    };
+  },
+  watch: {
+    options: {
+      handler: function handler() {
+        this.fnBuscar();
+      }
+    },
+    deep: true
+  },
+  methods: {
+    filterSearch: function filterSearch() {
+      var _this = this;
+
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(function () {
+        _this.fnBuscar(_this.buscar);
+      }, 600);
+    },
+    fnBuscar: function fnBuscar() {
+      var _this2 = this;
+
+      this.overlayLoading = true;
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage,
+          sortBy = _this$options.sortBy,
+          sortDesc = _this$options.sortDesc; // Obteniendo rangos de consultado paginación.
+
+      var start = itemsPerPage * (page - 1);
+      var length = itemsPerPage;
+
+      if (sortDesc[0] == true) {
+        sortBy = sortBy[0];
+        sortDesc = "DESC";
+      } else if (sortDesc[0] == false) {
+        sortBy = sortBy[0];
+        sortDesc = "ASC";
+      } else {
+        sortBy = "";
+        sortDesc = "";
+      }
+
+      axios.get("/consultorio-oftamologico/historia-clinica/listar/cargar-archivo/".concat(this.$route.params.numero_documento, "?length=").concat(length, "&start=").concat(start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc, "&buscar=").concat(this.buscar)).then(function (response) {
+        _this2.loading = false;
+        _this2.totalRegistros = response.data.total;
+        var data = response.data.data;
+        var getDataPaciente = data[0].get_paciente;
+        _this2.numero_documento = getDataPaciente.numero_documento;
+        _this2.nombre = getDataPaciente.nombre;
+        _this2.apellido = getDataPaciente.apellido;
+        _this2.form.numero_documento = _this2.$route.params.numero_documento;
+
+        for (var i = 0; i < _this2.totalRegistros; i++) {
+          if (data[i].observacion != null) {
+            data[i].observacion = data[i].observacion.substr(0, 15);
+          }
+
+          data[i].id_paciente = data[i].get_paciente.id;
+          data[i].numero_documento = data[i].get_paciente.numero_documento;
+          delete data[i].get_paciente;
+        }
+
+        _this2.dataSet = data;
+        _this2.overlayLoading = false;
+
+        if (_this2.contador == 0) {
+          _this2.contador++;
+
+          _this2.obtenerConsecutivo();
+        }
+      })["catch"](function (errors) {
+        _this2.overlayLoading = false;
+        _this2.loading = false;
+        _this2.dataSet = [];
+      });
+    },
+    obtenerConsecutivo: function obtenerConsecutivo() {
+      var _this3 = this;
+
+      this.form.numero_documento = this.$route.params.numero_documento;
+      this.overlayLoading = true;
+      axios.get("/consultorio-oftamologico/historia-clinica/cosecutivo-cargar-archivo/".concat(this.form.numero_documento)).then(function (response) {
+        _this3.consecutivo_archivo = response.data;
+        _this3.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this3.fnResponseError(errores);
+
+        _this3.overlayLoading = false;
+      });
+    },
+    fnAccion: function fnAccion() {
+      if (this.cAccion === "Guardar") {
+        this.fnStore();
+      } else {
+        this.fnUpdate();
+      }
+    },
+    fnStore: function fnStore() {
+      var _this4 = this;
+
+      this.overlayLoading = true; // files es una lista
+
+      var formData = new FormData();
+      var files = document.getElementById('archivo').files;
+
+      if (files[0] == undefined) {
+        formData.append('ruta_archivo', '');
+      } else {
+        formData.append('ruta_archivo', files[0]);
+      } // Agregar archivo a formData, índice cero (primer archivo... o único)
+
+
+      formData.append('observacion', this.form.observacion);
+      formData.append('numero_documento', this.$route.params.numero_documento);
+      axios.post("/consultorio-oftamologico/historia-clinica/guardar/cargar-archivo", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json'
+        }
+      }).then(function (response) {
+        _this4.errors = "";
+
+        _this4.$swal(response.data.message, '', 'success');
+
+        _this4.fnBuscar();
+
+        _this4.limpiarCampos();
+
+        _this4.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this4.errors = _this4.fnResponseError(errores);
+        _this4.overlayLoading = false;
+      });
+    },
+    fnUpdate: function fnUpdate() {
+      var _this5 = this;
+
+      this.overlayLoading = true;
+      var formData = new FormData();
+
+      if (this.form.ruta_archivo == "") {
+        // files es una lista
+        var files = document.getElementById('archivo').files;
+
+        if (files[0] == undefined) {
+          formData.append('ruta_archivo', '');
+        } else {
+          formData.append('ruta_archivo', files[0]);
+        }
+      } else {
+        formData.append('ruta_archivo', this.form.ruta_archivo);
+      }
+
+      formData.append('observacion', this.form.observacion);
+      formData.append('numero_documento', this.$route.params.numero_documento);
+      axios.post("/consultorio-oftamologico/historia-clinica/actualizar/cargar-archivo/".concat(this.form.id), formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json'
+        }
+      }).then(function (response) {
+        _this5.errors = "";
+
+        _this5.$swal(response.data.message, '', 'success');
+
+        _this5.fnBuscar();
+
+        _this5.limpiarCampos();
+
+        _this5.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this5.errors = _this5.fnResponseError(errores);
+        _this5.overlayLoading = false;
+      });
+    },
+    fnShow: function fnShow(id) {
+      var _this6 = this;
+
+      this.overlayLoading = true;
+      this.cAccion = "Actualizar";
+      axios.get("/consultorio-oftamologico/historia-clinica/mostrar/cargar-archivo/".concat(id)).then(function (response) {
+        var data = response.data.data;
+        _this6.form = data;
+        _this6.consecutivo_archivo = data.consecutivo_archivo;
+        _this6.errors = "";
+        _this6.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this6.errors = _this6.fnResponseError(errores);
+        _this6.overlayLoading = false;
+      });
+    },
+    fnDelete: function fnDelete(item) {
+      var _this7 = this;
+
+      this.$swal({
+        title: '¿Seguro que quiere eliminar el Archivo Cargado?',
+        text: "Eliminar el Carga Archivo N\xB0".concat(item.consecutivo_archivo, "!"),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this7.overlayLoading = true;
+          axios.post("/consultorio-oftamologico/historia-clinica/delete/cargar-archivo/".concat(item.id)).then(function (response) {
+            _this7.errors = "";
+
+            _this7.$swal(response.data.message, '', 'success');
+
+            _this7.fnBuscar();
+
+            _this7.limpiarCampos();
+
+            _this7.overlayLoading = false;
+          })["catch"](function (errores) {
+            _this7.fnResponseError(errores);
+
+            _this7.overlayLoading = false;
+          });
+        }
+      });
+    },
+    fnDescargarArchivo: function fnDescargarArchivo() {
+      var _this8 = this;
+
+      this.overlayLoading = true;
+      var vRutaArchivo = this.form.ruta_archivo.split("/");
+      var cNombreArchivo = vRutaArchivo[vRutaArchivo.length - 1]; // Obteniendo ultima posicion de arreglo para el nombre de archivo.
+
+      vRutaArchivo = vRutaArchivo.slice(0, -1);
+      var cRuta = vRutaArchivo.join('/');
+      var data = {
+        path: cRuta + "/",
+        nombreArchivo: cNombreArchivo
+      };
+      axios.post("/consultorio-oftamologico/historia-clinica/descargar/archivo", data, {
+        responseType: 'blob'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', cNombreArchivo);
+        document.body.appendChild(link);
+        link.click();
+        _this8.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this8.errors = _this8.fnResponseError(errores);
+        _this8.overlayLoading = false;
+      });
+    },
+    limpiarCampos: function limpiarCampos() {
+      if (this.cAccion == "Guardar" || this.form.ruta_archivo == "") {
+        // Solo se limpia campo donde se carga el archivo si esta por modo Guardar que es donde existe el campo input.
+        document.getElementById('archivo').value = "";
+      }
+
+      this.errors = "";
+      this.obtenerConsecutivo();
+      this.cAccion = "Guardar";
+      this.form.id = '';
+      this.form.numero_documento = '';
+      this.form.observacion = '';
+      this.form.ruta_archivo = '';
+    }
   }
 });
 
@@ -5936,7 +6456,7 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
               }
 
               _context2.t0 = _this2.$route.name;
-              _context2.next = _context2.t0 === 'historia-clinica' ? 4 : _context2.t0 === 'historia-clinica/motivo-consulta' ? 4 : _context2.t0 === 'historia-clinica/formula-anteojos' ? 4 : _context2.t0 === 'historia-clinica/antecedentes' ? 4 : 7;
+              _context2.next = _context2.t0 === 'historia-clinica' ? 4 : _context2.t0 === 'historia-clinica/motivo-consulta' ? 4 : _context2.t0 === 'historia-clinica/formula-anteojos' ? 4 : _context2.t0 === 'historia-clinica/antecedentes' ? 4 : _context2.t0 === 'historia-clinica/cargar-archivo' ? 4 : 7;
               break;
 
             case 4:
@@ -6286,12 +6806,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_consultorio_inicio_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/consultorio/inicio.vue */ "./resources/js/components/consultorio/inicio.vue");
 /* harmony import */ var _components_consultorio_ingresar_crearPaciente_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/consultorio/ingresar/crearPaciente.vue */ "./resources/js/components/consultorio/ingresar/crearPaciente.vue");
 /* harmony import */ var _components_consultorio_historiaClinica_busquedaHistoriaClinica_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/busquedaHistoriaClinica.vue */ "./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue");
-/* harmony import */ var _components_consultorio_historiaClinica_motivoConsulta_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/motivoConsulta.vue */ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue");
-/* harmony import */ var _components_consultorio_historiaClinica_formulaAnteojos_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/formulaAnteojos.vue */ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue");
-/* harmony import */ var _components_consultorio_historiaClinica_antecedentes_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/antecedentes.vue */ "./resources/js/components/consultorio/historiaClinica/antecedentes.vue");
-/* harmony import */ var _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/config/parametros/eps.vue */ "./resources/js/components/config/parametros/eps.vue");
-/* harmony import */ var _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/config/cambioClave.vue */ "./resources/js/components/config/cambioClave.vue");
-/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
+/* harmony import */ var _components_consultorio_historiaClinica_cargarArchivo_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/cargarArchivo.vue */ "./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue");
+/* harmony import */ var _components_consultorio_historiaClinica_motivoConsulta_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/motivoConsulta.vue */ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue");
+/* harmony import */ var _components_consultorio_historiaClinica_formulaAnteojos_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/formulaAnteojos.vue */ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue");
+/* harmony import */ var _components_consultorio_historiaClinica_antecedentes_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/antecedentes.vue */ "./resources/js/components/consultorio/historiaClinica/antecedentes.vue");
+/* harmony import */ var _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/config/parametros/eps.vue */ "./resources/js/components/config/parametros/eps.vue");
+/* harmony import */ var _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/config/cambioClave.vue */ "./resources/js/components/config/cambioClave.vue");
+/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -6300,6 +6821,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 
 
 /*Menu*/
+
 
 
 
@@ -6351,16 +6873,20 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'historia-clinica'
     }, {
       path: 'historia-clinica/motivo-consulta/:numero_documento',
-      component: _components_consultorio_historiaClinica_motivoConsulta_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+      component: _components_consultorio_historiaClinica_motivoConsulta_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
       name: 'historia-clinica/motivo-consulta'
     }, {
       path: 'historia-clinica/formula-anteojos/:numero_documento',
-      component: _components_consultorio_historiaClinica_formulaAnteojos_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+      component: _components_consultorio_historiaClinica_formulaAnteojos_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
       name: 'historia-clinica/formula-anteojos'
     }, {
       path: 'historia-clinica/antecedentes/:numero_documento',
-      component: _components_consultorio_historiaClinica_antecedentes_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+      component: _components_consultorio_historiaClinica_antecedentes_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
       name: 'historia-clinica/antecedentes'
+    }, {
+      path: 'historia-clinica/cargar-archivo/:numero_documento',
+      component: _components_consultorio_historiaClinica_cargarArchivo_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+      name: 'historia-clinica/cargar-archivo'
     }, // Historia clinica FIN
     {
       path: 'informe',
@@ -6383,16 +6909,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     },
     children: [{
       path: 'parametros/medicina-prepagada',
-      component: _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+      component: _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
       name: 'medicina-prepagada'
     }, {
       path: 'cambio-clave',
-      component: _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+      component: _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
       name: 'cambio-clave'
     }]
   }, {
     path: '*',
-    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
   }]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -25673,6 +26199,45 @@ component.options.__file = "resources/js/components/consultorio/historiaClinica/
 
 /***/ }),
 
+/***/ "./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _cargarArchivo_vue_vue_type_template_id_a4c222c0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cargarArchivo.vue?vue&type=template&id=a4c222c0& */ "./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=template&id=a4c222c0&");
+/* harmony import */ var _cargarArchivo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cargarArchivo.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _cargarArchivo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _cargarArchivo_vue_vue_type_template_id_a4c222c0___WEBPACK_IMPORTED_MODULE_0__.render,
+  _cargarArchivo_vue_vue_type_template_id_a4c222c0___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/consultorio/historiaClinica/cargarArchivo.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue ***!
@@ -26081,6 +26646,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cargarArchivo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./cargarArchivo.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cargarArchivo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************!*\
   !*** ./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=script&lang=js& ***!
@@ -26351,6 +26932,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_busquedaHistoriaClinica_vue_vue_type_template_id_41cada14___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_busquedaHistoriaClinica_vue_vue_type_template_id_41cada14___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./busquedaHistoriaClinica.vue?vue&type=template&id=41cada14& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/busquedaHistoriaClinica.vue?vue&type=template&id=41cada14&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=template&id=a4c222c0&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=template&id=a4c222c0& ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cargarArchivo_vue_vue_type_template_id_a4c222c0___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cargarArchivo_vue_vue_type_template_id_a4c222c0___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cargarArchivo_vue_vue_type_template_id_a4c222c0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./cargarArchivo.vue?vue&type=template&id=a4c222c0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=template&id=a4c222c0&");
 
 
 /***/ }),
@@ -27841,6 +28439,446 @@ var render = function () {
                             ),
                           ],
                           1
+                        ),
+                      ]
+                    },
+                  },
+                  {
+                    key: "item.cargarArchivo",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "router-link",
+                          {
+                            staticStyle: { "text-decoration": "none" },
+                            attrs: {
+                              title: "Cargar archivo",
+                              to: {
+                                path:
+                                  "/consultorio/historia-clinica/cargar-archivo/" +
+                                  item.numero_documento,
+                                params: {
+                                  numero_documento: item.numero_documento,
+                                },
+                              },
+                            },
+                          },
+                          [
+                            _c("v-icon", { attrs: { color: "grey" } }, [
+                              _vm._v(
+                                "\n                            file_upload\n                        "
+                              ),
+                            ]),
+                          ],
+                          1
+                        ),
+                      ]
+                    },
+                  },
+                ]),
+              }),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=template&id=a4c222c0&":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/cargarArchivo.vue?vue&type=template&id=a4c222c0& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("loadingGeneral", { attrs: { overlayLoading: _vm.overlayLoading } }),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticClass: "mt-7", attrs: { elevation: "2" } },
+        [
+          _c("h3", { staticClass: "text-center pt-2 pb-2" }, [
+            _vm._v("Carga Archivo - " + _vm._s(_vm.consecutivo_archivo)),
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "pb-2", attrs: { cols: "6", sm: "4" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Número de Documento",
+                      dense: "",
+                      readonly: "",
+                    },
+                    model: {
+                      value: _vm.numero_documento,
+                      callback: function ($$v) {
+                        _vm.numero_documento = $$v
+                      },
+                      expression: "numero_documento",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-2", attrs: { cols: "6", sm: "4" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Nombre", dense: "", readonly: "" },
+                    model: {
+                      value: _vm.nombre,
+                      callback: function ($$v) {
+                        _vm.nombre = $$v
+                      },
+                      expression: "nombre",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-2", attrs: { cols: "6", sm: "4" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Apellido", dense: "", readonly: "" },
+                    model: {
+                      value: _vm.apellido,
+                      callback: function ($$v) {
+                        _vm.apellido = $$v
+                      },
+                      expression: "apellido",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c("v-col", { attrs: { cols: "12", sm: "6" } }, [
+                _vm.form.ruta_archivo == ""
+                  ? _c("div", [
+                      _c("label", { attrs: { for: "archivo" } }, [
+                        _vm._v("Cargar Archivo:"),
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticStyle: { width: "100%" },
+                        attrs: {
+                          type: "file",
+                          id: "archivo",
+                          accept: "application/pdf",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.ruta_archivo != undefined
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: "pl-4",
+                              staticStyle: { color: "#b71c1c" },
+                            },
+                            [_vm._v(_vm._s(_vm.errors.ruta_archivo[0]))]
+                          )
+                        : _vm._e(),
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _vm._v(
+                          "\n                    Archivo Cargado:\n                    "
+                        ),
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "white--text text-none",
+                            attrs: {
+                              type: "submit",
+                              small: "",
+                              color: "red",
+                              tile: "",
+                            },
+                            on: { click: _vm.fnDescargarArchivo },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        Descargar\n                        "
+                            ),
+                            _c("v-icon", { attrs: { right: "" } }, [
+                              _vm._v(" picture_as_pdf "),
+                            ]),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "white--text text-none mr-3",
+                            attrs: {
+                              type: "click",
+                              small: "",
+                              color: "primary",
+                              tile: "",
+                            },
+                            on: {
+                              click: function ($event) {
+                                _vm.form.ruta_archivo = ""
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        Remover\n                    "
+                            ),
+                          ]
+                        ),
+                      ],
+                      1
+                    ),
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "12", sm: "12" } },
+                [
+                  _c("v-subheader", [
+                    _vm._v(
+                      "Consecutivo Archivo: " + _vm._s(_vm.consecutivo_archivo)
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-textarea", {
+                    ref: "observacion",
+                    attrs: {
+                      label: "Observación",
+                      placeholder:
+                        "Añade aquí alguna observación para el Archivo a Cargar.",
+                      outlined: "",
+                      dense: "",
+                      "error-messages": _vm.errors.observacion,
+                      rows: "2",
+                    },
+                    model: {
+                      value: _vm.form.observacion,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "observacion", $$v)
+                      },
+                      expression: "form.observacion",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "pl-4 pr-4" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "d-flex justify-end", attrs: { cols: "12" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text text-none mr-3",
+                      attrs: {
+                        type: "submit",
+                        small: "",
+                        color: "red darken-4",
+                        tile: "",
+                      },
+                      on: { click: _vm.limpiarCampos },
+                    },
+                    [
+                      _c("v-icon", { attrs: { left: "" } }, [
+                        _vm._v(" format_clear "),
+                      ]),
+                      _vm._v("Limpiar\n                "),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text text-none",
+                      attrs: {
+                        type: "submit",
+                        small: "",
+                        color: "success",
+                        tile: "",
+                      },
+                      on: { click: _vm.fnAccion },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.cAccion) +
+                          "\n                    "
+                      ),
+                      _c("v-icon", { attrs: { right: "" } }, [
+                        _vm._v(" save "),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c(
+                "v-card-title",
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      type: "text",
+                      "append-icon": "mdi-magnify",
+                      label: "Buscar",
+                      "single-line": "",
+                      "hide-details": "",
+                    },
+                    on: { input: _vm.filterSearch },
+                    model: {
+                      value: _vm.buscar,
+                      callback: function ($$v) {
+                        _vm.buscar = $$v
+                      },
+                      expression: "buscar",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  page: _vm.page,
+                  headers: _vm.headers,
+                  items: _vm.dataSet,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalRegistros,
+                  loading: _vm.loading,
+                  "items-per-page": 5,
+                  "footer-props": {
+                    "items-per-page-options": [5, 10, 15, 50],
+                  },
+                  "sort-by": "updated_at",
+                  "sort-desc": true,
+                  "no-data-text": "Sin registros",
+                },
+                on: {
+                  "update:options": function ($event) {
+                    _vm.options = $event
+                  },
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.editar",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: {
+                              color: "primary",
+                              title: "Editar Actecedente",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnShow(item.id)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-pencil\n                    "
+                            ),
+                          ]
+                        ),
+                      ]
+                    },
+                  },
+                  {
+                    key: "item.eliminar",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: {
+                              color: "red",
+                              title: "Eliminar Actecedente",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnDelete(item)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        delete\n                    "
+                            ),
+                          ]
                         ),
                       ]
                     },
