@@ -77,7 +77,7 @@ class Antecedente extends Model
 
     static $messages = [
         'numero_documento.required'  => 'El Número de Documento del paciente es requerido.',
-        'otro.string'                => 'El valor de Otro Antecedente no puede superar lo 255 carácteres.'
+        'otro.max'                   => 'El valor de Otro Antecedente no puede superar lo 255 carácteres.'
     ];
 
     static $rulesStore = [

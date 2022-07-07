@@ -136,7 +136,7 @@ class FormulaAnteojosController extends Controller
                     if ($valor != "") {
                         $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
                     }
-                }else{
+                }else if($valor != ""){
                     $valor = trim($valor);
                 }
                 return $valor;
