@@ -1,0 +1,9 @@
+[
+    { "value": "CC", "text": "CEDULA DE CIUDADANIA" },
+    { "value": "RC", "text": "REGISTRO CIVIL" },
+    { "value": "CE", "text": "CEDULA DE EXTRANJERIA" },
+    { "value": "NIP", "text": "NUMERO DE IDENTIFICACION PERSONAL" },
+    { "value": "NIT", "text": "NUMERO DE IDENTIFICACION TRIBUTARIA" },
+    { "value": "TI", "text": "TARJETA DE IDENTIDAD" },
+    { "value": "PAP", "text": "PASAPORTE" }
+]

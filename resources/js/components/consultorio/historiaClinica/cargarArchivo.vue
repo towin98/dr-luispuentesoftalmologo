@@ -70,7 +70,7 @@
                         v-model="form.observacion"
                         ref="observacion"
                         label="Observación"
-                        placeholder="Añade aquí alguna observación para el Archivo a Cargar."
+                        placeholder="Agregue aquí alguna observación para el Archivo a Cargar."
                         outlined
                         dense
                         :error-messages="errors.observacion"

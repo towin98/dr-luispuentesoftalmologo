@@ -2543,6 +2543,723 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+/* harmony import */ var _json_tiposDocumentos_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../json/tiposDocumentos.json */ "./resources/js/components/json/tiposDocumentos.json");
+/* harmony import */ var _json_tiposConsulta_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../json/tiposConsulta.json */ "./resources/js/components/json/tiposConsulta.json");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    loadingGeneral: _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      accion: 'Agendar_Cita',
+      disabledCampos: false,
+      // Formulario
+      errors: "",
+      form: {
+        numero_documento: '',
+        tipo_consulta: '',
+        fecha_cita: '',
+        hora_cita: '',
+        observacion: ''
+      },
+      radioGroupEps: '',
+      search_paciente: null,
+      pacienteData: [],
+      debounce: null,
+      numero_documento_readonly: false,
+      // Variables autocomplete
+      isLoading: false,
+      // loading de autocomplete
+      autocomplete_numero_documento: null,
+      // Variables para informacion de paciente solo MOSTRAR.
+      id_cita: '',
+      tipo_documento: '',
+      numero_documento: '',
+      nombre: '',
+      apellido: '',
+      celular: '',
+      id_p_eps: '',
+      tiposDocumentosItems: [],
+      itemsEpsPrepagada: [],
+      tiposConsultaCitaItems: [],
+      overlayLoading: false,
+      // Variables table.
+      buscar: "",
+      page: 1,
+      totalRegistros: 0,
+      numberOfPages: 0,
+      loading: false,
+      options: {},
+      headers: [{
+        text: "Identificación",
+        value: "numero_documento"
+      }, {
+        text: "Paciente",
+        value: "nombre_apellido"
+      }, {
+        text: "EPS",
+        value: "eps"
+      }, {
+        text: "Tipo Consulta",
+        value: "tipo_consulta"
+      }, // { text: "Celular", value: "celular" },
+      {
+        text: "Fecha Cita",
+        value: "fecha_cita"
+      }, {
+        text: "Hora",
+        value: "hora_cita"
+      }, {
+        text: "Fecha Modificado",
+        value: "updated_at"
+      }, {
+        text: "Ver",
+        value: "ver",
+        sortable: false
+      }, {
+        text: "Editar",
+        value: "editar",
+        sortable: false
+      }, {
+        text: "Eliminar",
+        value: "eliminar",
+        sortable: false
+      }],
+      dataSet: []
+      /* end variables Table. */
+
+    };
+  },
+  watch: {
+    search_paciente: function search_paciente(val) {
+      this.fnAutoCompletePaciente(val);
+    },
+    options: {
+      handler: function handler() {
+        this.fnBuscar();
+      }
+    }
+  },
+  methods: {
+    fnAutoCompletePaciente: function fnAutoCompletePaciente(val) {
+      var _this = this;
+
+      var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'SI';
+
+      if (val == "" || val == null) {
+        this.fnLimpiarInfoPaciente();
+        return;
+      }
+
+      if (this.autocomplete_numero_documento != null && this.autocomplete_numero_documento != '') {
+        var vNumeroDocumento = val.split('-');
+
+        if (this.autocomplete_numero_documento === vNumeroDocumento[0]) {
+          return;
+        }
+      } // Los artículos ya han sido solicitados
+
+
+      if (this.isLoading) return; // Borra el retraso asignado
+
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(function () {
+        _this.isLoading = true;
+        axios.post("/consultorio-oftamologico/agenda/busqueda-paciente-autocomplete", {
+          valor: val
+        }).then(function (response) {
+          _this.pacienteData = response.data.data;
+          _this.errors = "";
+
+          if (_this.pacienteData.length == 0) {
+            _this.autocomplete_numero_documento = null;
+          } // Si devuelve solo un dato se carga automaticamente el paciente.
+
+
+          if (_this.pacienteData.length == 1) {
+            _this.autocomplete_numero_documento = _this.pacienteData[0].id;
+
+            _this.fnCargarInfoPaciente();
+          }
+        })["catch"](function (errores) {
+          _this.errors = _this.fnResponseError(errores);
+          _this.autocomplete_numero_documento = null;
+        })["finally"](function () {
+          return _this.isLoading = false;
+        });
+      }, timeout == 'SI' ? 800 : 0);
+    },
+    filterSearch: function filterSearch() {
+      var _this2 = this;
+
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(function () {
+        _this2.fnBuscar(_this2.buscar);
+      }, 600);
+    },
+    fnBuscar: function fnBuscar() {
+      var _this3 = this;
+
+      this.overlayLoading = true;
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage,
+          sortBy = _this$options.sortBy,
+          sortDesc = _this$options.sortDesc; // Obteniendo rangos de consultado paginación.
+
+      this.start = itemsPerPage * (page - 1);
+      this.length = itemsPerPage;
+
+      if (sortDesc[0] == true) {
+        sortBy = sortBy[0];
+        sortDesc = "DESC";
+      } else if (sortDesc[0] == false) {
+        sortBy = sortBy[0];
+        sortDesc = "ASC";
+      } else {
+        sortBy = "";
+        sortDesc = "";
+      }
+
+      axios.get("/consultorio-oftamologico/agenda/listar/citas-pacientes?length=".concat(this.length, "&start=").concat(this.start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc, "&buscar=").concat(this.buscar)).then(function (response) {
+        var data = response.data.data;
+
+        for (var i = 0; i < data.length; i++) {
+          data[i].paciente = data[i].nombre + " " + data[i].apellido;
+        }
+
+        _this3.dataSet = response.data.data;
+        _this3.totalRegistros = response.data.total;
+        _this3.numberOfPages = response.data.totalPages; // Limpiando mensajes de error del formulario.
+
+        _this3.errors = {};
+        _this3.loading = false;
+        _this3.overlayLoading = false;
+      })["catch"](function (errors) {
+        _this3.overlayLoading = false;
+        _this3.loading = false;
+        _this3.dataSet = [];
+
+        _this3.$swal({
+          icon: 'error',
+          title: "",
+          text: "No fue posible realizar la operaci\xF3n solicitada"
+        });
+      });
+    },
+    fnAccion: function fnAccion() {
+      if (this.accion === "Agendar_Cita") {
+        this.fnstoreCitaPaciente();
+      } else {
+        this.fnUpdate();
+      }
+    },
+    fnCargarInfoPaciente: function fnCargarInfoPaciente() {
+      var _this4 = this;
+
+      if (this.autocomplete_numero_documento == null || this.autocomplete_numero_documento == "") {
+        this.fnLimpiarInfoPaciente(); // El numero de documento del autocomplete esta vacio o null no se permite buscar info del paciente.
+
+        return;
+      }
+
+      this.overlayLoading = true;
+      this.numero_documento_readonly = true;
+      axios.get("/consultorio-oftamologico/agenda/cargar-informacion-paciente?numero_documento=".concat(this.autocomplete_numero_documento)).then(function (response) {
+        var data = response.data.data;
+        _this4.tipo_documento = data.tipo_documento;
+        _this4.numero_documento = data.numero_documento;
+        _this4.nombre = data.nombre;
+        _this4.apellido = data.apellido;
+        _this4.id_p_eps = data.id_p_eps;
+        _this4.celular = data.celular;
+
+        if (data.id_p_eps == 1) {
+          _this4.radioGroupEps = "PARTICULAR";
+        } else {
+          _this4.radioGroupEps = "PREPAGADA";
+        }
+
+        _this4.overlayLoading = false;
+        _this4.numero_documento_readonly = false;
+      })["catch"](function (errores) {
+        _this4.errors = _this4.fnResponseError(errores);
+        _this4.overlayLoading = false;
+        _this4.numero_documento_readonly = false;
+      })["finally"](function () {
+        return _this4.isLoading = false;
+      });
+    },
+    fnstoreCitaPaciente: function fnstoreCitaPaciente() {
+      var _this5 = this;
+
+      this.overlayLoading = true;
+
+      if (this.autocomplete_numero_documento != null && this.autocomplete_numero_documento != "") {
+        this.form.numero_documento = this.autocomplete_numero_documento;
+      } // ?
+
+
+      axios.post("/consultorio-oftamologico/agenda/guardar/cita-paciente", this.form).then(function (response) {
+        _this5.$swal(response.data.message, '', 'success');
+
+        _this5.errors = {};
+
+        _this5.fnLimpiar();
+
+        _this5.fnBuscar();
+
+        _this5.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this5.overlayLoading = false;
+        _this5.errors = _this5.fnResponseError(errores);
+      })["finally"](function () {
+        return _this5.isLoading = false;
+      });
+    },
+
+    /* METODOS QUE LIMPIAN CAMPOS - START*/
+    fnLimpiar: function fnLimpiar() {
+      this.overlayLoading = true;
+      this.accion = "Agendar_Cita";
+      this.form.tipo_consulta = "";
+      this.form.fecha_cita = "";
+      this.form.hora_cita = "";
+      this.form.observacion = "";
+      this.errors = {};
+      this.overlayLoading = false;
+    },
+    fnLimpiarInfoPaciente: function fnLimpiarInfoPaciente() {
+      var clear_autocomplete = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'NO';
+
+      if (clear_autocomplete == 'SI') {
+        this.autocomplete_numero_documento = "";
+        this.pacienteData = [];
+      }
+
+      this.tipo_documento = "";
+      this.numero_documento = "";
+      this.nombre = "";
+      this.apellido = "";
+      this.radioGroupEps = "";
+      this.celular = "";
+    },
+
+    /* METODOS QUE LIMPIAN CAMPOS - END*/
+    fnShow: function fnShow(id, mostrar) {
+      var _this6 = this;
+
+      this.disabledCampos = mostrar == 'VER' ? true : false;
+      this.id_cita = id;
+      this.overlayLoading = true;
+      this.accion = "Editar_Cita";
+      axios.get("/consultorio-oftamologico/agenda/mostrar/cita-paciente/".concat(id)).then(function (response) {
+        var data = response.data.data;
+
+        if (data.get_paciente.numero_documento != _this6.autocomplete_numero_documento) {
+          // this.autocomplete_numero_documento = null;
+          _this6.fnAutoCompletePaciente(data.get_paciente.numero_documento, 'NO');
+        } else {
+          _this6.overlayLoading = false;
+        }
+
+        _this6.form.tipo_consulta = data.tipo_consulta;
+        _this6.form.fecha_cita = data.fecha_cita;
+        _this6.form.hora_cita = data.hora_cita;
+        _this6.form.observacion = data.observacion;
+        _this6.errors = "";
+      })["catch"](function (errores) {
+        _this6.$swal({
+          icon: 'error',
+          title: "Error al mostrar la informaci\xF3n.",
+          text: "Por favor comunicate con el \xE1rea de Tecnolog\xEDa."
+        });
+
+        _this6.overlayLoading = false;
+      });
+    },
+    fnUpdate: function fnUpdate() {
+      var _this7 = this;
+
+      this.overlayLoading = true;
+      this.form.numero_documento = this.autocomplete_numero_documento;
+      this.form.hora_cita = this.form.hora_cita.substr(0, 5); // Recortando Hora, formato aceptado H:i
+
+      axios.put("/consultorio-oftamologico/agenda/actualizar/cita-paciente/".concat(this.id_cita), this.form).then(function (response) {
+        _this7.errors = "";
+
+        _this7.$swal(response.data.message, '', 'success');
+
+        _this7.fnBuscar();
+
+        _this7.fnLimpiar();
+
+        _this7.fnLimpiarInfoPaciente('SI');
+
+        _this7.overlayLoading = false;
+      })["catch"](function (errores) {
+        _this7.errors = _this7.fnResponseError(errores);
+        _this7.overlayLoading = false;
+      });
+    },
+    fnDelete: function fnDelete(item) {
+      var _this8 = this;
+
+      this.$swal({
+        title: '¿Seguro que quiere Eliminar Cita?',
+        text: "Eliminar Cita del Paciente ".concat(item.nombre_apellido, "!"),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this8.overlayLoading = true;
+          axios.post("/consultorio-oftamologico/agenda/delete/cita-paciente/".concat(item.id)).then(function (response) {
+            _this8.errors = "";
+
+            _this8.$swal('', response.data.message, 'success');
+
+            _this8.fnBuscar();
+
+            _this8.fnLimpiar();
+
+            _this8.fnLimpiarInfoPaciente('SI');
+
+            _this8.overlayLoading = false;
+          })["catch"](function (errores) {
+            _this8.fnResponseError(errores);
+
+            _this8.overlayLoading = false;
+          });
+        }
+      });
+    }
+  },
+  created: function created() {
+    var _this9 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _this9.tiposDocumentosItems = _json_tiposDocumentos_json__WEBPACK_IMPORTED_MODULE_2__;
+              _this9.tiposConsultaCitaItems = _json_tiposConsulta_json__WEBPACK_IMPORTED_MODULE_3__;
+              _context.next = 4;
+              return _this9.fnBuscarParametro('p_eps');
+
+            case 4:
+              _this9.itemsEpsPrepagada = _context.sent;
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/antecedentes.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/antecedentes.vue?vue&type=script&lang=js& ***!
@@ -2555,6 +3272,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+//
+//
 //
 //
 //
@@ -6056,7 +6775,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     filterSearch: function filterSearch() {
       var _this6 = this;
 
-      this.overlayLoading = true;
       clearTimeout(this.debounce);
       this.debounce = setTimeout(function () {
         _this6.fnBuscar(_this6.buscar);
@@ -6380,6 +7098,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 
 
@@ -6397,10 +7122,9 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
       date: "",
       // Variables permisos menus start
       moduloCrearPaciente: false,
-      // crearPaciente   : false,
       moduloHistoriaClinica: false,
       moduloInforme: false,
-      moduloAgendar: false,
+      moduloAgenda: false,
       moduloTurno: false,
 
       /* Variables de configuracion del sistema */
@@ -6503,11 +7227,10 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
               break;
 
             case 21:
-              _this2.moduloCrearPaciente = true; // this.crearPaciente       = true;
-
+              _this2.moduloCrearPaciente = true;
               _this2.moduloHistoriaClinica = true;
               _this2.moduloInforme = true;
-              _this2.moduloAgendar = true;
+              _this2.moduloAgenda = true;
               _this2.moduloTurno = true;
               /* Variables de configuracion del sistema */
 
@@ -6810,9 +7533,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_consultorio_historiaClinica_motivoConsulta_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/motivoConsulta.vue */ "./resources/js/components/consultorio/historiaClinica/motivoConsulta.vue");
 /* harmony import */ var _components_consultorio_historiaClinica_formulaAnteojos_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/formulaAnteojos.vue */ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue");
 /* harmony import */ var _components_consultorio_historiaClinica_antecedentes_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/antecedentes.vue */ "./resources/js/components/consultorio/historiaClinica/antecedentes.vue");
-/* harmony import */ var _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/config/parametros/eps.vue */ "./resources/js/components/config/parametros/eps.vue");
-/* harmony import */ var _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/config/cambioClave.vue */ "./resources/js/components/config/cambioClave.vue");
-/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
+/* harmony import */ var _components_consultorio_agenda_citaCliente_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/consultorio/agenda/citaCliente.vue */ "./resources/js/components/consultorio/agenda/citaCliente.vue");
+/* harmony import */ var _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/config/parametros/eps.vue */ "./resources/js/components/config/parametros/eps.vue");
+/* harmony import */ var _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/config/cambioClave.vue */ "./resources/js/components/config/cambioClave.vue");
+/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -6821,6 +7545,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 
 
 /*Menu*/
+
 
 
 
@@ -6889,13 +7614,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'historia-clinica/cargar-archivo'
     }, // Historia clinica FIN
     {
-      path: 'informe',
-      component: _components_consultorio_inicio_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-      name: 'informe'
-    }, {
-      path: 'agendar',
-      component: _components_consultorio_inicio_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-      name: 'agendar'
+      path: 'agenda/cita-cliente',
+      component: _components_consultorio_agenda_citaCliente_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+      name: 'agenda/cita-cliente'
     }, {
       path: 'turno',
       component: _components_consultorio_inicio_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -6909,16 +7630,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     },
     children: [{
       path: 'parametros/medicina-prepagada',
-      component: _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+      component: _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
       name: 'medicina-prepagada'
     }, {
       path: 'cambio-clave',
-      component: _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+      component: _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
       name: 'cambio-clave'
     }]
   }, {
     path: '*',
-    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
   }]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -26121,6 +26842,45 @@ component.options.__file = "resources/js/components/config/parametros/eps.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/consultorio/agenda/citaCliente.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/consultorio/agenda/citaCliente.vue ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _citaCliente_vue_vue_type_template_id_8626dc6e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./citaCliente.vue?vue&type=template&id=8626dc6e& */ "./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=template&id=8626dc6e&");
+/* harmony import */ var _citaCliente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./citaCliente.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _citaCliente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _citaCliente_vue_vue_type_template_id_8626dc6e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _citaCliente_vue_vue_type_template_id_8626dc6e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/consultorio/agenda/citaCliente.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/consultorio/historiaClinica/antecedentes.vue":
 /*!******************************************************************************!*\
   !*** ./resources/js/components/consultorio/historiaClinica/antecedentes.vue ***!
@@ -26614,6 +27374,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_citaCliente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./citaCliente.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_citaCliente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/consultorio/historiaClinica/antecedentes.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************!*\
   !*** ./resources/js/components/consultorio/historiaClinica/antecedentes.vue?vue&type=script&lang=js& ***!
@@ -26898,6 +27674,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_eps_vue_vue_type_template_id_7de61d25___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_eps_vue_vue_type_template_id_7de61d25___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./eps.vue?vue&type=template&id=7de61d25& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/config/parametros/eps.vue?vue&type=template&id=7de61d25&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=template&id=8626dc6e&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=template&id=8626dc6e& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_citaCliente_vue_vue_type_template_id_8626dc6e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_citaCliente_vue_vue_type_template_id_8626dc6e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_citaCliente_vue_vue_type_template_id_8626dc6e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./citaCliente.vue?vue&type=template&id=8626dc6e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=template&id=8626dc6e&");
 
 
 /***/ }),
@@ -27789,6 +28582,616 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=template&id=8626dc6e&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=template&id=8626dc6e& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("loadingGeneral", { attrs: { overlayLoading: _vm.overlayLoading } }),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticClass: "mt-7", attrs: { elevation: "2" } },
+        [
+          _c("h3", { staticClass: "text-center pt-2 pb-2" }, [
+            _vm._v("Cita Paciente"),
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "12", sm: "5" } },
+                [
+                  _c("v-autocomplete", {
+                    attrs: {
+                      items: _vm.pacienteData,
+                      loading: _vm.isLoading,
+                      "search-input": _vm.search_paciente,
+                      "hide-no-data": "",
+                      "item-text": "description",
+                      "item-value": "id",
+                      label: "Buscar Paciente",
+                      placeholder:
+                        "Ingrese numero documento, nombre o apellido.",
+                      "error-messages": _vm.errors.numero_documento,
+                      readonly: _vm.numero_documento_readonly,
+                      disabled: _vm.disabledCampos,
+                    },
+                    on: {
+                      "update:searchInput": function ($event) {
+                        _vm.search_paciente = $event
+                      },
+                      "update:search-input": function ($event) {
+                        _vm.search_paciente = $event
+                      },
+                      change: _vm.fnCargarInfoPaciente,
+                    },
+                    model: {
+                      value: _vm.autocomplete_numero_documento,
+                      callback: function ($$v) {
+                        _vm.autocomplete_numero_documento = $$v
+                      },
+                      expression: "autocomplete_numero_documento",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "12", sm: "3" } },
+                [
+                  _c("v-select", {
+                    ref: "tipo_documento",
+                    attrs: {
+                      label: "Tipo de Documento",
+                      items: _vm.tiposDocumentosItems,
+                      "item-value": "value",
+                      "item-text": "text",
+                      "error-messages": _vm.errors.tipo_documento,
+                      dense: "",
+                      disabled: "",
+                    },
+                    model: {
+                      value: _vm.tipo_documento,
+                      callback: function ($$v) {
+                        _vm.tipo_documento = $$v
+                      },
+                      expression: "tipo_documento",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "12", sm: "3" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Número de Documento",
+                      dense: "",
+                      disabled: "",
+                    },
+                    model: {
+                      value: _vm.numero_documento,
+                      callback: function ($$v) {
+                        _vm.numero_documento = $$v
+                      },
+                      expression: "numero_documento",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "6", sm: "3" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Nombre", dense: "", disabled: "" },
+                    model: {
+                      value: _vm.nombre,
+                      callback: function ($$v) {
+                        _vm.nombre = $$v
+                      },
+                      expression: "nombre",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "6", sm: "3" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Apellido", dense: "", disabled: "" },
+                    model: {
+                      value: _vm.apellido,
+                      callback: function ($$v) {
+                        _vm.apellido = $$v
+                      },
+                      expression: "apellido",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-3 pb-0", attrs: { cols: "6", sm: "4" } },
+                [
+                  _c("v-text-field", {
+                    ref: "celular",
+                    attrs: { label: "Celular", dense: "", disabled: "" },
+                    model: {
+                      value: _vm.celular,
+                      callback: function ($$v) {
+                        _vm.celular = $$v
+                      },
+                      expression: "celular",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0 pb-0", attrs: { cols: "6", sm: "4" } },
+                [
+                  _c(
+                    "v-radio-group",
+                    {
+                      attrs: { row: "" },
+                      model: {
+                        value: _vm.radioGroupEps,
+                        callback: function ($$v) {
+                          _vm.radioGroupEps = $$v
+                        },
+                        expression: "radioGroupEps",
+                      },
+                    },
+                    [
+                      _c("v-radio", {
+                        attrs: {
+                          label: "Particular",
+                          value: "PARTICULAR",
+                          disabled: "",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("v-radio", {
+                        attrs: {
+                          label: "Prepagada",
+                          value: "PREPAGADA",
+                          disabled: "",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-3 pb-0", attrs: { cols: "6", sm: "4" } },
+                [
+                  _vm.radioGroupEps == "PREPAGADA"
+                    ? _c("v-select", {
+                        ref: "id_p_eps",
+                        attrs: {
+                          label: "MP",
+                          items: _vm.itemsEpsPrepagada,
+                          "item-value": "id",
+                          "item-text": "descripcion",
+                          dense: "",
+                          disabled: "",
+                        },
+                        model: {
+                          value: _vm.id_p_eps,
+                          callback: function ($$v) {
+                            _vm.id_p_eps = $$v
+                          },
+                          expression: "id_p_eps",
+                        },
+                      })
+                    : _vm._e(),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "6", sm: "4" } },
+                [
+                  _c("v-select", {
+                    ref: "tipo_consulta",
+                    attrs: {
+                      label: "Tipo de Consulta",
+                      items: _vm.tiposConsultaCitaItems,
+                      "item-value": "value",
+                      "item-text": "text",
+                      "error-messages": _vm.errors.tipo_consulta,
+                      dense: "",
+                      title: "Tipo consulta de Cita, seleccione",
+                      disabled: _vm.disabledCampos,
+                    },
+                    model: {
+                      value: _vm.form.tipo_consulta,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "tipo_consulta", $$v)
+                      },
+                      expression: "form.tipo_consulta",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "6", sm: "4" } },
+                [
+                  _c("v-text-field", {
+                    ref: "fecha_cita",
+                    attrs: {
+                      type: "date",
+                      label: "Fecha Cita",
+                      "error-messages": _vm.errors.fecha_cita,
+                      dense: "",
+                      disabled: _vm.disabledCampos,
+                    },
+                    model: {
+                      value: _vm.form.fecha_cita,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "fecha_cita", $$v)
+                      },
+                      expression: "form.fecha_cita",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pb-0", attrs: { cols: "6", sm: "4" } },
+                [
+                  _c("v-text-field", {
+                    ref: "hora_cita",
+                    attrs: {
+                      type: "time",
+                      label: "Hora Cita",
+                      "error-messages": _vm.errors.hora_cita,
+                      dense: "",
+                      disabled: _vm.disabledCampos,
+                    },
+                    model: {
+                      value: _vm.form.hora_cita,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "hora_cita", $$v)
+                      },
+                      expression: "form.hora_cita",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0 pb-0", attrs: { cols: "12", sm: "12" } },
+                [
+                  _c("v-subheader", [_vm._v("Observaciones")]),
+                  _vm._v(" "),
+                  _c("v-textarea", {
+                    ref: "observacion",
+                    attrs: {
+                      placeholder:
+                        "Agreue aquí alguna observación para la cita del paciente.",
+                      outlined: "",
+                      dense: "",
+                      "error-messages": _vm.errors.observacion,
+                      rows: "2",
+                      disabled: _vm.disabledCampos,
+                    },
+                    model: {
+                      value: _vm.form.observacion,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "observacion", $$v)
+                      },
+                      expression: "form.observacion",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "d-flex justify-end", attrs: { cols: "12" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "mr-3 text-none",
+                      attrs: {
+                        type: "button",
+                        small: "",
+                        color: "grey",
+                        icon: "",
+                        title: "Recargar Registros",
+                      },
+                      on: { click: _vm.fnBuscar },
+                    },
+                    [_c("v-icon", [_vm._v(" refresh ")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text text-none mr-3",
+                      attrs: {
+                        type: "submit",
+                        small: "",
+                        color: "red darken-4",
+                        tile: "",
+                      },
+                      on: {
+                        click: function ($event) {
+                          _vm.fnLimpiar()
+                          _vm.fnLimpiarInfoPaciente("SI")
+                        },
+                      },
+                    },
+                    [
+                      _c("v-icon", [_vm._v(" format_clear ")]),
+                      _vm._v("Limpiar Todo\n                "),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.accion == "Editar_Cita"
+                    ? _c(
+                        "v-btn",
+                        {
+                          staticClass: "white--text text-none",
+                          attrs: {
+                            type: "submit",
+                            small: "",
+                            color: "success",
+                            tile: "",
+                          },
+                          on: { click: _vm.fnAccion },
+                        },
+                        [
+                          _c("v-icon", [_vm._v(" save ")]),
+                          _vm._v("Editar Cita\n                "),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.accion == "Agendar_Cita"
+                    ? _c(
+                        "v-btn",
+                        {
+                          staticClass: "white--text text-none",
+                          attrs: {
+                            type: "submit",
+                            small: "",
+                            color: "success",
+                            tile: "",
+                          },
+                          on: { click: _vm.fnAccion },
+                        },
+                        [
+                          _c("v-icon", [_vm._v(" save ")]),
+                          _vm._v("Agendar Cita\n                "),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c(
+                "v-card-title",
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      type: "text",
+                      "append-icon": "mdi-magnify",
+                      label: "Buscar",
+                      "single-line": "",
+                      "hide-details": "",
+                    },
+                    on: { input: _vm.filterSearch },
+                    model: {
+                      value: _vm.buscar,
+                      callback: function ($$v) {
+                        _vm.buscar = $$v
+                      },
+                      expression: "buscar",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  page: _vm.page,
+                  pageCount: _vm.numberOfPages,
+                  headers: _vm.headers,
+                  items: _vm.dataSet,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalRegistros,
+                  loading: _vm.loading,
+                  "items-per-page": 5,
+                  "footer-props": {
+                    "items-per-page-options": [5, 10, 15, 50],
+                  },
+                  "sort-by": "updated_at",
+                  "sort-desc": true,
+                  "no-data-text": "Sin registros",
+                },
+                on: {
+                  "update:options": function ($event) {
+                    _vm.options = $event
+                  },
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.ver",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            staticClass: "mr-2",
+                            attrs: { color: "primary", title: "Ver Cita" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnShow(item.id, "VER")
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        visibility\n                    "
+                            ),
+                          ]
+                        ),
+                      ]
+                    },
+                  },
+                  {
+                    key: "item.editar",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            staticClass: "mr-2",
+                            attrs: { color: "primary", title: "Editar Cita" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnShow(item.id, "EDITAR")
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        edit\n                    "
+                            ),
+                          ]
+                        ),
+                      ]
+                    },
+                  },
+                  {
+                    key: "item.eliminar",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            staticClass: "mr-2",
+                            attrs: { color: "red", title: "Eliminar Cita" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.fnDelete(item)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                        delete\n                    "
+                            ),
+                          ]
+                        ),
+                      ]
+                    },
+                  },
+                ]),
+              }),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/antecedentes.vue?vue&type=template&id=e330b226&":
 /*!****************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/antecedentes.vue?vue&type=template&id=e330b226& ***!
@@ -27948,6 +29351,30 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "v-col",
+                { attrs: { cols: "12" } },
+                [
+                  _vm.errors != ""
+                    ? _c(
+                        "v-alert",
+                        { attrs: { type: "error" } },
+                        _vm._l(_vm.errors, function (item, index) {
+                          return _c("div", { key: item.id }, [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(item[0]) +
+                                "\n                    "
+                            ),
+                          ])
+                        }),
+                        0
+                      )
+                    : _vm._e(),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
                 { staticClass: "d-flex justify-end", attrs: { cols: "12" } },
                 [
                   _c(
@@ -27994,12 +29421,6 @@ var render = function () {
                 ],
                 1
               ),
-              _vm._v(" "),
-              _c("pre", [
-                _vm._v(
-                  "                " + _vm._s(_vm.errors) + "\n            "
-                ),
-              ]),
             ],
             1
           ),
@@ -28691,7 +30112,7 @@ var render = function () {
                     attrs: {
                       label: "Observación",
                       placeholder:
-                        "Añade aquí alguna observación para el Archivo a Cargar.",
+                        "Agregue aquí alguna observación para el Archivo a Cargar.",
                       outlined: "",
                       dense: "",
                       "error-messages": _vm.errors.observacion,
@@ -32264,45 +33685,97 @@ var render = function () {
                               )
                             : _vm._e(),
                           _vm._v(" "),
-                          _vm.moduloInforme
+                          _vm.moduloAgenda
                             ? _c(
-                                "v-tab",
+                                "v-menu",
                                 {
-                                  staticClass: "white--text",
-                                  attrs: { to: { name: "informe" } },
-                                  on: {
-                                    click: function ($event) {
-                                      _vm.titleProceso = "Informe"
-                                      _vm.pathPrevious = ""
-                                    },
-                                  },
+                                  attrs: { "offset-y": "", rounded: "lg" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function (ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-tab",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "white--text",
+                                                  },
+                                                  "v-tab",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _vm._v(
+                                                  "\n                                Agenda\n                                "
+                                                ),
+                                                _c(
+                                                  "v-icon",
+                                                  {
+                                                    attrs: {
+                                                      right: "",
+                                                      color: "white",
+                                                    },
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                    mdi-menu-down\n                                "
+                                                    ),
+                                                  ]
+                                                ),
+                                              ],
+                                              1
+                                            ),
+                                          ]
+                                        },
+                                      },
+                                    ],
+                                    null,
+                                    false,
+                                    2462272158
+                                  ),
                                 },
                                 [
-                                  _vm._v(
-                                    "\n                        Informe\n                    "
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list",
+                                    [
+                                      _vm.moduloAgenda
+                                        ? _c(
+                                            "v-list-item",
+                                            {
+                                              attrs: {
+                                                to: {
+                                                  name: "agenda/cita-cliente",
+                                                },
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  _vm.titleProceso =
+                                                    "Agenda/Cita Cliente"
+                                                  _vm.pathPrevious = ""
+                                                },
+                                              },
+                                            },
+                                            [
+                                              _c("v-list-item-title", [
+                                                _vm._v("Cita Cliente"),
+                                              ]),
+                                            ],
+                                            1
+                                          )
+                                        : _vm._e(),
+                                    ],
+                                    1
                                   ),
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.moduloAgendar
-                            ? _c(
-                                "v-tab",
-                                {
-                                  staticClass: "white--text",
-                                  attrs: { to: { name: "agendar" } },
-                                  on: {
-                                    click: function ($event) {
-                                      _vm.titleProceso = "Agendar"
-                                      _vm.pathPrevious = ""
-                                    },
-                                  },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                        Agendar\n                    "
-                                  ),
-                                ]
+                                ],
+                                1
                               )
                             : _vm._e(),
                           _vm._v(" "),
@@ -94208,6 +95681,28 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 
 "use strict";
 module.exports = JSON.parse('[{"id":0,"departamento":"Amazonas","ciudades":["Leticia","Puerto Nariño"]},{"id":1,"departamento":"Antioquia","ciudades":["Abejorral","Abriaquí","Alejandría","Amagá","Amalfi","Andes","Angelópolis","Angostura","Anorí","Anzá","Apartadó","Arboletes","Argelia","Armenia","Barbosa","Bello","Belmira","Betania","Betulia","Briceño","Buriticá","Cáceres","Caicedo","Caldas","Campamento","Cañasgordas","Caracolí","Caramanta","Carepa","Carolina del Príncipe","Caucasia","Chigorodó","Cisneros","Ciudad Bolívar","Cocorná","Concepción","Concordia","Copacabana","Dabeiba","Donmatías","Ebéjico","El Bagre","El Carmen de Viboral","El Peñol","El Retiro","El Santuario","Entrerríos","Envigado","Fredonia","Frontino","Giraldo","Girardota","Gómez Plata","Granada","Guadalupe","Guarne","Guatapé","Heliconia","Hispania","Itagüí","Ituango","Jardín","Jericó","La Ceja","La Estrella","La Pintada","La Unión","Liborina","Maceo","Marinilla","Medellín","Montebello","Murindó","Mutatá","Nariño","Nechí","Necoclí","Olaya","Peque","Pueblorrico","Puerto Berrío","Puerto Nare","Puerto Triunfo","Remedios","Rionegro","Sabanalarga","Sabaneta","Salgar","San Andrés de Cuerquia","San Carlos","San Francisco","San Jerónimo","San José de la Montaña","San Juan de Urabá","San Luis","San Pedro de Urabá","San Pedro de los Milagros","San Rafael","San Roque","San Vicente","Santa Bárbara","Santa Fe de Antioquia","Santa Rosa de Osos","Santo Domingo","Segovia","Sonsón","Sopetrán","Támesis","Tarazá","Tarso","Titiribí","Toledo","Turbo","Uramita","Urrao","Valdivia","Valparaíso","Vegachí","Venecia","Vigía del Fuerte","Yalí","Yarumal","Yolombó","Yondó","Zaragoza"]},{"id":2,"departamento":"Arauca","ciudades":["Arauca","Arauquita","Cravo Norte","Fortul","Puerto Rondón","Saravena","Tame"]},{"id":3,"departamento":"Atlántico","ciudades":["Baranoa","Barranquilla","Campo de la Cruz","Candelaria","Galapa","Juan de Acosta","Luruaco","Malambo","Manatí","Palmar de Varela","Piojó","Polonuevo","Ponedera","Puerto Colombia","Repelón","Sabanagrande","Sabanalarga","Santa Lucía","Santo Tomás","Soledad","Suán","Tubará","Usiacurí"]},{"id":4,"departamento":"Bolívar","ciudades":["Achí","Altos del Rosario","Arenal","Arjona","Arroyohondo","Barranco de Loba","Brazuelo de Papayal","Calamar","Cantagallo","Cartagena de Indias","Cicuco","Clemencia","Córdoba","El Carmen de Bolívar","El Guamo","El Peñón","Hatillo de Loba","Magangué","Mahates","Margarita","María la Baja","Mompós","Montecristo","Morales","Norosí","Pinillos","Regidor","Río Viejo","San Cristóbal","San Estanislao","San Fernando","San Jacinto del Cauca","San Jacinto","San Juan Nepomuceno","San Martín de Loba","San Pablo","Santa Catalina","Santa Rosa","Santa Rosa del Sur","Simití","Soplaviento","Talaigua Nuevo","Tiquisio","Turbaco","Turbaná","Villanueva","Zambrano"]},{"id":5,"departamento":"Boyacá","ciudades":["Almeida","Aquitania","Arcabuco","Belén","Berbeo","Betéitiva","Boavita","Boyacá","Briceño","Buenavista","Busbanzá","Caldas","Campohermoso","Cerinza","Chinavita","Chiquinquirá","Chíquiza","Chiscas","Chita","Chitaraque","Chivatá","Chivor","Ciénega","Cómbita","Coper","Corrales","Covarachía","Cubará","Cucaita","Cuítiva","Duitama","El Cocuy","El Espino","Firavitoba","Floresta","Gachantivá","Gámeza","Garagoa","Guacamayas","Guateque","Guayatá","Güicán","Iza","Jenesano","Jericó","La Capilla","La Uvita","La Victoria","Labranzagrande","Macanal","Maripí","Miraflores","Mongua","Monguí","Moniquirá","Motavita","Muzo","Nobsa","Nuevo Colón","Oicatá","Otanche","Pachavita","Páez","Paipa","Pajarito","Panqueba","Pauna","Paya","Paz del Río","Pesca","Pisba","Puerto Boyacá","Quípama","Ramiriquí","Ráquira","Rondón","Saboyá","Sáchica","Samacá","San Eduardo","San José de Pare","San Luis de Gaceno","San Mateo","San Miguel de Sema","San Pablo de Borbur","Santa María","Santa Rosa de Viterbo","Santa Sofía","Santana","Sativanorte","Sativasur","Siachoque","Soatá","Socha","Socotá","Sogamoso","Somondoco","Sora","Soracá","Sotaquirá","Susacón","Sutamarchán","Sutatenza","Tasco","Tenza","Tibaná","Tibasosa","Tinjacá","Tipacoque","Toca","Togüí","Tópaga","Tota","Tunja","Tununguá","Turmequé","Tuta","Tutazá","Úmbita","Ventaquemada","Villa de Leyva","Viracachá","Zetaquira"]},{"id":6,"departamento":"Caldas","ciudades":["Aguadas","Anserma","Aranzazu","Belalcázar","Chinchiná","Filadelfia","La Dorada","La Merced","Manizales","Manzanares","Marmato","Marquetalia","Marulanda","Neira","Norcasia","Pácora","Palestina","Pensilvania","Riosucio","Risaralda","Salamina","Samaná","San José","Supía","Victoria","Villamaría","Viterbo"]},{"id":7,"departamento":"Caquetá","ciudades":["Albania","Belén de los Andaquíes","Cartagena del Chairá","Curillo","El Doncello","El Paujil","Florencia","La Montañita","Milán","Morelia","Puerto Rico","San José del Fragua","San Vicente del Caguán","Solano","Solita","Valparaíso"]},{"id":8,"departamento":"Casanare","ciudades":["Aguazul","Chámeza","Hato Corozal","La Salina","Maní","Monterrey","Nunchía","Orocué","Paz de Ariporo","Pore","Recetor","Sabanalarga","Sácama","San Luis de Palenque","Támara","Tauramena","Trinidad","Villanueva","Yopal"]},{"id":9,"departamento":"Cauca","ciudades":["Almaguer","Argelia","Balboa","Bolívar","Buenos Aires","Cajibío","Caldono","Caloto","Corinto","El Tambo","Florencia","Guachené","Guapí","Inzá","Jambaló","La Sierra","La Vega","López de Micay","Mercaderes","Miranda","Morales","Padilla","Páez","Patía","Piamonte","Piendamó","Popayán","Puerto Tejada","Puracé","Rosas","San Sebastián","Santa Rosa","Santander de Quilichao","Silvia","Sotará","Suárez","Sucre","Timbío","Timbiquí","Toribío","Totoró","Villa Rica"]},{"id":10,"departamento":"Cesar","ciudades":["Aguachica","Agustín Codazzi","Astrea","Becerril","Bosconia","Chimichagua","Chiriguaná","Curumaní","El Copey","El Paso","Gamarra","González","La Gloria (Cesar)","La Jagua de Ibirico","La Paz","Manaure Balcón del Cesar","Pailitas","Pelaya","Pueblo Bello","Río de Oro","San Alberto","San Diego","San Martín","Tamalameque","Valledupar"]},{"id":11,"departamento":"Chocó","ciudades":["Acandí","Alto Baudó","Bagadó","Bahía Solano","Bajo Baudó","Bojayá","Cantón de San Pablo","Cértegui","Condoto","El Atrato","El Carmen de Atrato","El Carmen del Darién","Istmina","Juradó","Litoral de San Juan","Lloró","Medio Atrato","Medio Baudó","Medio San Juan","Nóvita","Nuquí","Quibdó","Río Iró","Río Quito","Riosucio","San José del Palmar","Sipí","Tadó","Unión Panamericana","Unguía"]},{"id":12,"departamento":"Cundinamarca","ciudades":["Agua de Dios","Albán","Anapoima","Anolaima","Apulo","Arbeláez","Beltrán","Bituima","Bogotá","Bojacá","Cabrera","Cachipay","Cajicá","Caparrapí","Cáqueza","Carmen de Carupa","Chaguaní","Chía","Chipaque","Choachí","Chocontá","Cogua","Cota","Cucunubá","El Colegio","El Peñón","El Rosal","Facatativá","Fómeque","Fosca","Funza","Fúquene","Fusagasugá","Gachalá","Gachancipá","Gachetá","Gama","Girardot","Granada","Guachetá","Guaduas","Guasca","Guataquí","Guatavita","Guayabal de Síquima","Guayabetal","Gutiérrez","Jerusalén","Junín","La Calera","La Mesa","La Palma","La Peña","La Vega","Lenguazaque","Machetá","Madrid","Manta","Medina","Mosquera","Nariño","Nemocón","Nilo","Nimaima","Nocaima","Pacho","Paime","Pandi","Paratebueno","Pasca","Puerto Salgar","Pulí","Quebradanegra","Quetame","Quipile","Ricaurte","San Antonio del Tequendama","San Bernardo","San Cayetano","San Francisco","San Juan de Rioseco","Sasaima","Sesquilé","Sibaté","Silvania","Simijaca","Soacha","Sopó","Subachoque","Suesca","Supatá","Susa","Sutatausa","Tabio","Tausa","Tena","Tenjo","Tibacuy","Tibirita","Tocaima","Tocancipá","Topaipí","Ubalá","Ubaque","Ubaté","Une","Útica","Venecia","Vergara","Vianí","Villagómez","Villapinzón","Villeta","Viotá","Yacopí","Zipacón","Zipaquirá"]},{"id":13,"departamento":"Córdoba","ciudades":["Ayapel","Buenavista","Canalete","Cereté","Chimá","Chinú","Ciénaga de Oro","Cotorra","La Apartada","Lorica","Los Córdobas","Momil","Montelíbano","Montería","Moñitos","Planeta Rica","Pueblo Nuevo","Puerto Escondido","Puerto Libertador","Purísima","Sahagún","San Andrés de Sotavento","San Antero","San Bernardo del Viento","San Carlos","San José de Uré","San Pelayo","Tierralta","Tuchín","Valencia"]},{"id":14,"departamento":"Guainía","ciudades":["Inírida"]},{"id":15,"departamento":"Guaviare","ciudades":["Calamar","El Retorno","Miraflores","San José del Guaviare"]},{"id":16,"departamento":"Huila","ciudades":["Acevedo","Agrado","Aipe","Algeciras","Altamira","Baraya","Campoalegre","Colombia","El Pital","Elías","Garzón","Gigante","Guadalupe","Hobo","Íquira","Isnos","La Argentina","La Plata","Nátaga","Neiva","Oporapa","Paicol","Palermo","Palestina","Pitalito","Rivera","Saladoblanco","San Agustín","Santa María","Suaza","Tarqui","Tello","Teruel","Tesalia","Timaná","Villavieja","Yaguará"]},{"id":17,"departamento":"La Guajira","ciudades":["Albania","Barrancas","Dibulla","Distracción","El Molino","Fonseca","Hatonuevo","La Jagua del Pilar","Maicao","Manaure","Riohacha","San Juan del Cesar","Uribia","Urumita","Villanueva"]},{"id":18,"departamento":"Magdalena","ciudades":["Algarrobo","Aracataca","Ariguaní","Cerro de San Antonio","Chibolo","Chibolo","Ciénaga","Concordia","El Banco","El Piñón","El Retén","Fundación","Guamal","Nueva Granada","Pedraza","Pijiño del Carmen","Pivijay","Plato","Pueblo Viejo","Remolino","Sabanas de San Ángel","Salamina","San Sebastián de Buenavista","San Zenón","Santa Ana","Santa Bárbara de Pinto","Santa Marta","Sitionuevo","Tenerife","Zapayán","Zona Bananera"]},{"id":19,"departamento":"Meta","ciudades":["Acacías","Barranca de Upía","Cabuyaro","Castilla la Nueva","Cubarral","Cumaral","El Calvario","El Castillo","El Dorado","Fuente de Oro","Granada","Guamal","La Macarena","La Uribe","Lejanías","Mapiripán","Mesetas","Puerto Concordia","Puerto Gaitán","Puerto Lleras","Puerto López","Puerto Rico","Restrepo","San Carlos de Guaroa","San Juan de Arama","San Juanito","San Martín","Villavicencio","Vista Hermosa"]},{"id":20,"departamento":"Nariño","ciudades":["Aldana","Ancuyá","Arboleda","Barbacoas","Belén","Buesaco","Chachagüí","Colón","Consacá","Contadero","Córdoba","Cuaspud","Cumbal","Cumbitara","El Charco","El Peñol","El Rosario","El Tablón","El Tambo","Francisco Pizarro","Funes","Guachucal","Guaitarilla","Gualmatán","Iles","Imués","Ipiales","La Cruz","La Florida","La Llanada","La Tola","La Unión","Leiva","Linares","Los Andes","Magüí Payán","Mallama","Mosquera","Nariño","Olaya Herrera","Ospina","Pasto","Policarpa","Potosí","Providencia","Puerres","Pupiales","Ricaurte","Roberto Payán","Samaniego","San Bernardo","San José de Albán","San Lorenzo","San Pablo","San Pedro de Cartago","Sandoná","Santa Bárbara","Santacruz","Sapuyes","Taminango","Tangua","Tumaco","Túquerres","Yacuanquer"]},{"id":21,"departamento":"Norte de Santander","ciudades":["Ábrego","Arboledas","Bochalema","Bucarasica","Cáchira","Cácota","Chinácota","Chitagá","Convención","Cúcuta","Cucutilla","Duranía","El Carmen","El Tarra","El Zulia","Gramalote","Hacarí","Herrán","La Esperanza","La Playa de Belén","Labateca","Los Patios","Lourdes","Mutiscua","Ocaña","Pamplona","Pamplonita","Puerto Santander","Ragonvalia","Salazar de Las Palmas","San Calixto","San Cayetano","Santiago","Santo Domingo de Silos","Sardinata","Teorama","Tibú","Toledo","Villa Caro","Villa del Rosario"]},{"id":22,"departamento":"Putumayo","ciudades":["Colón","Mocoa","Orito","Puerto Asís","Puerto Caicedo","Puerto Guzmán","Puerto Leguízamo","San Francisco","San Miguel","Santiago","Sibundoy","Valle del Guamuez","Villagarzón"]},{"id":23,"departamento":"Quindío","ciudades":["Armenia","Buenavista","Calarcá","Circasia","Córdoba","Filandia","Génova","La Tebaida","Montenegro","Pijao","Quimbaya","Salento"]},{"id":24,"departamento":"Risaralda","ciudades":["Apía","Balboa","Belén de Umbría","Dosquebradas","Guática","La Celia","La Virginia","Marsella","Mistrató","Pereira","Pueblo Rico","Quinchía","Santa Rosa de Cabal","Santuario"]},{"id":25,"departamento":"San Andrés y Providencia","ciudades":["Providencia y Santa Catalina Islas","San Andrés"]},{"id":26,"departamento":"Santander","ciudades":["Aguada","Albania","Aratoca","Barbosa","Barichara","Barrancabermeja","Betulia","Bolívar","Bucaramanga","Cabrera","California","Capitanejo","Carcasí","Cepitá","Cerrito","Charalá","Charta","Chima","Chipatá","Cimitarra","Concepción","Confines","Contratación","Coromoro","Curití","El Carmen de Chucurí","El Guacamayo","El Peñón","El Playón","El Socorro","Encino","Enciso","Florián","Floridablanca","Galán","Gámbita","Girón","Guaca","Guadalupe","Guapotá","Guavatá","Güepsa","Hato","Jesús María","Jordán","La Belleza","La Paz","Landázuri","Lebrija","Los Santos","Macaravita","Málaga","Matanza","Mogotes","Molagavita","Ocamonte","Oiba","Onzaga","Palmar","Palmas del Socorro","Páramo","Piedecuesta","Pinchote","Puente Nacional","Puerto Parra","Puerto Wilches","Rionegro","Sabana de Torres","San Andrés","San Benito","San Gil","San Joaquín","San José de Miranda","San Miguel","San Vicente de Chucurí","Santa Bárbara","Santa Helena del Opón","Simacota","Suaita","Sucre","Suratá","Tona","Valle de San José","Vélez","Vetas","Villanueva","Zapatoca"]},{"id":27,"departamento":"Sucre","ciudades":["Buenavista","Caimito","Chalán","Colosó","Corozal","Coveñas","El Roble","Galeras","Guaranda","La Unión","Los Palmitos","Majagual","Morroa","Ovejas","Sampués","San Antonio de Palmito","San Benito Abad","San Juan de Betulia","San Marcos","San Onofre","San Pedro","Sincé","Sincelejo","Sucre","Tolú","Tolú Viejo"]},{"id":28,"departamento":"Tolima","ciudades":["Alpujarra","Alvarado","Ambalema","Anzoátegui","Armero","Ataco","Cajamarca","Carmen de Apicalá","Casabianca","Chaparral","Coello","Coyaima","Cunday","Dolores","El Espinal","Falán","Flandes","Fresno","Guamo","Herveo","Honda","Ibagué","Icononzo","Lérida","Líbano","Mariquita","Melgar","Murillo","Natagaima","Ortega","Palocabildo","Piedras","Planadas","Prado","Purificación","Rioblanco","Roncesvalles","Rovira","Saldaña","San Antonio","San Luis","Santa Isabel","Suárez","Valle de San Juan","Venadillo","Villahermosa","Villarrica"]},{"id":29,"departamento":"Valle del Cauca","ciudades":["Alcalá","Andalucía","Ansermanuevo","Argelia","Bolívar","Buenaventura","Buga","Bugalagrande","Caicedonia","Cali","Calima","Candelaria","Cartago","Dagua","El Águila","El Cairo","El Cerrito","El Dovio","Florida","Ginebra","Guacarí","Jamundí","La Cumbre","La Unión","La Victoria","Obando","Palmira","Pradera","Restrepo","Riofrío","Roldanillo","San Pedro","Sevilla","Toro","Trujillo","Tuluá","Ulloa","Versalles","Vijes","Yotoco","Yumbo","Zarzal"]},{"id":30,"departamento":"Vaupés","ciudades":["Carurú","Mitú","Taraira"]},{"id":31,"departamento":"Vichada","ciudades":["Cumaribo","La Primavera","Puerto Carreño","Santa Rosalía"]}]');
+
+/***/ }),
+
+/***/ "./resources/js/components/json/tiposConsulta.json":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/json/tiposConsulta.json ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('[{"value":"CONSULTA1","text":"CONSULTA1"},{"value":"CONSULTA2","text":"CONSULTA2"},{"value":"CONSULTA3","text":"CONSULTA3"}]');
+
+/***/ }),
+
+/***/ "./resources/js/components/json/tiposDocumentos.json":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/json/tiposDocumentos.json ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('[{"value":"CC","text":"CEDULA DE CIUDADANIA"},{"value":"RC","text":"REGISTRO CIVIL"},{"value":"CE","text":"CEDULA DE EXTRANJERIA"},{"value":"NIP","text":"NUMERO DE IDENTIFICACION PERSONAL"},{"value":"NIT","text":"NUMERO DE IDENTIFICACION TRIBUTARIA"},{"value":"TI","text":"TARJETA DE IDENTIDAD"},{"value":"PAP","text":"PASAPORTE"}]');
 
 /***/ })
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Agenda\CitaClienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -69,6 +70,16 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
     Route::get('/listar/cargar-archivo/{numero_documento}', [CargarArchivosController::class, 'listar']);
     Route::get('/cosecutivo-cargar-archivo/{id_paciente}', [CargarArchivosController::class, 'obtenerConsecutivo']);
     Route::post('/descargar/archivo', [CargarArchivosController::class, 'descargar']);
+});
+
+Route::group(['prefix' => 'agenda'/* , 'middleware' => 'auth:sanctum' */] , function(){
+    Route::post('/busqueda-paciente-autocomplete', [CitaClienteController::class, 'busquedaAutocompletePaciente']);
+    Route::get('/cargar-informacion-paciente', [CitaClienteController::class, 'cargarInfoPaciente']);
+    Route::post('/guardar/cita-paciente', [CitaClienteController::class, 'store']);
+    Route::put('/actualizar/cita-paciente/{id}', [CitaClienteController::class, 'update']);
+    Route::get('/mostrar/cita-paciente/{id}', [CitaClienteController::class, 'show']);
+    Route::post('/delete/cita-paciente/{id}', [CitaClienteController::class, 'destroy']);
+    Route::get('/listar/citas-pacientes', [CitaClienteController::class, 'listar']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){

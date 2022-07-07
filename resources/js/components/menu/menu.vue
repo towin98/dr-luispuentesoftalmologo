@@ -64,20 +64,27 @@
                             v-on:click="titleProceso = 'Historia Clinica'; pathPrevious = 'historia-clinica'">
                             Historia Clinica
                         </v-tab>
-                        <v-tab
-                            v-if="moduloInforme"
-                            :to="{ name: 'informe' }"
-                            class="white--text"
-                            v-on:click="titleProceso = 'Informe'; pathPrevious = ''">
-                            Informe
-                        </v-tab>
-                        <v-tab
-                            v-if="moduloAgendar"
-                            :to="{ name: 'agendar' }"
-                            class="white--text"
-                            v-on:click="titleProceso = 'Agendar'; pathPrevious = ''">
-                            Agendar
-                        </v-tab>
+
+                        <!-- Agenda -->
+                        <v-menu offset-y rounded="lg"  v-if="moduloAgenda">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-tab
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    class="white--text">
+                                    Agenda
+                                    <v-icon right color="white">
+                                        mdi-menu-down
+                                    </v-icon>
+                                </v-tab>
+                            </template>
+
+                            <v-list>
+                                <v-list-item :to="{ name: 'agenda/cita-cliente' }" v-if="moduloAgenda" v-on:click="titleProceso = 'Agenda/Cita Cliente'; pathPrevious = ''">
+                                    <v-list-item-title>Cita Cliente</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
                         <v-tab
                             v-if="moduloTurno"
                             :to="{ name: 'turno' }"
@@ -142,11 +149,10 @@ export default {
             date: "",
 
             // Variables permisos menus start
-            moduloCrearPaciente    : false,
-            // crearPaciente   : false,
+            moduloCrearPaciente           : false,
             moduloHistoriaClinica         : false,
             moduloInforme                 : false,
-            moduloAgendar                 : false,
+            moduloAgenda                 : false,
             moduloTurno                   : false,
 
             /* Variables de configuracion del sistema */
@@ -225,11 +231,10 @@ export default {
 
         switch (this.infoUser.rol) {
             case "SECRETARIA":
-                this.moduloCrearPaciente           = true;
-                // this.crearPaciente       = true;
+                this.moduloCrearPaciente          = true;
                 this.moduloHistoriaClinica        = true;
                 this.moduloInforme                = true;
-                this.moduloAgendar                = true;
+                this.moduloAgenda                 = true;
                 this.moduloTurno                  = true;
 
                 /* Variables de configuracion del sistema */

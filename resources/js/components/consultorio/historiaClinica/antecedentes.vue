@@ -53,6 +53,13 @@
                         dense
                     ></v-text-field>
                 </v-col>
+                <v-col cols="12">
+                    <v-alert type="error" v-if="errors != ''">
+                        <div v-for="(item, index) in errors" :key="item.id">
+                            {{ item[0] }}
+                        </div>
+                    </v-alert>
+                </v-col>
                 <v-col cols="12" class="d-flex justify-end">
                     <v-btn
                         type="submit"
@@ -75,11 +82,6 @@
                         <v-icon right> save </v-icon>
                     </v-btn>
                 </v-col>
-                <pre>
-                    {{
-                        errors
-                    }}
-                </pre>
             </v-row>
         </v-card>
         <!-- start Data table -->
