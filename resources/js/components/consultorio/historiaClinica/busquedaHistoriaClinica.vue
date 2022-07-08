@@ -77,10 +77,40 @@
                     :sort-desc="true"
                     no-data-text="Sin registros"
                 >
-                    <template v-slot:item.acciones="{ item }">
+                    <template v-slot:item.motivoConsulta="{ item }">
                         <router-link style="text-decoration: none;"
-                            :to="{ path: `/consultorio/historia-clinica/evolucion/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
-                        Motivo Consulta
+                            title="Motivo Consulta (subir refracciones)"
+                            :to="{ path: `/consultorio/historia-clinica/motivo-consulta/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
+                            <v-icon color="primary">
+                                query_stats
+                            </v-icon>
+                        </router-link>
+                    </template>
+                    <template v-slot:item.formulaAnteojos="{ item }">
+                        <router-link style="text-decoration: none;"
+                            title="Formula Anteojos"
+                            :to="{ path: `/consultorio/historia-clinica/formula-anteojos/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
+                            <v-icon color="light-green">
+                                fact_check
+                            </v-icon>
+                        </router-link>
+                    </template>
+                    <template v-slot:item.antecedentes="{ item }">
+                        <router-link style="text-decoration: none;"
+                            title="Antecedentes del Paciente"
+                            :to="{ path: `/consultorio/historia-clinica/antecedentes/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
+                            <v-icon color="orange lighten-1">
+                                find_in_page
+                            </v-icon>
+                        </router-link>
+                    </template>
+                    <template v-slot:item.cargarArchivo="{ item }">
+                        <router-link style="text-decoration: none;"
+                            title="Cargar archivo"
+                            :to="{ path: `/consultorio/historia-clinica/cargar-archivo/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
+                            <v-icon color="grey">
+                                file_upload
+                            </v-icon>
                         </router-link>
                     </template>
                 </v-data-table>
@@ -133,7 +163,10 @@ export default {
                 { text: "Nombre Completo", value: "nombre" },
                 { text: "Apellido Completo", value: "apellido" },
                 { text: "Fecha Modificado", value: "updated_at" },
-                { text: "Acciones", value: "acciones", sortable: false },
+                { text: "Motivo Consulta", value: "motivoConsulta", sortable: false, width:20 },
+                { text: "Formula Anteojos", value: "formulaAnteojos", sortable: false, width:20 },
+                { text: "Antecedentes", value: "antecedentes", sortable: false, width:20 },
+                { text: "Cargar Archivo", value: "cargarArchivo", sortable: false, width:20 },
             ],
             dataSet: [],
             contador: 0

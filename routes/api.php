@@ -1,12 +1,18 @@
 <?php
 
+use App\Http\Controllers\Agenda\CitaClienteController;
+use App\Http\Controllers\Agenda\InformeCitacontroller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HistoriaClinica\AntecedentesController;
+use App\Http\Controllers\HistoriaClinica\CargarArchivosController;
+use App\Http\Controllers\HistoriaClinica\FormulaAnteojosController;
 use App\Http\Controllers\Paciente\PacienteController;
 use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
 use App\Http\Controllers\Parametro\ParametroController;
 use App\Http\Controllers\PermissionController;
+use Illuminate\Support\Facades\Artisan;
 
 /*Rutas de autenticacacion*/
 Route::post('/login', [AuthController::class, 'login']);
@@ -17,6 +23,7 @@ Route::post('/password/change', [AuthController::class, 'passwordChange'])->midd
 Route::get('/informacion-usuario', [PermissionController::class, 'informacionUsuario'])->middleware('auth:sanctum');
 
 Route::post('/password/email', [AuthController::class, 'resetPassword']);
+Artisan::call('cache:clear');
 
 /*Rutas MENU*/
 Route::group(['prefix' => 'paciente', /*'middleware' => 'auth:sanctum'*/] , function(){
@@ -38,6 +45,49 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
     Route::post('/descargar/evolucion/refracciones', [HistoriaClinicaController::class, 'descargar']);
     Route::post('/actualizar/evolucion/{id}', [HistoriaClinicaController::class, 'updateEvolucion']);
     Route::post('/delete/evolucion/{id}', [HistoriaClinicaController::class, 'destroyEvolucion']);
+
+    // Formula Anteojos
+    Route::post('/guardar/formula-anteojos', [FormulaAnteojosController::class, 'store']);
+    Route::put('/actualizar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'update']);
+    Route::get('/mostrar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'show']);
+    Route::post('/delete/formula-anteojos/{id}', [FormulaAnteojosController::class, 'destroy']);
+    Route::get('/listar/formula-anteojos/{numero_documento}', [FormulaAnteojosController::class, 'listar']);
+    Route::get('/cosecutivo-formula-anteojos/{id_paciente}', [FormulaAnteojosController::class, 'obtenerNumeroFormulaAnteojos']);
+    Route::post('/pdf/formula-anteojos', [FormulaAnteojosController::class, 'reportePdf']);
+
+    // Antecedentes
+    Route::post('/guardar/antecedentes', [AntecedentesController::class, 'store']);
+    Route::put('/actualizar/antecedentes/{id}', [AntecedentesController::class, 'update']);
+    Route::get('/mostrar/antecedentes/{id}', [AntecedentesController::class, 'show']);
+    Route::post('/delete/antecedentes/{id}', [AntecedentesController::class, 'destroy']);
+    Route::get('/listar/antecedentes/{numero_documento}', [AntecedentesController::class, 'listar']);
+    Route::get('/cosecutivo-antecedentes/{id_paciente}', [AntecedentesController::class, 'obtenerNumeroAntecedente']);
+
+    // cargar archivo
+    Route::post('/guardar/cargar-archivo', [CargarArchivosController::class, 'store']);
+    Route::post('/actualizar/cargar-archivo/{id}', [CargarArchivosController::class, 'update']);
+    Route::get('/mostrar/cargar-archivo/{id}', [CargarArchivosController::class, 'show']);
+    Route::post('/delete/cargar-archivo/{id}', [CargarArchivosController::class, 'destroy']);
+    Route::get('/listar/cargar-archivo/{numero_documento}', [CargarArchivosController::class, 'listar']);
+    Route::get('/cosecutivo-cargar-archivo/{id_paciente}', [CargarArchivosController::class, 'obtenerConsecutivo']);
+    Route::post('/descargar/archivo', [CargarArchivosController::class, 'descargar']);
+});
+
+Route::group(['prefix' => 'agenda'/* , 'middleware' => 'auth:sanctum' */] , function(){
+
+    // cita-cliente
+    Route::post('/cita-cliente/busqueda-paciente-autocomplete', [CitaClienteController::class, 'busquedaAutocompletePaciente']);
+    Route::get('/cita-cliente/cargar-informacion-paciente', [CitaClienteController::class, 'cargarInfoPaciente']);
+    Route::post('/cita-cliente/guardar', [CitaClienteController::class, 'store']);
+    Route::put('/cita-cliente/actualizar/{id}', [CitaClienteController::class, 'update']);
+    Route::get('/cita-cliente/mostrar/{id}', [CitaClienteController::class, 'show']);
+    Route::post('/cita-cliente/delete/{id}', [CitaClienteController::class, 'destroy']);
+    Route::get('/cita-cliente/listar', [CitaClienteController::class, 'listar']);
+    Route::post('/cita-cliente/horas-disponible-citas', [CitaClienteController::class, 'horasDisponiblesCitaDia']);
+
+    // Informe Cita
+    Route::post('/informe-cita/listar', [InformeCitacontroller::class, 'buscarCitas']);
+    Route::post('/informe-cita/asistio-cita/{id_cita}', [InformeCitacontroller::class, 'asistirCita']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){
@@ -46,7 +96,3 @@ Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , f
     Route::get('/buscar', [ParametroController::class, 'buscar']);
     Route::get('/{parametrica}/{id}', [ParametroController::class, 'show']);
 });
-
-
-
-Route::get('/imprimir', [HistoriaClinicaController::class, 'imprimir']);

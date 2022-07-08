@@ -1,8 +1,10 @@
 <template>
+    <!-- EVOLUCION -->
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
         <!-- FORMULARIO -->
         <v-card elevation="2" class="mt-7">
+            <h3 class="text-center">Motivo Consulta</h3>
             <v-row class="pl-4 pr-4 pt-5">
                 <v-col cols="12" sm="9">
 
@@ -205,8 +207,8 @@ export default {
     },
     data() {
         return {
-            myFiles: ['cat.jpeg'] ,
             /* Variables Table. */
+            debounce: null,
             buscar: "",
             page: 1,
             totalRegistros: 0,
@@ -232,6 +234,7 @@ export default {
 
             errors:{},
 
+            id               : '',
             id_paciente      : '',
             foto_paciente    : null,
             numero_documento : '',
@@ -486,10 +489,10 @@ export default {
                         this.foto_paciente = null;
                     }
 
-                    this.id_paciente = getDataPaciente.id;
-                    this.numero_documento = getDataPaciente.numero_documento;
-                    this.nombre = getDataPaciente.nombre;
-                    this.apellido = getDataPaciente.apellido;
+                    this.id_paciente        = getDataPaciente.id;
+                    this.numero_documento   = getDataPaciente.numero_documento;
+                    this.nombre             = getDataPaciente.nombre;
+                    this.apellido           = getDataPaciente.apellido;
 
                     this.dataSet = response.data.data;
                     this.totalRegistros = response.data.total;
@@ -513,7 +516,6 @@ export default {
                 });
         },
         filterSearch() {
-            this.overlayLoading = true;
             clearTimeout(this.debounce);
             this.debounce = setTimeout(() => {
                 this.fnBuscar(this.buscar);

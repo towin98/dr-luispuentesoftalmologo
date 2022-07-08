@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 use App\Traits\metodosComunesTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic as Image;
-
 
 class HistoriaClinicaController extends Controller
 {
@@ -77,7 +73,7 @@ class HistoriaClinicaController extends Controller
         if ($numero_documento == "") {
             return response()->json([
                 'message' => 'Error de Validación',
-                'errors'  => "La Evolución del paciente no puede ser vacía."
+                'errors'  => "El Numero de Documento del paciente no puede ser vacío."
             ], 409);
         }
 
@@ -207,10 +203,10 @@ class HistoriaClinicaController extends Controller
         try {
 
             if (!file_exists(public_path('storage/img-refracciones-temporal'))) {
-                File::makeDirectory(public_path('storage/img-refracciones-temporal'));
+                File::makeDirectory(public_path('storage/img-refracciones-temporal'), 0777);
             }
             if (!file_exists(public_path('storage/refracciones'))) {
-                File::makeDirectory(public_path('storage/refracciones'));
+                File::makeDirectory(public_path('storage/refracciones'), 0777);
             }
 
             if($request->hasFile('refracciones')){

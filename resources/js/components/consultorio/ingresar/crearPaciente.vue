@@ -571,7 +571,6 @@ export default {
                 });
         },
         filterSearch() {
-            this.overlayLoading = true;
             clearTimeout(this.debounce);
             this.debounce = setTimeout(() => {
                 this.fnBuscar(this.buscar);

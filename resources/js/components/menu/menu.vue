@@ -64,20 +64,30 @@
                             v-on:click="titleProceso = 'Historia Clinica'; pathPrevious = 'historia-clinica'">
                             Historia Clinica
                         </v-tab>
-                        <v-tab
-                            v-if="moduloInforme"
-                            :to="{ name: 'informe' }"
-                            class="white--text"
-                            v-on:click="titleProceso = 'Informe'; pathPrevious = ''">
-                            Informe
-                        </v-tab>
-                        <v-tab
-                            v-if="moduloAgendar"
-                            :to="{ name: 'agendar' }"
-                            class="white--text"
-                            v-on:click="titleProceso = 'Agendar'; pathPrevious = ''">
-                            Agendar
-                        </v-tab>
+
+                        <!-- Agenda -->
+                        <v-menu offset-y rounded="lg"  v-if="moduloAgenda">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-tab
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    class="white--text">
+                                    Agenda
+                                    <v-icon right color="white">
+                                        mdi-menu-down
+                                    </v-icon>
+                                </v-tab>
+                            </template>
+
+                            <v-list>
+                                <v-list-item :to="{ name: 'agenda/cita-cliente' }" v-if="moduloCitaCliente" v-on:click="titleProceso = 'Agenda/Cita Cliente'; pathPrevious = ''">
+                                    <v-list-item-title>Cita Cliente</v-list-item-title>
+                                </v-list-item>
+                                <v-list-item :to="{ name: 'agenda/informe-cita' }" v-if="moduloInformeCita" v-on:click="titleProceso = 'Agenda/Informe Cita'; pathPrevious = ''">
+                                    <v-list-item-title>Informe Cita</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
                         <v-tab
                             v-if="moduloTurno"
                             :to="{ name: 'turno' }"
@@ -139,19 +149,22 @@ export default {
         return {
 
             token: localStorage.getItem("token_Historial_Clinico_Oftamologico"),
-            date: "",
+            date : "",
 
             // Variables permisos menus start
-            moduloCrearPaciente    : false,
-            // crearPaciente   : false,
+            moduloCrearPaciente           : false,
             moduloHistoriaClinica         : false,
             moduloInforme                 : false,
-            moduloAgendar                 : false,
+            // Variables para menu agenda.
+            moduloAgenda                  : false,
+            moduloCitaCliente             : false,
+            moduloInformeCita             : false,
+            // Variables para menu agenda.
             moduloTurno                   : false,
 
             /* Variables de configuracion del sistema */
             moduloParametros              : false,
-            /* fin Variables de configuracion del sistema */
+            /* Variables de configuracion del sistema */
 
             // Variables permisos menus end
 
@@ -191,7 +204,19 @@ export default {
 
         // Obteniendo nombre de la ruta.
         if (this.$route.name) {
-            this.titleProceso = this.$route.name.replace("-", " ");
+            switch (this.$route.name) {
+                case 'historia-clinica':
+                case 'historia-clinica/motivo-consulta':
+                case 'historia-clinica/formula-anteojos':
+                case 'historia-clinica/antecedentes':
+                case 'historia-clinica/cargar-archivo':
+                    this.pathPrevious = 'historia-clinica';
+                    this.titleProceso = 'Historia Clinica';
+                break;
+                default:
+                    this.titleProceso = this.$route.name.replace("-", " ");
+                break;
+            }
         }
 
         const fecha = new Date();
@@ -213,11 +238,12 @@ export default {
 
         switch (this.infoUser.rol) {
             case "SECRETARIA":
-                this.moduloCrearPaciente           = true;
-                // this.crearPaciente       = true;
+                this.moduloCrearPaciente          = true;
                 this.moduloHistoriaClinica        = true;
                 this.moduloInforme                = true;
-                this.moduloAgendar                = true;
+                this.moduloAgenda                 = true;
+                this.moduloCitaCliente            = true;
+                this.moduloInformeCita            = true;
                 this.moduloTurno                  = true;
 
                 /* Variables de configuracion del sistema */
