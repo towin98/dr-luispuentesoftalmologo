@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Agenda\CitaClienteController;
+use App\Http\Controllers\Agenda\InformeCitacontroller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -73,14 +74,20 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
 });
 
 Route::group(['prefix' => 'agenda'/* , 'middleware' => 'auth:sanctum' */] , function(){
-    Route::post('/busqueda-paciente-autocomplete', [CitaClienteController::class, 'busquedaAutocompletePaciente']);
-    Route::get('/cargar-informacion-paciente', [CitaClienteController::class, 'cargarInfoPaciente']);
-    Route::post('/guardar/cita-paciente', [CitaClienteController::class, 'store']);
-    Route::put('/actualizar/cita-paciente/{id}', [CitaClienteController::class, 'update']);
-    Route::get('/mostrar/cita-paciente/{id}', [CitaClienteController::class, 'show']);
-    Route::post('/delete/cita-paciente/{id}', [CitaClienteController::class, 'destroy']);
-    Route::get('/listar/citas-pacientes', [CitaClienteController::class, 'listar']);
-    Route::post('/horas-disponible-citas', [CitaClienteController::class, 'horasDisponiblesCitaDia']);
+
+    // cita-cliente
+    Route::post('/cita-cliente/busqueda-paciente-autocomplete', [CitaClienteController::class, 'busquedaAutocompletePaciente']);
+    Route::get('/cita-cliente/cargar-informacion-paciente', [CitaClienteController::class, 'cargarInfoPaciente']);
+    Route::post('/cita-cliente/guardar', [CitaClienteController::class, 'store']);
+    Route::put('/cita-cliente/actualizar/{id}', [CitaClienteController::class, 'update']);
+    Route::get('/cita-cliente/mostrar/{id}', [CitaClienteController::class, 'show']);
+    Route::post('/cita-cliente/delete/{id}', [CitaClienteController::class, 'destroy']);
+    Route::get('/cita-cliente/listar', [CitaClienteController::class, 'listar']);
+    Route::post('/cita-cliente/horas-disponible-citas', [CitaClienteController::class, 'horasDisponiblesCitaDia']);
+
+    // Informe Cita
+    Route::post('/informe-cita/listar', [InformeCitacontroller::class, 'buscarCitas']);
+    Route::post('/informe-cita/asistio-cita/{id_cita}', [InformeCitacontroller::class, 'asistirCita']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){

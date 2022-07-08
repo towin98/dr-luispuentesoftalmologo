@@ -131,7 +131,8 @@ class CitaClienteController extends Controller
         try {
             $request->merge([
                 'id_paciente'               => $paciente->id,
-                'hora_cita'                 => $request->hora_cita.":00"
+                'hora_cita'                 => $request->hora_cita.":00",
+                'asistio'                   => "NO"
             ]);
             $input = $request->collect();
             $input = $input->except(['numero_documento']);
@@ -258,9 +259,7 @@ class CitaClienteController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'message' => 'Error en el Sistema',
-                    'errors'  => [
-                        "Error al actualizar Cita Paciente, por favor comuniquese con el area de Tecnología, Gracias."
-                    ]
+                    'errors'  => "Error al actualizar Cita Paciente, por favor comuniquese con el area de Tecnología, Gracias."
                 ], 500);
             }
         }

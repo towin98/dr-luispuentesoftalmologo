@@ -20,6 +20,7 @@ class CreateCitaPacienteTable extends Migration
             $table->date('fecha_cita');
             $table->time('hora_cita');
             $table->string('observacion',255)->nullable();
+            $table->string('asistio', 2)->nullable()->comment('Asistio paciente cita, SI o NO');
             $table->timestamps();
 
             $table->foreign('id_paciente')->references('id')->on('paciente');
