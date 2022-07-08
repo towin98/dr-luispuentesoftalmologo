@@ -124,18 +124,21 @@
                         :error-messages="errors.fecha_cita"
                         dense
                         :disabled="disabledCampos"
+                        @change="fnHorasCita()"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="6" sm="4" class="pb-0">
-                    <v-text-field
-                        type="time"
+                    <v-select
                         v-model="form.hora_cita"
                         ref="hora_cita"
                         label="Hora Cita"
+                        :items="horasCitaItems"
                         :error-messages="errors.hora_cita"
                         dense
+                        title="Seleccione hora de la cita."
                         :disabled="disabledCampos"
-                    ></v-text-field>
+                        no-data-text="Sin horas citas, seleccione una fecha cita o cambie fecha de citas para buscar"
+                    ></v-select>
                 </v-col>
                 <v-col cols="12" sm="12" class="pt-0 pb-0">
                     <v-subheader>Observaciones</v-subheader>
@@ -312,6 +315,7 @@ export default {
             tiposDocumentosItems    : [],
             itemsEpsPrepagada       : [],
             tiposConsultaCitaItems  : [],
+            horasCitaItems          : [],
 
             overlayLoading: false,
 
@@ -354,12 +358,15 @@ export default {
         fnAutoCompletePaciente(val, timeout = 'SI'){
             if (val == "" || val == null) {
                 this.fnLimpiarInfoPaciente();
+                // this.overlayLoading = false;
                 return;
             }
 
             if (this.autocomplete_numero_documento != null && this.autocomplete_numero_documento != '') {
                 let vNumeroDocumento = val.split('-');
+                // No se permite buscar al seleccionar registro en el autocomplete.
                 if (this.autocomplete_numero_documento === vNumeroDocumento[0]) {
+                    // this.overlayLoading = false;
                     return;
                 }
             }
@@ -370,6 +377,7 @@ export default {
             // Borra el retraso asignado
             clearTimeout(this.debounce);
             this.debounce = setTimeout(() => {
+                this.overlayLoading = true;
                 this.isLoading = true;
                 axios
                     .post(`/consultorio-oftamologico/agenda/busqueda-paciente-autocomplete`, {valor: val })
@@ -382,6 +390,8 @@ export default {
                         }
 
                         // Si devuelve solo un dato se carga automaticamente el paciente.
+                        this.overlayLoading = false;
+
                         if (this.pacienteData.length == 1) {
                             this.autocomplete_numero_documento = this.pacienteData[0].id;
                             this.fnCargarInfoPaciente();
@@ -390,6 +400,7 @@ export default {
                     .catch((errores) => {
                         this.errors = this.fnResponseError(errores);
                         this.autocomplete_numero_documento = null;
+                        this.overlayLoading = false;
                     })
                     .finally(() => (this.isLoading = false));
             }, (timeout == 'SI' ? 800 : 0) );
@@ -458,12 +469,13 @@ export default {
             }
         },
         fnCargarInfoPaciente(){
+            this.overlayLoading = true;
             if (this.autocomplete_numero_documento == null || this.autocomplete_numero_documento == "") {
                 this.fnLimpiarInfoPaciente();
+                this.overlayLoading = false;
                 // El numero de documento del autocomplete esta vacio o null no se permite buscar info del paciente.
                 return;
             }
-            this.overlayLoading = true;
             this.numero_documento_readonly = true;
             axios
                 .get(`/consultorio-oftamologico/agenda/cargar-informacion-paciente?numero_documento=${this.autocomplete_numero_documento}`)
@@ -508,6 +520,7 @@ export default {
                     );
                     this.errors = {};
                     this.fnLimpiar();
+                    this.fnLimpiarInfoPaciente('SI');
                     this.fnBuscar();
                     this.overlayLoading = false;
                 })
@@ -524,9 +537,11 @@ export default {
             this.form.tipo_consulta     = "";
             this.form.fecha_cita        = "";
             this.form.hora_cita         = "";
+            this.horasCitaItems         = [];
             this.form.observacion       = "";
             this.errors                 = {};
             this.overlayLoading         = false;
+            this.disabledCampos         = false;
         },
         fnLimpiarInfoPaciente(clear_autocomplete = 'NO'){
             if(clear_autocomplete == 'SI') {
@@ -551,6 +566,7 @@ export default {
                 .get(`/consultorio-oftamologico/agenda/mostrar/cita-paciente/${id}`)
                 .then((response) => {
                     const data = response.data.data;
+                    // Solo se busca info en el autocomplete de paciente si se selecciona un paciente diferente.
                     if (data.get_paciente.numero_documento != this.autocomplete_numero_documento) {
                         // this.autocomplete_numero_documento = null;
                         this.fnAutoCompletePaciente(data.get_paciente.numero_documento, 'NO');
@@ -559,8 +575,9 @@ export default {
                     }
                     this.form.tipo_consulta = data.tipo_consulta;
                     this.form.fecha_cita    = data.fecha_cita;
-                    this.form.hora_cita     = data.hora_cita;
+                    this.form.hora_cita     = data.hora_cita.substr(0,5);
                     this.form.observacion   = data.observacion;
+                    this.fnHorasCita(data.hora_cita);
 
                     this.errors = "";
                 })
@@ -631,6 +648,46 @@ export default {
                 }
             });
         },
+        fnHorasCita(show_hora = ""){
+            this.horasCitaItems = [];
+
+            let isValidDate = Date.parse(this.form.fecha_cita);
+            if (isNaN(isValidDate)) {
+                // Formato Invalido
+            }else{
+                // Formato Valido
+                const data = {
+                    hora_inicio : "08:00:00",
+                    hora_fin    : "17:00:00",
+                    intervalo   : 20,
+                    fecha_cita  : this.form.fecha_cita,
+                    show_hora   : show_hora
+                };
+
+                // Si show_hora es diferente a vacio viene de fnShow().
+                if (show_hora == "") {
+                    this.form.hora_cita = "";
+                    this.overlayLoading = true;
+                }
+
+                axios
+                    .post(
+                        `/consultorio-oftamologico/agenda/horas-disponible-citas`, data
+                    )
+                    .then((response) => {
+                        this.horasCitaItems = response.data;
+                        // Si show_hora es diferente a vacio viene de fnShow().
+                        if (show_hora == "") {
+                            this.overlayLoading = false;
+                        }
+                    })
+                    .catch((errores) => {
+                        this.horasCitaItems = [];
+                        this.fnResponseError(errores);
+                        this.overlayLoading = false;
+                    });
+            }
+        }
     },
 
     async created(){

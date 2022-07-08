@@ -2836,6 +2836,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2876,6 +2879,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tiposDocumentosItems: [],
       itemsEpsPrepagada: [],
       tiposConsultaCitaItems: [],
+      horasCitaItems: [],
       overlayLoading: false,
       // Variables table.
       buscar: "",
@@ -2941,14 +2945,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'SI';
 
       if (val == "" || val == null) {
-        this.fnLimpiarInfoPaciente();
+        this.fnLimpiarInfoPaciente(); // this.overlayLoading = false;
+
         return;
       }
 
       if (this.autocomplete_numero_documento != null && this.autocomplete_numero_documento != '') {
-        var vNumeroDocumento = val.split('-');
+        var vNumeroDocumento = val.split('-'); // No se permite buscar al seleccionar registro en el autocomplete.
 
         if (this.autocomplete_numero_documento === vNumeroDocumento[0]) {
+          // this.overlayLoading = false;
           return;
         }
       } // Los artículos ya han sido solicitados
@@ -2958,6 +2964,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       clearTimeout(this.debounce);
       this.debounce = setTimeout(function () {
+        _this.overlayLoading = true;
         _this.isLoading = true;
         axios.post("/consultorio-oftamologico/agenda/busqueda-paciente-autocomplete", {
           valor: val
@@ -2970,6 +2977,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           } // Si devuelve solo un dato se carga automaticamente el paciente.
 
 
+          _this.overlayLoading = false;
+
           if (_this.pacienteData.length == 1) {
             _this.autocomplete_numero_documento = _this.pacienteData[0].id;
 
@@ -2978,6 +2987,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         })["catch"](function (errores) {
           _this.errors = _this.fnResponseError(errores);
           _this.autocomplete_numero_documento = null;
+          _this.overlayLoading = false;
         })["finally"](function () {
           return _this.isLoading = false;
         });
@@ -3052,13 +3062,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     fnCargarInfoPaciente: function fnCargarInfoPaciente() {
       var _this4 = this;
 
+      this.overlayLoading = true;
+
       if (this.autocomplete_numero_documento == null || this.autocomplete_numero_documento == "") {
-        this.fnLimpiarInfoPaciente(); // El numero de documento del autocomplete esta vacio o null no se permite buscar info del paciente.
+        this.fnLimpiarInfoPaciente();
+        this.overlayLoading = false; // El numero de documento del autocomplete esta vacio o null no se permite buscar info del paciente.
 
         return;
       }
 
-      this.overlayLoading = true;
       this.numero_documento_readonly = true;
       axios.get("/consultorio-oftamologico/agenda/cargar-informacion-paciente?numero_documento=".concat(this.autocomplete_numero_documento)).then(function (response) {
         var data = response.data.data;
@@ -3102,6 +3114,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         _this5.fnLimpiar();
 
+        _this5.fnLimpiarInfoPaciente('SI');
+
         _this5.fnBuscar();
 
         _this5.overlayLoading = false;
@@ -3120,9 +3134,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.tipo_consulta = "";
       this.form.fecha_cita = "";
       this.form.hora_cita = "";
+      this.horasCitaItems = [];
       this.form.observacion = "";
       this.errors = {};
       this.overlayLoading = false;
+      this.disabledCampos = false;
     },
     fnLimpiarInfoPaciente: function fnLimpiarInfoPaciente() {
       var clear_autocomplete = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'NO';
@@ -3149,7 +3165,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.overlayLoading = true;
       this.accion = "Editar_Cita";
       axios.get("/consultorio-oftamologico/agenda/mostrar/cita-paciente/".concat(id)).then(function (response) {
-        var data = response.data.data;
+        var data = response.data.data; // Solo se busca info en el autocomplete de paciente si se selecciona un paciente diferente.
 
         if (data.get_paciente.numero_documento != _this6.autocomplete_numero_documento) {
           // this.autocomplete_numero_documento = null;
@@ -3160,8 +3176,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         _this6.form.tipo_consulta = data.tipo_consulta;
         _this6.form.fecha_cita = data.fecha_cita;
-        _this6.form.hora_cita = data.hora_cita;
+        _this6.form.hora_cita = data.hora_cita.substr(0, 5);
         _this6.form.observacion = data.observacion;
+
+        _this6.fnHorasCita(data.hora_cita);
+
         _this6.errors = "";
       })["catch"](function (errores) {
         _this6.$swal({
@@ -3230,23 +3249,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           });
         }
       });
+    },
+    fnHorasCita: function fnHorasCita() {
+      var _this9 = this;
+
+      var show_hora = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+      this.horasCitaItems = [];
+      var isValidDate = Date.parse(this.form.fecha_cita);
+
+      if (isNaN(isValidDate)) {// Formato Invalido
+      } else {
+        // Formato Valido
+        var data = {
+          hora_inicio: "08:00:00",
+          hora_fin: "17:00:00",
+          intervalo: 20,
+          fecha_cita: this.form.fecha_cita,
+          show_hora: show_hora
+        }; // Si show_hora es diferente a vacio viene de fnShow().
+
+        if (show_hora == "") {
+          this.form.hora_cita = "";
+          this.overlayLoading = true;
+        }
+
+        axios.post("/consultorio-oftamologico/agenda/horas-disponible-citas", data).then(function (response) {
+          _this9.horasCitaItems = response.data; // Si show_hora es diferente a vacio viene de fnShow().
+
+          if (show_hora == "") {
+            _this9.overlayLoading = false;
+          }
+        })["catch"](function (errores) {
+          _this9.horasCitaItems = [];
+
+          _this9.fnResponseError(errores);
+
+          _this9.overlayLoading = false;
+        });
+      }
     }
   },
   created: function created() {
-    var _this9 = this;
+    var _this10 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _this9.tiposDocumentosItems = _json_tiposDocumentos_json__WEBPACK_IMPORTED_MODULE_2__;
-              _this9.tiposConsultaCitaItems = _json_tiposConsulta_json__WEBPACK_IMPORTED_MODULE_3__;
+              _this10.tiposDocumentosItems = _json_tiposDocumentos_json__WEBPACK_IMPORTED_MODULE_2__;
+              _this10.tiposConsultaCitaItems = _json_tiposConsulta_json__WEBPACK_IMPORTED_MODULE_3__;
               _context.next = 4;
-              return _this9.fnBuscarParametro('p_eps');
+              return _this10.fnBuscarParametro('p_eps');
 
             case 4:
-              _this9.itemsEpsPrepagada = _context.sent;
+              _this10.itemsEpsPrepagada = _context.sent;
 
             case 5:
             case "end":
@@ -28881,6 +28938,11 @@ var render = function () {
                       dense: "",
                       disabled: _vm.disabledCampos,
                     },
+                    on: {
+                      change: function ($event) {
+                        return _vm.fnHorasCita()
+                      },
+                    },
                     model: {
                       value: _vm.form.fecha_cita,
                       callback: function ($$v) {
@@ -28897,14 +28959,17 @@ var render = function () {
                 "v-col",
                 { staticClass: "pb-0", attrs: { cols: "6", sm: "4" } },
                 [
-                  _c("v-text-field", {
+                  _c("v-select", {
                     ref: "hora_cita",
                     attrs: {
-                      type: "time",
                       label: "Hora Cita",
+                      items: _vm.horasCitaItems,
                       "error-messages": _vm.errors.hora_cita,
                       dense: "",
+                      title: "Seleccione hora de la cita.",
                       disabled: _vm.disabledCampos,
+                      "no-data-text":
+                        "Sin horas citas, seleccione una fecha cita o cambie fecha de citas para buscar",
                     },
                     model: {
                       value: _vm.form.hora_cita,
