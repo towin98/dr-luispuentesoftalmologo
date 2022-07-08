@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Agenda;
 
 use Exception;
+use DateInterval;
+use DatePeriod;
+use DateTime;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Models\CitaPaciente;
 use App\Traits\metodosComunesTrait;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -111,6 +115,19 @@ class CitaClienteController extends Controller
             ], 409);
         }
 
+        $cita = CitaPaciente::select('hora_cita')
+            ->where('fecha_cita', $request->fecha_cita)
+            ->where('hora_cita', $request->hora_cita.":00")
+            ->first();
+        if ($cita) {
+            return response()->json([
+                'message' => 'Validación de Datos',
+                'errors' => [
+                    "hora_cita" => "Ya existe una cita para el día $request->fecha_cita y hora $request->hora_cita."
+                ]
+            ], 422);
+        }
+
         try {
             $request->merge([
                 'id_paciente'               => $paciente->id,
@@ -190,7 +207,7 @@ class CitaClienteController extends Controller
         if (count($errores) > 0) {
             return response()->json([
                 'message' => 'Error de Validación de Datos',
-                'errores' => $errores
+                'errors'  => $errores
             ], 422);
         }
 
@@ -206,6 +223,20 @@ class CitaClienteController extends Controller
                 // Si se cambio el paciente para la cita.
                 $request->merge(['id_paciente' => $paciente->id,]);
             }
+        }
+
+        $cita = CitaPaciente::select('hora_cita')
+            ->where('fecha_cita', $request->fecha_cita)
+            ->where('hora_cita', $request->hora_cita.":00")
+            ->where('hora_cita', "!=", $citaPaciente->hora_cita)
+            ->first();
+        if ($cita) {
+            return response()->json([
+                'message' => 'Validación de Datos',
+                'errors' => [
+                    "hora_cita" => "Ya existe una cita para el día $request->fecha_cita y hora $request->hora_cita."
+                ]
+            ], 422);
         }
 
         if ($citaPaciente) {
@@ -326,4 +357,67 @@ class CitaClienteController extends Controller
             'data' => $paciente
         ], 200);
     }
+
+    /**
+     * Método que retorna horas disponibles citas.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function horasDisponiblesCitaDia(Request $request) {
+        /**
+         * Listado de horas disponibles
+         */
+        $horas = array();
+
+        $hora_inicio = new DateTime($request->hora_inicio);
+        $hora_fin    = new DateTime($request->hora_fin);
+
+        // Si la hora de inicio es superior a la hora fin
+        if ($hora_inicio >= $hora_fin) {
+            return response()->json([
+                'message' => 'Error validación de datos',
+                'errors' => 'La hora de Inicio no puede ser mayor o Igual a la hora Final.'
+            ], 500);
+        }
+
+        // Establecemos el intervalo en minutos
+        $intervalo = new DateInterval('PT'.$request->intervalo.'M');
+
+        // Sacamos los periodos entre las horas
+        $periodo   = new DatePeriod($hora_inicio, $intervalo, $hora_fin);
+
+        foreach( $periodo as $hora ) {
+            $guardarHora = true;
+
+            $citasPacientesHora = CitaPaciente::select('hora_cita')
+                ->where('fecha_cita', $request->fecha_cita)
+                ->get();
+
+            $horaValid = $hora->format('H:i:s');
+            foreach ($citasPacientesHora as $cita) {
+                // Restringiendo que no se guarden horas para ya citas agendadas.
+                if ($cita->hora_cita == $horaValid) {
+                    // show_hora es la hora que se va a mostrar al cargar la información.
+                    if ($cita->hora_cita != $request->show_hora) {
+                        $guardarHora = false;
+                        break;
+                    }
+                }
+            }
+
+            // Quitando horas del almuerzo
+            $vHoraAlmuerzo = ["12:00:00","12:20:00","12:40:00","13:00:00","13:20:00","13:40:00"];
+            if (in_array($horaValid, $vHoraAlmuerzo)) {
+                $guardarHora = false;
+            }
+
+            if ($guardarHora == true) {
+                $horas[] = substr($horaValid,0,5);
+            }
+        }
+
+        return $horas;
+    }
 }
+

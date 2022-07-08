@@ -80,6 +80,7 @@ Route::group(['prefix' => 'agenda'/* , 'middleware' => 'auth:sanctum' */] , func
     Route::get('/mostrar/cita-paciente/{id}', [CitaClienteController::class, 'show']);
     Route::post('/delete/cita-paciente/{id}', [CitaClienteController::class, 'destroy']);
     Route::get('/listar/citas-pacientes', [CitaClienteController::class, 'listar']);
+    Route::post('/horas-disponible-citas', [CitaClienteController::class, 'horasDisponiblesCitaDia']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){
