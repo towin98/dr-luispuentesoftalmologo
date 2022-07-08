@@ -2966,7 +2966,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.debounce = setTimeout(function () {
         _this.overlayLoading = true;
         _this.isLoading = true;
-        axios.post("/consultorio-oftamologico/agenda/busqueda-paciente-autocomplete", {
+        axios.post("/consultorio-oftamologico/agenda/cita-cliente/busqueda-paciente-autocomplete", {
           valor: val
         }).then(function (response) {
           _this.pacienteData = response.data.data;
@@ -3026,7 +3026,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         sortDesc = "";
       }
 
-      axios.get("/consultorio-oftamologico/agenda/listar/citas-pacientes?length=".concat(this.length, "&start=").concat(this.start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc, "&buscar=").concat(this.buscar)).then(function (response) {
+      axios.get("/consultorio-oftamologico/agenda/cita-cliente/listar?length=".concat(this.length, "&start=").concat(this.start, "&orderColumn=").concat(sortBy, "&order=").concat(sortDesc, "&buscar=").concat(this.buscar)).then(function (response) {
         var data = response.data.data;
 
         for (var i = 0; i < data.length; i++) {
@@ -3072,7 +3072,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.numero_documento_readonly = true;
-      axios.get("/consultorio-oftamologico/agenda/cargar-informacion-paciente?numero_documento=".concat(this.autocomplete_numero_documento)).then(function (response) {
+      axios.get("/consultorio-oftamologico/agenda/cita-cliente/cargar-informacion-paciente?numero_documento=".concat(this.autocomplete_numero_documento)).then(function (response) {
         var data = response.data.data;
         _this4.tipo_documento = data.tipo_documento;
         _this4.numero_documento = data.numero_documento;
@@ -3107,7 +3107,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } // ?
 
 
-      axios.post("/consultorio-oftamologico/agenda/guardar/cita-paciente", this.form).then(function (response) {
+      axios.post("/consultorio-oftamologico/agenda/cita-cliente/guardar", this.form).then(function (response) {
         _this5.$swal(response.data.message, '', 'success');
 
         _this5.errors = {};
@@ -3164,7 +3164,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.id_cita = id;
       this.overlayLoading = true;
       this.accion = "Editar_Cita";
-      axios.get("/consultorio-oftamologico/agenda/mostrar/cita-paciente/".concat(id)).then(function (response) {
+      axios.get("/consultorio-oftamologico/agenda/cita-cliente/mostrar/".concat(id)).then(function (response) {
         var data = response.data.data; // Solo se busca info en el autocomplete de paciente si se selecciona un paciente diferente.
 
         if (data.get_paciente.numero_documento != _this6.autocomplete_numero_documento) {
@@ -3199,7 +3199,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.numero_documento = this.autocomplete_numero_documento;
       this.form.hora_cita = this.form.hora_cita.substr(0, 5); // Recortando Hora, formato aceptado H:i
 
-      axios.put("/consultorio-oftamologico/agenda/actualizar/cita-paciente/".concat(this.id_cita), this.form).then(function (response) {
+      axios.put("/consultorio-oftamologico/agenda/cita-cliente/actualizar/".concat(this.id_cita), this.form).then(function (response) {
         _this7.errors = "";
 
         _this7.$swal(response.data.message, '', 'success');
@@ -3230,7 +3230,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }).then(function (result) {
         if (result.isConfirmed) {
           _this8.overlayLoading = true;
-          axios.post("/consultorio-oftamologico/agenda/delete/cita-paciente/".concat(item.id)).then(function (response) {
+          axios.post("/consultorio-oftamologico/agenda/cita-cliente/delete/".concat(item.id)).then(function (response) {
             _this8.errors = "";
 
             _this8.$swal('', response.data.message, 'success');
@@ -3273,7 +3273,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           this.overlayLoading = true;
         }
 
-        axios.post("/consultorio-oftamologico/agenda/horas-disponible-citas", data).then(function (response) {
+        axios.post("/consultorio-oftamologico/agenda/cita-cliente/horas-disponible-citas", data).then(function (response) {
           _this9.horasCitaItems = response.data; // Si show_hora es diferente a vacio viene de fnShow().
 
           if (show_hora == "") {
@@ -3312,6 +3312,157 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }, _callee);
     }))();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../loadingGeneral/loadingGeneral.vue */ "./resources/js/components/loadingGeneral/loadingGeneral.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    loadingGeneral: _loadingGeneral_loadingGeneral_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      overlayLoading: false,
+      radioGroupReporte: "DIA",
+      fecha_title: '',
+      dataReporteCitas: [],
+      // FORM
+      form: {
+        fecha_reporte: ""
+      },
+      errors: ""
+    };
+  },
+  methods: {
+    fnBuscarCitas: function fnBuscarCitas() {
+      var _this = this;
+
+      var data = {
+        tipo_informe_cita: this.radioGroupReporte,
+        fecha_reporte: this.form.fecha_reporte
+      };
+      this.overlayLoading = true;
+      axios.post("/consultorio-oftamologico/agenda/informe-cita/listar", data).then(function (response) {
+        _this.dataReporteCitas = response.data.data;
+        _this.errors = "";
+        var date = new Date(_this.form.fecha_reporte.replace(/-+/g, '/'));
+        var options = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        };
+        _this.fecha_title = " - " + date.toLocaleDateString('es-MX', options);
+      })["catch"](function (errores) {
+        _this.errors = _this.fnResponseError(errores);
+        _this.dataReporteCitas = [];
+      })["finally"](function () {
+        return _this.overlayLoading = false;
+      });
+    },
+    fnAsistioCita: function fnAsistioCita(id_cita) {
+      var _this2 = this;
+
+      this.overlayLoading = true;
+      axios.post("/consultorio-oftamologico/agenda/informe-cita/asistio-cita/".concat(id_cita)).then(function (response) {
+        _this2.$swal(response.data.message, '', 'success');
+
+        _this2.fnBuscarCitas();
+      })["catch"](function (errores) {
+        _this2.fnResponseError(errores);
+      })["finally"](function () {
+        return _this2.overlayLoading = false;
+      });
+    }
   }
 });
 
@@ -7162,6 +7313,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 
 
@@ -7181,13 +7335,17 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
       moduloCrearPaciente: false,
       moduloHistoriaClinica: false,
       moduloInforme: false,
+      // Variables para menu agenda.
       moduloAgenda: false,
+      moduloCitaCliente: false,
+      moduloInformeCita: false,
+      // Variables para menu agenda.
       moduloTurno: false,
 
       /* Variables de configuracion del sistema */
       moduloParametros: false,
 
-      /* fin Variables de configuracion del sistema */
+      /* Variables de configuracion del sistema */
       // Variables permisos menus end
       infoUser: {
         rol: '',
@@ -7280,7 +7438,7 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
                 }, _callee);
               })), 20000);
               _context2.t1 = _this2.infoUser.rol;
-              _context2.next = _context2.t1 === "SECRETARIA" ? 21 : _context2.t1 === "MEDICO" ? 28 : 31;
+              _context2.next = _context2.t1 === "SECRETARIA" ? 21 : _context2.t1 === "MEDICO" ? 30 : 33;
               break;
 
             case 21:
@@ -7288,20 +7446,22 @@ Vue.mixin(_commons_commons_js__WEBPACK_IMPORTED_MODULE_4__.commons);
               _this2.moduloHistoriaClinica = true;
               _this2.moduloInforme = true;
               _this2.moduloAgenda = true;
+              _this2.moduloCitaCliente = true;
+              _this2.moduloInformeCita = true;
               _this2.moduloTurno = true;
               /* Variables de configuracion del sistema */
 
               _this2.moduloParametros = true;
               /* fin Variables de configuracion del sistema */
 
-              return _context2.abrupt("break", 31);
+              return _context2.abrupt("break", 33);
 
-            case 28:
+            case 30:
               _this2.moduloCrearPaciente = true;
               _this2.turno = true;
-              return _context2.abrupt("break", 31);
+              return _context2.abrupt("break", 33);
 
-            case 31:
+            case 33:
             case "end":
               return _context2.stop();
           }
@@ -7591,9 +7751,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_consultorio_historiaClinica_formulaAnteojos_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/formulaAnteojos.vue */ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue");
 /* harmony import */ var _components_consultorio_historiaClinica_antecedentes_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/consultorio/historiaClinica/antecedentes.vue */ "./resources/js/components/consultorio/historiaClinica/antecedentes.vue");
 /* harmony import */ var _components_consultorio_agenda_citaCliente_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/consultorio/agenda/citaCliente.vue */ "./resources/js/components/consultorio/agenda/citaCliente.vue");
-/* harmony import */ var _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/config/parametros/eps.vue */ "./resources/js/components/config/parametros/eps.vue");
-/* harmony import */ var _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/config/cambioClave.vue */ "./resources/js/components/config/cambioClave.vue");
-/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
+/* harmony import */ var _components_consultorio_agenda_informeCita_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/consultorio/agenda/informeCita.vue */ "./resources/js/components/consultorio/agenda/informeCita.vue");
+/* harmony import */ var _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/config/parametros/eps.vue */ "./resources/js/components/config/parametros/eps.vue");
+/* harmony import */ var _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/config/cambioClave.vue */ "./resources/js/components/config/cambioClave.vue");
+/* harmony import */ var _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/errors/404.vue */ "./resources/js/components/errors/404.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -7602,6 +7763,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 
 
 /*Menu*/
+
 
 
 
@@ -7670,11 +7832,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: _components_consultorio_historiaClinica_cargarArchivo_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
       name: 'historia-clinica/cargar-archivo'
     }, // Historia clinica FIN
+    // Agenda
     {
       path: 'agenda/cita-cliente',
       component: _components_consultorio_agenda_citaCliente_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
       name: 'agenda/cita-cliente'
     }, {
+      path: 'agenda/informe-cita',
+      component: _components_consultorio_agenda_informeCita_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+      name: 'agenda/informe-cita'
+    }, // Agenda
+    {
       path: 'turno',
       component: _components_consultorio_inicio_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
       name: 'turno'
@@ -7687,16 +7855,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     },
     children: [{
       path: 'parametros/medicina-prepagada',
-      component: _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+      component: _components_config_parametros_eps_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
       name: 'medicina-prepagada'
     }, {
       path: 'cambio-clave',
-      component: _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+      component: _components_config_cambioClave_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
       name: 'cambio-clave'
     }]
   }, {
     path: '*',
-    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+    component: _components_errors_404_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
   }]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -7845,6 +8013,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\ninput {\r\n    padding-left: 10px !important;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\ninput[type=\"checkbox\"] + label {\n    display: block;\n    margin: 0.2em;\n    cursor: pointer;\n    padding: 0.2em;\n    font-family: \"Arial\";\n}\ninput[type=\"checkbox\"] {\n    display: none;\n}\ninput[type=\"checkbox\"] + label:before {\n    content: \"\\2714\";\n    border: 0.1em solid #000;\n    border-radius: 0.2em;\n    display: inline-block;\n    width: 1.2em;\n    height: 1.2em;\n    padding-left: 0.2em;\n    padding-bottom: 0.3em;\n    margin-right: 0.2em;\n    vertical-align: bottom;\n    color: transparent;\n    transition: 0.2s;\n}\ninput[type=\"checkbox\"] + label:active:before {\n    transform: scale(0);\n}\ninput[type=\"checkbox\"]:checked + label:before {\n    background-color: #4caf50;\n    border-color: #4caf50;\n    color: #fff;\n}\ninput[type=\"checkbox\"]:disabled + label:before {\n    transform: scale(1);\n    border-color: #aaa;\n}\ninput[type=\"checkbox\"]:checked:disabled + label:before {\n    transform: scale(1);\n    background-color: #a2d4a4;\n    border-color: #a2d4a4;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26358,6 +26550,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./informeCita.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css& ***!
@@ -26938,6 +27160,47 @@ component.options.__file = "resources/js/components/consultorio/agenda/citaClien
 
 /***/ }),
 
+/***/ "./resources/js/components/consultorio/agenda/informeCita.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/consultorio/agenda/informeCita.vue ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _informeCita_vue_vue_type_template_id_72f08b9e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./informeCita.vue?vue&type=template&id=72f08b9e& */ "./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=template&id=72f08b9e&");
+/* harmony import */ var _informeCita_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./informeCita.vue?vue&type=script&lang=js& */ "./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=script&lang=js&");
+/* harmony import */ var _informeCita_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./informeCita.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _informeCita_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _informeCita_vue_vue_type_template_id_72f08b9e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _informeCita_vue_vue_type_template_id_72f08b9e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/consultorio/agenda/informeCita.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/consultorio/historiaClinica/antecedentes.vue":
 /*!******************************************************************************!*\
   !*** ./resources/js/components/consultorio/historiaClinica/antecedentes.vue ***!
@@ -27447,6 +27710,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./informeCita.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/consultorio/historiaClinica/antecedentes.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************!*\
   !*** ./resources/js/components/consultorio/historiaClinica/antecedentes.vue?vue&type=script&lang=js& ***!
@@ -27620,6 +27899,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./informeCita.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=style&index=0&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css&":
 /*!******************************************************************************************************************************************!*\
   !*** ./resources/js/components/consultorio/historiaClinica/formulaAnteojos.vue?vue&type=style&index=0&id=5c80d85b&scoped=true&lang=css& ***!
@@ -27748,6 +28040,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_citaCliente_vue_vue_type_template_id_8626dc6e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_citaCliente_vue_vue_type_template_id_8626dc6e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./citaCliente.vue?vue&type=template&id=8626dc6e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/citaCliente.vue?vue&type=template&id=8626dc6e&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=template&id=72f08b9e&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=template&id=72f08b9e& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_template_id_72f08b9e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_template_id_72f08b9e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_informeCita_vue_vue_type_template_id_72f08b9e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./informeCita.vue?vue&type=template&id=72f08b9e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=template&id=72f08b9e&");
 
 
 /***/ }),
@@ -29243,6 +29552,230 @@ var render = function () {
             ],
             1
           ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=template&id=72f08b9e&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/consultorio/agenda/informeCita.vue?vue&type=template&id=72f08b9e& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("loadingGeneral", { attrs: { overlayLoading: _vm.overlayLoading } }),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticClass: "mt-7", attrs: { elevation: "2" } },
+        [
+          _c("h3", { staticClass: "text-center pt-2 pb-2" }, [
+            _vm._v("Informe de citas"),
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "pt-0 pb-0", attrs: { cols: "6" } },
+                [
+                  _c(
+                    "v-radio-group",
+                    {
+                      attrs: { row: "" },
+                      model: {
+                        value: _vm.radioGroupReporte,
+                        callback: function ($$v) {
+                          _vm.radioGroupReporte = $$v
+                        },
+                        expression: "radioGroupReporte",
+                      },
+                    },
+                    [
+                      _c("v-radio", {
+                        attrs: { label: "Por día", value: "DIA" },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { staticClass: "ml-2 mr-2" },
+            [
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { cols: "12", sm: "3" } },
+                [
+                  _c("v-text-field", {
+                    ref: "fecha_reporte",
+                    attrs: {
+                      type: "date",
+                      label: "Fecha de reporte",
+                      "error-messages": _vm.errors.fecha_reporte,
+                      dense: "",
+                    },
+                    model: {
+                      value: _vm.form.fecha_reporte,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.form, "fecha_reporte", $$v)
+                      },
+                      expression: "form.fecha_reporte",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "pt-0", attrs: { cols: "12", sm: "3" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "white--text",
+                      attrs: { color: "success" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.fnBuscarCitas()
+                        },
+                      },
+                    },
+                    [_vm._v("Buscar")]
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c("h3", { staticClass: "text-center pt-2 pb-2" }, [
+            _vm._v("Reporte " + _vm._s(_vm.fecha_title)),
+          ]),
+          _vm._v(" "),
+          _c("v-simple-table", {
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function () {
+                  return [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("Hora"),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("Identificación"),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("Paciente"),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("Celular"),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("Tipo Consulta"),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-left" }, [
+                          _vm._v("Asisitio"),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.dataReporteCitas, function (item) {
+                        return _c("tr", { key: item.id }, [
+                          _c("td", [_vm._v(_vm._s(item.hora_cita))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(item.get_paciente.numero_documento)),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(item.get_paciente.nombre) +
+                                "\n                            " +
+                                _vm._s(item.get_paciente.apellido) +
+                                "\n                        "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.get_paciente.celular))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.tipo_consulta))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("input", {
+                              attrs: {
+                                name: "asisitio_" + item.id,
+                                type: "checkbox",
+                                id: "asisitio_" + item.id,
+                              },
+                              domProps: {
+                                checked: item.asistio == "SI" ? true : false,
+                              },
+                              on: {
+                                change: function ($event) {
+                                  return _vm.fnAsistioCita(item.id)
+                                },
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("label", {
+                              attrs: { for: "asisitio_" + item.id },
+                            }),
+                          ]),
+                        ])
+                      }),
+                      0
+                    ),
+                  ]
+                },
+                proxy: true,
+              },
+            ]),
+          }),
         ],
         1
       ),
@@ -33811,7 +34344,7 @@ var render = function () {
                                   _c(
                                     "v-list",
                                     [
-                                      _vm.moduloAgenda
+                                      _vm.moduloCitaCliente
                                         ? _c(
                                             "v-list-item",
                                             {
@@ -33831,6 +34364,32 @@ var render = function () {
                                             [
                                               _c("v-list-item-title", [
                                                 _vm._v("Cita Cliente"),
+                                              ]),
+                                            ],
+                                            1
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm.moduloInformeCita
+                                        ? _c(
+                                            "v-list-item",
+                                            {
+                                              attrs: {
+                                                to: {
+                                                  name: "agenda/informe-cita",
+                                                },
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  _vm.titleProceso =
+                                                    "Agenda/Informe Cita"
+                                                  _vm.pathPrevious = ""
+                                                },
+                                              },
+                                            },
+                                            [
+                                              _c("v-list-item-title", [
+                                                _vm._v("Informe Cita"),
                                               ]),
                                             ],
                                             1
@@ -95756,7 +96315,7 @@ module.exports = JSON.parse('[{"id":0,"departamento":"Amazonas","ciudades":["Let
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('[{"value":"CONSULTA1","text":"CONSULTA1"},{"value":"CONSULTA2","text":"CONSULTA2"},{"value":"CONSULTA3","text":"CONSULTA3"}]');
+module.exports = JSON.parse('[{"value":"CONSULTA","text":"CONSULTA"},{"value":"CONTROLCX","text":"CONTROLCX"},{"value":"CONTROLTTO","text":"CONTROL TTO"}]');
 
 /***/ }),
 

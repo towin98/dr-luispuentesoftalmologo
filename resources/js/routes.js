@@ -17,6 +17,7 @@ import motivoConsulta from './components/consultorio/historiaClinica/motivoConsu
 import formulaAnteojos from './components/consultorio/historiaClinica/formulaAnteojos.vue'
 import antecedentes from './components/consultorio/historiaClinica/antecedentes.vue'
 import citaCliente from './components/consultorio/agenda/citaCliente.vue'
+import informeCita from './components/consultorio/agenda/informeCita.vue'
 
 import parametrosEps from './components/config/parametros/eps.vue' // Medicina Prepagada.
 import cambioClave from './components/config/cambioClave.vue'
@@ -82,11 +83,20 @@ const router = new VueRouter({
                     name: 'historia-clinica/cargar-archivo',
                 },
                 // Historia clinica FIN
+
+                // Agenda
                 {
                     path: 'agenda/cita-cliente',
                     component: citaCliente,
                     name: 'agenda/cita-cliente',
                 },
+                {
+                    path: 'agenda/informe-cita',
+                    component: informeCita,
+                    name: 'agenda/informe-cita',
+                },
+                // Agenda
+
                 {
                     path: 'turno',
                     component: inicio,

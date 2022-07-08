@@ -80,8 +80,11 @@
                             </template>
 
                             <v-list>
-                                <v-list-item :to="{ name: 'agenda/cita-cliente' }" v-if="moduloAgenda" v-on:click="titleProceso = 'Agenda/Cita Cliente'; pathPrevious = ''">
+                                <v-list-item :to="{ name: 'agenda/cita-cliente' }" v-if="moduloCitaCliente" v-on:click="titleProceso = 'Agenda/Cita Cliente'; pathPrevious = ''">
                                     <v-list-item-title>Cita Cliente</v-list-item-title>
+                                </v-list-item>
+                                <v-list-item :to="{ name: 'agenda/informe-cita' }" v-if="moduloInformeCita" v-on:click="titleProceso = 'Agenda/Informe Cita'; pathPrevious = ''">
+                                    <v-list-item-title>Informe Cita</v-list-item-title>
                                 </v-list-item>
                             </v-list>
                         </v-menu>
@@ -146,18 +149,22 @@ export default {
         return {
 
             token: localStorage.getItem("token_Historial_Clinico_Oftamologico"),
-            date: "",
+            date : "",
 
             // Variables permisos menus start
             moduloCrearPaciente           : false,
             moduloHistoriaClinica         : false,
             moduloInforme                 : false,
-            moduloAgenda                 : false,
+            // Variables para menu agenda.
+            moduloAgenda                  : false,
+            moduloCitaCliente             : false,
+            moduloInformeCita             : false,
+            // Variables para menu agenda.
             moduloTurno                   : false,
 
             /* Variables de configuracion del sistema */
             moduloParametros              : false,
-            /* fin Variables de configuracion del sistema */
+            /* Variables de configuracion del sistema */
 
             // Variables permisos menus end
 
@@ -235,6 +242,8 @@ export default {
                 this.moduloHistoriaClinica        = true;
                 this.moduloInforme                = true;
                 this.moduloAgenda                 = true;
+                this.moduloCitaCliente            = true;
+                this.moduloInformeCita            = true;
                 this.moduloTurno                  = true;
 
                 /* Variables de configuracion del sistema */

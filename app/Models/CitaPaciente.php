@@ -35,7 +35,8 @@ class CitaPaciente extends Model
         'tipo_consulta',
         'fecha_cita',
         'hora_cita',
-        'observacion'
+        'observacion',
+        'asistio'
     ];
 
     /**
@@ -50,6 +51,7 @@ class CitaPaciente extends Model
         'fecha_cita',
         'hora_cita',
         'observacion',
+        'asistio',
         'created_at',
         'updated_at',
         'getPaciente'
@@ -70,7 +72,8 @@ class CitaPaciente extends Model
         'numero_documento' => 'required',
         'fecha_cita'       => 'required|date_format:Y-m-d',
         'hora_cita'        => 'required|date_format:H:i',
-        'observacion'      => 'nullable|max:255'
+        'observacion'      => 'nullable|max:255',
+        'asistio'          => 'nullable|in:SI,NO'
     ];
 
     /**
