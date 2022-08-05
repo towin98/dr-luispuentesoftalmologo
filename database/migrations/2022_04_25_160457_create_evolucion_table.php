@@ -17,9 +17,9 @@ class CreateEvolucionTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_paciente');
             $table->string('numero_evolucion',20);
-            $table->string('url_refraccion');
-            $table->date('fecha');
-            $table->time('hora');
+            $table->string('url_refraccion')->nullable();
+            $table->date('fecha')->comment('Fecha Evolucion');
+            $table->time('hora')->comment('Hora Evolucion');
             $table->string('descripcion', 255)->nullable();
             $table->timestamps();
 

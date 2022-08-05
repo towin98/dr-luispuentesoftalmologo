@@ -21,7 +21,6 @@ class PacienteController extends Controller
      */
     public function listar(Request $request)
     {
-
         // Se válida si envian los parámetros length y start.
         if ($request->has(['length', 'start'])) {
             $length = $request->length;
@@ -75,24 +74,24 @@ class PacienteController extends Controller
         try {
             $urlFotoGuardada = $this->guardarArchivoSubido($request, "foto", "fotos-paciente");
 
+            $input = $request->collect();
+
+            $data = $input->map(function ($valor, $key) {
+                if ($key == "nombre" || $key == "apellido") {
+                    if ($valor != "") {
+                        $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
+                    }
+                }else if($valor != ""){
+                    $valor = trim(strtoupper($valor));
+                }
+                return $valor;
+            })->all();
+
+            $data['foto']           = $urlFotoGuardada;
+            $data['fecha_creacion'] = trim($request->fecha_creacion." ".date('H:i:s'));
+
             // Guardando datos
-            Paciente::create([
-                'tipo_documento'    => trim(strtoupper($request->tipo_documento)),
-                'numero_documento'  => trim(strtoupper($request->numero_documento)),
-                'nombre'            => trim(strtoupper($request->nombre)),
-                'apellido'          => trim(strtoupper($request->apellido)),
-                'correo'            => trim(strtolower($request->correo)),
-                'celular'           => trim($request->celular),
-                'direccion'         => trim(strtoupper($request->direccion)),
-                'departamento'      => trim(strtoupper($request->departamento)),
-                'municipio'         => trim(strtoupper($request->municipio)),
-                'fecha_nacimiento'  => trim($request->fecha_nacimiento),
-                'edad'              => trim($request->edad),
-                'ocupacion'         => trim(strtoupper($request->ocupacion)),
-                'foto'              => $urlFotoGuardada,
-                'id_p_eps'          => $request->id_p_eps,
-                'fecha_creacion'    => trim($request->fecha_creacion." ".date('H:i:s'))
-            ]);
+            Paciente::create($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',

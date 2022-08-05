@@ -469,9 +469,10 @@ export default {
                         ... data
                     };
 
-                    this.fnBuscarMunicipio(data.departamento);
-
-                    this.form.municipio = this.fnRemoveAccents(data.municipio.toUpperCase());
+                    if (data.departamento != "" && data.departamento != null) {
+                        this.fnBuscarMunicipio(data.departamento);
+                        this.form.municipio = this.fnRemoveAccents(data.municipio.toUpperCase());
+                    }
 
                     if (data.id_p_eps == 1) {
                         this.radioGroupEps = "PARTICULAR";
@@ -479,7 +480,7 @@ export default {
                         this.radioGroupEps = "PREPAGADA";
                     }
 
-                    if (data.foto != "") {
+                    if (data.foto != "" && data.foto != null) {
                         // Si la foto existe.
                         this.preview = "../../"+data.foto;
                     }else{
