@@ -143,7 +143,7 @@ class HistoriaClinicaController extends Controller
     }
 
     /**
-     * Guardar evolucion.
+     * Guardar evolución.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -176,22 +176,23 @@ class HistoriaClinicaController extends Controller
                                         "url_refraccion" => $file
                                     ],
                                     [
-                                        'url_refraccion' => 'mimes:jpg,jpeg,bmp,png'
+                                        'url_refraccion' => 'mimes:jpg,jpeg,png'
                                     ],
                                     Evolucion::$messages);
                 if ($validator->fails()) {
                     $errores = $validator->errors();
                 }
             }
-        }else{
-            if (empty($errores)) {
-                $errores['url_refraccion'] = [
-                    'La refracción es requerida.'
-                ];
-            }else{
-                $errores->add('url_refraccion', 'La refracción es requerida.');
-            }
         }
+        // else{
+        //     if (empty($errores)) {
+        //         $errores['url_refraccion'] = [
+        //             'La refracción es requerida.'
+        //         ];
+        //     }else{
+        //         $errores->add('url_refraccion', 'La refracción es requerida.');
+        //     }
+        // }
 
         if (count($errores) > 0) {
             return response()->json([
@@ -209,9 +210,10 @@ class HistoriaClinicaController extends Controller
                 File::makeDirectory(public_path('storage/refracciones'), 0777);
             }
 
-            if($request->hasFile('refracciones')){
+            $numeroEvolucion = $this->obtenerNumeroEvolucion($paciente->id);
+            $nombrePdf = null;
 
-                $numeroEvolucion = $this->obtenerNumeroEvolucion($paciente->id);
+            if($request->hasFile('refracciones')){
 
                 // Procesando imagenes para crear pdf con refracciones subida.
                 $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $numeroEvolucion);

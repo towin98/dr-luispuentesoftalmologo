@@ -64,7 +64,7 @@ trait metodosComunesTrait {
             $file->move($carpetaMover,  $fileName);
             return  $carpetaMover ."/".$fileName;
         }else{
-            return "";
+            return null;
         }
     }
 

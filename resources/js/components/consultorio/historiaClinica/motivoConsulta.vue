@@ -185,8 +185,8 @@
                             mdi-pencil
                         </v-icon>
                         <v-icon
-                            small
-                            title="Eliminar Evolucion Seleccionada."
+                            color="red"
+                            title="Eliminar Evolución Seleccionada."
                             @click="fnDelete(item)"
                         >
                             mdi-delete

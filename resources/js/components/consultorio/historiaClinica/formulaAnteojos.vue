@@ -3,7 +3,7 @@
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
         <!-- FORMULARIO -->
         <v-card elevation="2" class="mt-7">
-            <h3 class="text-center">FORMULA ANTEOJOS - {{ numero_formula_anteojos }}</h3>
+            <h3 class="text-center">HISTORIA CLINICA - {{ numero_formula_anteojos }}</h3><!-- FORMULA ANTEOJOS -->
 
             <v-row class="ml-2 mr-2 pt-5">
                 <v-col cols="12" sm="3">
