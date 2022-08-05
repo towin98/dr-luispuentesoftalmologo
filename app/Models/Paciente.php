@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Parametro\Eps;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Paciente extends Model
 {
@@ -89,7 +90,8 @@ class Paciente extends Model
         'foto',
         'id_p_eps',
         'fecha_creacion',
-        'updated_at'
+        'updated_at',
+        'getEps'
     ];
 
     static $messages = [
@@ -206,5 +208,14 @@ class Paciente extends Model
         if($columna && $orden){
             return $query->orderBy($columna, $orden);
         }
+    }
+
+    /**
+     * Obtiene el registro de eps asociado al paciente.
+     *
+     * @return Illuminate\Support\Collection;
+     */
+    public function getEps(){
+        return $this->belongsTo(Eps::class,'id_p_eps', 'id');
     }
 }

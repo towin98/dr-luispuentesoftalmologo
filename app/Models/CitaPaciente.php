@@ -10,7 +10,6 @@ class CitaPaciente extends Model
 {
     use HasFactory;
 
-
     protected $table = 'cita_paciente';
     protected $primaryKey = 'id';
 
@@ -36,7 +35,10 @@ class CitaPaciente extends Model
         'fecha_cita',
         'hora_cita',
         'observacion',
-        'asistio'
+        'asistio',
+        'id_alerta_cita',
+        'prioridad',
+        'prioridad_aceptado'
     ];
 
     /**
@@ -52,9 +54,13 @@ class CitaPaciente extends Model
         'hora_cita',
         'observacion',
         'asistio',
+        'id_alerta_cita',
+        'prioridad',
+        'prioridad_aceptado',
         'created_at',
         'updated_at',
-        'getPaciente'
+        'getPaciente',
+        'getAlertaCita'
     ];
 
     static $messages = [
@@ -73,7 +79,8 @@ class CitaPaciente extends Model
         'fecha_cita'       => 'required|date_format:Y-m-d',
         'hora_cita'        => 'required|date_format:H:i',
         'observacion'      => 'nullable|max:255',
-        'asistio'          => 'nullable|in:SI,NO'
+        'asistio'          => 'nullable|in:SI,NO',
+        'prioridad'        => 'nullable|in:SI,NO'
     ];
 
     /**
@@ -83,5 +90,14 @@ class CitaPaciente extends Model
      */
     public function getPaciente(){
         return $this->belongsTo(Paciente::class,'id_paciente', 'id');
+    }
+
+    /**
+     * Obtiene la alerta de la cita asociado.
+     *
+     * @return Illuminate\Support\Collection;
+     */
+    public function getAlertaCita(){
+        return $this->belongsTo(AlertaCita::class,'id_alerta_cita', 'id');
     }
 }

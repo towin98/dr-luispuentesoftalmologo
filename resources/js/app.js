@@ -7,6 +7,9 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import router from "./routes";
 import App from "./components/App";
+import VueNotification from "@kugatsu/vuenotification";
+
+Vue.use(VueNotification);
 
 Vue.use(VueSweetalert2);
 

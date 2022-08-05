@@ -15,12 +15,10 @@ export const rolesPermisos = {
                         errors.response.status == 500
                     ) {
                         this.logout();
-                        clearInterval(this.intervalId);
                         this.$swal("La Sesión ha caducado.", "", "info");
                     }
                 }else{
                     this.logout();
-                    clearInterval(this.intervalId);
                 }
             }
         },

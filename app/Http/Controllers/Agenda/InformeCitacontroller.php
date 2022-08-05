@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Agenda;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\AlertaCita;
 use App\Models\CitaPaciente;
 use Exception;
 use Illuminate\Http\Request;
@@ -22,10 +23,10 @@ class InformeCitacontroller extends Controller
                                     $request->all(),
                                     [
                                         "tipo_informe_cita" => "required",
-                                        "fecha_reporte" => "required|date_format:Y-m-d"
+                                        "fecha_reporte"     => "required|date_format:Y-m-d"
                                     ],
                                     [
-                                        "tipo_informe_cita.required"        => "El tipo de informe de cita es requerido",
+                                        "tipo_informe_cita.required"    => "El tipo de informe de cita es requerido",
                                         "fecha_reporte.required"        => "La fecha de reporte es requerida",
                                         'fecha_reporte.date_format'     => 'La fecha de reporte no coincide con el formato Y-m-d',
                                     ]);
@@ -51,7 +52,16 @@ class InformeCitacontroller extends Controller
                             'numero_documento',
                             'nombre',
                             'apellido',
-                            'celular'
+                            'celular',
+                            'id_p_eps'
+                        ])
+                        ->with([
+                            'getEps' => function ($query){
+                                $query->select([
+                                    'id',
+                                    'descripcion'
+                                ]);
+                            }
                         ]);
                     }
                 ])
@@ -71,26 +81,62 @@ class InformeCitacontroller extends Controller
     }
 
     /**
-     * Método que actualiza cita de paciente, con estado asistio "SI" o "NO"
+     * Método que actualiza cita de paciente, dependiente el tipo de marcación enviado. "SI" o "NO"
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param CitaPaciente $cita
+     * @return void
      */
-    public function asistirCita(CitaPaciente $id_cita){
-        if ($id_cita->asistio != "SI") {
-            $estadoCita = "SI";
-        }else{
-            $estadoCita = "NO";
-        }
+    public function marcarCita(Request $request, CitaPaciente $cita){
 
-        try {
-            $id_cita->update([
-                "asistio" => $estadoCita
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => 'Error inesperado',
-                'errors' => 'Error al actualizar Estado Cita.'.$e
-            ], 500);
+        switch ($request->tipo_marcacion) {
+            case 'ASISTIOCITA':
+                $estadoCita = $cita->asistio != "SI" ? "SI" : "NO";
+                $cita->update([
+                    "asistio" => $estadoCita
+                ]);
+            break;
+            case 'PRIORITARIA':
+                $prioritarioCita = $cita->prioridad != "SI" ? "SI" : "NO";
+
+                if ($prioritarioCita == "NO") {
+                    $id_alerta_cita = $cita->id_alerta_cita;
+                    $cita->update([
+                        "prioridad"         => $prioritarioCita,
+                        "id_alerta_cita"    => null
+                    ]);
+                    try {
+                        // Se elimina alerta solo cuando a la cita se quite el check de prioridad.
+                        AlertaCita::find($id_alerta_cita)->delete();
+                    } catch (Exception $e) {
+                        return response()->json([
+                            'message' => 'Error inesperado en el sistema',
+                            'errors' => "No se pudo eliminar alerta id $id_alerta_cita."
+                        ], 500);
+                    }
+                }else{
+                    $vNotificacion = $this->notificacion($request->tipo_alerta);
+                    if ($vNotificacion[0] == "false") {
+                        return response()->json([
+                            'message' => 'Error inesperado en el sistema',
+                            'errors' => "Error al crear notificación."
+                        ], 500);
+                    }
+
+                    // Si se marca en SI prioritaria cita se asocia notificación.
+                    $cita->update([
+                        "prioridad"      => $prioritarioCita,
+                        "id_alerta_cita" => $vNotificacion[1]
+                    ]);
+                }
+
+            break;
+            default:
+                return response()->json([
+                    'message' => 'Validación de Datos',
+                    'errors' => "No se encontro parametrizado el tipo de marcación en el sistema $request->tipo_marcacion"
+                ], 409);
+            break;
         }
 
         return response()->json([
@@ -98,5 +144,29 @@ class InformeCitacontroller extends Controller
         ], 201);
     }
 
-    
+    /**
+     * Método que actualiza cita de paciente, dependiente el tipo de marcación enviado. "SI" o "NO"
+     *
+     * @param Request $request
+     * @param CitaPaciente $cita
+     * @return void
+     */
+    public function notificacion($tipo_alerta){
+
+        $mReturn[0] = ""; // Estado
+        $mReturn[1] = ""; // Id Alerta
+        $mReturn[2] = ""; // Errores
+        try {
+            $alertaCita = AlertaCita::create([
+                "tipo_alerta"   => $tipo_alerta
+            ]);
+            $mReturn[0] = "true";
+            $mReturn[1] = $alertaCita->id;
+        } catch (Exception $e) {
+            $mReturn[0] = "false";
+            $mReturn[2] = "Errores al crear alerta cita: ".$e;
+        }
+
+        return $mReturn;
+    }
 }
