@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use App\Models\CitaPaciente;
 use App\Traits\metodosComunesTrait;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -132,7 +131,8 @@ class CitaClienteController extends Controller
             $request->merge([
                 'id_paciente'               => $paciente->id,
                 'hora_cita'                 => $request->hora_cita.":00",
-                'asistio'                   => "NO"
+                'asistio'                   => "NO",
+                'prioridad'                 => "NO"
             ]);
             $input = $request->collect();
             $input = $input->except(['numero_documento']);
@@ -417,6 +417,31 @@ class CitaClienteController extends Controller
         }
 
         return $horas;
+    }
+
+    /**
+     * Método que marca cita del paciente, permite seguir de urgencia.
+     *
+     * @param CitaPaciente $citaPaciente
+     * @return \Illuminate\Http\Response
+     */
+    public function seguirPacienteCita(CitaPaciente $citaPaciente){
+
+        $prioridad_aceptada = null;
+        if ($citaPaciente->prioridad_aceptado == null) {
+            $prioridad_aceptada = date('Y-m-d H:i:s');
+            $cReturnMensaje = "El paciente se permite seguir a la cita.";
+        }else{
+            $cReturnMensaje = "El paciente no se permitio seguir a la cita.";
+        }
+
+        $citaPaciente->update([
+            "prioridad_aceptado" => $prioridad_aceptada
+        ]);
+
+        return response()->json([
+            'message' => $cReturnMensaje,
+        ], 201);
     }
 }
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\HistoriaClinica\CargarArchivosController;
 use App\Http\Controllers\HistoriaClinica\FormulaAnteojosController;
 use App\Http\Controllers\Paciente\PacienteController;
 use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
+use App\Http\Controllers\Notificacion\AlertaCitaController;
 use App\Http\Controllers\Parametro\ParametroController;
 use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Artisan;
@@ -84,10 +85,17 @@ Route::group(['prefix' => 'agenda'/* , 'middleware' => 'auth:sanctum' */] , func
     Route::post('/cita-cliente/delete/{id}', [CitaClienteController::class, 'destroy']);
     Route::get('/cita-cliente/listar', [CitaClienteController::class, 'listar']);
     Route::post('/cita-cliente/horas-disponible-citas', [CitaClienteController::class, 'horasDisponiblesCitaDia']);
+    Route::post('/seguir-cita/{citaPaciente}', [CitaClienteController::class, 'seguirPacienteCita']);
 
     // Informe Cita
     Route::post('/informe-cita/listar', [InformeCitacontroller::class, 'buscarCitas']);
-    Route::post('/informe-cita/asistio-cita/{id_cita}', [InformeCitacontroller::class, 'asistirCita']);
+    Route::post('/informe-cita/marcar/{cita}', [InformeCitacontroller::class, 'marcarCita']);
+});
+
+Route::group(['prefix' => 'notificacion-citas'/* , 'middleware' => 'auth:sanctum' */] , function(){
+    Route::get('/listar-alertas-citas', [AlertaCitaController::class, 'listarCitasConALerta']);
+    Route::post('/leer/{alertaCita}', [AlertaCitaController::class, 'notitifacionLeida']);
+    Route::get('/prioritarias-aceptadas', [AlertaCitaController::class, 'notificacionCitasPrioritariasAceptadasRealTime']);
 });
 
 Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){

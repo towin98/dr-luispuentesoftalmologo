@@ -97,11 +97,6 @@ const router = new VueRouter({
                 },
                 // Agenda
 
-                {
-                    path: 'turno',
-                    component: inicio,
-                    name: 'turno',
-                },
             ],
         },
         {

@@ -20,7 +20,7 @@
                         :error-messages="errors.numero_documento"
                         @change="fnCargarInfoPaciente"
                         :readonly="numero_documento_readonly"
-                        :disabled="disabledCampos"
+                        :disabled="disabledCampos || accion == 'Editar_Cita'"
                     ></v-autocomplete>
                 </v-col>
             </v-row>
@@ -282,7 +282,7 @@ export default {
     },
     data() {
         return {
-            accion          : 'Agendar_Cita',
+            accion          : 'Agendar_Cita', // o el Valor de: Editar_Cita //Solo estos dos valores.
             disabledCampos  : false,
             // Formulario
             errors          :"",

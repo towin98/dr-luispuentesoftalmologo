@@ -42,30 +42,47 @@
                             <th class="text-left">Hora</th>
                             <th class="text-left">Identificación</th>
                             <th class="text-left">Paciente</th>
-                            <th class="text-left">Celular</th>
+                            <th class="text-left">Particular o MP</th>
+                            <!-- <th class="text-left">Celular</th> -->
                             <th class="text-left">Tipo Consulta</th>
                             <th class="text-left">Asisitio</th>
+                            <th class="text-left">Prioritario</th>
+                            <th class="text-left">Seguir</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in dataReporteCitas" :key="item.id">
+                        <tr v-for="(item,i) in dataReporteCitas" :key="i">
                             <td>{{ item.hora_cita }}</td>
                             <td>{{ item.get_paciente.numero_documento }}</td>
                             <td>
                                 {{ item.get_paciente.nombre }}
                                 {{ item.get_paciente.apellido }}
                             </td>
-                            <td>{{ item.get_paciente.celular }}</td>
+                            <td>{{ item.get_paciente.get_eps.descripcion }}</td>
+                            <!-- <td>{{ item.get_paciente.celular }}</td> -->
                             <td>{{ item.tipo_consulta }}</td>
                             <td>
                                 <input
+                                    class="checkAsisitio"
                                     :name="'asisitio_'+item.id"
                                     type="checkbox"
                                     :checked="item.asistio == 'SI' ? true : false"
-                                    @change="fnAsistioCita(item.id)"
+                                    @change="fnAsistioCita(item, i)"
                                     :id="'asisitio_'+item.id">
                                 <label :for="'asisitio_'+item.id"></label>
                             </td>
+                            <td>
+                                <input
+                                    class="checkPrioritario"
+                                    :name="'prioritario_'+item.id"
+                                    type="checkbox"
+                                    :checked="item.prioridad == 'SI' ? true : false"
+                                    @change="fnCitaPrioritaria(item, i)"
+                                    :id="'prioritario_'+item.id">
+                                <label :for="'prioritario_'+item.id"></label>
+                            </td>
+                            <td v-if="item.prioridad == 'SI'">{{ item.prioridad_aceptado == null ? 'NO AUTORIZADO' : 'AUTORIZADO' }}</td>
+                            <td v-else></td>
                         </tr>
                     </tbody>
                 </template>
@@ -91,22 +108,31 @@ export default {
                 fecha_reporte: "",
             },
             errors: "",
+            intervalIdBuscarCitas : 0
         };
     },
     methods: {
-        fnBuscarCitas() {
+        fnBuscarCitas(loading = true) {
+            clearInterval(this.intervalIdBuscarCitas);
             const data = {
                 tipo_informe_cita: this.radioGroupReporte,
                 fecha_reporte: this.form.fecha_reporte,
             };
-            this.overlayLoading = true;
+
+            if (loading == true )this.overlayLoading = true;
+
             axios
-                .post(
-                    `/consultorio-oftamologico/agenda/informe-cita/listar`,
-                    data
-                )
+                .post(`/consultorio-oftamologico/agenda/informe-cita/listar`,data)
                 .then((response) => {
                     this.dataReporteCitas = response.data.data;
+
+                    for (let index = 0; index < this.dataReporteCitas.length; index++) {
+                        if (this.dataReporteCitas[index].prioridad == "SI") {
+                            clearInterval(this.intervalIdBuscarCitas);
+                            this.fnActivarSetIntervalBuscarCitar();
+                            break;
+                        }
+                    }
                     this.errors = "";
 
                     let date = new Date(this.form.fecha_reporte.replace(/-+/g, '/'));
@@ -126,74 +152,123 @@ export default {
                 })
                 .finally(() => (this.overlayLoading = false));
         },
-        fnAsistioCita(id_cita) {
+        fnAsistioCita(item, index) {
             this.overlayLoading = true;
             axios
                 .post(
-                    `/consultorio-oftamologico/agenda/informe-cita/asistio-cita/${id_cita}`
+                    `/consultorio-oftamologico/agenda/informe-cita/marcar/${item.id}`, {tipo_marcacion: 'ASISTIOCITA'}
                 )
                 .then((response) => {
-                    this.$swal(
-                        response.data.message,
-                        '',
-                        'success'
-                    );
-                    this.fnBuscarCitas();
+                    this.dataReporteCitas[index].asistio = item.asistio == 'SI' ? 'NO' : 'SI';
                 })
                 .catch((errores) => {
                     this.fnResponseError(errores);
                 })
                 .finally(() => (this.overlayLoading = false));
         },
+        fnCitaPrioritaria(item, index) {
+            this.overlayLoading = true;
+            let data = {};
+            if (item.id_alerta == null || item.id_alerta == "") {
+                data = {
+                    tipo_alerta   : 'PRIORITARIA', // DATA PARA ALERTA
+                    tipo_marcacion: 'PRIORITARIA'
+                };
+            }else{
+                data = {
+                    tipo_marcacion: 'PRIORITARIA'
+                };
+            }
+
+            axios
+                .post(`/consultorio-oftamologico/agenda/informe-cita/marcar/${item.id}`, data)
+                .then((response) => {
+                    const valorCitaPrioritaria = item.prioridad == 'SI' ? 'NO' : 'SI';
+                    if (valorCitaPrioritaria == "SI") {
+                        this.fnActivarSetIntervalBuscarCitar();
+                    }
+                    this.dataReporteCitas[index].prioridad = valorCitaPrioritaria;
+
+                    let citasPrioritariasExistentes = false;
+                    for (let index = 0; index < this.dataReporteCitas.length; index++) {
+                        if (this.dataReporteCitas[index].prioridad == "SI") {
+                            citasPrioritariasExistentes = true;
+                        }
+                    }
+
+                    if (citasPrioritariasExistentes == false) {
+                        clearInterval(this.intervalIdBuscarCitas);
+                    }
+                })
+                .catch((errores) => {
+                    this.fnResponseError(errores);
+                })
+                .finally(() => (this.overlayLoading = false));
+        },
+        fnActivarSetIntervalBuscarCitar(){
+            this.intervalIdBuscarCitas = setInterval(() => {
+                this.fnBuscarCitas(false);
+            }, 15000);
+        }
     },
+    mounted(){},
+    destroyed() {
+        clearInterval(this.intervalIdBuscarCitas);
+    }
 };
 </script>
 <style>
-input[type="checkbox"] + label {
-    display: block;
-    margin: 0.2em;
-    cursor: pointer;
-    padding: 0.2em;
-    font-family: "Arial";
-}
+    input[type="checkbox"] + label {
+        display: block;
+        margin: 0.2em;
+        cursor: pointer;
+        padding: 0.2em;
+        font-family: "Arial";
+    }
 
-input[type="checkbox"] {
-    display: none;
-}
+    input[type="checkbox"] {
+        display: none;
+    }
 
-input[type="checkbox"] + label:before {
-    content: "\2714";
-    border: 0.1em solid #000;
-    border-radius: 0.2em;
-    display: inline-block;
-    width: 1.2em;
-    height: 1.2em;
-    padding-left: 0.2em;
-    padding-bottom: 0.3em;
-    margin-right: 0.2em;
-    vertical-align: bottom;
-    color: transparent;
-    transition: 0.2s;
-}
+    input[type="checkbox"] + label:before {
+        content: "\2714";
+        border: 0.1em solid #000;
+        border-radius: 0.2em;
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        padding-left: 0.3em;
+        padding-bottom: 1.3em;
+        margin-right: 0.2em;
+        vertical-align: bottom;
+        color: transparent;
+        transition: 0.2s;
+    }
 
-input[type="checkbox"] + label:active:before {
-    transform: scale(0);
-}
+    input[type="checkbox"] + label:active:before {
+        transform: scale(0);
+    }
 
-input[type="checkbox"]:checked + label:before {
-    background-color: #4caf50;
-    border-color: #4caf50;
-    color: #fff;
-}
+    .checkPrioritario:checked + label:before{
+        background-color: #df1f1f;
+        border-color: #df1f1f;
+        color: #fff;
+    }
 
-input[type="checkbox"]:disabled + label:before {
-    transform: scale(1);
-    border-color: #aaa;
-}
+    .checkAsisitio:checked + label:before {
+        background-color: #4caf50;
+        border-color: #4caf50;
+        color: #fff;
+    }
 
-input[type="checkbox"]:checked:disabled + label:before {
-    transform: scale(1);
-    background-color: #a2d4a4;
-    border-color: #a2d4a4;
-}
+    input[type="checkbox"]:disabled + label:before {
+        transform: scale(1);
+        border-color: #aaa;
+    }
+
+    input[type="checkbox"]:checked:disabled + label:before {
+        transform: scale(1);
+        background-color: #a2d4a4;
+        border-color: #a2d4a4;
+    }
 </style>
