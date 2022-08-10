@@ -18,17 +18,17 @@ class PermissionsSeeder extends Seeder
     public function run()
     {
         $permisos = [];
-        array_push($permisos, Permission::create(['name' => 'LISTAR']));   // tracking
-        array_push($permisos, Permission::create(['name' => 'CREAR']));    // store
-        array_push($permisos, Permission::create(['name' => 'EDITAR']));   // update
-        array_push($permisos, Permission::create(['name' => 'ELIMINAR'])); // Destroy
-        array_push($permisos, Permission::create(['name' => 'VER']));      // deshabilitar campos
+        array_push($permisos, Permission::create(['name' => 'LISTAR']));
+        array_push($permisos, Permission::create(['name' => 'CREAR']));
+        array_push($permisos, Permission::create(['name' => 'EDITAR']));
+        array_push($permisos, Permission::create(['name' => 'ELIMINAR']));
+        array_push($permisos, Permission::create(['name' => 'VER']));
 
-        $rolSecretaria = Role::create(['name' => 'SECRETARIA']);
+        $rol = Role::create(['name' => 'SECRETARIA']);
+        $rol->syncPermissions($permisos);
 
-        $rolSecretaria->syncPermissions($permisos); //en caso de querer darle 1 solo permiso a un rol
-
-        Role::create(['name' => 'MEDICO']);
+        $rol = Role::create(['name' => 'MEDICO']);
+        $rol->syncPermissions($permisos);
 
         $user = User::create([
             'name' => 'Cristian Segura',
