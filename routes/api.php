@@ -90,6 +90,7 @@ Route::group(['prefix' => 'agenda'/* , 'middleware' => 'auth:sanctum' */] , func
     // Informe Cita
     Route::post('/informe-cita/listar', [InformeCitacontroller::class, 'buscarCitas']);
     Route::post('/informe-cita/marcar/{cita}', [InformeCitacontroller::class, 'marcarCita']);
+    Route::post('/informe-cita/valor-cita/{cita}', [InformeCitacontroller::class, 'valorCita']);
 });
 
 Route::group(['prefix' => 'notificacion-citas'/* , 'middleware' => 'auth:sanctum' */] , function(){

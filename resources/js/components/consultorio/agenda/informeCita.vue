@@ -48,6 +48,7 @@
                             <th class="text-left">Asisitio</th>
                             <th class="text-left">Prioritario</th>
                             <th class="text-left">Seguir</th>
+                            <th class="text-left">Valor</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,6 +84,22 @@
                             </td>
                             <td v-if="item.prioridad == 'SI'">{{ item.prioridad_aceptado == null ? 'NO AUTORIZADO' : 'AUTORIZADO' }}</td>
                             <td v-else></td>
+                            <td :id="'tdValor_'+item.id">
+                                <input
+                                    style="border: green solid 1px;width: 110px; text-align: center;"
+                                    class="rounded-pill"
+                                    :name="'valorCita_'+item.id"
+                                    :id="'valorCita_'+item.id"
+                                    :value="fnFormatoValuePeso(item.valor)"
+                                    @change="fnValorCita(item.id)"
+                                    title="Valor Cita.">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8"></td>
+                            <td>
+                                TOTAL : {{ valorTotalRecaudado }}
+                            </td>
                         </tr>
                     </tbody>
                 </template>
@@ -108,7 +125,8 @@ export default {
                 fecha_reporte: "",
             },
             errors: "",
-            intervalIdBuscarCitas : 0
+            intervalIdBuscarCitas : 0,
+            valorTotalRecaudado: 0
         };
     },
     methods: {
@@ -125,6 +143,7 @@ export default {
                 .post(`/consultorio-oftamologico/agenda/informe-cita/listar`,data)
                 .then((response) => {
                     this.dataReporteCitas = response.data.data;
+                    this.fnSumarTotalRecaudado();
 
                     for (let index = 0; index < this.dataReporteCitas.length; index++) {
                         if (this.dataReporteCitas[index].prioridad == "SI") {
@@ -209,6 +228,69 @@ export default {
             this.intervalIdBuscarCitas = setInterval(() => {
                 this.fnBuscarCitas(false);
             }, 15000);
+        },
+        fnValorCita(id){
+            this.overlayLoading = true;
+            let valor = document.getElementById('valorCita_'+id);
+            const valorCita = this.fnReemplazarPuntosYComasPorPuntos(valor.value);
+
+            let id_mensaje_valor = document.getElementById('id_mensaje_valor_'+id);
+
+            axios
+                .post(`/consultorio-oftamologico/agenda/informe-cita/valor-cita/${id}`, {valor: valorCita})
+                .then((response) => {
+                    if (id_mensaje_valor) {
+                        id_mensaje_valor.remove();
+                    }
+
+                    this.fnBuscarCitas(false);
+                })
+                .catch((errores) => {
+                    if (id_mensaje_valor) {
+                        id_mensaje_valor.remove();
+                    }
+                    document.getElementById('valorCita_'+id).value = "";
+                    const div = document.createElement("div");
+                    div.id = "id_mensaje_valor_"+id;
+
+                    const span = document.createElement("span");
+                    span.textContent = errores.response.data.errors.valor[0];
+                    span.style.color = "red";
+                    div.appendChild(span);
+
+                    const tdValor = document.getElementById('tdValor_'+id);
+                    tdValor.appendChild(div);
+                })
+                .finally(() => (this.overlayLoading = false));
+        },
+        /**
+         * Método que formatea el valor de la cita.
+         *
+         * @param {number} id Id de la cita para armar el nombre del input.
+         */
+        fnFormatoValuePeso(valor){
+            const formatterPeso = new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0
+            });
+
+            return formatterPeso.format(valor);
+        },
+        fnReemplazarPuntosYComasPorPuntos(cadena){
+            let cadenaNueva = cadena.replace(/\$/g, '');
+            cadenaNueva = cadenaNueva.replace(/\s+/g, '')
+            cadenaNueva = cadenaNueva.replace(/\./g, '');
+            return cadenaNueva.replace(/,/g, '.');
+        },
+        fnSumarTotalRecaudado(){
+            this.valorTotalRecaudado = 0;
+            let valorTotal = 0;
+            for (let i = 0; i < this.dataReporteCitas.length; i++) {
+                valorTotal += this.dataReporteCitas[i].valor;
+            }
+
+            this.valorTotalRecaudado = this.fnFormatoValuePeso(valorTotal);
         }
     },
     mounted(){},
