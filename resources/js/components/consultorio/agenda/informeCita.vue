@@ -22,6 +22,7 @@
                         label="Fecha de reporte"
                         :error-messages="errors.fecha_reporte"
                         dense
+                        :disabled="!$can(['LISTAR'])"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="3" class="pt-0">
@@ -29,8 +30,10 @@
                         color="success"
                         class="white--text"
                         @click="fnBuscarCitas()"
-                        >Buscar</v-btn
+                        :disabled="!$can(['LISTAR'])"
                     >
+                        Buscar
+                    </v-btn>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
@@ -293,7 +296,11 @@ export default {
             this.valorTotalRecaudado = this.fnFormatoValuePeso(valorTotal);
         }
     },
-    mounted(){},
+    async created(){
+        this.overlayLoading = true;
+        await this.$fnConsultaPermisosUsuario();
+        this.overlayLoading = false;
+    },
     destroyed() {
         clearInterval(this.intervalIdBuscarCitas);
     }

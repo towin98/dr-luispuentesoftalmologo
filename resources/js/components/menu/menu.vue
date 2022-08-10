@@ -226,8 +226,9 @@
 window.Vue = require("vue").default;
 import menuHeader from "./header.vue";
 import loadingGeneral from "../loadingGeneral/loadingGeneral.vue";
-import { rolesPermisos } from "../rolPermission/rolesPermisos.js";
+import permisos from "../rolPermission/Permissions.vue";
 import { commons }  from '../commons/commons.js';
+Vue.mixin(permisos);
 Vue.mixin(commons);
 export default {
     components: {
@@ -276,7 +277,6 @@ export default {
             contadorCitas : 0
         };
     },
-    mixins: [rolesPermisos],
     methods:{
         logout() {
             this.overlayLoading = true;
@@ -425,6 +425,12 @@ export default {
         }
     },
     async created() {
+        const fecha = new Date();
+        const month = fecha.toLocaleString("es-CO", { month: "long" });
+
+        this.date = `${month.substring(0, 3)}/${fecha.getFullYear()}`;
+        window.axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
+
         // Obteniendo nombre de la ruta.
         if (this.$route.name) {
             switch (this.$route.name) {
@@ -442,11 +448,11 @@ export default {
             }
         }
 
-        const fecha = new Date();
-        const month = fecha.toLocaleString("es-CO", { month: "long" });
-
-        this.date = `${month.substring(0, 3)}/${fecha.getFullYear()}`;
-        window.axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
+        if (this.$route.name != 'agenda/informe-cita') {
+            this.overlayLoading = true;
+            await this.$fnConsultaPermisosUsuario();
+            this.overlayLoading = false;
+        }
 
         /* DEPENDIENDO DEL ROL DEL USUARIO SE MUESTRA MENU. */
         this.overlayLoading = true;

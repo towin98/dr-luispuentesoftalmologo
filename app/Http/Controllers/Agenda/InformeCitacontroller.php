@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class InformeCitacontroller extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:LISTAR'])->only('buscarCitas');
+    }
+
     /**
      * Método que busca citas.
      *
