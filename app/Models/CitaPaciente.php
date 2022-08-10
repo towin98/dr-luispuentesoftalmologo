@@ -38,7 +38,8 @@ class CitaPaciente extends Model
         'asistio',
         'id_alerta_cita',
         'prioridad',
-        'prioridad_aceptado'
+        'prioridad_aceptado',
+        'valor'
     ];
 
     /**
@@ -57,6 +58,7 @@ class CitaPaciente extends Model
         'id_alerta_cita',
         'prioridad',
         'prioridad_aceptado',
+        'valor',
         'created_at',
         'updated_at',
         'getPaciente',
@@ -70,7 +72,7 @@ class CitaPaciente extends Model
         'fecha_cita.date_format'        => 'La fecha de cita no coincide con el formato Y-m-d',
         'hora_cita.required'            => 'La Hora de la cita es requerido.',
         'hora_cita.date_format'         => 'La Hora de cita no coincide con el formato H:i',
-        'observacion.max'               => 'La observación de la cita no puede superar lo 255 carácteres.'
+        'observacion.max'               => 'La observación de la cita no puede superar lo 255 carácteres.',
     ];
 
     static $rulesStore = [

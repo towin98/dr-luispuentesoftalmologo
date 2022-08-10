@@ -20,16 +20,17 @@ class InformeCitacontroller extends Controller
     {
         $errores = [];
         $validator = Validator::make(
-                                    $request->all(),
-                                    [
-                                        "tipo_informe_cita" => "required",
-                                        "fecha_reporte"     => "required|date_format:Y-m-d"
-                                    ],
-                                    [
-                                        "tipo_informe_cita.required"    => "El tipo de informe de cita es requerido",
-                                        "fecha_reporte.required"        => "La fecha de reporte es requerida",
-                                        'fecha_reporte.date_format'     => 'La fecha de reporte no coincide con el formato Y-m-d',
-                                    ]);
+            $request->all(),
+            [
+                "tipo_informe_cita" => "required",
+                "fecha_reporte"     => "required|date_format:Y-m-d"
+            ],
+            [
+                "tipo_informe_cita.required"    => "El tipo de informe de cita es requerido",
+                "fecha_reporte.required"        => "La fecha de reporte es requerida",
+                'fecha_reporte.date_format'     => 'La fecha de reporte no coincide con el formato Y-m-d',
+            ]
+        );
 
         if ($validator->fails()) {
             $errores = $validator->errors();
@@ -45,34 +46,34 @@ class InformeCitacontroller extends Controller
         switch ($request->tipo_informe_cita) {
             case 'DIA':
                 $citas = CitaPaciente::where('fecha_cita', $request->fecha_reporte)
-                ->with([
-                    'getPaciente' => function ($query){
-                        $query->select([
-                            'id',
-                            'numero_documento',
-                            'nombre',
-                            'apellido',
-                            'celular',
-                            'id_p_eps'
-                        ])
-                        ->with([
-                            'getEps' => function ($query){
-                                $query->select([
-                                    'id',
-                                    'descripcion'
+                    ->with([
+                        'getPaciente' => function ($query) {
+                            $query->select([
+                                'id',
+                                'numero_documento',
+                                'nombre',
+                                'apellido',
+                                'celular',
+                                'id_p_eps'
+                            ])
+                                ->with([
+                                    'getEps' => function ($query) {
+                                        $query->select([
+                                            'id',
+                                            'descripcion'
+                                        ]);
+                                    }
                                 ]);
-                            }
-                        ]);
-                    }
-                ])
-                ->orderBy('hora_cita', 'asc')->get();
-            break;
+                        }
+                    ])
+                    ->orderBy('hora_cita', 'asc')->get();
+                break;
             default:
-            return response()->json([
-                'message' => 'Validación de Datos',
-                'errors' => "No se encontro parametrizado el tipo de informe solicitado[$request->tipo_informe_cita]."
-            ], 409);
-            break;
+                return response()->json([
+                    'message' => 'Validación de Datos',
+                    'errors' => "No se encontro parametrizado el tipo de informe solicitado[$request->tipo_informe_cita]."
+                ], 409);
+                break;
         }
 
         return response()->json([
@@ -87,7 +88,8 @@ class InformeCitacontroller extends Controller
      * @param CitaPaciente $cita
      * @return void
      */
-    public function marcarCita(Request $request, CitaPaciente $cita){
+    public function marcarCita(Request $request, CitaPaciente $cita)
+    {
 
         switch ($request->tipo_marcacion) {
             case 'ASISTIOCITA':
@@ -95,7 +97,7 @@ class InformeCitacontroller extends Controller
                 $cita->update([
                     "asistio" => $estadoCita
                 ]);
-            break;
+                break;
             case 'PRIORITARIA':
                 $prioritarioCita = $cita->prioridad != "SI" ? "SI" : "NO";
 
@@ -114,7 +116,7 @@ class InformeCitacontroller extends Controller
                             'errors' => "No se pudo eliminar alerta id $id_alerta_cita."
                         ], 500);
                     }
-                }else{
+                } else {
                     $vNotificacion = $this->notificacion($request->tipo_alerta);
                     if ($vNotificacion[0] == "false") {
                         return response()->json([
@@ -130,13 +132,13 @@ class InformeCitacontroller extends Controller
                     ]);
                 }
 
-            break;
+                break;
             default:
                 return response()->json([
                     'message' => 'Validación de Datos',
                     'errors' => "No se encontro parametrizado el tipo de marcación en el sistema $request->tipo_marcacion"
                 ], 409);
-            break;
+                break;
         }
 
         return response()->json([
@@ -151,7 +153,8 @@ class InformeCitacontroller extends Controller
      * @param CitaPaciente $cita
      * @return void
      */
-    public function notificacion($tipo_alerta){
+    public function notificacion($tipo_alerta)
+    {
 
         $mReturn[0] = ""; // Estado
         $mReturn[1] = ""; // Id Alerta
@@ -164,9 +167,43 @@ class InformeCitacontroller extends Controller
             $mReturn[1] = $alertaCita->id;
         } catch (Exception $e) {
             $mReturn[0] = "false";
-            $mReturn[2] = "Errores al crear alerta cita: ".$e;
+            $mReturn[2] = "Errores al crear alerta cita: " . $e;
         }
 
         return $mReturn;
+    }
+
+    public function valorCita(Request $request, CitaPaciente $cita)
+    {
+        $errores = [];
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'valor'            => 'nullable|numeric|regex:/^[\d]{0,9}(\.[\d]{1,2})?$/'
+            ],
+            [
+                'valor.numeric'    => 'El valor de la cita debe ser un dato númerico.',
+                'valor.regex'      => 'El valor de la cita no puede tener 9 digitos entreros y 2 decimales máximo.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $errores = $validator->errors();
+        }
+
+        if (count($errores) > 0) {
+            return response()->json([
+                'message' => 'Error de Validación de Datos',
+                'errors' => $errores
+            ], 422);
+        }
+
+        $cita->update([
+            "valor" => $request->valor
+        ]);
+
+        return response()->json([
+            'message' => 'Cita Actualizada.',
+        ], 201);
     }
 }
