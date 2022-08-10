@@ -24,18 +24,18 @@ Route::post('/password/change', [AuthController::class, 'passwordChange'])->midd
 Route::get('/informacion-usuario', [PermissionController::class, 'informacionUsuario'])->middleware('auth:sanctum');
 
 Route::post('/password/email', [AuthController::class, 'resetPassword']);
+Route::get('/permisos-usuario/', [PermissionController::class, 'buscaPermisosUsuario'])->middleware('auth:sanctum');
 Artisan::call('cache:clear');
 
 /*Rutas MENU*/
-Route::group(['prefix' => 'paciente', /*'middleware' => 'auth:sanctum'*/] , function(){
-    // Artisan::call('cache:clear');
+Route::group(['prefix' => 'paciente', 'middleware' => 'auth:sanctum'] , function(){
     Route::get('/listar', [PacienteController::class, 'listar']);
     Route::resource('/', PacienteController::class)->only(['store']);
     Route::post('/actualizar/{id}', [PacienteController::class, 'update']);
     Route::get('/mostrar/{id}', [PacienteController::class, 'show']);
 });
 
-Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/] , function(){
+Route::group(['prefix' => 'historia-clinica', 'middleware' => 'auth:sanctum'] , function(){
     Route::get('/buscar', [HistoriaClinicaController::class, 'buscar']);
 
     // Evolucion
@@ -74,7 +74,7 @@ Route::group(['prefix' => 'historia-clinica', /*'middleware' => 'auth:sanctum'*/
     Route::post('/descargar/archivo', [CargarArchivosController::class, 'descargar']);
 });
 
-Route::group(['prefix' => 'agenda'/* , 'middleware' => 'auth:sanctum' */] , function(){
+Route::group(['prefix' => 'agenda', 'middleware' => 'auth:sanctum'] , function(){
 
     // cita-cliente
     Route::post('/cita-cliente/busqueda-paciente-autocomplete', [CitaClienteController::class, 'busquedaAutocompletePaciente']);
@@ -93,13 +93,13 @@ Route::group(['prefix' => 'agenda'/* , 'middleware' => 'auth:sanctum' */] , func
     Route::post('/informe-cita/valor-cita/{cita}', [InformeCitacontroller::class, 'valorCita']);
 });
 
-Route::group(['prefix' => 'notificacion-citas'/* , 'middleware' => 'auth:sanctum' */] , function(){
+Route::group(['prefix' => 'notificacion-citas', 'middleware' => 'auth:sanctum'] , function(){
     Route::get('/listar-alertas-citas', [AlertaCitaController::class, 'listarCitasConALerta']);
     Route::post('/leer/{alertaCita}', [AlertaCitaController::class, 'notitifacionLeida']);
     Route::get('/prioritarias-aceptadas', [AlertaCitaController::class, 'notificacionCitasPrioritariasAceptadasRealTime']);
 });
 
-Route::group(['prefix' => 'parametro'/* , 'middleware' => 'auth:sanctum' */] , function(){
+Route::group(['prefix' => 'parametro', 'middleware' => 'auth:sanctum'] , function(){
     Route::resource('/',  ParametroController::class)->only(['store']);
     Route::put('/{id}', [ParametroController::class, 'update']);
     Route::get('/buscar', [ParametroController::class, 'buscar']);

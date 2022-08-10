@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\File;
 class HistoriaClinicaController extends Controller
 {
     use metodosComunesTrait;
+
+    public function __construct()
+    {
+        $this->middleware(['permission:LISTAR'])->only(['buscar','buscarEvolucion']);
+        $this->middleware(['permission:CREAR'])->only('storeEvolucion');
+        $this->middleware(['permission:EDITAR'])->only('updateEvolucion');
+        $this->middleware(['permission:ELIMINAR'])->only('destroyEvolucion');
+        $this->middleware(['permission:VER'])->only('showEvolucion');
+    }
+
     /**
      * Método que busca registros de un paciente.
      *

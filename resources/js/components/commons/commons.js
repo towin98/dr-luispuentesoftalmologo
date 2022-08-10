@@ -23,7 +23,7 @@ export const commons = {
                 errores.response.status == 405 ||
                 errores.response.status == 404)
             {
-                let mensaje = "El sistema a generado un Error.";
+                let mensaje = "El sistema a generado una validación.";
                 if (errores.response.data.message != undefined) {
                     mensaje = errores.response.data.message;
                 }
