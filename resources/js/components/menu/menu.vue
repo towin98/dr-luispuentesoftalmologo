@@ -185,7 +185,7 @@
                             </v-list>
                         </v-menu>
                         <!-- Parametros -->
-                        <v-menu
+                        <!-- <v-menu
                             v-if="moduloParametros"
                             offset-y rounded="lg"
                         >
@@ -209,7 +209,7 @@
                                     <v-list-item-title>Medicina Prepagada</v-list-item-title>
                                 </v-list-item>
                             </v-list>
-                        </v-menu>
+                        </v-menu> -->
                     </v-tabs>
                 </template>
             </v-app-bar>
