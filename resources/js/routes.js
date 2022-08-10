@@ -104,11 +104,11 @@ const router = new VueRouter({
             component: menu,
             meta: {requiresAuth: true},
             children:[
-                {
-                    path: 'parametros/medicina-prepagada',
-                    component: parametrosEps,
-                    name: 'medicina-prepagada',
-                },
+                // {
+                //     path: 'parametros/medicina-prepagada',
+                //     component: parametrosEps,
+                //     name: 'medicina-prepagada',
+                // },
                 {
                     path: 'cambio-clave',
                     component: cambioClave,
