@@ -17,26 +17,29 @@ export const commons = {
             }
         },
         fnResponseError(errores){
-            if (errores.response.status == 500 ||
-                errores.response.status == 403 ||
-                errores.response.status == 409 ||
-                errores.response.status == 405 ||
-                errores.response.status == 404)
-            {
-                let mensaje = "El sistema a generado un Error.";
-                if (errores.response.data.message != undefined) {
-                    mensaje = errores.response.data.message;
+            if (errores.response != undefined) {
+                if (errores.response.status == 500 ||
+                    errores.response.status == 403 ||
+                    errores.response.status == 409 ||
+                    errores.response.status == 405 ||
+                    errores.response.status == 404)
+                {
+                    let mensaje = "El sistema a generado una validación.";
+                    if (errores.response.data.message != undefined) {
+                        mensaje = errores.response.data.message;
+                    }
+                    this.$swal({
+                        icon: 'error',
+                        title: `${mensaje}`,
+                        text: `${errores.response.data.errors}`,
+                    })
+                    return '';
+                }else{
+                    if (errores.response.status == 422) {
+                        return errores.response.data.errors;
+                    }
                 }
-                this.$swal({
-                    icon: 'error',
-                    title: `${mensaje}`,
-                    text: `${errores.response.data.errors}`,
-                })
-                return '';
-            }else{
-                if (errores.response.status == 422) {
-                    return errores.response.data.errors;
-                }
+
             }
         }
     },

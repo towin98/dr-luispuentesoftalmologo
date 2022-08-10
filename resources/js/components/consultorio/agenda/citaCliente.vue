@@ -1,7 +1,7 @@
 <template>
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
-        <!-- FORMULARIO -->
+        <!-- CitaClienteController.php -->
         <v-card elevation="2" class="mt-7">
             <h3 class="text-center pt-2 pb-2">Cita Paciente</h3>
 
@@ -20,7 +20,7 @@
                         :error-messages="errors.numero_documento"
                         @change="fnCargarInfoPaciente"
                         :readonly="numero_documento_readonly"
-                        :disabled="disabledCampos"
+                        :disabled="disabledCampos || accion == 'Editar_Cita'"
                     ></v-autocomplete>
                 </v-col>
             </v-row>
@@ -186,6 +186,7 @@
                         tile
                         v-on:click="fnAccion"
                         v-if="accion == 'Editar_Cita'"
+                        :disabled="!$can(['EDITAR'])"
                     >
                         <v-icon> save </v-icon>Editar Cita
                     </v-btn>
@@ -198,6 +199,7 @@
                         tile
                         v-on:click="fnAccion"
                         v-if="accion == 'Agendar_Cita'"
+                        :disabled="!$can(['CREAR'])"
                     >
                         <v-icon> save </v-icon>Agendar Cita
                     </v-btn>
@@ -217,6 +219,7 @@
                         hide-details
                         v-model="buscar"
                         @input="filterSearch"
+                        :disabled="!$can(['LISTAR'])"
                     ></v-text-field>
                 </v-card-title>
                 <v-data-table
@@ -235,6 +238,7 @@
                     sort-by="updated_at"
                     :sort-desc="true"
                     no-data-text="Sin registros"
+                    :disable-sort="!$can(['LISTAR'])"
                 >
                     <template v-slot:item.ver="{ item }">
                         <v-icon
@@ -242,6 +246,7 @@
                             class="mr-2"
                             @click="fnShow(item.id, 'VER')"
                             title="Ver Cita"
+                            v-if="$can(['VER'])"
                         >
                             visibility
                         </v-icon>
@@ -252,6 +257,7 @@
                             class="mr-2"
                             @click="fnShow(item.id, 'EDITAR')"
                             title="Editar Cita"
+                            v-if="$can(['EDITAR'])"
                         >
                             edit
                         </v-icon>
@@ -262,6 +268,7 @@
                             class="mr-2"
                             @click="fnDelete(item)"
                             title="Eliminar Cita"
+                            v-if="$can(['ELIMINAR'])"
                         >
                             delete
                         </v-icon>
@@ -282,7 +289,7 @@ export default {
     },
     data() {
         return {
-            accion          : 'Agendar_Cita',
+            accion          : 'Agendar_Cita', // o el Valor de: Editar_Cita //Solo estos dos valores.
             disabledCampos  : false,
             // Formulario
             errors          :"",
@@ -454,11 +461,7 @@ export default {
                     this.overlayLoading = false;
                     this.loading = false;
                     this.dataSet = [];
-                    this.$swal({
-                        icon: 'error',
-                        title: ``,
-                        text: `No fue posible realizar la operación solicitada`,
-                    });
+                    this.fnResponseError(errors);
                 });
         },
         fnAccion(){

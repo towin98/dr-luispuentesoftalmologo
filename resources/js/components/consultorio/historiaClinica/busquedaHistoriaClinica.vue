@@ -51,7 +51,7 @@
 
             </v-col>
             <v-col cols="12" sm="3" class="d-flex justify-center">
-                <v-btn style="background:#616161;" class="white--text" @click="fnBuscar('SI')">Listar Todos</v-btn>
+                <v-btn style="background:#616161;" class="white--text" @click="fnBuscarListarTodos()">Listar Todos</v-btn>
             </v-col>
         </v-row>
 
@@ -86,9 +86,9 @@
                             </v-icon>
                         </router-link>
                     </template>
-                    <template v-slot:item.formulaAnteojos="{ item }">
+                    <template v-slot:item.historia_clinica="{ item }">
                         <router-link style="text-decoration: none;"
-                            title="Formula Anteojos"
+                            title="Historia clinica"
                             :to="{ path: `/consultorio/historia-clinica/formula-anteojos/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
                             <v-icon color="light-green">
                                 fact_check
@@ -164,7 +164,7 @@ export default {
                 { text: "Apellido Completo", value: "apellido" },
                 { text: "Fecha Modificado", value: "updated_at" },
                 { text: "Motivo Consulta", value: "motivoConsulta", sortable: false, width:20 },
-                { text: "Formula Anteojos", value: "formulaAnteojos", sortable: false, width:20 },
+                { text: "Historia Clinica", value: "historia_clinica", sortable: false, width:20 },
                 { text: "Antecedentes", value: "antecedentes", sortable: false, width:20 },
                 { text: "Cargar Archivo", value: "cargarArchivo", sortable: false, width:20 },
             ],
@@ -172,34 +172,16 @@ export default {
             contador: 0
         }
     },
-    watch: {
-        options: {
-            handler() {
-                this.fnBuscar();
-            },
-        },
-        deep: true,
-    },
     methods :{
-        fnBuscar(listar_todos = 'NO') {
+        fnBuscar() {
 
             this.overlayLoading = true;
             this.loading = true;
 
-            if (listar_todos == 'SI') {
-                // Limpiando campos porque se requiere listar todos los datos.
-                this.limpiarCampo();
-            }
-
             // Contruyendo data request enviar por get.
-            var dataRequest = "";
-            // Si se envia SI es porque se quiere listar todos los registros.
-            if (listar_todos == 'SI') {
-                dataRequest += "&listar_todos=SI";
-            }else{
-                for (let key in this.form) {
-                    dataRequest += "&"+key+"="+this.form[key]
-                }
+            let dataRequest = "";
+            for (let key in this.form) {
+                dataRequest += "&"+key+"="+this.form[key]
             }
 
             let { page, itemsPerPage, sortBy, sortDesc } = this.options;
@@ -235,14 +217,55 @@ export default {
                     this.overlayLoading = false;
                     this.loading = false;
                     this.dataSet = [];
-                    this.$swal({
-                        icon: 'error',
-                        title: ``,
-                        text: `No fue posible realizar la operación solicitada`,
-                    });
+                    this.errors = this.fnResponseError(errores);
                 });
         },
+        fnBuscarListarTodos(){
+            this.overlayLoading = true;
+            this.loading = true;
 
+            // Limpiando campos porque se requiere listar todos los datos.
+            this.limpiarCampo();
+
+            // Contruyendo data request enviar por get.
+            const dataRequest = "&listar_todos=SI";
+
+            let { page, itemsPerPage, sortBy, sortDesc } = this.options;
+
+            // Obteniendo rangos de consultado paginación.
+            this.start  = itemsPerPage * (page - 1);
+            this.length = itemsPerPage;
+
+            if (sortDesc[0] == true) {
+                sortBy = sortBy[0];
+                sortDesc = "DESC";
+            } else if (sortDesc[0] == false) {
+                sortBy = sortBy[0];
+                sortDesc = "ASC";
+            } else {
+                sortBy = "";
+                sortDesc = "";
+            }
+
+            axios
+                .get(
+                    `/consultorio-oftamologico/historia-clinica/buscar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}${dataRequest}`
+                )
+                .then((response) => {
+                    this.loading = false;
+                    this.dataSet = response.data.data;
+                    this.totalRegistros = response.data.total;
+                    this.numberOfPages = response.data.totalPages;
+
+                    this.overlayLoading = false;
+                })
+                .catch((errores) => {
+                    this.overlayLoading = false;
+                    this.loading = false;
+                    this.dataSet = [];
+                    this.errors = this.fnResponseError(errores);
+                });
+        },
         limpiarCampo() {
             this.form.tipo_documento    = "";
             this.form.numero_documento  = "";
@@ -251,7 +274,7 @@ export default {
         }
     },
     mounted(){
-        this.fnBuscar('SI')
+        this.fnBuscarListarTodos();
     }
 
 }

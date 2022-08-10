@@ -1,5 +1,5 @@
 <template>
-    <!-- EVOLUCION -->
+    <!-- HistoriaClinicaController.php -->
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
         <!-- FORMULARIO -->
@@ -136,6 +136,7 @@
                         class="white--text text-none"
                         tile
                         v-on:click="fnAccion"
+                        :disabled="!$can(['CREAR', 'EDITAR'])"
                     >
                         {{ cAccion }}
                         <v-icon right> save </v-icon>
@@ -174,6 +175,7 @@
                     sort-by="updated_at"
                     :sort-desc="true"
                     no-data-text="Sin registros"
+                    :disable-sort="!$can(['LISTAR'])"
                 >
                     <template v-slot:item.acciones="{ item }">
                         <v-icon
@@ -181,13 +183,15 @@
                             class="mr-2"
                             @click="fnShowEvolucion(item.id)"
                             title="Editar Evolución"
+                            v-if="$can(['VER', 'EDITAR'])"
                         >
                             mdi-pencil
                         </v-icon>
                         <v-icon
-                            small
-                            title="Eliminar Evolucion Seleccionada."
+                            color="red"
+                            title="Eliminar Evolución Seleccionada."
                             @click="fnDelete(item)"
+                            v-if="$can(['ELIMINAR'])"
                         >
                             mdi-delete
                         </v-icon>
@@ -508,11 +512,7 @@ export default {
                     this.overlayLoading = false;
                     this.loading = false;
                     this.dataSet = [];
-                    this.$swal({
-                        icon: 'error',
-                        title: ``,
-                        text: `No fue posible realizar la operación solicitada`,
-                    });
+                    this.fnResponseError(errors);
                 });
         },
         filterSearch() {

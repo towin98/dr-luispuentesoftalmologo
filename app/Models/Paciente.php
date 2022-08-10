@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Parametro\Eps;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Paciente extends Model
 {
@@ -89,7 +90,8 @@ class Paciente extends Model
         'foto',
         'id_p_eps',
         'fecha_creacion',
-        'updated_at'
+        'updated_at',
+        'getEps'
     ];
 
     static $messages = [
@@ -143,33 +145,33 @@ class Paciente extends Model
         'numero_documento'      => 'required|unique:paciente|numeric|digits_between:5,20',
         'nombre'                => 'required|string|max:25',
         'apellido'              => 'required|string|max:25',
-        'correo'                => 'required|unique:paciente|email|max:255',
-        'celular'               => 'required|string|max:15',
-        'direccion'             => 'required|string|max:30',
-        'departamento'          => 'required|string|max:30',
-        'municipio'             => 'required|string|max:30',
-        'fecha_nacimiento'      => 'required|date_format:Y-m-d',
-        'edad'                  => 'required|integer',
-        'ocupacion'             => 'required|string',
+        'correo'                => 'nullable|unique:paciente|email|max:255',
+        'celular'               => 'nullable|string|max:15',
+        'direccion'             => 'nullable|string|max:30',
+        'departamento'          => 'nullable|string|max:30',
+        'municipio'             => 'nullable|string|max:30',
+        'fecha_nacimiento'      => 'nullable|date_format:Y-m-d',
+        'edad'                  => 'nullable|integer',
+        'ocupacion'             => 'nullable|string',
         'id_p_eps'              => 'required|integer',
         'fecha_creacion'        => 'required|date'
     ];
 
     static function fnRulesUpdate($user) {
         return [
-            'tipo_documento'        => 'required|filled|string|max:10',
-            'numero_documento'      => 'required|unique:paciente,numero_documento,'.$user->id.'|filled|numeric|digits_between:5,20',
-            'nombre'                => 'required|filled|string|max:25',
-            'apellido'              => 'required|filled|string|max:25',
-            'correo'                => 'required|unique:paciente,correo,'.$user->id.'|filled|email|max:255',
-            'celular'               => 'required|filled|string|max:15',
-            'direccion'             => 'required|filled|string|max:30',
-            'departamento'          => 'required|filled|string|max:30',
-            'municipio'             => 'required|filled|string|max:30',
-            'fecha_nacimiento'      => 'required|filled|date_format:Y-m-d',
-            'edad'                  => 'required|filled|integer',
-            'ocupacion'             => 'required|filled|string',
-            'id_p_eps'              => 'required|filled|integer',
+            'tipo_documento'        => 'required|string|max:10',
+            'numero_documento'      => 'required|unique:paciente,numero_documento,'.$user->id.'|numeric|digits_between:5,20',
+            'nombre'                => 'required|string|max:25',
+            'apellido'              => 'required|string|max:25',
+            'correo'                => 'nullable|unique:paciente,correo,'.$user->id.'|email|max:255',
+            'celular'               => 'nullable|string|max:15',
+            'direccion'             => 'nullable|string|max:30',
+            'departamento'          => 'nullable|string|max:30',
+            'municipio'             => 'nullable|string|max:30',
+            'fecha_nacimiento'      => 'nullable|date_format:Y-m-d',
+            'edad'                  => 'nullable|integer',
+            'ocupacion'             => 'nullable|string',
+            'id_p_eps'              => 'required|integer',
         ];
     }
 
@@ -206,5 +208,14 @@ class Paciente extends Model
         if($columna && $orden){
             return $query->orderBy($columna, $orden);
         }
+    }
+
+    /**
+     * Obtiene el registro de eps asociado al paciente.
+     *
+     * @return Illuminate\Support\Collection;
+     */
+    public function getEps(){
+        return $this->belongsTo(Eps::class,'id_p_eps', 'id');
     }
 }

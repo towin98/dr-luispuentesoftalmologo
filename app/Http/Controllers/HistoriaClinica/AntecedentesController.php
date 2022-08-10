@@ -14,6 +14,15 @@ class AntecedentesController extends Controller
 {
     use metodosComunesTrait;
 
+    public function __construct()
+    {
+        $this->middleware(['permission:LISTAR'])->only('listar');
+        $this->middleware(['permission:CREAR'])->only('store');
+        $this->middleware(['permission:EDITAR'])->only('update');
+        $this->middleware(['permission:ELIMINAR'])->only('destroy');
+        $this->middleware(['permission:VER'])->only('show');
+    }
+
     /**
      * Lista antecedentes de un paciente.
      *

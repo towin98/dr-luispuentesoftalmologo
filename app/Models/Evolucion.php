@@ -52,7 +52,7 @@ class Evolucion extends Model
     static $messages = [
         'numero_documento.required'  => 'El Número de Documento del paciente es requerido.',
         'url_refraccion.required'    => 'La refracción es requerida.',
-        'url_refraccion.mimes'       => 'La refracción debe ser un archivo de tipo: jpg, jpeg, bmp, png.',
+        'url_refraccion.mimes'       => 'La refracción debe ser un archivo de tipo: jpg, jpeg, png.',
         'fecha.required'             => 'La Fecha es requerida.',
         'fecha.date_format'          => 'La fecha debe cumplir el formato: Y-m-d.',
         'hora.required'              => 'La Hora es requerida.',

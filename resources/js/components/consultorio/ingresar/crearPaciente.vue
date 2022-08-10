@@ -179,8 +179,6 @@
 
                         </v-card-subtitle>
                         <v-card-text v-if="preview">
-                            <!-- <p class="mb-0" v-if="this.accion != 'Actualizar'">Nombre Archivo: {{ form.foto.name }}</p>
-                            <p class="mb-0" v-if="this.accion != 'Actualizar'">Tamaño: {{ form.foto.size / 1024 }}KB</p> -->
                             <v-btn
                                 type="click"
                                 small
@@ -214,6 +212,7 @@
                         class="white--text text-none"
                         tile
                         v-on:click="fnAccion"
+                        :disabled="!$can(['CREAR', 'EDITAR'])"
                     >
                         <v-icon> save </v-icon>{{ accion }}
                     </v-btn>
@@ -232,6 +231,7 @@
                         single-line
                         hide-details
                         v-model="buscar"
+                        :disabled="!$can(['LISTAR'])"
                         @input="filterSearch"
                     ></v-text-field>
                 </v-card-title>
@@ -251,6 +251,7 @@
                     sort-by="updated_at"
                     :sort-desc="true"
                     no-data-text="Sin registros"
+                    :disable-sort="!$can(['LISTAR'])"
                 >
                     <template v-slot:item.acciones="{ item }">
                         <v-icon
@@ -258,6 +259,7 @@
                             class="mr-2"
                             @click="fnShow(item.id)"
                             title="Editar paciente"
+                            v-if="$can(['VER', 'EDITAR'])"
                         >
                             mdi-pencil
                         </v-icon>
@@ -393,15 +395,7 @@ export default {
                     this.errors = '';
                 })
                 .catch((errores) => {
-                    if (errores.response.status == 409 || errores.response.status == 500 ) {
-                        this.$swal({
-                            icon: "error",
-                            title: errores.response.data.message,
-                            text : errores.response.data.errores[0]
-                        });
-                    }else{
-                        this.errors = errores.response.data.errores;
-                    }
+                    this.errors = this.fnResponseError(errores);
                 });
         },
 
@@ -469,9 +463,10 @@ export default {
                         ... data
                     };
 
-                    this.fnBuscarMunicipio(data.departamento);
-
-                    this.form.municipio = this.fnRemoveAccents(data.municipio.toUpperCase());
+                    if (data.departamento != "" && data.departamento != null) {
+                        this.fnBuscarMunicipio(data.departamento);
+                        this.form.municipio = this.fnRemoveAccents(data.municipio.toUpperCase());
+                    }
 
                     if (data.id_p_eps == 1) {
                         this.radioGroupEps = "PARTICULAR";
@@ -479,7 +474,7 @@ export default {
                         this.radioGroupEps = "PREPAGADA";
                     }
 
-                    if (data.foto != "") {
+                    if (data.foto != "" && data.foto != null) {
                         // Si la foto existe.
                         this.preview = "../../"+data.foto;
                     }else{
@@ -491,11 +486,7 @@ export default {
                     this.overlayLoading = false;
                 })
                 .catch((errores) => {
-                    this.$swal({
-                        icon: 'error',
-                        title: `Error al mostrar la información.`,
-                        text: `Por favor comunicate con el área de Tecnología.`,
-                    })
+                    this.errors = this.fnResponseError(errores);
                     this.overlayLoading = false;
                 });
         },
@@ -563,11 +554,7 @@ export default {
                     this.overlayLoading = false;
                     this.loading = false;
                     this.dataSet = [];
-                    this.$swal({
-                        icon: 'error',
-                        title: ``,
-                        text: `No fue posible realizar la operación solicitada`,
-                    });
+                    this.fnResponseError(errors);
                 });
         },
         filterSearch() {

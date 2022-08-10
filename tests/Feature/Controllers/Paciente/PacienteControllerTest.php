@@ -67,7 +67,7 @@ class PacienteControllerTest extends TestCase
             'numero_documento'  => '728232',
             'nombre'            => 'cristian',
             'apellido'          => 'segura',
-            'correo'            => 'cristian@gmail.com',
+            'correo'            => 'segura9801@gmail.com',
             'celular'           => '23728328',
             'direccion'         => 'cra 20',
             'departamento'      => 'HUILA',

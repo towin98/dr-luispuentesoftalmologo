@@ -1,7 +1,7 @@
 <template>
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
-        <!-- FORMULARIO -->
+        <!-- AntecedentesController.php -->
         <v-card elevation="2" class="mt-7">
             <h3 class="text-center pt-2 pb-2">Antecedente - {{ numero_antecedente }}</h3>
             <v-row class="ml-2 mr-2">
@@ -77,6 +77,7 @@
                         class="white--text text-none"
                         tile
                         v-on:click="fnAccion"
+                        :disabled="!$can(['CREAR', 'EDITAR'])"
                     >
                         {{ cAccion }}
                         <v-icon right> save </v-icon>
@@ -96,6 +97,7 @@
                         hide-details
                         v-model="buscar"
                         @input="filterSearch"
+                        :disabled="!$can(['LISTAR'])"
                     ></v-text-field>
                 </v-card-title>
                 <v-data-table
@@ -113,12 +115,14 @@
                     sort-by="updated_at"
                     :sort-desc="true"
                     no-data-text="Sin registros"
+                    :disable-sort="!$can(['LISTAR'])"
                 >
                     <template v-slot:item.editar="{ item }">
                         <v-icon
                             color="primary"
                             @click="fnShow(item.id)"
                             title="Editar Actecedente"
+                            v-if="$can(['VER', 'EDITAR'])"
                         >
                             mdi-pencil
                         </v-icon>
@@ -128,6 +132,7 @@
                             color="red"
                             @click="fnDelete(item)"
                             title="Eliminar Actecedente"
+                            v-if="$can(['ELIMINAR'])"
                         >
                             delete
                         </v-icon>
@@ -248,6 +253,7 @@ export default {
                     this.overlayLoading = false;
                     this.loading = false;
                     this.dataSet = [];
+                    this.fnResponseError(errors);
                 });
         },
         fnObtenerNumeroAntecedente(){

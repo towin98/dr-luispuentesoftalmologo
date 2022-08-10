@@ -50,18 +50,17 @@
     <footer>
         <hr style="width: 80%;">
         <h5>
-            Calle 11 No. 6-47 Consultorio 101. Teléfonos: 8720511 - 8713201 <br>
-            Cel : 3132856336 Neiva - Huila. <br>
-            Email: PUENTES222@HOTMAIL.COM
+            Calle 11 No. 6-47 Consultorio 101. Teléfonos: 608 8713201 - 608 8720511 <br>
+            Cel : 313 2856336 Neiva - Huila. <br>
+            Email: consultoriodoctorpuentes@gmail.com
         </h5>
     </footer>
 
     <!-- Defina bloques de encabezado -->
     <header>
-        <img src="{{ public_path('img/sistema/logo_centro_oftamologico.png') }}" alt="Logo no encontrado" style="margin-left: 15%; float: left; height: 80px; padding-top:0.5cm;">
+        <img src="{{ public_path('img/sistema/logo_centro_oftamologico.jpg') }}" alt="Logo no encontrado" style="margin-left: 15%; float: left; height: 80px; padding-top:0.5cm;">
         <h1 style="float: right; margin-right: 15%; text-align: center;">Dr. Luís Augusto Puentes M. <br>Oftamólogo</h1>
     </header>
-
 
     <!-- Envuelva el contenido de su PDF dentro de una etiqueta principal -->
     <main>
@@ -88,7 +87,7 @@
                 <p>RX: OD: {{ $mData['data']['rx_od'] }} <br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OI: {{ $mData['data']['rx_oi'] }}
                 </p>
-                <p> ADICION {{ $mData['data']['adicion'] }} </p>
+                <p> ADICION: {{ $mData['data']['adicion'] }} </p>
                 <p>DP: {{ $mData['data']['dp'] }} </p>
                 <p style="word-wrap:break-word;">{{ $mData['data']['observacion'] }}</p>
             @break
@@ -108,7 +107,7 @@
         <img src="{{ public_path('img/sistema/firma_medico.png') }}" alt="Firma No encontrada" style="height:100px;">
         <p>
             DR.  LUIS AUGUSTO PUENTES MILLAN <br>
-            CC. 19.143.147 Bogotá <br>
+            CC. 19.143.147 Bogotá D.C<br>
             Registro No. 8127/76
         </p>
     </main>

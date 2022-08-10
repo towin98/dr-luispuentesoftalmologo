@@ -10,7 +10,6 @@ class CitaPaciente extends Model
 {
     use HasFactory;
 
-
     protected $table = 'cita_paciente';
     protected $primaryKey = 'id';
 
@@ -36,7 +35,11 @@ class CitaPaciente extends Model
         'fecha_cita',
         'hora_cita',
         'observacion',
-        'asistio'
+        'asistio',
+        'id_alerta_cita',
+        'prioridad',
+        'prioridad_aceptado',
+        'valor'
     ];
 
     /**
@@ -52,9 +55,14 @@ class CitaPaciente extends Model
         'hora_cita',
         'observacion',
         'asistio',
+        'id_alerta_cita',
+        'prioridad',
+        'prioridad_aceptado',
+        'valor',
         'created_at',
         'updated_at',
-        'getPaciente'
+        'getPaciente',
+        'getAlertaCita'
     ];
 
     static $messages = [
@@ -64,7 +72,7 @@ class CitaPaciente extends Model
         'fecha_cita.date_format'        => 'La fecha de cita no coincide con el formato Y-m-d',
         'hora_cita.required'            => 'La Hora de la cita es requerido.',
         'hora_cita.date_format'         => 'La Hora de cita no coincide con el formato H:i',
-        'observacion.max'               => 'La observación de la cita no puede superar lo 255 carácteres.'
+        'observacion.max'               => 'La observación de la cita no puede superar lo 255 carácteres.',
     ];
 
     static $rulesStore = [
@@ -73,7 +81,8 @@ class CitaPaciente extends Model
         'fecha_cita'       => 'required|date_format:Y-m-d',
         'hora_cita'        => 'required|date_format:H:i',
         'observacion'      => 'nullable|max:255',
-        'asistio'          => 'nullable|in:SI,NO'
+        'asistio'          => 'nullable|in:SI,NO',
+        'prioridad'        => 'nullable|in:SI,NO'
     ];
 
     /**
@@ -83,5 +92,14 @@ class CitaPaciente extends Model
      */
     public function getPaciente(){
         return $this->belongsTo(Paciente::class,'id_paciente', 'id');
+    }
+
+    /**
+     * Obtiene la alerta de la cita asociado.
+     *
+     * @return Illuminate\Support\Collection;
+     */
+    public function getAlertaCita(){
+        return $this->belongsTo(AlertaCita::class,'id_alerta_cita', 'id');
     }
 }

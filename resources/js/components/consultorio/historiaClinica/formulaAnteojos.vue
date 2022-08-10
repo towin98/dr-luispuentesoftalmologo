@@ -1,9 +1,9 @@
 <template>
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
-        <!-- FORMULARIO -->
+        <!-- FormulaAnteojosController.php -->
         <v-card elevation="2" class="mt-7">
-            <h3 class="text-center">FORMULA ANTEOJOS - {{ numero_formula_anteojos }}</h3>
+            <h3 class="text-center">HISTORIA CLINICA - {{ numero_formula_anteojos }}</h3><!-- FORMULA ANTEOJOS -->
 
             <v-row class="ml-2 mr-2 pt-5">
                 <v-col cols="12" sm="3">
@@ -595,6 +595,7 @@
                         tile
                         v-on:click="fnImprimir('formula')"
                         v-if="cAccion == 'Actualizar'"
+                        :disabled="!$can(['EDITAR'])"
                     >
                         Imprimir formula
                         <v-icon right> picture_as_pdf </v-icon>
@@ -607,6 +608,7 @@
                         tile
                         v-on:click="fnImprimir('orden_medica')"
                         v-if="cAccion == 'Actualizar'"
+                        :disabled="!$can(['EDITAR'])"
                     >
                         Imprimir Orden Medica
                         <v-icon right> picture_as_pdf </v-icon>
@@ -619,6 +621,7 @@
                         tile
                         v-on:click="fnImprimir('rx')"
                         v-if="cAccion == 'Actualizar'"
+                        :disabled="!$can(['EDITAR'])"
                     >
                         Imprimir RX
                         <v-icon right> picture_as_pdf </v-icon>
@@ -643,6 +646,7 @@
                         class="white--text text-none"
                         tile
                         v-on:click="fnAccion"
+                        :disabled="!$can(['CREAR', 'EDITAR'])"
                     >
                         {{ cAccion }}
                         <v-icon right> save </v-icon>
@@ -664,6 +668,7 @@
                         hide-details
                         v-model="buscar"
                         @input="filterSearch"
+                        :disabled="!$can(['LISTAR'])"
                     ></v-text-field>
                 </v-card-title>
                 <v-data-table
@@ -681,6 +686,7 @@
                     sort-by="updated_at"
                     :sort-desc="true"
                     no-data-text="Sin registros"
+                    :disable-sort="!$can(['LISTAR'])"
                 >
                     <template v-slot:item.acciones="{ item }">
                         <v-icon
@@ -688,6 +694,7 @@
                             class="mr-2"
                             @click="fnShow(item.id)"
                             title="Editar Formula Anteojos"
+                            v-if="$can(['VER', 'EDITAR'])"
                         >
                             mdi-pencil
                         </v-icon>
@@ -695,6 +702,7 @@
                             color="red"
                             title="Eliminar Formula Anteojos."
                             @click="fnDelete(item)"
+                            v-if="$can(['ELIMINAR'])"
                         >
                             mdi-delete
                         </v-icon>

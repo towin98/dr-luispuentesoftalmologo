@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\alerta;
 use Throwable;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -63,7 +64,7 @@ trait metodosComunesTrait {
             $file->move($carpetaMover,  $fileName);
             return  $carpetaMover ."/".$fileName;
         }else{
-            return "";
+            return null;
         }
     }
 

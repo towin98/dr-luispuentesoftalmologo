@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\File;
 class HistoriaClinicaController extends Controller
 {
     use metodosComunesTrait;
+
+    public function __construct()
+    {
+        $this->middleware(['permission:LISTAR'])->only(['buscar','buscarEvolucion']);
+        $this->middleware(['permission:CREAR'])->only('storeEvolucion');
+        $this->middleware(['permission:EDITAR'])->only('updateEvolucion');
+        $this->middleware(['permission:ELIMINAR'])->only('destroyEvolucion');
+        $this->middleware(['permission:VER'])->only('showEvolucion');
+    }
+
     /**
      * Método que busca registros de un paciente.
      *
@@ -143,7 +153,7 @@ class HistoriaClinicaController extends Controller
     }
 
     /**
-     * Guardar evolucion.
+     * Guardar evolución.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -176,22 +186,23 @@ class HistoriaClinicaController extends Controller
                                         "url_refraccion" => $file
                                     ],
                                     [
-                                        'url_refraccion' => 'mimes:jpg,jpeg,bmp,png'
+                                        'url_refraccion' => 'mimes:jpg,jpeg,png'
                                     ],
                                     Evolucion::$messages);
                 if ($validator->fails()) {
                     $errores = $validator->errors();
                 }
             }
-        }else{
-            if (empty($errores)) {
-                $errores['url_refraccion'] = [
-                    'La refracción es requerida.'
-                ];
-            }else{
-                $errores->add('url_refraccion', 'La refracción es requerida.');
-            }
         }
+        // else{
+        //     if (empty($errores)) {
+        //         $errores['url_refraccion'] = [
+        //             'La refracción es requerida.'
+        //         ];
+        //     }else{
+        //         $errores->add('url_refraccion', 'La refracción es requerida.');
+        //     }
+        // }
 
         if (count($errores) > 0) {
             return response()->json([
@@ -209,9 +220,10 @@ class HistoriaClinicaController extends Controller
                 File::makeDirectory(public_path('storage/refracciones'), 0777);
             }
 
-            if($request->hasFile('refracciones')){
+            $numeroEvolucion = $this->obtenerNumeroEvolucion($paciente->id);
+            $nombrePdf = null;
 
-                $numeroEvolucion = $this->obtenerNumeroEvolucion($paciente->id);
+            if($request->hasFile('refracciones')){
 
                 // Procesando imagenes para crear pdf con refracciones subida.
                 $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $numeroEvolucion);
