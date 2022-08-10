@@ -50,7 +50,7 @@ export default {
                 .catch((errores) => {
                     this.fnResponseError(errores);
                 });
-        },
+        }
     },
     created(){
         this.fnBuscarCitas();
