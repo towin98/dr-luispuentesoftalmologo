@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(PermissionsSeeder::class);
         $this->call(epsSeeder::class);
-        Paciente::factory(5)->create(); // SOLO PARA PRUEBAS
+        // Paciente::factory(5)->create(); // SOLO PARA PRUEBAS
     }
 }

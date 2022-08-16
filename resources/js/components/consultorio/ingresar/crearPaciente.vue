@@ -359,7 +359,7 @@ export default {
         },
 
         fnStore() {
-
+            this.overlayLoading = true;
             //CONFIGURACION EPS
             if (this.radioGroupEps == "PARTICULAR") {
                 this.form.id_p_eps = 1;
@@ -393,9 +393,11 @@ export default {
                     this.fnBuscar();
                     this.limpiarCampo();
                     this.errors = '';
+                    this.overlayLoading = false;
                 })
                 .catch((errores) => {
                     this.errors = this.fnResponseError(errores);
+                    this.overlayLoading = false;
                 });
         },
 
@@ -437,15 +439,7 @@ export default {
                     this.overlayLoading = false;
                 })
                 .catch((errores) => {
-                    if (errores.response.status == 409 || errores.response.status == 500 ) {
-                        this.$swal({
-                            icon: "error",
-                            title: errores.response.data.message,
-                            text : errores.response.data.errors[0]
-                        });
-                    }else{
-                        this.errors = errores.response.data.errores;
-                    }
+                    this.errors = this.fnResponseError(errores);
                     this.overlayLoading = false;
                 });
         },
