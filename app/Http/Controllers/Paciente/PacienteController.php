@@ -77,7 +77,7 @@ class PacienteController extends Controller
         if (count($errores) > 0) {
             return response()->json([
                 'message' => 'Error de Validación de Datos',
-                'errores' => $errores
+                'errors'  => $errores
             ], 422);
         }
 
@@ -105,7 +105,7 @@ class PacienteController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',
-                'errores' => [
+                'errors' => [
                     'Error al Guardar datos.'.$e
                 ]
             ], 500);
@@ -159,7 +159,7 @@ class PacienteController extends Controller
         if (count($errores) > 0) {
             return response()->json([
                 'message' => 'Error de Validación de Datos',
-                'errores' => $errores
+                'errors'  => $errores
             ], 422);
         }
 
