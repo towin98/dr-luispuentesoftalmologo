@@ -2,7 +2,7 @@
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
         <!-- FORMULARIO -->
-        <v-card elevation="2" class="mt-7">
+        <v-card elevation="2" class="negativovMarginTopImprimir">
             <h3 class="text-center pt-2 pb-2">Informe de citas</h3>
 
             <v-row class="ml-2 mr-2">
