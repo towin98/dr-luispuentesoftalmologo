@@ -349,6 +349,7 @@ class FormulaAnteojosController extends Controller
         switch ($request->tipo_reporte) {
             case 'formula':
                 $mData['tipo_rerporte'] = 'formula';
+                $mData['mostrar_info_centro'] = "";
                 $data = [
                     "tratamiento"       => $formulaAnteojos->tratamiento,
                     "pacienteCc"        => $paciente->numero_documento,
@@ -357,7 +358,8 @@ class FormulaAnteojosController extends Controller
                 $mData['data'] = $data;
             break;
             case 'orden_medica':
-                $mData['tipo_rerporte'] = 'orden_medica';
+                $mData['tipo_rerporte']       = 'orden_medica';
+                $mData['mostrar_info_centro'] = $request->mostrar_info_centro;
                 $data = [
                     "orden_medica"      => $formulaAnteojos->orden_medica,
                     "pacienteCc"        => $paciente->numero_documento,
@@ -367,6 +369,7 @@ class FormulaAnteojosController extends Controller
             break;
             case 'rx':
                 $mData['tipo_rerporte'] = 'rx';
+                $mData['mostrar_info_centro'] = "";
                 $data = [
                     "pacienteCc"        => $paciente->numero_documento,
                     "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido,

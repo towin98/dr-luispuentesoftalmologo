@@ -76,11 +76,11 @@
         <!--DATA CUERPO -->
         @switch($mData['tipo_rerporte'])
             @case('formula')
-                <p style="word-wrap:break-word;"> TRATAMIENTO: {{ $mData['data']['tratamiento'] }} </p>
+                <p style="white-space: pre-wrap;">TRATAMIENTO: {{ $mData['data']['tratamiento'] }} </p>
             @break
 
             @case('orden_medica')
-                <p style="word-wrap:break-word;"> SE ORDENA: {{ $mData['data']['orden_medica'] }} </p>
+                <p style="white-space: pre-wrap;"> SE ORDENA: {{ $mData['data']['orden_medica'] }} </p>
             @break
 
             @case('rx')
@@ -89,20 +89,29 @@
                 </p>
                 <p> ADICION: {{ $mData['data']['adicion'] }} </p>
                 <p>DP: {{ $mData['data']['dp'] }} </p>
-                <p style="word-wrap:break-word;">{{ $mData['data']['observacion'] }}</p>
+                <p style="white-space: pre-wrap;">{{ $mData['data']['observacion'] }}</p>
             @break
         @endswitch
 
         <br> <br> <br> <br>
-        @switch($mData['tipo_rerporte'])
-            @case('orden_medica')
-            <p>
-                CALE 18 No. 5-96 <br>
-                CENTRO OFTAMOLOGICO SURCOLOMBIANO <br>
-                TEL 8755849 - 8750332
-            </p>
-            @break
+        @switch($mData['mostrar_info_centro'])
+            @case("centro_oftamologico")
+                <p>
+                    CALE 18 No. 5 - 96 Neiva, Huila <br>
+                    CENTRO OFTAMOLOGICO SURCOLOMBIANO <br>
+                    TEL 8755849 - 8750332
+                </p>
+                @break
+            @case("oftamolaser_sa")
+                <p>
+                    Cra. 7 # 19 - 10 Neiva, Huila <br>
+                    Oftamolaser SA <br>
+                    TEL 88664441 - 608-8664441
+                </p>
+                @break
+            @default
         @endswitch
+
         <br> <br> <br> <br> <br> <br>
         <img src="{{ public_path('img/sistema/firma_medico.png') }}" alt="Firma No encontrada" style="height:100px;">
         <p>

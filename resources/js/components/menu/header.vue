@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="parte1">
         <div class="d-flex">
             <v-icon size="20" color="black">home</v-icon>
             <h4>Inicio</h4>
