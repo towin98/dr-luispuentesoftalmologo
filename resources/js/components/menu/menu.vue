@@ -2,7 +2,7 @@
     <div>
         <v-app id="inspire">
             <loadingGeneral v-bind:overlayLoading="overlayLoading" />
-            <v-app-bar app clipped-left style="background: #9ecce3;">
+            <v-app-bar app clipped-left style="background: #9ecce3;" class="parte1">
                 <v-spacer></v-spacer>
                 <v-btn style="background: #00bcd4" class="white--text mr-1" rounded small>
                     <v-icon> date_range </v-icon>{{ date }}
@@ -376,28 +376,30 @@ export default {
             // Listar notificaciones citas
             if (this.contadorCitas == 0) {this.fnListarNotificacionesCitas('INI');}
 
+            if (this.contadorCitas > 0) {
+                axios
+                    .get(`/consultorio-oftamologico/notificacion-citas/listar-alertas-citas`)
+                    .then((response) => {
+                        // Si hay mas notificaciones de citas en BD que en el frontend se cargan
+                        if (response.data.citasConNotificacion > this.citasConNotificacion) {
+                            const limit = response.data.citasConNotificacion - this.citasConNotificacion;
+                            this.fnListarNotificacionesCitas('FIN', limit);
+                        }
+
+                        if(response.data.citasConNotificacion < this.citasConNotificacion){
+                            this.itemsNotifiaciones = [];
+                            this.fnListarNotificacionesCitas('INI'); // Listar notificaciones citas
+                        }
+
+                        this.notificacionesSinLeer    = response.data.notificacionesSinLeer;
+                        this.citasConNotificacion     = response.data.citasConNotificacion;
+                    })
+                    .catch((errores) => {
+                        this.fnResponseError(errores);
+                    });
+            }
+
             this.contadorCitas++;
-
-            axios
-                .get(`/consultorio-oftamologico/notificacion-citas/listar-alertas-citas`)
-                .then((response) => {
-                    // Si hay mas notificaciones de citas en BD que en el front end se cargan
-                    if (response.data.citasConNotificacion > this.citasConNotificacion) {
-                        const limit = response.data.citasConNotificacion - this.citasConNotificacion;
-                        this.fnListarNotificacionesCitas('FIN', limit);
-                    }
-
-                    if(response.data.citasConNotificacion < this.citasConNotificacion){
-                        this.itemsNotifiaciones = [];
-                        this.fnListarNotificacionesCitas('INI'); // Listar notificaciones citas
-                    }
-
-                    this.notificacionesSinLeer    = response.data.notificacionesSinLeer;
-                    this.citasConNotificacion     = response.data.citasConNotificacion;
-                })
-                .catch((errores) => {
-                    this.fnResponseError(errores);
-                });
         },
         /**
          * Método que consulta las citas prioritarias aceptadas por un rango de fecha (entre 20 segundos), esto con el fin de hacer
@@ -499,5 +501,13 @@ export default {
     },
 };
 </script>
-<style>
+<style type="text/css" media="print">
+    @media print {
+        .negativovMarginTopImprimir {
+            margin-top: -130px;
+        }
+        .parte1 {
+            display:none;
+        }
+    }
 </style>

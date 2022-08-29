@@ -2,7 +2,7 @@
     <div>
         <loadingGeneral v-bind:overlayLoading="overlayLoading" />
         <!-- FormulaAnteojosController.php -->
-        <v-card elevation="2" class="mt-7">
+        <v-card elevation="2" class="negativovMarginTopImprimir">
             <h3 class="text-center">HISTORIA CLINICA - {{ numero_formula_anteojos }}</h3><!-- FORMULA ANTEOJOS -->
 
             <v-row class="ml-2 mr-2 pt-5">
@@ -584,7 +584,7 @@
                 </v-col>
             </v-row>
 
-            <v-row class="pl-4 pr-4">
+            <v-row class="pl-4 pr-4 parte1">
                 <!-- BOTONES ACCIONES  -->
                 <v-col cols="12" sm="6">
                     <v-btn
@@ -606,7 +606,7 @@
                         color="red darken-4"
                         class="white--text text-none"
                         tile
-                        v-on:click="fnImprimir('orden_medica')"
+                        v-on:click="modalImprimirOrdenMedica = true"
                         v-if="cAccion == 'Actualizar'"
                         :disabled="!$can(['EDITAR'])"
                     >
@@ -628,6 +628,19 @@
                     </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6" class="d-flex justify-end">
+                    <v-btn
+                        type="button"
+                        small
+                        color="grey"
+                        class="white--text mr-3"
+                        tile
+                        v-on:click="fnImprimirFormulario()"
+                        v-if="cAccion == 'Actualizar'"
+                        :disabled="!$can(['EDITAR'])"
+                    >
+                        Imprimir formulario
+                        <v-icon right> print </v-icon>
+                    </v-btn>
                     <v-btn
                         type="submit"
                         small
@@ -657,7 +670,7 @@
         <!-- FIN FORMULARIO -->
 
         <!-- start Data table -->
-        <v-row>
+        <v-row class="parte1">
             <v-col cols="12">
                 <v-card-title>
                     <v-text-field
@@ -711,6 +724,24 @@
             </v-col>
         </v-row>
         <!-- end Data table -->
+
+        <!-- Start Modal Orden Médica -->
+        <v-dialog v-model="modalImprimirOrdenMedica" persistent max-width="600px">
+            <v-card>
+                <v-toolbar color="grey lighten-2" >Eliga la dirección a incluir en la Orden Médica</v-toolbar>
+                <v-card-text class="mt-3">
+                    <v-btn dark small color="success" v-on:click="fnImprimir('orden_medica','centro_oftamologico')">Centro Oftamológico</v-btn>
+                    <v-btn dark small color="success" v-on:click="fnImprimir('orden_medica','oftamolaser_sa')">Oftamolaser SA</v-btn>
+                    <v-btn dark small color="red darken-4" v-on:click="fnImprimir('orden_medica')">Vacío (Sin datos)</v-btn>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn dark small @click="modalImprimirOrdenMedica = false">Cancelar</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <!-- end Modal Orden Médica -->
     </div>
 </template>
 <script>
@@ -800,7 +831,8 @@ export default {
                 diagnostico         : '',
                 tratamiento         : '',
                 orden_medica        : ''
-            }
+            },
+            modalImprimirOrdenMedica : false
         }
     },
     watch: {
@@ -1047,13 +1079,23 @@ export default {
             this.form.tratamiento         = '';
             this.form.orden_medica        = '';
         },
-        fnImprimir(reporte = ''){
+        fnImprimir(reporte = '', info_centro = ''){
+
+            let data = {};
+
+            switch (reporte) {
+                case 'orden_medica':
+                    data.mostrar_info_centro = info_centro
+                    this.modalImprimirOrdenMedica = false;
+                break;
+            }
+
             this.overlayLoading = true;
-            const data = {
-                tipo_reporte    : reporte,
-                numero_documento: this.$route.params.numero_documento,
-                id_formula      : this.form.id
-            };
+
+            data.tipo_reporte    = reporte;
+            data.numero_documento= this.$route.params.numero_documento;
+            data.id_formula      = this.form.id;
+
             axios
                 .post(`/consultorio-oftamologico/historia-clinica/pdf/formula-anteojos`,data,  {responseType: 'blob',})
                 .then((response) => {
@@ -1079,6 +1121,9 @@ export default {
                     })
                     this.overlayLoading = false;
                 });
+        },
+        fnImprimirFormulario(){
+            window.print();
         }
     }
 }
