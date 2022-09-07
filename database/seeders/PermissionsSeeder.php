@@ -17,18 +17,21 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
-        $permisos = [];
-        array_push($permisos, Permission::create(['name' => 'LISTAR']));
-        array_push($permisos, Permission::create(['name' => 'CREAR']));
-        array_push($permisos, Permission::create(['name' => 'EDITAR']));
-        array_push($permisos, Permission::create(['name' => 'ELIMINAR']));
-        array_push($permisos, Permission::create(['name' => 'VER']));
+        $permisosSecretaria = [];
+        array_push($permisosSecretaria, Permission::create(['name' => 'LISTAR']));
+        array_push($permisosSecretaria, Permission::create(['name' => 'CREAR']));
+        array_push($permisosSecretaria, Permission::create(['name' => 'EDITAR']));
+        array_push($permisosSecretaria, Permission::create(['name' => 'ELIMINAR']));
+        array_push($permisosSecretaria, Permission::create(['name' => 'VER']));
+
+        $permisosMedico = [];
+        array_push($permisosMedico, Permission::create(['name' => 'VER']));
 
         $rol = Role::create(['name' => 'SECRETARIA']);
-        $rol->syncPermissions($permisos);
+        $rol->syncPermissions($permisosSecretaria);
 
         $rol = Role::create(['name' => 'MEDICO']);
-        $rol->syncPermissions($permisos);
+        $rol->syncPermissions($permisosMedico);
 
         $user = User::create([
             'name' => 'Cristian Segura',
@@ -39,7 +42,7 @@ class PermissionsSeeder extends Seeder
 
         $user = User::create([
             'name' => 'Eduardo Martinez',
-            'email' => 'eduardo@gmail.com',
+            'email' => 'emartinezvi@sena.edu.co',
             'password' => Hash::make('admin123'),
         ]);
         $user->assignRole('MEDICO');
