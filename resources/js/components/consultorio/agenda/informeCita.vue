@@ -150,7 +150,6 @@ export default {
 
                     for (let index = 0; index < this.dataReporteCitas.length; index++) {
                         if (this.dataReporteCitas[index].prioridad == "SI") {
-                            clearInterval(this.intervalIdBuscarCitas);
                             this.fnActivarSetIntervalBuscarCitar();
                             break;
                         }
@@ -230,7 +229,7 @@ export default {
         fnActivarSetIntervalBuscarCitar(){
             this.intervalIdBuscarCitas = setInterval(() => {
                 this.fnBuscarCitas(false);
-            }, 15000);
+            }, 13000);
         },
         fnValorCita(id){
             this.overlayLoading = true;

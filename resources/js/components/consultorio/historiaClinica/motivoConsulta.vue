@@ -485,7 +485,7 @@ export default {
 
                     let getDataPaciente = response.data.data[0].get_paciente;
 
-                    if (getDataPaciente.foto != "") {
+                    if (getDataPaciente.foto != "" && getDataPaciente.foto != null) {
                         // Si la foto existe.
                         this.foto_paciente = "/"+getDataPaciente.foto;
                     }else{

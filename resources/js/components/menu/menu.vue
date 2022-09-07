@@ -244,7 +244,6 @@ export default {
             // Variables permisos menus start
             moduloCrearPaciente           : false,
             moduloHistoriaClinica         : false,
-            moduloInforme                 : false,
             // Variables para menu agenda.
             moduloAgenda                  : false,
             moduloCitaCliente             : false,
@@ -463,13 +462,12 @@ export default {
 
         this.intervalId = setInterval(async () => {
             await this.informacionUsuario();
-        }, 20000);
+        }, 28000);
 
         switch (this.infoUser.rol) {
             case "SECRETARIA":
                 this.moduloCrearPaciente          = true;
                 this.moduloHistoriaClinica        = true;
-                this.moduloInforme                = true;
                 this.moduloAgenda                 = true;
                 this.moduloCitaCliente            = true;
                 this.moduloInformeCita            = true;
@@ -486,7 +484,15 @@ export default {
 
                 break;
             case "MEDICO":
-                this.moduloInforme                = true;
+                this.moduloCrearPaciente          = true;
+                this.moduloHistoriaClinica        = true;
+                this.moduloAgenda                 = true;
+                this.moduloCitaCliente            = true;
+                this.moduloInformeCita            = true;
+
+                /* Variables de configuracion del sistema */
+                this.moduloParametros             = true;
+                /* fin Variables de configuracion del sistema */
 
                 this.fnCantidadNotificacionesCitas();
             break;

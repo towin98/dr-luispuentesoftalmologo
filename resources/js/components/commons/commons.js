@@ -18,6 +18,9 @@ export const commons = {
         },
         fnResponseError(errores){
             if (errores.response != undefined) {
+                if (errores.response.status == 401) {
+                    return '';
+                }
                 if (errores.response.status == 500 ||
                     errores.response.status == 403 ||
                     errores.response.status == 409 ||
