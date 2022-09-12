@@ -47,8 +47,12 @@ export default {
          * Método que consulta permisos del usuario autenticado.
          */
         async $fnConsultaPermisosUsuario(){
-            let response = await axios.get("/consultorio-oftamologico/permisos-usuario");
-            arrPermisos = response.data.data;
+            try {
+                let response = await axios.get("/consultorio-oftamologico/permisos-usuario");
+                arrPermisos = response.data.data;
+            } catch (error) {
+                // console.log(error);
+            }
         }
     }
 };

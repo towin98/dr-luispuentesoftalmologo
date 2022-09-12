@@ -335,23 +335,42 @@ class HistoriaClinicaController extends Controller
         $evolucion = Evolucion::findOrfail($id);
 
         if ($evolucion) {
-            $nombrePdf = $evolucion->url_refraccion;
 
-            if($request->hasFile('refracciones')){
+            $nombrePdf = null; // Variable para guardar el nombre del archivo PDF.
 
-                // Eliminando PDF, porque se enviaron archivos.
-                File::delete(public_path('storage/refracciones/').$evolucion->url_refraccion);
+            // Determina si el parametro está ausente.
+            if ($request->missing('refracciones')) {
+                $nombrePdf = $evolucion->url_refraccion;
+            }else{
 
-                // Procesando imagenes para crear pdf con refracciones subida.
-                $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $evolucion->numero_evolucion);
+                if($request->hasFile('refracciones')){
 
-                if ($vReturnPdfRefracciones[0] == "false") {
-                    return response()->json([
-                        'message' => 'Error inesperado.',
-                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
-                    ], 500);
+                    // Eliminando PDF, porque se subieron refracciones nuevas.
+                    File::delete(public_path('storage/refracciones/').$evolucion->url_refraccion);
+
+                    // Procesando imagenes para crear pdf con refracciones subida.
+                    $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $evolucion->numero_evolucion);
+
+                    if ($vReturnPdfRefracciones[0] == "false") {
+                        return response()->json([
+                            'message' => 'Error inesperado.',
+                            'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
+                        ], 500);
+                    }else{
+                        $nombrePdf = $vReturnPdfRefracciones[1];
+                    }
                 }else{
-                    $nombrePdf = $vReturnPdfRefracciones[1];
+                    try {
+                        // Eliminando PDF no se envío ninguna refracción
+                        File::delete(public_path('storage/refracciones/').$evolucion->url_refraccion);
+                    } catch (Throwable $e) {
+                        return response()->json([
+                            'message' => 'Error inesperado',
+                            'errors' => [
+                                'Error al eliminar PDF refracciones.'
+                            ]
+                        ], 500);
+                    }
                 }
             }
 
