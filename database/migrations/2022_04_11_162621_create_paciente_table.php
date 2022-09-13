@@ -30,6 +30,7 @@ class CreatePacienteTable extends Migration
             $table->string('foto') ->nullable()->nullable();
             $table->unsignedBigInteger('id_p_eps');
             $table->dateTime('fecha_creacion');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('id_p_eps')->references('id')->on('p_eps');

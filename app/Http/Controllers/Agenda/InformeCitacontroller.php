@@ -71,6 +71,7 @@ class InformeCitacontroller extends Controller
                                 ]);
                         }
                     ])
+                    ->has('getPaciente') // Todas las que tengan relación
                     ->orderBy('hora_cita', 'asc')->get();
                 break;
             default:
