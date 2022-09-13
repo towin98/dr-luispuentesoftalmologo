@@ -508,6 +508,11 @@ export default {
 };
 </script>
 <style type="text/css" media="print">
+
+    input {
+        padding-left: 0px !important;
+    }
+
     @media print {
         .negativovMarginTopImprimir {
             margin-top: -130px;

@@ -6,7 +6,7 @@
             <h3 class="text-center">HISTORIA CLINICA - {{ numero_formula_anteojos }}</h3><!-- FORMULA ANTEOJOS -->
 
             <v-row class="ml-2 mr-2 pt-5">
-                <v-col cols="12" sm="3">
+                <v-col cols="6" sm="3">
                     <v-text-field
                         type="date"
                         v-model="form.fecha_formula"
@@ -16,215 +16,233 @@
                         label="Fecha Formula"
                     ></v-text-field>
                 </v-col>
-            </v-row>
-
-            <v-row class="ml-2 mr-2">
-                <!-- Primera columna -->
-                <v-col sm="1" cols="6" class="pt-3 pb-0" style="background-color: #f0f0f0; border-top-left-radius: 14px; border-bottom-left-radius: 14px;">
-                    <v-subheader class="pl-0 mt-4">OD*</v-subheader>
-                    <v-subheader class="pl-0 mt-4">OI*</v-subheader>
-                </v-col>
-                <!-- Segunda columna -->
-                <v-col sm="2" cols="6" class="pt-3 pb-0" style="background-color: #f0f0f0; border-top-right-radius: 14px; border-bottom-right-radius: 14px;">
-                    <h5 class="pb-2">AVS CC</h5>
+                <v-col cols="6" sm="3">
                     <v-text-field
-                        v-model="form.avs_cc_od"
-                        :error-messages="errors.avs_cc_od"
-                        title="Agudeza Visual con correccion ojo derecho"
-                        single-line
+                        v-model="numero_documento"
+                        label="Número de Documento"
                         dense
-                        solo
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="form.avs_cc_oi"
-                        :error-messages="errors.avs_cc_oi"
-                        title="Agudeza Visual con correccion ojo izquierdo"
-                        single-line
-                        dense
-                        solo
+                        disabled
                     ></v-text-field>
                 </v-col>
-                <!-- Tercera columna -->
-                <v-col sm="1" cols="6" class="pt-3 pb-0">
-                    <v-subheader class="pl-0 mt-4">OD*</v-subheader>
-                    <v-subheader class="pl-0 mt-4">OI*</v-subheader>
-                </v-col>
-                <!-- Cuarta columna -->
-                <v-col sm="2" cols="6" class="pt-3 pb-0">
-                    <h5 class="pb-2">AVS SC</h5>
+                <v-col cols="6" sm="3">
                     <v-text-field
-                        v-model="form.avs_sc_od"
-                        :error-messages="errors.avs_sc_od"
-                        title="Agudeza Visual sin correccion ojo derecho"
-                        single-line
+                        v-model="nombre"
+                        label="Nombre"
                         dense
-                        solo
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="form.avs_sc_oi"
-                        :error-messages="errors.avs_sc_oi"
-                        title="Agudeza Visual sin correccion ojo Izquierdo"
-                        single-line
-                        dense
-                        solo
+                        disabled
                     ></v-text-field>
                 </v-col>
-                <!-- Quinta columna -->
-                <v-col sm="1" cols="6" class="pt-3 pb-0" style="background-color: #f0f0f0; border-top-left-radius: 14px; border-bottom-left-radius: 14px;">
-                    <v-subheader class="pl-0 mt-4">OD*</v-subheader>
-                    <v-subheader class="pl-0 mt-4">OI*</v-subheader>
-                </v-col>
-                <!-- Sexta columna -->
-                <v-col sm="2" cols="6" class="pt-3 pb-0" style="background-color: #f0f0f0; border-top-right-radius: 14px; border-bottom-right-radius: 14px;">
-                    <h5 class="pb-2">RX</h5>
+                <v-col cols="6" sm="3">
                     <v-text-field
-                        v-model="form.rx_od"
-                        :error-messages="errors.rx_od"
-                        title="RX ojo derecho"
-                        single-line
+                        v-model="apellido"
+                        label="Apellido"
                         dense
-                        solo
+                        disabled
                     ></v-text-field>
-                    <v-text-field
-                        v-model="form.rx_oi"
-                        :error-messages="errors.rx_oi"
-                        title="RX ojo Izquierdo"
-                        single-line
-                        dense
-                        solo
-                    ></v-text-field>
-                </v-col>
-                <!-- Septima columna -->
-                <v-col sm="1" cols="6" class="pt-1 pb-0">
-                    <v-subheader class="pl-0">Adicion</v-subheader>
-                    <v-subheader class="pl-0">DP</v-subheader>
-                </v-col>
-                <!-- Octava columna -->
-                <v-col sm="2" cols="6" class="pt-1 pb-0">
-                    <v-text-field
-                        v-model="form.adicion"
-                        :error-messages="errors.adicion"
-                        title="Adición"
-                        single-line
-                        dense
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="form.dp"
-                        :error-messages="errors.dp"
-                        title="Distancia Pupilar"
-                        single-line
-                        dense
-                    ></v-text-field>
-                    <v-textarea
-                        v-model="form.observacion"
-                        :error-messages="errors.observacion"
-                        rows="4"
-                        outlined
-                        label="Observación"
-                    >
-                    </v-textarea>
                 </v-col>
             </v-row>
 
-            <v-row class="ml-2 mr-2 pt-5">
-                <v-col sm="1" cols="6" class="pt-3 pb-0" style="background-color: #f0f0f0; border-top-left-radius: 14px; border-bottom-left-radius: 14px;">
-                    <v-subheader class="pl-0 mt-4">OD*</v-subheader>
-                    <v-subheader class="pl-0 mt-4">OI*</v-subheader>
-                </v-col>
-                <!-- Segunda columna -->
-                <v-col sm="2" cols="6" class="pt-3 pb-0" style="background-color: #f0f0f0; border-top-right-radius: 14px; border-bottom-right-radius: 14px;">
-                    <h5 class="pb-2">Refracción Objetiva</h5>
-                    <v-text-field
-                        v-model="form.ref_obj_od"
-                        :error-messages="errors.ref_obj_od"
-                        title="Refracción Objetiva Ojo Derecho"
-                        single-line
-                        dense
-                        solo
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="form.ref_obj_oi"
-                        :error-messages="errors.ref_obj_oi"
-                        title="Refracción Objetiva Ojo izquierdo"
-                        single-line
-                        dense
-                        solo
-                    ></v-text-field>
-                </v-col>
-                <!-- Tercera columna -->
-                <v-col sm="1" cols="6" class="pt-3 pb-0">
-                    <v-subheader class="pl-0 mt-4">OD*</v-subheader>
-                    <v-subheader class="pl-0 mt-4">OI*</v-subheader>
-                </v-col>
-                <!-- Cuarta columna -->
-                <v-col sm="2" cols="6" class="pt-3 pb-0">
-                    <h5 class="pb-2">Refracción Subjetiva</h5>
-                    <v-text-field
-                        v-model="form.ref_sub_od"
-                        :error-messages="errors.ref_sub_od"
-                        title="Refracción Subjetiva Ojo Derecho"
-                        single-line
-                        dense
-                        solo
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="form.ref_sub_oi"
-                        :error-messages="errors.ref_sub_oi"
-                        title="Refracción Subjetiva Ojo izquierdo"
-                        single-line
-                        dense
-                        solo
-                    ></v-text-field>
-                </v-col>
-                <!-- Quinta columna -->
-                <v-col sm="1" cols="6" class="pt-3 pb-0" style="background-color: #f0f0f0; border-top-left-radius: 14px; border-bottom-left-radius: 14px;">
-                    <v-subheader class="pl-0 mt-4">OD*</v-subheader>
-                    <v-subheader class="pl-0 mt-4">OI*</v-subheader>
-                </v-col>
-                <!-- Sexta columna -->
-                <v-col sm="2" cols="6" class="pt-3 pb-0" style="background-color: #f0f0f0; border-top-right-radius: 14px; border-bottom-right-radius: 14px;">
-                    <h5 class="pb-2">Queratrometria</h5>
-                    <v-text-field
-                        v-model="form.que_od"
-                        :error-messages="errors.que_od"
-                        title="Queratometría Ojo Derecho"
-                        single-line
-                        dense
-                        solo
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="form.que_oi"
-                        :error-messages="errors.que_oi"
-                        title="Queratometría Ojo Izquierdo"
-                        single-line
-                        dense
-                        solo
-                    ></v-text-field>
-                </v-col>
-                <!-- Septima columna -->
-                <v-col sm="1" cols="6" class="pt-1 pb-0">
-                    <v-subheader class="pl-0">Hirschberg</v-subheader>
-                    <v-subheader class="pl-0">Cover Test</v-subheader>
-                </v-col>
-                <!-- Octava columna -->
-                <v-col sm="2" cols="6" class="pt-1 pb-0">
-                    <v-text-field
-                        v-model="form.hirschberg"
-                        :error-messages="errors.hirschberg"
-                        title="Hirschberg"
-                        single-line
-                        dense
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="form.cover_test"
-                        :error-messages="errors.cover_test"
-                        title="Cover Test"
-                        single-line
-                        dense
-                    ></v-text-field>
+            <v-row>
+                <v-col sm="6" cols="12" class="pt-0">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="background-color: #f0f0f0; border-top-left-radius: 14px; border-bottom-left-radius: 14px;">
+                                <v-subheader class="pr-1 pl-1">OD*</v-subheader>
+                                <v-subheader class="pr-1 pl-1">OI*</v-subheader>
+                            </td>
+                            <td style="background-color: #f0f0f0; border-top-right-radius: 14px; border-bottom-right-radius: 14px;">
+                                <h5 class="">AVS CC - RX USO</h5>
+                                <v-text-field
+                                    v-model="form.avs_cc_od"
+                                    :error-messages="errors.avs_cc_od"
+                                    title="Agudeza Visual con correccion ojo derecho"
+                                    single-line
+                                    dense
+                                    solo
+                                    class="pr-1"
+                                ></v-text-field>
+                                <v-text-field
+                                    v-model="form.avs_cc_oi"
+                                    :error-messages="errors.avs_cc_oi"
+                                    title="Agudeza Visual con correccion ojo izquierdo"
+                                    single-line
+                                    dense
+                                    solo
+                                    class="pr-1"
+                                ></v-text-field>
+                            </td>
+                            <td>
+                                <v-subheader class="pr-1 pl-1">OD*</v-subheader>
+                                <v-subheader class="pr-1 pl-1">OI*</v-subheader>
+                            </td>
+                            <td>
+                                <h5 class="">AVS SC</h5>
+                                <v-text-field
+                                    v-model="form.avs_sc_od"
+                                    :error-messages="errors.avs_sc_od"
+                                    title="Agudeza Visual sin correccion ojo derecho"
+                                    single-line
+                                    dense
+                                    solo
+                                ></v-text-field>
+                                <v-text-field
+                                    v-model="form.avs_sc_oi"
+                                    :error-messages="errors.avs_sc_oi"
+                                    title="Agudeza Visual sin correccion ojo Izquierdo"
+                                    single-line
+                                    dense
+                                    solo
+                                ></v-text-field>
+                            </td>
+                        </tr>
+                    </table>
                 </v-col>
 
+                <v-col sm="6" cols="12" class="pt-0">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="background-color: #f0f0f0; border-top-left-radius: 14px; border-bottom-left-radius: 14px;">
+                                <v-subheader class="pr-1 pl-1">OD*</v-subheader>
+                                <v-subheader class="pr-1 pl-1">OI*</v-subheader>
+                            </td>
+                            <td style="background-color: #f0f0f0; border-top-right-radius: 14px; border-bottom-right-radius: 14px;">
+                                <h5 class="pb-2">Refracción Subjetiva</h5>
+                                <v-text-field
+                                    v-model="form.ref_sub_od"
+                                    :error-messages="errors.ref_sub_od"
+                                    title="Refracción Subjetiva Ojo Derecho"
+                                    single-line
+                                    dense
+                                    solo
+                                    class="pr-1"
+                                ></v-text-field>
+                                <v-text-field
+                                    v-model="form.ref_sub_oi"
+                                    :error-messages="errors.ref_sub_oi"
+                                    title="Refracción Subjetiva Ojo izquierdo"
+                                    single-line
+                                    dense
+                                    solo
+                                    class="pr-1"
+                                ></v-text-field>
+                            </td>
+                            <td>
+                                <v-subheader class="pr-1 pl-1">Adicion</v-subheader>
+                                <v-subheader class="pr-1 pl-1">DP</v-subheader>
+                            </td>
+                            <td>
+                                <v-text-field
+                                    v-model="form.adicion"
+                                    :error-messages="errors.adicion"
+                                    title="Adición"
+                                    single-line
+                                    dense
+                                ></v-text-field>
+                                <v-text-field
+                                    v-model="form.dp"
+                                    :error-messages="errors.dp"
+                                    title="Distancia Pupilar"
+                                    single-line
+                                    dense
+                                ></v-text-field>
+                            </td>
+                        </tr>
+                    </table>
+                </v-col>
             </v-row>
+
+            <v-row>
+                <v-col sm="6" cols="12" class="pt-0 pb-0">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td>
+                                <v-subheader class="pr-1 pl-1">OD*</v-subheader>
+                                <v-subheader class="pr-1 pl-1">OI*</v-subheader>
+                            </td>
+                            <td>
+                                <h5 class="">RX</h5>
+                                <v-text-field
+                                    v-model="form.rx_od"
+                                    :error-messages="errors.rx_od"
+                                    title="RX ojo derecho"
+                                    single-line
+                                    dense
+                                    solo
+                                    class="pr-1"
+                                ></v-text-field>
+                                <v-text-field
+                                    v-model="form.rx_oi"
+                                    :error-messages="errors.rx_oi"
+                                    title="RX ojo Izquierdo"
+                                    single-line
+                                    dense
+                                    solo
+                                    class="pr-1"
+                                ></v-text-field>
+                            </td>
+                            <td style="background-color: #f0f0f0; border-top-left-radius: 14px; border-bottom-left-radius: 14px;">
+                                <v-subheader class="pr-1 pl-1">OD*</v-subheader>
+                                <v-subheader class="pr-1 pl-1">OI*</v-subheader>
+                            </td>
+                            <td style="background-color: #f0f0f0; border-top-right-radius: 14px; border-bottom-right-radius: 14px;">
+                                <h5 class="pb-2">Queratrometria</h5>
+                                <v-text-field
+                                    v-model="form.que_od"
+                                    :error-messages="errors.que_od"
+                                    title="Queratometría Ojo Derecho"
+                                    single-line
+                                    dense
+                                    solo
+                                ></v-text-field>
+                                <v-text-field
+                                    v-model="form.que_oi"
+                                    :error-messages="errors.que_oi"
+                                    title="Queratometría Ojo Izquierdo"
+                                    single-line
+                                    dense
+                                    solo
+                                ></v-text-field>
+                            </td>
+                        </tr>
+                    </table>
+                </v-col>
+                <v-col sm="6" cols="12" class="pt-0 pb-0">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td>
+                                <v-subheader class="pr-1 pl-1">Hirschberg</v-subheader>
+                                <v-subheader class="pr-1 pl-1">Cover Test</v-subheader>
+                            </td>
+                            <td class="pr-2">
+                                <v-text-field
+                                    v-model="form.hirschberg"
+                                    :error-messages="errors.hirschberg"
+                                    title="Hirschberg"
+                                    single-line
+                                    dense
+                                ></v-text-field>
+                                <v-text-field
+                                    v-model="form.cover_test"
+                                    :error-messages="errors.cover_test"
+                                    title="Cover Test"
+                                    single-line
+                                    dense
+                                ></v-text-field>
+                            </td>
+                            <td>
+                                <v-textarea
+                                    v-model="form.observacion"
+                                    :error-messages="errors.observacion"
+                                    rows="2"
+                                    outlined
+                                    label="Observación">
+                                </v-textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </v-col>
+            </v-row>
+
             <v-row class="ml-2 mr-2 mt-5">
                 <v-col sm="1" cols="6" class="pt-0">
                     <v-subheader class="pl-0 mt-4">PPC:</v-subheader>
@@ -253,34 +271,6 @@
                         dense
                     ></v-text-field>
                 </v-col>
-                <!-- Quinta columna -->
-                <v-col sm="1" cols="6" class="pt-0">
-                    <v-subheader class="pl-0 mt-4">Dilatación Pupilar</v-subheader>
-                </v-col>
-                <!-- Sexta columna -->
-                <v-col sm="2" cols="6" class="pt-0">
-                    <v-text-field
-                        v-model="form.dilatacion_pupilar"
-                        :error-messages="errors.dilatacion_pupilar"
-                        title="Dilatación Pupilar"
-                        single-line
-                        dense
-                    ></v-text-field>
-                </v-col>
-                <!-- Septima columna -->
-                <v-col sm="1" cols="6" class="pt-0">
-                    <v-subheader class="pl-0 mt-4">Papilas</v-subheader>
-                </v-col>
-                <!-- Octava columna -->
-                <v-col sm="2" cols="6" class="pt-0">
-                    <v-text-field
-                        v-model="form.papilas"
-                        :error-messages="errors.papilas"
-                        title="Papilas"
-                        single-line
-                        dense
-                    ></v-text-field>
-                </v-col>
             </v-row>
 
             <!-- BIOMICROSCOPIA -->
@@ -288,7 +278,7 @@
                 <v-col sm="6" cols="12" style="border: solid 1px #000; border-radius:22px;">
                     <h5>BIOMICROSCOPIA OD:*</h5>
                     <v-row class="pt-4">
-                        <v-col sm="4" cols="12" class="pt-0 pl-1 pr-1">
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_od_par"
                                 :error-messages="errors.bio_od_par"
@@ -305,6 +295,8 @@
                                 outlined
                                 dense
                             ></v-text-field>
+                        </v-col>
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_od_cor"
                                 :error-messages="errors.bio_od_cor"
@@ -313,8 +305,6 @@
                                 outlined
                                 dense
                             ></v-text-field>
-                        </v-col>
-                        <v-col sm="4" cols="12" class="pt-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_od_ang"
                                 :error-messages="errors.bio_od_ang"
@@ -323,6 +313,8 @@
                                 outlined
                                 dense
                             ></v-text-field>
+                        </v-col>
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_od_iris"
                                 :error-messages="errors.bio_od_iris"
@@ -332,15 +324,15 @@
                                 dense
                             ></v-text-field>
                             <v-text-field
-                                v-model="form.bio_od_rpa"
-                                :error-messages="errors.bio_od_rpa"
-                                label="Reflejo Papilar"
-                                title="Reflejo Papilar ojo derecho"
+                                v-model="form.bio_od_rpu"
+                                :error-messages="errors.bio_od_rpu"
+                                label="Reflejo Pupilar"
+                                title="Reflejo Pupilar ojo derecho"
                                 outlined
                                 dense
                             ></v-text-field>
                         </v-col>
-                        <v-col sm="4" cols="12" class="pt-0 pl-1 pr-1">
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_od_cri"
                                 :error-messages="errors.bio_od_cri"
@@ -358,12 +350,23 @@
                                 dense
                             ></v-text-field>
                         </v-col>
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
+                            <v-text-field
+                                v-model="form.bio_od_dil"
+                                :error-messages="errors.bio_od_dil"
+                                label="Dilatación"
+                                title="Dilatación ojo derecho"
+                                outlined
+                                dense
+                            ></v-text-field>
+                        </v-col>
                     </v-row>
                 </v-col>
+
                 <v-col sm="6" cols="12" style="border: solid 1px #000; border-radius:22px;">
                     <h5>BIOMICROSCOPIA OI:*</h5>
                     <v-row class="pt-4">
-                        <v-col sm="4" cols="12" class="pt-0 pl-1 pr-1">
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_oi_par"
                                 :error-messages="errors.bio_oi_par"
@@ -380,6 +383,8 @@
                                 outlined
                                 dense
                             ></v-text-field>
+                        </v-col>
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_oi_cor"
                                 :error-messages="errors.bio_oi_cor"
@@ -388,8 +393,6 @@
                                 outlined
                                 dense
                             ></v-text-field>
-                        </v-col>
-                        <v-col sm="4" cols="12" class="pt-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_oi_ang"
                                 :error-messages="errors.bio_oi_ang"
@@ -398,6 +401,8 @@
                                 outlined
                                 dense
                             ></v-text-field>
+                        </v-col>
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_oi_iris"
                                 :error-messages="errors.bio_oi_iris"
@@ -407,15 +412,15 @@
                                 dense
                             ></v-text-field>
                             <v-text-field
-                                v-model="form.bio_oi_rpa"
-                                :error-messages="errors.bio_oi_rpa"
-                                title="Reflejo Papilar ojo izquierdo"
-                                label="Reflejo Papilar"
+                                v-model="form.bio_oi_rpu"
+                                :error-messages="errors.bio_oi_rpu"
+                                title="Reflejo Pupilar ojo izquierdo"
+                                label="Reflejo Pupilar"
                                 outlined
                                 dense
                             ></v-text-field>
                         </v-col>
-                        <v-col sm="4" cols="12" class="pt-0 pl-1 pr-1">
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
                             <v-text-field
                                 v-model="form.bio_oi_cri"
                                 :error-messages="errors.bio_oi_cri"
@@ -429,6 +434,16 @@
                                 :error-messages="errors.bio_oi_pro"
                                 title="Presión Ocular ojo izquierdo"
                                 label="Presión Ocular"
+                                outlined
+                                dense
+                            ></v-text-field>
+                        </v-col>
+                        <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
+                            <v-text-field
+                                v-model="form.bio_oi_dil"
+                                :error-messages="errors.bio_oi_dil"
+                                label="Dilatación"
+                                title="Dilatación ojo izquierdo"
                                 outlined
                                 dense
                             ></v-text-field>
@@ -579,6 +594,17 @@
                         rows="2"
                         outlined
                         label="Orden Medica"
+                    >
+                    </v-textarea>
+                </v-col>
+
+                <v-col cols="12" sm="6" class="pb-0 pt-0">
+                    <v-textarea
+                        v-model="form.observaciones2"
+                        :error-messages="errors.observaciones2"
+                        rows="2"
+                        outlined
+                        label="Observaciones"
                     >
                     </v-textarea>
                 </v-col>
@@ -799,7 +825,6 @@ export default {
                 ppc                 : '',
                 motilidad_ocular    : '',
                 dilatacion_pupilar  : '',
-                papilas             : '',
                 bio_od_par          : '',
                 bio_od_ang          : '',
                 bio_od_cri          : '',
@@ -807,7 +832,8 @@ export default {
                 bio_od_iris         : '',
                 bio_od_pro          : '',
                 bio_od_cor          : '',
-                bio_od_rpa          : '',
+                bio_od_rpu          : '',
+                bio_od_dil          : '',
                 bio_oi_par          : '',
                 bio_oi_ang          : '',
                 bio_oi_cri          : '',
@@ -815,7 +841,8 @@ export default {
                 bio_oi_iris         : '',
                 bio_oi_pro          : '',
                 bio_oi_cor          : '',
-                bio_oi_rpa          : '',
+                bio_oi_rpu          : '',
+                bio_oi_dil          : '',
                 fon_od_pap          : '',
                 fon_od_vit          : '',
                 fon_od_mac          : '',
@@ -830,8 +857,15 @@ export default {
                 fon_oi_retina       : '',
                 diagnostico         : '',
                 tratamiento         : '',
-                orden_medica        : ''
+                orden_medica        : '',
+                observaciones2      : ''
             },
+
+            // Variables para mostrar solo información del paciente.
+            numero_documento : '',
+            nombre           : '',
+            apellido         : '',
+
             modalImprimirOrdenMedica : false
         }
     },
@@ -880,7 +914,13 @@ export default {
                     this.loading = false;
                     this.totalRegistros = response.data.total;
 
-                    let data = response.data.data
+                    let data = response.data.data;
+                    // Obteniendo información del paciente.
+                    this.numero_documento = data[0].get_paciente.numero_documento;
+                    this.nombre           = data[0].get_paciente.nombre;
+                    this.apellido         = data[0].get_paciente.apellido;
+
+                    // Onteniendo información paciente para mostrar en grilla.
                     this.form.numero_documento   = this.$route.params.numero_documento;
                     for (let i = 0; i < this.totalRegistros; i++) {
                         data[i].id_paciente      = data[i].get_paciente.id;
@@ -1035,7 +1075,6 @@ export default {
             this.form.adicion             = '';
             this.form.dp                  = '';
             this.form.observacion         = '';
-            this.form.ref_obj_od          = '';
             this.form.ref_obj_oi          = '';
             this.form.ref_sub_od          = '';
             this.form.ref_sub_oi          = '';
@@ -1046,7 +1085,6 @@ export default {
             this.form.ppc                 = '';
             this.form.motilidad_ocular    = '';
             this.form.dilatacion_pupilar  = '';
-            this.form.papilas             = '';
             this.form.bio_od_par          = '';
             this.form.bio_od_ang          = '';
             this.form.bio_od_cri          = '';
@@ -1054,7 +1092,8 @@ export default {
             this.form.bio_od_iris         = '';
             this.form.bio_od_pro          = '';
             this.form.bio_od_cor          = '';
-            this.form.bio_od_rpa          = '';
+            this.form.bio_od_rpu          = '';
+            this.form.bio_od_dil          = '';
             this.form.bio_oi_par          = '';
             this.form.bio_oi_ang          = '';
             this.form.bio_oi_cri          = '';
@@ -1062,7 +1101,8 @@ export default {
             this.form.bio_oi_iris         = '';
             this.form.bio_oi_pro          = '';
             this.form.bio_oi_cor          = '';
-            this.form.bio_oi_rpa          = '';
+            this.form.bio_oi_rpu          = '';
+            this.form.bio_oi_dil          = '';
             this.form.fon_od_pap          = '';
             this.form.fon_od_vit          = '';
             this.form.fon_od_mac          = '';
@@ -1078,6 +1118,7 @@ export default {
             this.form.diagnostico         = '';
             this.form.tratamiento         = '';
             this.form.orden_medica        = '';
+            this.form.observaciones2      = '';
         },
         fnImprimir(reporte = '', info_centro = ''){
 

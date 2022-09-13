@@ -17,15 +17,17 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
-        $permisosSecretaria = [];
-        array_push($permisosSecretaria, Permission::create(['name' => 'LISTAR']));
-        array_push($permisosSecretaria, Permission::create(['name' => 'CREAR']));
-        array_push($permisosSecretaria, Permission::create(['name' => 'EDITAR']));
-        array_push($permisosSecretaria, Permission::create(['name' => 'ELIMINAR']));
-        array_push($permisosSecretaria, Permission::create(['name' => 'VER']));
 
-        $permisosMedico = [];
-        array_push($permisosMedico, Permission::create(['name' => 'VER']));
+        $idListar   = Permission::create(['name' => 'LISTAR']);
+        $idCrear    = Permission::create(['name' => 'CREAR']);
+        $idEditar   = Permission::create(['name' => 'EDITAR']);
+        $idEliminar = Permission::create(['name' => 'ELIMINAR']);
+        $idVer      = Permission::create(['name' => 'VER']);
+
+        $permisosSecretaria = [$idListar, $idCrear, $idEditar, $idEliminar, $idVer];
+
+        $permisosMedico = [$idVer];
+        // array_push($permisosMedico, Permission::create(['name' => 'VER']));
 
         $rol = Role::create(['name' => 'SECRETARIA']);
         $rol->syncPermissions($permisosSecretaria);
@@ -34,15 +36,22 @@ class PermissionsSeeder extends Seeder
         $rol->syncPermissions($permisosMedico);
 
         $user = User::create([
-            'name' => 'Cristian Segura',
-            'email' => 'segura9801@gmail.com',
+            'name' => 'Vicky Aldana',
+            'email' => 'vickyaldana31@gmail.com',
             'password' => Hash::make('admin123'),
         ]);
         $user->assignRole('SECRETARIA');
 
         $user = User::create([
-            'name' => 'Eduardo Martinez',
-            'email' => 'emartinezvi@sena.edu.co',
+            'name' => 'Consultorio',
+            'email' => ' Consultoriodoctorpuentes@gmail.com',
+            'password' => Hash::make('admin123'),
+        ]);
+        $user->assignRole('SECRETARIA');
+
+        $user = User::create([
+            'name' => 'Luis Puentes',
+            'email' => 'puentes222@hotmail.com',
             'password' => Hash::make('admin123'),
         ]);
         $user->assignRole('MEDICO');
