@@ -259,9 +259,19 @@
                             class="mr-2"
                             @click="fnShow(item.id)"
                             title="Editar paciente"
+                            small
                             v-if="$can(['VER', 'EDITAR'])"
                         >
                             mdi-pencil
+                        </v-icon>
+                        <v-icon
+                            color="red"
+                            @click="fnDestroy(item)"
+                            title="Eliminar paciente"
+                            small
+                            v-if="$can(['ELIMINAR'])"
+                        >
+                            delete
                         </v-icon>
                     </template>
                 </v-data-table>
@@ -601,6 +611,45 @@ export default {
             this.form.foto      = '';
             this.preview   = null;
         },
+
+        /**
+         * Método que realiza petición para eliminar temporalmente un paciente.
+         * @param {*} item Informacion del paciente.
+         */
+        fnDestroy(item){
+            this.$swal({
+                title: '¿Seguro que quiere eliminar el Paciente?',
+                text: `Eliminar el Paciente con C.C ${item.numero_documento}!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Eliminar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        this.overlayLoading = true;
+
+                        axios.post(`/consultorio-oftamologico/paciente/delete/${item.id}`)
+                        .then((response) => {
+                            this.errors = "";
+                            this.$swal(
+                                response.data.message,
+                                '',
+                                'success'
+                            );
+                            this.fnBuscar();
+                            this.limpiarCampo();
+                            this.overlayLoading = false;
+                        })
+                        .catch((errores) => {
+                            this.fnResponseError(errores);
+                            this.overlayLoading = false;
+                        });
+
+                    }
+                });
+        }
     },
     async created() {
         /* Consultando campos parametros tipo lista. */

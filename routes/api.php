@@ -33,6 +33,7 @@ Route::group(['prefix' => 'paciente', 'middleware' => 'auth:sanctum'] , function
     Route::resource('/', PacienteController::class)->only(['store']);
     Route::post('/actualizar/{id}', [PacienteController::class, 'update']);
     Route::get('/mostrar/{id}', [PacienteController::class, 'show']);
+    Route::post('/delete/{id}', [PacienteController::class, 'destroy']);
 });
 
 Route::group(['prefix' => 'historia-clinica', 'middleware' => 'auth:sanctum'] , function(){
