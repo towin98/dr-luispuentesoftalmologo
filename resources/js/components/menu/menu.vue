@@ -184,18 +184,16 @@
                                 </v-list-item>
                             </v-list>
                         </v-menu>
+
                         <!-- Parametros -->
-                        <!-- <v-menu
-                            v-if="moduloParametros"
-                            offset-y rounded="lg"
-                        >
+                        <v-menu v-if="moduloParametros" offset-y rounded="lg">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-tab
                                     v-bind="attrs"
                                     v-on="on"
                                     class="white--text"
                                     title="Campos Parámetros del Sistema">
-                                    Parametros
+                                    PARÁMETROS
                                     <v-icon right color="white">
                                         mdi-menu-down
                                     </v-icon>
@@ -203,13 +201,12 @@
                             </template>
 
                             <v-list class=" lighten-3">
-                                <v-list-item
-                                    :to="{ name: 'medicina-prepagada' }"
-                                    v-on:click="titleProceso = 'Medicina Prepagada'; pathPrevious = ''">
-                                    <v-list-item-title>Medicina Prepagada</v-list-item-title>
+                                <v-list-item :to="{ name: 'parametros/eps' }" v-if="moduloEps"  v-on:click="titleProceso = 'Parametros/Eps'; pathPrevious = ''">
+                                    <v-list-item-title>Eps</v-list-item-title>
                                 </v-list-item>
                             </v-list>
-                        </v-menu> -->
+                        </v-menu>
+
                     </v-tabs>
                 </template>
             </v-app-bar>
@@ -252,6 +249,7 @@ export default {
 
             /* Variables de configuracion del sistema */
             moduloParametros              : false,
+            moduloEps                     : false,
             /* Variables de configuracion del sistema */
 
             // Variables permisos menus end
@@ -474,6 +472,7 @@ export default {
 
                 /* Variables de configuracion del sistema */
                 this.moduloParametros             = true;
+                this.moduloEps                    = true;
                 /* fin Variables de configuracion del sistema */
 
                 this.overlayLoading = true;
@@ -492,6 +491,7 @@ export default {
 
                 /* Variables de configuracion del sistema */
                 this.moduloParametros             = true;
+                this.moduloEps                    = true;
                 /* fin Variables de configuracion del sistema */
 
                 this.fnCantidadNotificacionesCitas();

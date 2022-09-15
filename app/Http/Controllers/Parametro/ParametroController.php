@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers\Parametro;
 
-use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Traits\Parametricas\ParametricaTrait;
 
 class ParametroController extends Controller
 {
     use ParametricaTrait;
+
+    public function __construct()
+    {
+        $this->middleware(['permission:LISTAR'])->only('buscar');
+        $this->middleware(['permission:CREAR'])->only('store');
+        $this->middleware(['permission:EDITAR'])->only('update');
+        // $this->middleware(['permission:ELIMINAR'])->only('destroy');
+        $this->middleware(['permission:VER'])->only('show');
+    }
 
     /**
      * Método que busca registros, lista registros de una tabla parámetrica.
@@ -43,7 +52,7 @@ class ParametroController extends Controller
         $registros = $modelo::Buscar($request->buscar)
             ->Ordenamiento($request->orderColumn, $request->order);
 
-        $totalRegistros = $modelo::count();
+        $totalRegistros = $registros->count();
 
         $registros = $registros->skip($start)
             ->take($length)
@@ -91,9 +100,9 @@ class ParametroController extends Controller
                 return response()->json([
                     'message' => 'Error de Validación de Datos',
                     'errors' => [
-                        "codigo" => "El código[$request->codigo] ya existe, en la parámetrica[$nombreCampoParametro]"
+                        "codigo" => ["El código[$request->codigo] ya existe, en la parámetrica[$nombreCampoParametro]"]
                     ],
-                ], 409);
+                ], 422);
             }
 
             $modelo::create([
@@ -166,6 +175,19 @@ class ParametroController extends Controller
             ], 422);
         }
 
+        $registro = $modelo::where('codigo', strtoupper($request->codigo))
+            ->where('id', '!=', $id)
+            ->first();
+        if ($registro) {
+            $nombreCampoParametro  = $this->getCampoParametro($request->parametrica);
+            return response()->json([
+                'message' => 'Error de Validación de Datos',
+                'errors' => [
+                    "codigo" => ["El código[$request->codigo] ya existe, en la parámetrica[$nombreCampoParametro]"]
+                ],
+            ], 422);
+        }
+
         try {
             $modelo::findOrfail($id)->update([
                 'codigo'      => strtoupper($request->codigo),
@@ -209,7 +231,7 @@ class ParametroController extends Controller
             // Validación conforme a reglas del modelo.
             $objValidator = Validator::make($request->all(), ParametricaTrait::$rules, ParametricaTrait::$messages);
             if($objValidator->fails()){
-                $arrErrors = $objValidator->messages();
+                $arrErrors = $objValidator->errors();
             }
 
             $model = new $modelo;

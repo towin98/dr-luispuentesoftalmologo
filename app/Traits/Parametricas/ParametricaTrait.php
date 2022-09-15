@@ -3,7 +3,6 @@
 namespace App\Traits\Parametricas;
 
 use App\Models\Parametro\Eps;
-use App\Models\parametro\ocupacion;
 
 trait ParametricaTrait {
 
@@ -17,9 +16,9 @@ trait ParametricaTrait {
     ];
 
     static $rules = [
-        'descripcion'             => 'required|string|max:25',
+        'codigo'                  => 'required|string|max:25',
         'descripcion'             => 'required|string|max:50',
-        'estado'                  => 'required|string|in:ACTIVO,INACTIVO',
+        'estado'                  => 'required|string|in:ACTIVO,INACTIVO'
     ];
 
     /**
@@ -29,7 +28,6 @@ trait ParametricaTrait {
      */
     public $arrayModelos = [
         'p_eps'                    => Eps::class,
-        'p_ocupacion'              => ocupacion::class,
     ];
 
     /**
@@ -38,9 +36,7 @@ trait ParametricaTrait {
      * @var array
      */
     public $arrayCamposParametros = [
-
         'p_eps'                    => 'Eps',
-        'p_ocupacion'              => 'Ocupación',
     ];
 
     /**
