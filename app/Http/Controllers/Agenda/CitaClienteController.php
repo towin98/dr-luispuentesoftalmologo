@@ -59,7 +59,8 @@ class CitaClienteController extends Controller
                         ->orWhere('cita_paciente.hora_cita', 'LIKE', "%$request->buscar%")
                         ->orWhere('cita_paciente.updated_at', 'LIKE', "%$request->buscar%")
                         ->orWhere('p_eps.descripcion', 'LIKE', "%$request->buscar%");
-            });
+            })
+            ->where('paciente.deleted_at'); // consultando todos los que tengas valor null en deleted_at, es decir que no esten borrados.
             // Ordenamiento
             if($request->orderColumn != "" && $request->order != ""){
                 $citas_pacientes = $citas_pacientes->orderBy($request->orderColumn, $request->order);

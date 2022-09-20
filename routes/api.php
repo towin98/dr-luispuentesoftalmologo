@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Agenda\CitaClienteController;
 use App\Http\Controllers\Agenda\InformeCitacontroller;
+use App\Http\Controllers\Auditing\AuditingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -33,6 +34,7 @@ Route::group(['prefix' => 'paciente', 'middleware' => 'auth:sanctum'] , function
     Route::resource('/', PacienteController::class)->only(['store']);
     Route::post('/actualizar/{id}', [PacienteController::class, 'update']);
     Route::get('/mostrar/{id}', [PacienteController::class, 'show']);
+    Route::post('/delete/{id}', [PacienteController::class, 'destroy']);
 });
 
 Route::group(['prefix' => 'historia-clinica', 'middleware' => 'auth:sanctum'] , function(){
@@ -104,4 +106,8 @@ Route::group(['prefix' => 'parametro', 'middleware' => 'auth:sanctum'] , functio
     Route::put('/{id}', [ParametroController::class, 'update']);
     Route::get('/buscar', [ParametroController::class, 'buscar']);
     Route::get('/{parametrica}/{id}', [ParametroController::class, 'show']);
+});
+
+Route::group(['prefix' => 'config', 'middleware' => 'auth:sanctum'] , function(){
+    Route::get('/auditing-buscar', [AuditingController::class, 'auditingListar']);
 });

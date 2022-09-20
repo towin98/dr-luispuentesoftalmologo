@@ -313,7 +313,7 @@ class CargarArchivosController extends Controller
                 return $valor;
             })->all();
 
-            $archivo->update($data);
+            CargarArchivo::find($id)->update($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',

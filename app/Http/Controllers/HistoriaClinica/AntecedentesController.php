@@ -252,7 +252,7 @@ class AntecedentesController extends Controller
                 return $valor;
             })->all();
 
-            $antecedente->update($data);
+            Antecedente::find($id)->update($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',

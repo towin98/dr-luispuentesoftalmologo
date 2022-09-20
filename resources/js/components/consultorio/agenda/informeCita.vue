@@ -150,7 +150,6 @@ export default {
 
                     for (let index = 0; index < this.dataReporteCitas.length; index++) {
                         if (this.dataReporteCitas[index].prioridad == "SI") {
-                            clearInterval(this.intervalIdBuscarCitas);
                             this.fnActivarSetIntervalBuscarCitar();
                             break;
                         }
@@ -207,6 +206,7 @@ export default {
                 .then((response) => {
                     const valorCitaPrioritaria = item.prioridad == 'SI' ? 'NO' : 'SI';
                     if (valorCitaPrioritaria == "SI") {
+                        clearInterval(this.intervalIdBuscarCitas);
                         this.fnActivarSetIntervalBuscarCitar();
                     }
                     this.dataReporteCitas[index].prioridad = valorCitaPrioritaria;
@@ -230,7 +230,7 @@ export default {
         fnActivarSetIntervalBuscarCitar(){
             this.intervalIdBuscarCitas = setInterval(() => {
                 this.fnBuscarCitas(false);
-            }, 15000);
+            }, 4000);
         },
         fnValorCita(id){
             this.overlayLoading = true;

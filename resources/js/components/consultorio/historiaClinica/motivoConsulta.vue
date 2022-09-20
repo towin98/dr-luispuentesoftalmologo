@@ -60,7 +60,7 @@
 
                     <v-row>
                         <v-col cols="12" sm="12">
-                            <div v-if="url_refraccion == ''">
+                            <div v-if="url_refraccion == '' || url_refraccion == null">
                                 <label for="id_refracciones">Subir Refracciones:</label>
                                 <input type="file" id="inputArchivos" accept="image/*" multiple style="width:50%;" title="Subir Refracciones, solo imagenes">
                                 <div style="color:#b71c1c;" v-if="errors.url_refraccion != undefined ">{{ errors.url_refraccion[0] }}</div>
@@ -370,8 +370,9 @@ export default {
             }
             formData.append('numero_documento', this.numero_documento);
 
-                        // Si url_refraccion es vacio es porque se esta mostrando el input para subir archivos
-            if (this.url_refraccion == "") {
+            // Si url_refraccion es vacio es porque se esta mostrando el input para subir archivos
+            // Entonces se examina su se subieron archivos para pasarlos por parametro.
+            if (this.url_refraccion == "" || this.url_refraccion == null) {
                 const $inputArchivos = document.querySelector("#inputArchivos");
                 const archivosParaSubir = $inputArchivos.files;
 
@@ -485,7 +486,7 @@ export default {
 
                     let getDataPaciente = response.data.data[0].get_paciente;
 
-                    if (getDataPaciente.foto != "") {
+                    if (getDataPaciente.foto != "" && getDataPaciente.foto != null) {
                         // Si la foto existe.
                         this.foto_paciente = "/"+getDataPaciente.foto;
                     }else{
@@ -522,7 +523,7 @@ export default {
             }, 600);
         },
         limpiarCampos(){
-            if (this.cAccion == "Guardar" || this.url_refraccion == "") {
+            if (this.url_refraccion == "" || this.url_refraccion == null) {
                 let $inputArchivos = document.querySelector("#inputArchivos");
                 $inputArchivos.value    = "";
             }

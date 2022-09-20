@@ -114,6 +114,11 @@
                         <v-list-item>
                             <v-list-item-title class="text-center font-weight-bold">{{ infoUser.rol }}</v-list-item-title>
                         </v-list-item>
+                        <v-list-item link :to="{name: 'auditoria-sistema'}" v-on:click="titleProceso = 'Auditoria Sistema'; pathPrevious = ''">
+                            <v-list-item-title>
+                                <v-icon size="20"> auto_stories </v-icon> Auditoría del Sistema
+                            </v-list-item-title>
+                        </v-list-item>
                         <v-list-item link :to="{name: 'cambio-clave'}" v-on:click="titleProceso = 'Cambio contraseña'; pathPrevious = ''">
                             <v-list-item-title>
                                 <v-icon size="20"> password </v-icon> Cambiar contraseña
@@ -184,18 +189,16 @@
                                 </v-list-item>
                             </v-list>
                         </v-menu>
+
                         <!-- Parametros -->
-                        <!-- <v-menu
-                            v-if="moduloParametros"
-                            offset-y rounded="lg"
-                        >
+                        <v-menu v-if="moduloParametros" offset-y rounded="lg">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-tab
                                     v-bind="attrs"
                                     v-on="on"
                                     class="white--text"
                                     title="Campos Parámetros del Sistema">
-                                    Parametros
+                                    PARÁMETROS
                                     <v-icon right color="white">
                                         mdi-menu-down
                                     </v-icon>
@@ -203,13 +206,12 @@
                             </template>
 
                             <v-list class=" lighten-3">
-                                <v-list-item
-                                    :to="{ name: 'medicina-prepagada' }"
-                                    v-on:click="titleProceso = 'Medicina Prepagada'; pathPrevious = ''">
-                                    <v-list-item-title>Medicina Prepagada</v-list-item-title>
+                                <v-list-item :to="{ name: 'parametros/eps' }" v-if="moduloEps"  v-on:click="titleProceso = 'Parametros/Eps'; pathPrevious = ''">
+                                    <v-list-item-title>Eps</v-list-item-title>
                                 </v-list-item>
                             </v-list>
-                        </v-menu> -->
+                        </v-menu>
+
                     </v-tabs>
                 </template>
             </v-app-bar>
@@ -244,7 +246,6 @@ export default {
             // Variables permisos menus start
             moduloCrearPaciente           : false,
             moduloHistoriaClinica         : false,
-            moduloInforme                 : false,
             // Variables para menu agenda.
             moduloAgenda                  : false,
             moduloCitaCliente             : false,
@@ -253,6 +254,7 @@ export default {
 
             /* Variables de configuracion del sistema */
             moduloParametros              : false,
+            moduloEps                     : false,
             /* Variables de configuracion del sistema */
 
             // Variables permisos menus end
@@ -463,19 +465,19 @@ export default {
 
         this.intervalId = setInterval(async () => {
             await this.informacionUsuario();
-        }, 20000);
+        }, 28000);
 
         switch (this.infoUser.rol) {
             case "SECRETARIA":
                 this.moduloCrearPaciente          = true;
                 this.moduloHistoriaClinica        = true;
-                this.moduloInforme                = true;
                 this.moduloAgenda                 = true;
                 this.moduloCitaCliente            = true;
                 this.moduloInformeCita            = true;
 
                 /* Variables de configuracion del sistema */
                 this.moduloParametros             = true;
+                this.moduloEps                    = true;
                 /* fin Variables de configuracion del sistema */
 
                 this.overlayLoading = true;
@@ -486,22 +488,34 @@ export default {
 
                 break;
             case "MEDICO":
-                this.moduloInforme                = true;
+                this.moduloCrearPaciente          = true;
+                this.moduloHistoriaClinica        = true;
+                this.moduloAgenda                 = true;
+                this.moduloCitaCliente            = true;
+                this.moduloInformeCita            = true;
+
+                /* Variables de configuracion del sistema */
+                this.moduloParametros             = true;
+                this.moduloEps                    = true;
+                /* fin Variables de configuracion del sistema */
 
                 this.fnCantidadNotificacionesCitas();
             break;
         }
     },
     mounted(){
-        this.overlayLoading = true;
         this.intervalIdCantidadNotificacionesCitas = setInterval(() => {
             this.fnCantidadNotificacionesCitas();
         }, 10000);
-        this.overlayLoading = false;
     },
 };
 </script>
 <style type="text/css" media="print">
+
+    input {
+        padding-left: 0px !important;
+    }
+
     @media print {
         .negativovMarginTopImprimir {
             margin-top: -130px;

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Paciente;
 
-use Throwable;
+use Exception;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Traits\metodosComunesTrait;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Support\Facades\Validator;
 
 class PacienteController extends Controller
@@ -91,8 +90,15 @@ class PacienteController extends Controller
                     if ($valor != "") {
                         $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
                     }
+                }else if($valor == null){
+                    $valor = "";
                 }else if($valor != ""){
                     $valor = trim(strtoupper($valor));
+                }
+
+                // Si no se envia valor en fecha nacimiento se deja null
+                if ($key == "fecha_nacimiento" && $valor == "") {
+                    $valor = null;
                 }
                 return $valor;
             })->all();
@@ -189,7 +195,7 @@ class PacienteController extends Controller
                     'departamento'      => trim(strtoupper($this->fnEliminarTildes($request->departamento))),
                     'municipio'         => trim(strtoupper($this->fnEliminarTildes($request->municipio))),
                     'municipio'         => trim(strtoupper($request->municipio)),
-                    'fecha_nacimiento'  => trim($request->fecha_nacimiento),
+                    'fecha_nacimiento'  => trim($request->fecha_nacimiento) != "" && trim($request->fecha_nacimiento) != null ? trim($request->fecha_nacimiento) : null,
                     'edad'              => trim($request->edad),
                     'ocupacion'         => trim(strtoupper($request->ocupacion)),
                     'foto'              => $urlFoto,
@@ -198,7 +204,7 @@ class PacienteController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'message' => 'Error en el Sistema',
-                    'errors'  => "Error al actualizar paciente, por favor comuniquese con el area de Tecnología, Gracias."
+                    'errors'  => "Error al actualizar paciente, por favor comuniquese con el area de Tecnología, Gracias.".$e
                 ], 500);
             }
         }
@@ -209,13 +215,33 @@ class PacienteController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Método que elimina un paciente.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $paciente = Paciente::find($id);
+        if ($paciente) {
+            try {
+                // Eliminando
+                $paciente->delete();
+            } catch (Exception $e) {
+                return response()->json([
+                    'message' => 'Error inesperado en el Sistema',
+                    'errors' => "Error al eliminar Paciente C.C $paciente->numero_documento"
+                ], 500);
+            }
+
+            return response()->json([
+                'message' => "El Paciente con C.C $paciente->numero_documento ha sido eliminado.",
+            ], 201);
+        }else{
+            return response()->json([
+                'message' => 'Validación de Datos',
+                'errors' => "No existe el paciente que intenta eliminar."
+            ], 404);
+        }
     }
 }

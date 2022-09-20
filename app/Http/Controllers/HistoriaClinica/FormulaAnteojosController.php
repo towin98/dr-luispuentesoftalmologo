@@ -51,9 +51,12 @@ class FormulaAnteojosController extends Controller
 
         $paciente = Paciente::select([
             'id',
+            'numero_documento',
+            'nombre',
+            'apellido'
         ])
-        ->where('numero_documento', $numero_documento)
-        ->first();
+            ->where('numero_documento', $numero_documento)
+            ->first();
 
         if (!$paciente) {
             return response()->json([
@@ -63,17 +66,17 @@ class FormulaAnteojosController extends Controller
         }
 
         $formulaAnteojos = FormulaAnteojos::select([
-                'formula_anteojos.id',
-                'id_paciente',
-                'numero_formula_anteojos',
-                'fecha_formula',
-                'formula_anteojos.updated_at'
-            ])
+            'formula_anteojos.id',
+            'id_paciente',
+            'numero_formula_anteojos',
+            'fecha_formula',
+            'formula_anteojos.updated_at'
+        ])
             ->where('id_paciente', $paciente->id)
             ->Buscar($request->buscar)
             ->Ordenamiento($request->orderColumn, $request->order)
             ->with([
-                'getPaciente' => function ($query){
+                'getPaciente' => function ($query) {
                     $query->select([
                         'id',
                         'numero_documento',
@@ -85,6 +88,16 @@ class FormulaAnteojosController extends Controller
 
         // consulta para saber cuantos registros hay.
         $totalRegistros = $formulaAnteojos->count();
+
+        if ($totalRegistros == 0) {
+            return response()->json([
+                'data'      => [
+                    ["get_paciente" => $paciente]
+                ],
+                'filtrados' => 0,
+                'total'     => 0,
+            ], 200);
+        }
 
         $registros = $formulaAnteojos->skip($start)
             ->take($length)
@@ -141,6 +154,11 @@ class FormulaAnteojosController extends Controller
             $input = $request->collect();
 
             $data = $input->map(function ($valor, $key) {
+
+                if ($valor == null) {
+                    $valor = "";
+                }
+
                 if ($key == "diagnostico" || $key == "tratamiento" || $key == "observacion" || $key == "orden_medica") {
                     if ($valor != "") {
                         $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
@@ -227,16 +245,25 @@ class FormulaAnteojosController extends Controller
             $input = $request->collect();
 
             $data = $input->map(function ($valor, $key) {
+                if ($valor == null) {
+                    $valor = "";
+                }
+
                 if ($key == "diagnostico" || $key == "tratamiento" || $key == "observacion" || $key == "orden_medica") {
                     if ($valor != "") {
                         $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
                     }
-                }else{
+                }else if($valor != ""){
                     $valor = trim($valor);
                 }
                 return $valor;
             })->all();
-            $formulaAnteojos->update($data);
+
+
+            // var_dump($data);
+            // die();
+            FormulaAnteojos::find($id)->update($data);
+            // $formulaAnteojos->update($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',

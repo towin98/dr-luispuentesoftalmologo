@@ -19,17 +19,18 @@ class CreatePacienteTable extends Migration
             $table->string('numero_documento', 20)->unique();
             $table->string('nombre', 25);
             $table->string('apellido', 25);
-            $table->string('correo', 255)->nullable();
-            $table->string('celular', 15)->nullable();
-            $table->string('direccion', 30)->nullable();
-            $table->string('departamento', 30)->nullable();
-            $table->string('municipio', 30)->nullable();
+            $table->string('correo', 255)->default('');
+            $table->string('celular', 15)->default('');
+            $table->string('direccion', 30)->default('');
+            $table->string('departamento', 30)->default('');
+            $table->string('municipio', 30)->default('');
             $table->date('fecha_nacimiento')->nullable();
-            $table->integer('edad')->nullable();
-            $table->string('ocupacion', 100)->nullable();
-            $table->string('foto') ->nullable()->nullable();
+            $table->string('edad',3)->default('');
+            $table->string('ocupacion', 100)->default('');
+            $table->string('foto')->default('');
             $table->unsignedBigInteger('id_p_eps');
             $table->dateTime('fecha_creacion');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('id_p_eps')->references('id')->on('p_eps');

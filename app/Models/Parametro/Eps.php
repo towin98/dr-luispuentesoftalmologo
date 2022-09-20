@@ -2,15 +2,47 @@
 
 namespace App\Models\Parametro;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use DateTimeInterface;
+use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Eps extends Model
+class Eps extends Model implements AuditableContract
 {
-    use HasFactory;
+    use HasFactory, Auditable;
 
     protected $table = 'p_eps';
     protected $primaryKey = 'id';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateTags(): array
+    {
+        return ["EPS"];
+    }
+
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +66,8 @@ class Eps extends Model
         'codigo',
         'descripcion',
         'estado',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -46,11 +80,13 @@ class Eps extends Model
     public function scopeBuscar($query, $buscar) {
         if($buscar) {
             return $query
-                ->where('id', 'LIKE', "%$buscar%")
-                ->orWhere('codigo', 'LIKE', "%$buscar%")
-                ->orWhere('descripcion', '!=', "PARTICULAR") // Excluyendo registro
+                ->where('descripcion', '!=', "PARTICULAR") // Excluyendo registro
+                // ->where('id', 'LIKE', "%$buscar%")
+                ->where('codigo', 'LIKE', "%$buscar%")
                 ->orWhere('descripcion', 'LIKE', "%$buscar%")
-                ->orWhere('estado', 'LIKE', "%$buscar%");
+                ->orWhere('estado', 'LIKE', "%$buscar%")
+                ->orWhere('created_at', 'LIKE', "%$buscar%")
+                ->orWhere('updated_at', 'LIKE', "%$buscar%");
         }else{
             return $query
                 ->where('descripcion', '!=', "PARTICULAR"); // Excluyendo registro

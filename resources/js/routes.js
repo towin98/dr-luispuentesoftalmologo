@@ -19,8 +19,9 @@ import antecedentes from './components/consultorio/historiaClinica/antecedentes.
 import citaCliente from './components/consultorio/agenda/citaCliente.vue'
 import informeCita from './components/consultorio/agenda/informeCita.vue'
 
-import parametrosEps from './components/config/parametros/eps.vue' // Medicina Prepagada.
+import eps from './components/config/parametros/eps.vue'
 import cambioClave from './components/config/cambioClave.vue'
+import auditoriaSistema from './components/config/auditoriaSistema.vue'
 /*Menu end*/
 
 import errors from './components/errors/404.vue'
@@ -100,19 +101,24 @@ const router = new VueRouter({
             ],
         },
         {
-            path: '/configuracion-sistema',
+            path: '/config',
             component: menu,
             meta: {requiresAuth: true},
             children:[
-                // {
-                //     path: 'parametros/medicina-prepagada',
-                //     component: parametrosEps,
-                //     name: 'medicina-prepagada',
-                // },
+                {
+                    path: 'parametros/eps',
+                    component: eps,
+                    name: 'parametros/eps',
+                },
                 {
                     path: 'cambio-clave',
                     component: cambioClave,
                     name: 'cambio-clave',
+                },
+                {
+                    path: 'auditoria-sistema',
+                    component: auditoriaSistema,
+                    name: 'auditoria-sistema',
                 }
             ],
         },

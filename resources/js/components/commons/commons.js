@@ -6,7 +6,13 @@ export const commons = {
         async fnBuscarParametro(parametrica){
             try {
                 let response = await axios.get(`/consultorio-oftamologico/parametro/buscar?parametrica=${parametrica}`);
-                return response.data.data;
+                let data = response.data.data;
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].estado != "ACTIVO") {
+                        data[i].disabled = true;
+                    }
+                }
+                return data;
             } catch (errores) {
                 // this.$swal({
                 //     icon: "error",
@@ -18,6 +24,9 @@ export const commons = {
         },
         fnResponseError(errores){
             if (errores.response != undefined) {
+                if (errores.response.status == 401) {
+                    return '';
+                }
                 if (errores.response.status == 500 ||
                     errores.response.status == 403 ||
                     errores.response.status == 409 ||
