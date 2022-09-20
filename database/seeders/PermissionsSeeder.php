@@ -26,7 +26,7 @@ class PermissionsSeeder extends Seeder
 
         $permisosSecretaria = [$idListar, $idCrear, $idEditar, $idEliminar, $idVer];
 
-        $permisosMedico = [$idVer];
+        $permisosMedico = [$idVer, $idListar];
         // array_push($permisosMedico, Permission::create(['name' => 'VER']));
 
         $rol = Role::create(['name' => 'SECRETARIA']);
@@ -44,7 +44,7 @@ class PermissionsSeeder extends Seeder
 
         $user = User::create([
             'name' => 'Consultorio',
-            'email' => 'Consultoriodoctorpuentes@gmail.com',
+            'email' => 'consultoriodoctorpuentes@gmail.com',
             'password' => Hash::make('admin123'),
         ]);
         $user->assignRole('SECRETARIA');

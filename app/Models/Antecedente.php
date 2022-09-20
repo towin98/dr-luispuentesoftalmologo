@@ -8,10 +8,20 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Antecedente extends Model
+class Antecedente extends Model implements AuditableContract
 {
-    use HasFactory, SoftDeletes, Prunable;
+    use HasFactory, SoftDeletes, Prunable, Auditable;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateTags(): array
+    {
+        return ["ANTECEDENTE"];
+    }
 
     /**
      * Determines the prunable query.

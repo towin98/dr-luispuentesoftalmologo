@@ -5,7 +5,7 @@
             color="primary"
             class="ma-2"
             dark
-            @click="dialogParametro = true"
+            @click="fnCrear()"
         >
             Crear Eps
         </v-btn>
@@ -186,6 +186,10 @@ export default {
             this.debounce = setTimeout(() => {
                 this.fnBuscar(this.buscar);
             }, 600);
+        },
+        fnCrear(){
+            this.dialogParametro = true;
+            this.limpiarCampos();
         },
         fnAccion() {
             if (this.Accion === "GUARDAR") {

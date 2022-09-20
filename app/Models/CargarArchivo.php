@@ -5,10 +5,20 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class CargarArchivo extends Model
+class CargarArchivo extends Model implements AuditableContract
 {
-    use HasFactory;
+    use HasFactory, Auditable;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateTags(): array
+    {
+        return ["CARGAR_ARCHIVO"];
+    }
 
     protected $table = 'cargar_archivos';
     protected $primaryKey = 'id';

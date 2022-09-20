@@ -154,6 +154,11 @@ class FormulaAnteojosController extends Controller
             $input = $request->collect();
 
             $data = $input->map(function ($valor, $key) {
+
+                if ($valor == null) {
+                    $valor = "";
+                }
+
                 if ($key == "diagnostico" || $key == "tratamiento" || $key == "observacion" || $key == "orden_medica") {
                     if ($valor != "") {
                         $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
@@ -240,16 +245,25 @@ class FormulaAnteojosController extends Controller
             $input = $request->collect();
 
             $data = $input->map(function ($valor, $key) {
+                if ($valor == null) {
+                    $valor = "";
+                }
+
                 if ($key == "diagnostico" || $key == "tratamiento" || $key == "observacion" || $key == "orden_medica") {
                     if ($valor != "") {
                         $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
                     }
-                }else{
+                }else if($valor != ""){
                     $valor = trim($valor);
                 }
                 return $valor;
             })->all();
-            $formulaAnteojos->update($data);
+
+
+            // var_dump($data);
+            // die();
+            FormulaAnteojos::find($id)->update($data);
+            // $formulaAnteojos->update($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',

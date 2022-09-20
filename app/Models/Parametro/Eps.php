@@ -3,15 +3,25 @@
 namespace App\Models\Parametro;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Eps extends Model
+class Eps extends Model implements AuditableContract
 {
-    use HasFactory;
+    use HasFactory, Auditable;
 
     protected $table = 'p_eps';
     protected $primaryKey = 'id';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateTags(): array
+    {
+        return ["EPS"];
+    }
 
     /**
      * The storage format of the model's date columns.
