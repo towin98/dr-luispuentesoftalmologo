@@ -7,13 +7,23 @@ use App\Models\Parametro\Eps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Paciente extends Model
+class Paciente extends Model implements AuditableContract
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Auditable;
 
     protected $table = 'paciente';
     protected $primaryKey = 'id';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateTags(): array
+    {
+        return ["CREAR_PACIENTE"];
+    }
 
     public function getdepartamentoAttribute($value)
     {

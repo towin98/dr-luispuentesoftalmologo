@@ -8,10 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class FormulaAnteojos extends Model
+class FormulaAnteojos extends Model implements AuditableContract
 {
-    use HasFactory, SoftDeletes, Prunable;
+    use HasFactory, SoftDeletes, Prunable, Auditable;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateTags(): array
+    {
+        return ["FORMULA_ANTEOJOS"];
+    }
 
     /**
      * Determines the prunable query.
@@ -77,7 +87,8 @@ class FormulaAnteojos extends Model
         'bio_od_iris',
         'bio_od_pro',
         'bio_od_cor',
-        'bio_od_rpa',
+        'bio_od_rpu',
+        'bio_od_dil',
         'bio_oi_par',
         'bio_oi_ang',
         'bio_oi_cri',
@@ -85,7 +96,8 @@ class FormulaAnteojos extends Model
         'bio_oi_iris',
         'bio_oi_pro',
         'bio_oi_cor',
-        'bio_oi_rpa',
+        'bio_oi_rpu',
+        'bio_oi_dil',
         'fon_od_pap',
         'fon_od_vit',
         'fon_od_mac',
@@ -139,7 +151,8 @@ class FormulaAnteojos extends Model
         'bio_od_iris',
         'bio_od_pro',
         'bio_od_cor',
-        'bio_od_rpa',
+        'bio_od_rpu',
+        'bio_od_dil',
         'bio_oi_par',
         'bio_oi_ang',
         'bio_oi_cri',
@@ -147,7 +160,8 @@ class FormulaAnteojos extends Model
         'bio_oi_iris',
         'bio_oi_pro',
         'bio_oi_cor',
-        'bio_oi_rpa',
+        'bio_oi_rpu',
+        'bio_oi_dil',
         'fon_od_pap',
         'fon_od_vit',
         'fon_od_mac',
@@ -248,9 +262,9 @@ class FormulaAnteojos extends Model
         'bio_od_cor.required'           => 'La Bio. O.D Cornea es requerida.',
         'bio_od_cor.string'             => 'La Bio. O.D Cornea debe ser un string.',
         'bio_od_cor.max'                => 'La Bio. O.D Cornea es máximo 50 carácteres.',
-        'bio_od_rpa.required'           => 'La Bio. O.D Reflejo Pupilar es requerida.',
-        'bio_od_rpa.string'             => 'La Bio. O.D Reflejo Pupilar debe ser un string.',
-        'bio_od_rpa.max'                => 'La Bio. O.D Reflejo Pupilar es máximo 50 carácteres.',
+        'bio_od_rpu.required'           => 'La Bio. O.D Reflejo Pupilar es requerida.',
+        'bio_od_rpu.string'             => 'La Bio. O.D Reflejo Pupilar debe ser un string.',
+        'bio_od_rpu.max'                => 'La Bio. O.D Reflejo Pupilar es máximo 50 carácteres.',
         'bio_od_dil.required'           => 'La Bio. O.D Dilatación es requerida.',
         'bio_od_dil.string'             => 'La Bio. O.D Dilatación debe ser un string.',
         'bio_od_dil.max'                => 'La Bio. O.D Dilatación es máximo 50 carácteres.',
@@ -276,9 +290,9 @@ class FormulaAnteojos extends Model
         'bio_oi_cor.required'           => 'La Bio. O.I Cornea es requerida.',
         'bio_oi_cor.string'             => 'La Bio. O.I Cornea debe ser un string.',
         'bio_oi_cor.max'                => 'La Bio. O.I Cornea es máximo 50 carácteres.',
-        'bio_oi_rpa.required'           => 'La Bio. O.I Reflejo Pupilar es requerida.',
-        'bio_oi_rpa.string'             => 'La Bio. O.I Reflejo Pupilar debe ser un string.',
-        'bio_oi_rpa.max'                => 'La Bio. O.I Reflejo Pupilar es máximo 50 carácteres.',
+        'bio_oi_rpu.required'           => 'La Bio. O.I Reflejo Pupilar es requerida.',
+        'bio_oi_rpu.string'             => 'La Bio. O.I Reflejo Pupilar debe ser un string.',
+        'bio_oi_rpu.max'                => 'La Bio. O.I Reflejo Pupilar es máximo 50 carácteres.',
         'bio_oi_dil.required'           => 'La Bio. O.I Dilatación es requerida.',
         'bio_oi_dil.string'             => 'La Bio. O.I Dilatación debe ser un string.',
         'bio_oi_dil.max'                => 'La Bio. O.I Dilatación es máximo 50 carácteres.',
@@ -362,7 +376,7 @@ class FormulaAnteojos extends Model
         'bio_od_iris'           => 'nullable|string|max:50',
         'bio_od_pro'            => 'nullable|string|max:50',
         'bio_od_cor'            => 'nullable|string|max:50',
-        'bio_od_rpa'            => 'nullable|string|max:50',
+        'bio_od_rpu'            => 'nullable|string|max:50',
         'bio_od_dil'            => 'nullable|string|max:50',
         'bio_oi_par'            => 'nullable|string|max:50',
         'bio_oi_ang'            => 'nullable|string|max:50',
@@ -371,7 +385,7 @@ class FormulaAnteojos extends Model
         'bio_oi_iris'           => 'nullable|string|max:50',
         'bio_oi_pro'            => 'nullable|string|max:50',
         'bio_oi_cor'            => 'nullable|string|max:50',
-        'bio_oi_rpa'            => 'nullable|string|max:50',
+        'bio_oi_rpu'            => 'nullable|string|max:50',
         'bio_oi_dil'            => 'nullable|string|max:50',
         'fon_od_pap'            => 'nullable|string|max:30',
         'fon_od_vit'            => 'nullable|string|max:30',

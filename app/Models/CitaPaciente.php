@@ -5,13 +5,23 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class CitaPaciente extends Model
+class CitaPaciente extends Model implements AuditableContract
 {
-    use HasFactory;
+    use HasFactory, Auditable;
 
     protected $table = 'cita_paciente';
     protected $primaryKey = 'id';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function generateTags(): array
+    {
+        return ["CITA_PACIENTE"];
+    }
 
     /**
      * Prepare a date for array / JSON serialization.

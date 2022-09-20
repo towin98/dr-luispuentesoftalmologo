@@ -114,6 +114,11 @@
                         <v-list-item>
                             <v-list-item-title class="text-center font-weight-bold">{{ infoUser.rol }}</v-list-item-title>
                         </v-list-item>
+                        <v-list-item link :to="{name: 'auditoria-sistema'}" v-on:click="titleProceso = 'Auditoria Sistema'; pathPrevious = ''">
+                            <v-list-item-title>
+                                <v-icon size="20"> auto_stories </v-icon> Auditoría del Sistema
+                            </v-list-item-title>
+                        </v-list-item>
                         <v-list-item link :to="{name: 'cambio-clave'}" v-on:click="titleProceso = 'Cambio contraseña'; pathPrevious = ''">
                             <v-list-item-title>
                                 <v-icon size="20"> password </v-icon> Cambiar contraseña
@@ -499,11 +504,9 @@ export default {
         }
     },
     mounted(){
-        this.overlayLoading = true;
         this.intervalIdCantidadNotificacionesCitas = setInterval(() => {
             this.fnCantidadNotificacionesCitas();
         }, 10000);
-        this.overlayLoading = false;
     },
 };
 </script>

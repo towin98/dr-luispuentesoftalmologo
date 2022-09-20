@@ -176,9 +176,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Barryvdh\DomPDF\ServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
-
+        Barryvdh\DomPDF\ServiceProvider::class, // CREAR PDF
+        Intervention\Image\ImageServiceProvider::class, // TRATAR IMAGENES
     ],
 
     /*

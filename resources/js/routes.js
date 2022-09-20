@@ -21,6 +21,7 @@ import informeCita from './components/consultorio/agenda/informeCita.vue'
 
 import eps from './components/config/parametros/eps.vue'
 import cambioClave from './components/config/cambioClave.vue'
+import auditoriaSistema from './components/config/auditoriaSistema.vue'
 /*Menu end*/
 
 import errors from './components/errors/404.vue'
@@ -100,7 +101,7 @@ const router = new VueRouter({
             ],
         },
         {
-            path: '/configuracion-sistema',
+            path: '/config',
             component: menu,
             meta: {requiresAuth: true},
             children:[
@@ -113,6 +114,11 @@ const router = new VueRouter({
                     path: 'cambio-clave',
                     component: cambioClave,
                     name: 'cambio-clave',
+                },
+                {
+                    path: 'auditoria-sistema',
+                    component: auditoriaSistema,
+                    name: 'auditoria-sistema',
                 }
             ],
         },
