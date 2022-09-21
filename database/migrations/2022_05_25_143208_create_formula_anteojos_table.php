@@ -31,7 +31,7 @@ class CreateFormulaAnteojosTable extends Migration
             $table->string('rx_oi', 30)->default('')->comment('RX ojo izquierdo');
             $table->string('adicion', 30)->default('')->comment('adicion');
             $table->string('dp', 30)->default('')->comment('Distancia Pupilar');
-            $table->text('observacion')->default('')->comment('Observacion');
+            $table->text('observacion')->comment('Observacion');
 
             // Campos Refraccion Subjetiva
             $table->string('ref_sub_od', 30)->default('')->comment('Refraccion Subjetiva ojo derecho');
@@ -46,26 +46,26 @@ class CreateFormulaAnteojosTable extends Migration
             $table->string('motilidad_ocular', 30)      ->default('')->comment('Motilidad ocular');
 
             // Campos Biomicroscopia ojo derecho
-            $table->text('bio_od_par')->default('')->comment('Biomicroscopia ojo derecho parpados');
-            $table->text('bio_od_ang')->default('')->comment('Biomicroscopia ojo derecho angulo');
-            $table->text('bio_od_cri')->default('')->comment('Biomicroscopia ojo derecho cristalino');
-            $table->text('bio_od_con')->default('')->comment('Biomicroscopia ojo derecho conjuntiva');
-            $table->text('bio_od_iris')->default('')->comment('Biomicroscopia ojo derecho iris');
-            $table->text('bio_od_pro')->default('')->comment('Biomicroscopia ojo derecho presion Ocular');
-            $table->text('bio_od_cor')->default('')->comment('Biomicroscopia ojo derecho cornea');
-            $table->text('bio_od_rpu')->default('')->comment('Biomicroscopia ojo derecho Reflejo Pupilar');
-            $table->text('bio_od_dil')->default('')->comment('Biomicroscopia ojo derecho Dilatacion');
+            $table->text('bio_od_par')->comment('Biomicroscopia ojo derecho parpados');
+            $table->text('bio_od_ang')->comment('Biomicroscopia ojo derecho angulo');
+            $table->text('bio_od_cri')->comment('Biomicroscopia ojo derecho cristalino');
+            $table->text('bio_od_con')->comment('Biomicroscopia ojo derecho conjuntiva');
+            $table->text('bio_od_iris')->comment('Biomicroscopia ojo derecho iris');
+            $table->text('bio_od_pro')->comment('Biomicroscopia ojo derecho presion Ocular');
+            $table->text('bio_od_cor')->comment('Biomicroscopia ojo derecho cornea');
+            $table->text('bio_od_rpu')->comment('Biomicroscopia ojo derecho Reflejo Pupilar');
+            $table->text('bio_od_dil')->comment('Biomicroscopia ojo derecho Dilatacion');
 
             // Campos Biomicroscopia ojo izquierdo
-            $table->text('bio_oi_par')->default('')->comment('Biomicroscopia ojo izquierdo parpados');
-            $table->text('bio_oi_ang')->default('')->comment('Biomicroscopia ojo izquierdo angulo');
-            $table->text('bio_oi_cri')->default('')->comment('Biomicroscopia ojo izquierdo cristalino');
-            $table->text('bio_oi_con')->default('')->comment('Biomicroscopia ojo izquierdo conjuntiva');
-            $table->text('bio_oi_iris')->default('')->comment('Biomicroscopia ojo izquierdo iris');
-            $table->text('bio_oi_pro')->default('')->comment('Biomicroscopia ojo izquierdo presion Ocular');
-            $table->text('bio_oi_cor')->default('')->comment('Biomicroscopia ojo izquierdo cornea');
-            $table->text('bio_oi_rpu')->default('')->comment('Biomicroscopia ojo izquierdo Reflejo Pupilar');
-            $table->text('bio_oi_dil')->default('')->comment('Biomicroscopia ojo izquierdo Dilatacion');
+            $table->text('bio_oi_par')->comment('Biomicroscopia ojo izquierdo parpados');
+            $table->text('bio_oi_ang')->comment('Biomicroscopia ojo izquierdo angulo');
+            $table->text('bio_oi_cri')->comment('Biomicroscopia ojo izquierdo cristalino');
+            $table->text('bio_oi_con')->comment('Biomicroscopia ojo izquierdo conjuntiva');
+            $table->text('bio_oi_iris')->comment('Biomicroscopia ojo izquierdo iris');
+            $table->text('bio_oi_pro')->comment('Biomicroscopia ojo izquierdo presion Ocular');
+            $table->text('bio_oi_cor')->comment('Biomicroscopia ojo izquierdo cornea');
+            $table->text('bio_oi_rpu')->comment('Biomicroscopia ojo izquierdo Reflejo Pupilar');
+            $table->text('bio_oi_dil')->comment('Biomicroscopia ojo izquierdo Dilatacion');
 
             // Campos Fondo de Ojo ojo derecho
             $table->string('fon_od_pap', 30)->default('')->comment('Fondo de ojo derecho papila');
@@ -84,16 +84,16 @@ class CreateFormulaAnteojosTable extends Migration
             $table->string('fon_oi_retina', 30)->default('')->comment('Fondo de ojo izquierdo retina');
 
             // Diagnostico
-            $table->text('diagnostico')->default('')->comment('Diagnostico');
+            $table->text('diagnostico')->comment('Diagnostico');
 
             // Tratamiento
-            $table->text('tratamiento')->default('')->comment('Tratamiento');
+            $table->text('tratamiento')->comment('Tratamiento');
 
             // Tratamiento
-            $table->text('orden_medica')->default('')->comment('Orden Medica');
+            $table->text('orden_medica')->comment('Orden Medica');
 
             // Observaciones 2
-            $table->text('observaciones2')->default('')->comment('Observaciones2');
+            $table->text('observaciones2')->comment('Observaciones2');
 
             $table->date('fecha_formula')->comment('Fecha Formula');
             $table->softDeletes();
