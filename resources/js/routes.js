@@ -22,6 +22,7 @@ import informeCita from './components/consultorio/agenda/informeCita.vue'
 import eps from './components/config/parametros/eps.vue'
 import cambioClave from './components/config/cambioClave.vue'
 import auditoriaSistema from './components/config/auditoriaSistema.vue'
+import rolesPermisos from './components/config/rolesPermisos.vue'
 /*Menu end*/
 
 import errors from './components/errors/404.vue'
@@ -109,6 +110,11 @@ const router = new VueRouter({
                     path: 'parametros/eps',
                     component: eps,
                     name: 'parametros/eps',
+                },
+                {
+                    path: 'roles-permisos',
+                    component: rolesPermisos,
+                    name: 'roles-permisos',
                 },
                 {
                     path: 'cambio-clave',

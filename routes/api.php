@@ -14,6 +14,7 @@ use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
 use App\Http\Controllers\Notificacion\AlertaCitaController;
 use App\Http\Controllers\Parametro\ParametroController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RolPermisos\RolesPermisosController;
 use Illuminate\Support\Facades\Artisan;
 
 /*Rutas de autenticacacion*/
@@ -110,4 +111,5 @@ Route::group(['prefix' => 'parametro', 'middleware' => 'auth:sanctum'] , functio
 
 Route::group(['prefix' => 'config', 'middleware' => 'auth:sanctum'] , function(){
     Route::get('/auditing-buscar', [AuditingController::class, 'auditingListar']);
+    Route::get('/roles-buscar', [RolesPermisosController::class, 'rolesBuscar']);
 });

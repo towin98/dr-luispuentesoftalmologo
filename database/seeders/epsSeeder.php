@@ -47,7 +47,9 @@ class epsSeeder extends Seeder
             ],
         ];
         foreach ($eps as $valueEps) {
-            Eps::create([
+            $exists = Eps::firstOrCreate([
+                'codigo' => $valueEps['codigo'],
+            ], [
                 'codigo'       => $valueEps['codigo'],
                 'descripcion'  => $valueEps['descripcion'],
                 'estado'       => $valueEps['estado']
