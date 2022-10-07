@@ -618,8 +618,8 @@ export default {
          */
         fnDestroy(item){
             this.$swal({
-                title: '¿Seguro que quiere eliminar el Paciente?',
-                text: `Eliminar el Paciente con C.C ${item.numero_documento}!`,
+                title: '¿Seguro que quiere eliminar el Paciente temporalmente?',
+                text: `Al eliminar el paciente temporalmente con C.C ${item.numero_documento}, no se puede volver a crear un nuevo paciente con el mismo número de Indentificación.`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
