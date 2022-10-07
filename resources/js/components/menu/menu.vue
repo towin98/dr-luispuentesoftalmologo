@@ -114,6 +114,11 @@
                         <v-list-item>
                             <v-list-item-title class="text-center font-weight-bold">{{ infoUser.rol }}</v-list-item-title>
                         </v-list-item>
+                        <v-list-item link :to="{name: 'roles-permisos'}" v-on:click="titleProceso = 'Roles Permisos'; pathPrevious = ''" v-if="moduloRolesPermisos">
+                            <v-list-item-title>
+                                <v-icon size="20"> settings </v-icon>Roles y Permisos
+                            </v-list-item-title>
+                        </v-list-item>
                         <v-list-item link :to="{name: 'auditoria-sistema'}" v-on:click="titleProceso = 'Auditoria Sistema'; pathPrevious = ''">
                             <v-list-item-title>
                                 <v-icon size="20"> auto_stories </v-icon> Auditoría del Sistema
@@ -255,6 +260,7 @@ export default {
             /* Variables de configuracion del sistema */
             moduloParametros              : false,
             moduloEps                     : false,
+            moduloRolesPermisos           : false,
             /* Variables de configuracion del sistema */
 
             // Variables permisos menus end
@@ -452,10 +458,16 @@ export default {
             }
         }
 
-        if (this.$route.name != 'agenda/informe-cita') {
-            this.overlayLoading = true;
-            await this.$fnConsultaPermisosUsuario();
-            this.overlayLoading = false;
+        switch (this.$route.name) {
+            case 'agenda/informe-cita':
+            // case 'roles-permisos':
+                // Para esta vista no se consulta porque ya tiene el metodo $fnConsultaPermisosUsuario()
+            break;
+            default:
+                this.overlayLoading = true;
+                await this.$fnConsultaPermisosUsuario();
+                this.overlayLoading = false;
+            break;
         }
 
         /* DEPENDIENDO DEL ROL DEL USUARIO SE MUESTRA MENU. */
@@ -500,6 +512,9 @@ export default {
                 /* fin Variables de configuracion del sistema */
 
                 this.fnCantidadNotificacionesCitas();
+            break;
+            case "ADMINISTRADOR":
+                this.moduloRolesPermisos          = true;
             break;
         }
     },

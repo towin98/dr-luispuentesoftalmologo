@@ -66,12 +66,12 @@
     <main>
         <br><br>
         <p>Neiva, {{ $diassemana[date('w')]." ".date('d')." de ".$meses[date('n')-1]. " del ".date('Y') ; }} </p>
-        <br><br><br>
+        <br><br>
         <p><strong>
             PACIENTE: {{ $mData['data']['nombrePaciente'] }}</strong><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <strong>C.C:</strong> {{ $mData['data']['pacienteCc'] }}
-        </p> <br> <br> <br>
+        </p><br> <br>
 
         <!--DATA CUERPO -->
         @switch($mData['tipo_rerporte'])
@@ -93,7 +93,7 @@
             @break
         @endswitch
 
-        <br> <br> <br> <br>
+        <br> <br> <br>
         @switch($mData['mostrar_info_centro'])
             @case("centro_oftamologico")
                 <p>

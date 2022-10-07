@@ -11,7 +11,7 @@ class AuditingController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:LISTAR'])->only('buscar');
+        $this->middleware(['permission:LISTAR'])->only('auditingListar');
     }
 
     /**
