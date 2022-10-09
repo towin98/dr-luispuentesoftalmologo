@@ -11,6 +11,7 @@ export default {
                 this.infoUser.name = data.name; // Nombre de usuario.
 
             } catch (errors) {
+                console.log(errors);
                 if (errors.response != undefined) {
                     if (
                         errors.response.status == 401 ||
