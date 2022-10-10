@@ -29,7 +29,8 @@ class RolesPermisosController extends Controller
             $length = 15;
             $start  = 0;
         }
-        $registros = ModelsRole::select(['id', 'name', 'updated_at']);
+        $registros = ModelsRole::select(['id', 'name', 'updated_at'])
+            ->where('name', '!=', 'ADMINISTRADOR');
         if ($request->buscar != "") {
             $registros->where('id', 'LIKE', "%$request->buscar%")
                     ->orWhere('name', 'LIKE', "%$request->buscar%")

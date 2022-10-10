@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loadingGeneral v-bind:overlayLoading="overlayLoading" />
         <!-- start Data table -->
         <v-row class="pt-0">
             <v-col cols="12">
@@ -36,7 +37,7 @@
                     <template v-slot:item.editar="{ item }">
                         <v-icon
                             color="primary"
-                            @click="fnShow(item.id)"
+                            @click="fnEditar(item)"
                             title="Editar Registro"
                             v-if="can(['VER', 'EDITAR'])"
                         >
@@ -46,7 +47,7 @@
                     <template v-slot:item.eliminar="{ item }">
                         <v-icon
                             color="primary"
-                            @click="fnShow(item.id)"
+                            @click="fnEliminar(item)"
                             title="Eliminar Registro"
                             v-if="can(['ELIMINAR'])"
                         >
@@ -56,11 +57,11 @@
                     <template v-slot:item.ver="{ item }">
                         <v-icon
                             color="primary"
-                            @click="fnShow(item.id)"
+                            @click="fnVer(item)"
                             title="Ver Registro"
                             v-if="can(['VER'])"
                         >
-                            mdi-pencil
+                            visibility
                         </v-icon>
                     </template>
                 </v-data-table>
@@ -70,10 +71,15 @@
     </div>
 </template>
 <script>
+import loadingGeneral from "../loadingGeneral/loadingGeneral.vue";
 export default {
+    components : {
+        loadingGeneral
+    },
     props: ["headers", "permisos", "url_buscar"],
     data() {
         return {
+            overlayLoading : false,
             /* Variables Table. */
             // Tabla filtro.
             debounce: null,
@@ -157,8 +163,14 @@ export default {
                     this.fnResponseError(errors);
                 });
         },
-        fnShow(){
-
+        fnEditar(item){
+            this.$emit("fnRolAccion", 'EDITAR', {data:item})
+        },
+        fnVer(item){
+            this.$emit("fnRolAccion", 'VER', {data:item})
+        },
+        fnEliminar(item){
+            this.$emit("fnRolAccion", 'ELIMINAR', {data:item})
         }
 
     },
