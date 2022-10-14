@@ -29,6 +29,14 @@ Route::post('/password/email', [AuthController::class, 'resetPassword']);
 Route::get('/permisos-usuario/', [PermissionController::class, 'buscaPermisosUsuario'])->middleware('auth:sanctum');
 Artisan::call('cache:clear');
 
+// Rutas Roles Permisos Users
+Route::group(['prefix' => 'rol-permisos', 'middleware' => 'auth:sanctum'] , function(){
+    Route::get('/roles-buscar', [RolesPermisosController::class, 'rolesBuscar']);
+    Route::get('/listar-permisos', [PermissionController::class, 'listarPermisos']);
+    Route::get('/listar-permisos-rol/{id}', [PermissionController::class, 'listarPermisosRol']);
+    Route::post('/guardar', [PermissionController::class, 'storeRolPermisos']);
+});
+
 /*Rutas MENU*/
 Route::group(['prefix' => 'paciente', 'middleware' => 'auth:sanctum'] , function(){
     Route::get('/listar', [PacienteController::class, 'listar']);
@@ -103,7 +111,7 @@ Route::group(['prefix' => 'notificacion-citas', 'middleware' => 'auth:sanctum'] 
 });
 
 Route::group(['prefix' => 'parametro', 'middleware' => 'auth:sanctum'] , function(){
-    Route::resource('/',  ParametroController::class)->only(['store']);
+    Route::post('/', [ParametroController::class, 'store']);
     Route::put('/{id}', [ParametroController::class, 'update']);
     Route::get('/buscar', [ParametroController::class, 'buscar']);
     Route::get('/{parametrica}/{id}', [ParametroController::class, 'show']);
@@ -111,5 +119,4 @@ Route::group(['prefix' => 'parametro', 'middleware' => 'auth:sanctum'] , functio
 
 Route::group(['prefix' => 'config', 'middleware' => 'auth:sanctum'] , function(){
     Route::get('/auditing-buscar', [AuditingController::class, 'auditingListar']);
-    Route::get('/roles-buscar', [RolesPermisosController::class, 'rolesBuscar']);
 });

@@ -83,12 +83,12 @@ class Handler extends ExceptionHandler
                 return response()->json(['errors' => 'No se puede eliminar de forma permanente el recurso porque esta relacionado', 'code' => 409], 409);
             }else{
                 // Descomentar en producción
-                // return response()->json(['errors' => ['Error inesperado en el Sistema'], 'code' => 500], 500);
+                return response()->json(['errors' => ['Error inesperado en el Sistema'], 'code' => 500], 500);
             }
         }
 
-        // return response()->json(['errors' => 'Falla inesperada, intente luego', 'code' => 500], 500);
+        return response()->json(['errors' => 'Falla inesperada, intente luego', 'code' => 500], 500);
 
-        return parent::render($request, $exception);
+        // return parent::render($request, $exception);
     }
 }
