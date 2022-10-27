@@ -279,86 +279,104 @@
                     <h5>BIOMICROSCOPIA OD:*</h5>
                     <v-row class="pt-4">
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_od_par"
                                 :error-messages="errors.bio_od_par"
                                 label="Parpados"
                                 title="Parpados ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.bio_od_con"
                                 :error-messages="errors.bio_od_con"
                                 label="Conjuntiva"
                                 title="Conjuntiva ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_od_cor"
                                 :error-messages="errors.bio_od_cor"
                                 label="Cornea"
                                 title="Cornea ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.bio_od_ang"
                                 :error-messages="errors.bio_od_ang"
                                 label="Angulo"
                                 title="Angulo ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_od_iris"
                                 :error-messages="errors.bio_od_iris"
                                 label="Iris"
                                 title="Iris ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.bio_od_rpu"
                                 :error-messages="errors.bio_od_rpu"
                                 label="Reflejo Pupilar"
                                 title="Reflejo Pupilar ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_od_cri"
                                 :error-messages="errors.bio_od_cri"
                                 label="Cristalino"
                                 title="Cristalino ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.bio_od_pro"
                                 :error-messages="errors.bio_od_pro"
                                 label="Presión Ocular"
                                 title="Presión Ocular ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_od_dil"
                                 :error-messages="errors.bio_od_dil"
                                 label="Dilatación"
                                 title="Dilatación ojo derecho"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -367,86 +385,104 @@
                     <h5>BIOMICROSCOPIA OI:*</h5>
                     <v-row class="pt-4">
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_oi_par"
                                 :error-messages="errors.bio_oi_par"
                                 title="Parpados ojo izquierdo"
                                 label="Parpados"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.bio_oi_con"
                                 :error-messages="errors.bio_oi_con"
                                 title="Conjuntiva ojo izquierdo"
                                 label="Conjuntiva"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_oi_cor"
                                 :error-messages="errors.bio_oi_cor"
                                 title="Cornea ojo izquierdo"
                                 label="Cornea"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.bio_oi_ang"
                                 :error-messages="errors.bio_oi_ang"
                                 title="Angulo ojo izquierdo"
                                 label="Angulo"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_oi_iris"
                                 :error-messages="errors.bio_oi_iris"
                                 title="Iris ojo izquierdo"
                                 label="Iris"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.bio_oi_rpu"
                                 :error-messages="errors.bio_oi_rpu"
                                 title="Reflejo Pupilar ojo izquierdo"
                                 label="Reflejo Pupilar"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_oi_cri"
                                 :error-messages="errors.bio_oi_cri"
                                 title="Cristalino ojo izquierdo"
                                 label="Cristalino"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.bio_oi_pro"
                                 :error-messages="errors.bio_oi_pro"
                                 title="Presión Ocular ojo izquierdo"
                                 label="Presión Ocular"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                         <v-col sm="6" cols="12" class="pt-0 pb-0 pl-1 pr-1">
-                            <v-text-field
+                            <v-textarea
                                 v-model="form.bio_oi_dil"
                                 :error-messages="errors.bio_oi_dil"
                                 label="Dilatación"
                                 title="Dilatación ojo izquierdo"
+                                rows="1"
+                                auto-grow
                                 outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -458,110 +494,140 @@
                 <v-col sm="6" cols="12" style="border: solid 1px #000; border-radius:22px;">
                     <h5>OD*</h5>
                     <v-row>
-                        <v-col sm="2" cols="6" class="pt-0">
-                            <v-subheader class="pl-0">Papila</v-subheader>
-                            <v-subheader class="pl-0">Macula</v-subheader>
-                            <v-subheader class="pl-0">Vasos Retinales</v-subheader>
-                        </v-col>
-                        <v-col sm="4" cols="6" class="pt-0">
-                            <v-text-field
+                        <v-col sm="6" cols="6" class="pt-3">
+                            <v-textarea
                                 v-model="form.fon_od_pap"
                                 :error-messages="errors.fon_od_pap"
                                 title="Papila ojo derecho"
+                                label="Papila"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.fon_od_mac"
                                 :error-messages="errors.fon_od_mac"
                                 title="Macula ojo derecho"
+                                label="Macula"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.fon_od_vre"
                                 :error-messages="errors.fon_od_vre"
                                 title="Vasos Retinales ojo derecho"
+                                label="Vasos Retinales"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
-                        <v-col sm="2" cols="6" class="pt-0">
-                            <v-subheader class="pl-0">Vitreo</v-subheader>
-                            <v-subheader class="pl-0">Periferia</v-subheader>
-                            <v-subheader class="pl-0">Retina</v-subheader>
-                        </v-col>
-                        <v-col sm="4" cols="6" class="pt-0">
-                            <v-text-field
+
+                        <v-col sm="6" cols="6" class="pt-3">
+                            <v-textarea
                                 v-model="form.fon_od_vit"
                                 :error-messages="errors.fon_od_vit"
                                 title="Vitreo ojo derecho"
+                                label="Vitreo"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.fon_od_per"
                                 :error-messages="errors.fon_od_per"
                                 title="Periferia ojo derecho"
+                                label="Periferia"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.fon_od_retina"
                                 :error-messages="errors.fon_od_retina"
                                 title="Retina ojo derecho"
+                                label="Retina"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                     </v-row>
                 </v-col>
                 <v-col sm="6" cols="12" style="border: solid 1px #000; border-radius:22px;">
                     <h5>OI:*</h5>
                     <v-row>
-                        <v-col sm="2" cols="6" class="pt-0">
-                            <v-subheader class="pl-0">Papila</v-subheader>
-                            <v-subheader class="pl-0">Macula</v-subheader>
-                            <v-subheader class="pl-0">Vasos Retinales</v-subheader>
-                        </v-col>
-                        <v-col sm="4" cols="6" class="pt-0">
-                            <v-text-field
+                        <v-col sm="6" cols="6" class="pt-3">
+                            <v-textarea
                                 v-model="form.fon_oi_pap"
                                 :error-messages="errors.fon_oi_pap"
-                                title="Papila Ojo izquierdo"
+                                title="Papila ojo izquierdo"
+                                label="Papila"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.fon_oi_mac"
                                 :error-messages="errors.fon_oi_mac"
                                 title="Macula ojo izquierdo"
+                                label="Macula"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.fon_oi_vre"
                                 :error-messages="errors.fon_oi_vre"
                                 title="Vasos Retinales ojo izquierdo"
+                                label="Vasos Retinales"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
-                        <v-col sm="2" cols="6" class="pt-0">
-                            <v-subheader class="pl-0">Vitreo</v-subheader>
-                            <v-subheader class="pl-0">Periferia</v-subheader>
-                            <v-subheader class="pl-0">Retina</v-subheader>
-                        </v-col>
-                        <v-col sm="4" cols="6" class="pt-0">
-                            <v-text-field
+
+                        <v-col sm="6" cols="6" class="pt-3">
+                            <v-textarea
                                 v-model="form.fon_oi_vit"
                                 :error-messages="errors.fon_oi_vit"
-                                title="Vitreo ojo derecho"
+                                title="Vitreo ojo izquierdo"
+                                label="Vitreo"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.fon_oi_per"
                                 :error-messages="errors.fon_oi_per"
                                 title="Periferia ojo izquierdo"
+                                label="Periferia"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
-                            <v-text-field
+                            ></v-textarea>
+                            <v-textarea
                                 v-model="form.fon_oi_retina"
                                 :error-messages="errors.fon_oi_retina"
                                 title="Retina ojo izquierdo"
+                                label="Retina"
+                                rows="1"
+                                auto-grow
+                                outlined
                                 dense
-                            ></v-text-field>
+                            ></v-textarea>
                         </v-col>
                     </v-row>
                 </v-col>
