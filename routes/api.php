@@ -58,22 +58,14 @@ Route::group(['prefix' => 'historia-clinica', 'middleware' => 'auth:sanctum'] , 
     Route::post('/actualizar/evolucion/{id}', [HistoriaClinicaController::class, 'updateEvolucion']);
     Route::post('/delete/evolucion/{id}', [HistoriaClinicaController::class, 'destroyEvolucion']);
 
-    // Formula Anteojos
+    // Formula Anteojos - Historia Clinica
     Route::post('/guardar/formula-anteojos', [FormulaAnteojosController::class, 'store']);
-    Route::put('/actualizar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'update']);
+    Route::post('/actualizar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'update']);
     Route::get('/mostrar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'show']);
     Route::post('/delete/formula-anteojos/{id}', [FormulaAnteojosController::class, 'destroy']);
     Route::get('/listar/formula-anteojos/{numero_documento}', [FormulaAnteojosController::class, 'listar']);
     Route::get('/cosecutivo-formula-anteojos/{id_paciente}', [FormulaAnteojosController::class, 'obtenerNumeroFormulaAnteojos']);
     Route::post('/pdf/formula-anteojos', [FormulaAnteojosController::class, 'reportePdf']);
-
-    // Antecedentes
-    Route::post('/guardar/antecedentes', [AntecedentesController::class, 'store']);
-    Route::put('/actualizar/antecedentes/{id}', [AntecedentesController::class, 'update']);
-    Route::get('/mostrar/antecedentes/{id}', [AntecedentesController::class, 'show']);
-    Route::post('/delete/antecedentes/{id}', [AntecedentesController::class, 'destroy']);
-    Route::get('/listar/antecedentes/{numero_documento}', [AntecedentesController::class, 'listar']);
-    Route::get('/cosecutivo-antecedentes/{id_paciente}', [AntecedentesController::class, 'obtenerNumeroAntecedente']);
 
     // cargar archivo
     Route::post('/guardar/cargar-archivo', [CargarArchivosController::class, 'store']);

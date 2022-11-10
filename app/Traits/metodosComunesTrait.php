@@ -7,6 +7,7 @@ use Throwable;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 
 trait metodosComunesTrait {
@@ -129,6 +130,22 @@ trait metodosComunesTrait {
         if (!file_exists(public_path($path))) {
             File::makeDirectory(public_path($path), $permisos);
         }
+    }
+
+    /**
+     * Método que valida request.
+     *
+     * @param Request $request
+     * @param array $rules
+     * @param array $messages
+     * @return array de errores o string vacío
+     */
+    public function fnValidator(Request $request, $rules, $messages){
+        $validatorFormulaAnteojos = Validator::make($request->all(),$rules,$messages);
+        if ($validatorFormulaAnteojos->fails()) {
+            return $validatorFormulaAnteojos->errors();
+        }
+        return "";
     }
 }
 ?>

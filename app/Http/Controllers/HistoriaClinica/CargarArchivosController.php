@@ -210,7 +210,7 @@ class CargarArchivosController extends Controller
     }
 
     /**
-     * Actualiza un antecedente.
+     * Actualiza un carga de archivo.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id

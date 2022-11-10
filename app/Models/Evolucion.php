@@ -60,28 +60,28 @@ class Evolucion extends Model implements AuditableContract
     ];
 
     static $messages = [
-        'numero_documento.required'  => 'El Número de Documento del paciente es requerido.',
-        'url_refraccion.required'    => 'La refracción es requerida.',
-        'url_refraccion.mimes'       => 'La refracción debe ser un archivo de tipo: jpg, jpeg, png.',
-        'fecha.required'             => 'La Fecha es requerida.',
-        'fecha.date_format'          => 'La fecha debe cumplir el formato: Y-m-d.',
-        'hora.required'              => 'La Hora es requerida.',
-        'hora.date_format'           => 'La Hora debe cumplir el formato: H:i.',
-        'descripcion.max'            => 'La descripción de la Historia Clinica no puede superar lo 255 carácteres.'
+        'numero_documento.required'                  => 'El Número de Documento del paciente es requerido.',
+        'url_refraccion.required'                    => 'La refracción es requerida.',
+        'url_refraccion.mimes'                       => 'La refracción debe ser un archivo de tipo: jpg, jpeg, png.',
+        'fecha_motivo_consulta.required'             => 'La Fecha es requerida.',
+        'fecha_motivo_consulta.date_format'          => 'La fecha debe cumplir el formato: Y-m-d.',
+        'hora_motivo_consulta.required'              => 'La Hora es requerida.',
+        'hora_motivo_consulta.date_format'           => 'La Hora debe cumplir el formato: H:i.',
+        'descripcion_motivo_consulta.max'            => 'La descripción de la Historia Clinica no puede superar lo 255 carácteres.'
     ];
 
     static $rulesStore = [
-        'numero_documento'  => 'required',
-        'fecha'             => 'required|date_format:Y-m-d',
-        'hora'              => 'required|date_format:H:i',
-        'descripcion'       => 'nullable|string|max:255'
+        'numero_documento'                  => 'required',
+        'fecha_motivo_consulta'             => 'required|date_format:Y-m-d',
+        'hora_motivo_consulta'              => 'required|date_format:H:i',
+        'descripcion_motivo_consulta'       => 'nullable|string|max:255'
     ];
 
     static function fnRulesUpdate() {
         return [
-            'fecha'             => 'required|date_format:Y-m-d',
-            'hora'              => 'required|date_format:H:i',
-            'descripcion'       => 'nullable|string|max:255'
+            'fecha_motivo_consulta'             => 'required|date_format:Y-m-d',
+            'hora_motivo_consulta'              => 'required|date_format:H:i',
+            'descripcion_motivo_consulta'       => 'nullable|string|max:255'
         ];
     }
 

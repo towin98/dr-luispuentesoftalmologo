@@ -96,7 +96,7 @@ class CitaPaciente extends Model implements AuditableContract
     ];
 
     /**
-     * Obtiene el registro paciente asociado al antecedente. Historia clinica
+     * Obtiene el registro del paciente asociado a la cita del paciente.
      *
      * @return Illuminate\Support\Collection;
      */
