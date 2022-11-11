@@ -69,49 +69,6 @@
                 <hr style="height: 6px; border: none; background: #bdbdbd; border-radius: 3px;">
             </div>
 
-            <!-- Motivo consulta start -->
-            <h4 class="ml-5">Motivo de Consulta</h4>
-
-            <v-row class="ml-2 mr-2">
-                <v-col cols="12" sm="12">
-                    <div v-if="url_refraccion == '' || url_refraccion == null">
-                        <label for="id_refracciones">Subir Refracciones:</label>
-                        <input type="file" id="inputArchivos" accept="image/*" multiple style="width:50%;" title="Subir Refracciones, solo imagenes">
-                        <div style="color:#b71c1c;" v-if="erroresMotivoConsulta.url_refraccion != undefined ">{{ erroresMotivoConsulta.url_refraccion[0] }}</div>
-                    </div>
-                    <div v-else>
-                        Refracción:
-                        <v-btn
-                            type="click"
-                            small
-                            color="primary"
-                            class="white--text text-none mr-3"
-                            tile
-                            v-on:click="url_refraccion = ''">
-                            Remover
-                        </v-btn>
-                    </div>
-                </v-col>
-                <v-col cols="12" sm="12">
-                    <v-textarea
-                        v-model="form.descripcion_motivo_consulta"
-                        ref="descripcion_motivo_consulta"
-                        label="Descripción Motivo Consulta"
-                        outlined
-                        dense
-                        :error-messages="erroresMotivoConsulta.descripcion_motivo_consulta"
-                        rows="2"
-                        >
-                    </v-textarea>
-                </v-col>
-            </v-row>
-            <!-- Motivo consulta end -->
-
-            <!-- Linea para separar -->
-            <div style="height: 30px; margin-left: 40px; margin-right: 40px;">
-                <hr style="height: 6px; border: none; background: #bdbdbd; border-radius: 3px;">
-            </div>
-
             <!-- Antecedentes start -->
             <h4 class="ml-5">Antecedentes</h4>
             <v-row class="ml-2 mr-2">
@@ -264,23 +221,28 @@
                                 ></v-text-field>
                             </td>
                             <td>
-                                <v-subheader class="pr-1 pl-1">Adicion</v-subheader>
-                                <v-subheader class="pr-1 pl-1">DP</v-subheader>
+                                <v-subheader class="pr-1 pl-1">OD*</v-subheader>
+                                <v-subheader class="pr-1 pl-1">OI*</v-subheader>
                             </td>
                             <td>
+                                <h5 class="pb-2">Queratrometria</h5>
                                 <v-text-field
-                                    v-model="form.adicion"
-                                    :error-messages="erroresFormulaAnteojos.adicion"
-                                    title="Adición"
+                                    v-model="form.que_od"
+                                    :error-messages="erroresFormulaAnteojos.que_od"
+                                    title="Queratometría Ojo Derecho"
                                     single-line
                                     dense
+                                    solo
+                                    class="pr-1"
                                 ></v-text-field>
                                 <v-text-field
-                                    v-model="form.dp"
-                                    :error-messages="erroresFormulaAnteojos.dp"
-                                    title="Distancia Pupilar"
+                                    v-model="form.que_oi"
+                                    :error-messages="erroresFormulaAnteojos.que_oi"
+                                    title="Queratometría Ojo Izquierdo"
                                     single-line
                                     dense
+                                    solo
+                                    class="pr-1"
                                 ></v-text-field>
                             </td>
                         </tr>
@@ -317,29 +279,24 @@
                                     class="pr-1"
                                 ></v-text-field>
                             </td>
-                            <td style="background-color: #f0f0f0; border-top-left-radius: 14px; border-bottom-left-radius: 14px;">
-                                <v-subheader class="pr-1 pl-1">OD*</v-subheader>
-                                <v-subheader class="pr-1 pl-1">OI*</v-subheader>
+                            <td>
+                                <v-subheader class="pr-1 pl-1">Adicion</v-subheader>
+                                <v-subheader class="pr-1 pl-1">DP</v-subheader>
                             </td>
-                            <td style="background-color: #f0f0f0; border-top-right-radius: 14px; border-bottom-right-radius: 14px;">
-                                <h5 class="pb-2">Queratrometria</h5>
+                            <td>
                                 <v-text-field
-                                    v-model="form.que_od"
-                                    :error-messages="erroresFormulaAnteojos.que_od"
-                                    title="Queratometría Ojo Derecho"
+                                    v-model="form.adicion"
+                                    :error-messages="erroresFormulaAnteojos.adicion"
+                                    title="Adición"
                                     single-line
                                     dense
-                                    solo
-                                    class="pr-1"
                                 ></v-text-field>
                                 <v-text-field
-                                    v-model="form.que_oi"
-                                    :error-messages="erroresFormulaAnteojos.que_oi"
-                                    title="Queratometría Ojo Izquierdo"
+                                    v-model="form.dp"
+                                    :error-messages="erroresFormulaAnteojos.dp"
+                                    title="Distancia Pupilar"
                                     single-line
                                     dense
-                                    solo
-                                    class="pr-1"
                                 ></v-text-field>
                             </td>
                         </tr>
@@ -357,6 +314,49 @@
             </v-row>
 
             <!-- Examen Optométrico end -->
+
+            <!-- Linea para separar -->
+            <div style="height: 30px; margin-left: 40px; margin-right: 40px;">
+                <hr style="height: 6px; border: none; background: #bdbdbd; border-radius: 3px;">
+            </div>
+
+            <!-- Motivo consulta start -->
+            <h4 class="ml-5">Motivo de Consulta</h4>
+
+            <v-row class="ml-2 mr-2">
+                <v-col cols="12" sm="12">
+                    <div v-if="url_refraccion == '' || url_refraccion == null">
+                        <label for="id_refracciones">Subir Refracciones:</label>
+                        <input type="file" id="inputArchivos" accept="image/*" multiple style="width:50%;" title="Subir Refracciones, solo imagenes">
+                        <div style="color:#b71c1c;" v-if="erroresMotivoConsulta.url_refraccion != undefined ">{{ erroresMotivoConsulta.url_refraccion[0] }}</div>
+                    </div>
+                    <div v-else>
+                        Refracción:
+                        <v-btn
+                            type="click"
+                            small
+                            color="primary"
+                            class="white--text text-none mr-3"
+                            tile
+                            v-on:click="url_refraccion = ''">
+                            Remover
+                        </v-btn>
+                    </div>
+                </v-col>
+                <v-col cols="12" sm="12">
+                    <v-textarea
+                        v-model="form.descripcion_motivo_consulta"
+                        ref="descripcion_motivo_consulta"
+                        label="Descripción Motivo Consulta"
+                        outlined
+                        dense
+                        :error-messages="erroresMotivoConsulta.descripcion_motivo_consulta"
+                        rows="2"
+                        >
+                    </v-textarea>
+                </v-col>
+            </v-row>
+            <!-- Motivo consulta end -->
 
             <!-- Linea para separar -->
             <div style="height: 30px; margin-left: 40px; margin-right: 40px;">
