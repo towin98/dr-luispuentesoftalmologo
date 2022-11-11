@@ -72,29 +72,6 @@
             <!-- Motivo consulta start -->
             <h4 class="ml-5">Motivo de Consulta</h4>
 
-            <v-row class="ml-2 mr-2 pt-5">
-                <v-col cols="6" sm="4" class="pb-2">
-                    <v-text-field
-                        type="date"
-                        v-model="form.fecha_motivo_consulta"
-                        ref="fecha"
-                        label="Fecha Motivo Consulta"
-                        :error-messages="erroresMotivoConsulta.fecha_motivo_consulta"
-                        dense
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="6" sm="4" class="pb-2">
-                    <v-text-field
-                        type="time"
-                        v-model="form.hora_motivo_consulta"
-                        ref="hora_motivo_consulta"
-                        label="Hora Motivo Consulta"
-                        :error-messages="erroresMotivoConsulta.hora_motivo_consulta"
-                        dense
-                    ></v-text-field>
-                </v-col>
-            </v-row>
-
             <v-row class="ml-2 mr-2">
                 <v-col cols="12" sm="12">
                     <div v-if="url_refraccion == '' || url_refraccion == null">
@@ -848,13 +825,13 @@
             <!-- Examen Oftalmológico end -->
 
             <!-- En este DIV ira la firma del doctor, solo se permite visualizar al imprimir formulario. -->
-            <div id="ocultar-firma" style="padding-right: 20px;">
+            <div style="padding-right: 20px;">
                 <div style=" display: flex; flex-direction: column; align-items: end;">
                     <div style="margin-right: 45px;">
-                        <v-img src="/img/sistema/firma_medico.png" width="170px" alt="Firma"></v-img>
+                        <v-img src="/img/sistema/firma_medico.png" class="width-height-img-firma" alt="Firma"></v-img>
                     </div>
                     <div>
-                        <p style="font-size: 13px;">
+                        <p class="font-size-firma">
                             DR.  LUIS AUGUSTO PUENTES MILLAN <br>
                             CC. 19.143.147 Bogotá D.C<br>
                             Registro No. 8127/76
@@ -1082,8 +1059,6 @@ export default {
             form: {
                 /* motivo consulta */
                 id_motivo_consulta          : "",
-                fecha_motivo_consulta       : '',
-                hora_motivo_consulta        : '',
                 descripcion_motivo_consulta : '',
 
                 /* antecedentes */
@@ -1464,8 +1439,6 @@ export default {
                 let $inputArchivos = document.querySelector("#inputArchivos");
                 $inputArchivos.value    = "";
             }
-            this.form.fecha_motivo_consulta         = "";
-            this.form.hora_motivo_consulta          = "";
             this.form.descripcion_motivo_consulta   = "";
             this.url_refraccion                     = "";
 
@@ -1608,12 +1581,6 @@ export default {
             window.print();
         }
     },
-    mounted(){
-        setTimeout(() => {
-            // se oculta despues de 1 segundo, ya que se necesita cargar en el dom la imagen.
-            document.getElementById("ocultar-firma").classList.add('firma-historia-clinica');
-        }, 1000);
-    }
 }
 </script>
 <style scoped>
@@ -1625,12 +1592,20 @@ export default {
     font-size: 13px !important;
 }
 
-.firma-historia-clinica{
-    display: none;
+.width-height-img-firma{
+    width: 0px;
+    height: 0px;
+}
+.font-size-firma{
+    font-size: 0px;
 }
     @media print {
-        .firma-historia-clinica{
-            display: block;
+        .width-height-img-firma{
+            width: 170px;
+            height: auto;
+        }
+        .font-size-firma{
+            font-size: 13px;
         }
     }
 </style>

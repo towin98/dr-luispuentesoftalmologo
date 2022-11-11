@@ -38,20 +38,7 @@ class ChangesToFormulaAnteojosTable0001 extends Migration
      */
     public function down()
     {
-        // Campos Fondo de Ojo ojo derecho
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_od_pap varchar(30) NOT NULL COMMENT \"Fondo de ojo derecho papila\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_od_vit varchar(30) NOT NULL COMMENT \"Fondo de ojo derecho vitreo\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_od_mac varchar(30) NOT NULL COMMENT \"Fondo de ojo derecho macula\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_od_per varchar(30) NOT NULL COMMENT \"Fondo de ojo derecho periferia\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_od_vre varchar(30) NOT NULL COMMENT \"Fondo de ojo derecho Vasos Retinales\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_od_retina varchar(30) NOT NULL COMMENT \"Fondo de ojo derecho retina\"");
-
-        // Campos Fondo de Ojo ojo izquierdo
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_pap varchar(30) NOT NULL COMMENT \"Fondo de ojo izquierdo papila\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_vit varchar(30) NOT NULL COMMENT \"Fondo de ojo izquierdo vitreo\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_mac varchar(30) NOT NULL COMMENT \"Fondo de ojo izquierdo macula\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_per varchar(30) NOT NULL COMMENT \"Fondo de ojo izquierdo periferia\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_vre varchar(30) NOT NULL COMMENT \"Fondo de ojo izquierdo Vasos Retinales\"");
-        DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_retina varchar(30) NOT NULL COMMENT \"Fondo de ojo izquierdo retina\"");
+        // Se deja el mismo tipo de campo, porque al regresarlos a varchar (30) genera error.
+        // Ademas no es muy necesario regresarlos al mismo tipo de campo
     }
 }

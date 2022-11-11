@@ -13,7 +13,6 @@ import inicio from './components/consultorio/inicio.vue'
 import crearPaciente from './components/consultorio/ingresar/crearPaciente.vue'
 import busquedaHistoriaClinica from './components/consultorio/historiaClinica/busquedaHistoriaClinica.vue'
 import cargarArchivo from './components/consultorio/historiaClinica/cargarArchivo.vue'
-import motivoConsulta from './components/consultorio/historiaClinica/motivoConsulta.vue'
 import formulaAnteojos from './components/consultorio/historiaClinica/formulaAnteojos.vue'
 import citaCliente from './components/consultorio/agenda/citaCliente.vue'
 import informeCita from './components/consultorio/agenda/informeCita.vue'
@@ -62,11 +61,6 @@ const router = new VueRouter({
                     path: 'historia-clinica',
                     component: busquedaHistoriaClinica,
                     name: 'historia-clinica',
-                },
-                {
-                    path: 'historia-clinica/motivo-consulta/:numero_documento',
-                    component: motivoConsulta,
-                    name: 'historia-clinica/motivo-consulta',
                 },
                 {
                     path: 'historia-clinica/formula-anteojos/:numero_documento',
