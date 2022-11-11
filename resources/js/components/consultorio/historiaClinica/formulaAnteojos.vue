@@ -371,13 +371,14 @@
                 </v-col>
                 <!-- Segunda columna -->
                 <v-col sm="2" cols="6">
-                    <v-text-field
+                    <v-textarea
                         v-model="form.ppc"
                         :error-messages="erroresFormulaAnteojos.ppc"
-                        title="Punto Próximo de Convergencia"
-                        single-line
+                        hint="Punto Próximo de Convergencia"
+                        rows="1"
+                        auto-grow
                         dense
-                    ></v-text-field>
+                    ></v-textarea>
                 </v-col>
                 <!-- Tercera columna -->
                 <v-col sm="1" cols="6">
@@ -385,38 +386,40 @@
                 </v-col>
                 <!-- Cuarta columna -->
                 <v-col sm="2" cols="6">
-                    <v-text-field
+                    <v-textarea
                         v-model="form.motilidad_ocular"
                         :error-messages="erroresFormulaAnteojos.motilidad_ocular"
-                        title="Motilidad ocular"
-                        single-line
+                        hint="Motilidad ocular"
+                        rows="1"
+                        auto-grow
                         dense
-                    ></v-text-field>
+                    ></v-textarea>
                 </v-col>
-
                 <v-col sm="1" cols="6">
                     <v-subheader>Hirschberg</v-subheader>
                 </v-col>
                 <v-col sm="2" cols="6">
-                    <v-text-field
+                    <v-textarea
                         v-model="form.hirschberg"
                         :error-messages="erroresFormulaAnteojos.hirschberg"
-                        title="Hirschberg"
-                        single-line
+                        hint="Hirschberg"
+                        rows="1"
+                        auto-grow
                         dense
-                    ></v-text-field>
+                    ></v-textarea>
                 </v-col>
                 <v-col sm="1" cols="6">
                     <v-subheader>Cover Test</v-subheader>
                 </v-col>
                 <v-col sm="2" cols="6">
-                    <v-text-field
+                    <v-textarea
                         v-model="form.cover_test"
                         :error-messages="erroresFormulaAnteojos.cover_test"
-                        title="Cover Test"
-                        single-line
+                        hint="Cover Test"
+                        rows="1"
+                        auto-grow
                         dense
-                    ></v-text-field>
+                    ></v-textarea>
                 </v-col>
             </v-row>
 

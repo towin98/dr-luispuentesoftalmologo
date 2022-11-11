@@ -20,6 +20,7 @@ class ChangesToMotivoConsultaTable0001 extends Migration
                 'fecha',
                 'hora'
             ]);
+            $table->text('descripcion')->comment('Descripcion motivo consulta')->change();
         });
     }
 

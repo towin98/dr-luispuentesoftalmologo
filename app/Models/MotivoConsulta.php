@@ -58,18 +58,17 @@ class MotivoConsulta extends Model implements AuditableContract
     static $messages = [
         'numero_documento.required'                  => 'El Número de Documento del paciente es requerido.',
         'url_refraccion.required'                    => 'La refracción es requerida.',
-        'url_refraccion.mimes'                       => 'La refracción debe ser un archivo de tipo: jpg, jpeg, png.',
-        'descripcion_motivo_consulta.max'            => 'La descripción de la Historia Clinica no puede superar lo 255 carácteres.'
+        'url_refraccion.mimes'                       => 'La refracción debe ser un archivo de tipo: jpg, jpeg, png.'
     ];
 
     static $rulesStore = [
         'numero_documento'                  => 'required',
-        'descripcion_motivo_consulta'       => 'nullable|string|max:255'
+        'descripcion_motivo_consulta'       => 'nullable|string'
     ];
 
     static function fnRulesUpdate() {
         return [
-            'descripcion_motivo_consulta'       => 'nullable|string|max:255'
+            'descripcion_motivo_consulta'       => 'nullable|string'
         ];
     }
 
