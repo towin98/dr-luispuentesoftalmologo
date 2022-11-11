@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\FormulaAnteojos;
 use App\Http\Controllers\Controller;
 use App\Models\Antecedente;
-use App\Models\Evolucion;
+use App\Models\MotivoConsulta;
 use App\Traits\metodosComunesTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -74,9 +74,9 @@ class FormulaAnteojosController extends Controller
         $historiasClinicas = DB::table('formula_anteojos')
         ->join('paciente', 'formula_anteojos.id_paciente', '=', 'paciente.id')
 
-        ->leftJoin('evolucion', function($query){
-            $query->on('formula_anteojos.numero_formula_anteojos', '=', 'evolucion.numero_evolucion')
-                ->on('formula_anteojos.id_paciente', '=', 'evolucion.id_paciente');
+        ->leftJoin('motivo_consulta', function($query){
+            $query->on('formula_anteojos.numero_formula_anteojos', '=', 'motivo_consulta.mc_consecutivo')
+                ->on('formula_anteojos.id_paciente', '=', 'motivo_consulta.id_paciente');
         })
         ->leftJoin('antecedentes', function($query){
             $query->on('formula_anteojos.numero_formula_anteojos', '=', 'antecedentes.numero_antecedente')
@@ -166,14 +166,14 @@ class FormulaAnteojosController extends Controller
         }
 
         // ======================== VALIDACIONES MOTIVO CONSULTA ==================
-        $validatorMotivoConsulta = Validator::make($request->all(),Evolucion::$rulesStore,Evolucion::$messages);
+        $validatorMotivoConsulta = Validator::make($request->all(),MotivoConsulta::$rulesStore,MotivoConsulta::$messages);
         if ($validatorMotivoConsulta->fails()) {
             $errores['erroresMotivoConsulta'] = $validatorMotivoConsulta->errors();
         }
 
         if($request->hasFile('refracciones')){
             foreach($request->file('refracciones') as $file){
-                $validatorMotivoConsultaRefraccion = Validator::make(["url_refraccion" => $file],['url_refraccion' => 'mimes:jpg,jpeg,png'],Evolucion::$messages);
+                $validatorMotivoConsultaRefraccion = Validator::make(["url_refraccion" => $file],['url_refraccion' => 'mimes:jpg,jpeg,png'],MotivoConsulta::$messages);
                 if ($validatorMotivoConsultaRefraccion->fails()) {
                     $errores['erroresMotivoConsulta'] = $validatorMotivoConsultaRefraccion->errors();
                 }
@@ -221,8 +221,6 @@ class FormulaAnteojosController extends Controller
             $vRequestFormulaAnteojos = $request->except([
                 'numero_documento',
                 // Motivo consulta
-                'fecha_motivo_consulta',
-                'hora_motivo_consulta',
                 'refracciones',
                 'descripcion_motivo_consulta',
                 // antecedentes
@@ -272,12 +270,10 @@ class FormulaAnteojosController extends Controller
 
             }
 
-            Evolucion::create([
+            MotivoConsulta::create([
                 "id_paciente"       => $paciente->id,
-                "numero_evolucion"  => $consecutuvo,
+                "mc_consecutivo"  => $consecutuvo,
                 "url_refraccion"    => $nombrePdf,
-                "fecha"             => $request->fecha_motivo_consulta,
-                "hora"              => $request->hora_motivo_consulta.":00",
                 "descripcion"       => trim(strtoupper($this->fnEliminarTildes($request->descripcion_motivo_consulta)))
             ]);
             // ======= GUARDAR MOTIVO CONSULTA ==============
@@ -313,9 +309,9 @@ class FormulaAnteojosController extends Controller
         $historiasClinicas = DB::table('formula_anteojos')
         ->join('paciente', 'formula_anteojos.id_paciente', '=', 'paciente.id')
 
-        ->leftJoin('evolucion', function($query){
-            $query->on('formula_anteojos.numero_formula_anteojos', '=', 'evolucion.numero_evolucion')
-                ->on('formula_anteojos.id_paciente', '=', 'evolucion.id_paciente');
+        ->leftJoin('motivo_consulta', function($query){
+            $query->on('formula_anteojos.numero_formula_anteojos', '=', 'motivo_consulta.mc_consecutivo')
+                ->on('formula_anteojos.id_paciente', '=', 'motivo_consulta.id_paciente');
         })
         ->leftJoin('antecedentes', function($query){
             $query->on('formula_anteojos.numero_formula_anteojos', '=', 'antecedentes.numero_antecedente')
@@ -324,17 +320,13 @@ class FormulaAnteojosController extends Controller
         ->where('formula_anteojos.id',$id)
         ->select(
             'formula_anteojos.*',
-            'evolucion.id as id_motivo_consulta',
-            'evolucion.url_refraccion',
-            'evolucion.fecha as fecha_motivo_consulta',
-            'evolucion.hora as hora_motivo_consulta',
-            'evolucion.descripcion as descripcion_motivo_consulta',
+            'motivo_consulta.id as id_motivo_consulta',
+            'motivo_consulta.url_refraccion',
+            'motivo_consulta.descripcion as descripcion_motivo_consulta',
             'antecedentes.id as id_antecedentes',
             'antecedentes.antecedentes',
             'antecedentes.otro')
         ->first();
-
-        $historiasClinicas->hora_motivo_consulta = substr($historiasClinicas->hora_motivo_consulta,0,5);
 
         return response()->json([
             'data'      => $historiasClinicas,
@@ -367,7 +359,7 @@ class FormulaAnteojosController extends Controller
 
         // 2. VALIDANDO MOTIVO CONSULTA
 
-        $validatorMotivoConsulta = Validator::make($request->all(),Evolucion::fnRulesUpdate(),Evolucion::$messages);
+        $validatorMotivoConsulta = Validator::make($request->all(),MotivoConsulta::fnRulesUpdate(),MotivoConsulta::$messages);
         if ($validatorMotivoConsulta->fails()) {
             $errores['erroresMotivoConsulta'] = $validatorMotivoConsulta->errors();
         }
@@ -375,7 +367,7 @@ class FormulaAnteojosController extends Controller
         // Validando refracciones.
         if($request->hasFile('refracciones')){
             foreach($request->file('refracciones') as $file){
-                $validatorMotivoConsultaFile = Validator::make(["url_refraccion" => $file],['url_refraccion' => 'mimes:jpg,jpeg,bmp,png'],Evolucion::$messages);
+                $validatorMotivoConsultaFile = Validator::make(["url_refraccion" => $file],['url_refraccion' => 'mimes:jpg,jpeg,bmp,png'],MotivoConsulta::$messages);
                 if ($validatorMotivoConsultaFile->fails()) {
                     $errores['erroresMotivoConsulta'] = $validatorMotivoConsultaFile->errors();
                 }
@@ -431,8 +423,6 @@ class FormulaAnteojosController extends Controller
             'numero_documento',
             // Motivo consulta
             'id_motivo_consulta',
-            'fecha_motivo_consulta',
-            'hora_motivo_consulta',
             'refracciones',
             'descripcion_motivo_consulta',
             // antecedentes
@@ -455,7 +445,7 @@ class FormulaAnteojosController extends Controller
         }
 
         // 2. MOTIVO CONSULTA
-        $motivo_consulta = Evolucion::where('id',$request->id_motivo_consulta)->first();
+        $motivo_consulta = MotivoConsulta::where('id',$request->id_motivo_consulta)->first();
         $nombrePdf = null; // Variable para guardar el nombre del archivo PDF.
         if ($motivo_consulta) {
 
@@ -470,7 +460,7 @@ class FormulaAnteojosController extends Controller
                     File::delete(public_path('storage/refracciones/').$motivo_consulta->url_refraccion);
 
                     // Procesando imagenes para crear pdf con refracciones subida.
-                    $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $motivo_consulta->numero_evolucion);
+                    $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $motivo_consulta->mc_consecutivo);
 
                     if ($vReturnPdfRefracciones[0] == "false") {
                         return response()->json([
@@ -518,19 +508,15 @@ class FormulaAnteojosController extends Controller
             // MOTIVO CONSULTA
             if (!$motivo_consulta) {
                 // Crear motivo consulta.
-                Evolucion::create([
+                MotivoConsulta::create([
                     "id_paciente"       => $paciente->id,
-                    "numero_evolucion"  => $formulaAnteojos->numero_formula_anteojos,
+                    "mc_consecutivo"  => $formulaAnteojos->numero_formula_anteojos,
                     "url_refraccion"    => $nombrePdf,
-                    "fecha"             => $request->fecha_motivo_consulta,
-                    "hora"              => $request->hora_motivo_consulta.":00",
                     "descripcion"       => trim(strtoupper($this->fnEliminarTildes($request->descripcion_motivo_consulta)))
                 ]);
             }else{
                 // Actualizar motivo consulta.
                 $motivo_consulta->update([
-                    "fecha"          => $request->fecha_motivo_consulta,
-                    "hora"           => $request->hora_motivo_consulta.":00",
                     "descripcion"    => trim(strtoupper($this->fnEliminarTildes($request->descripcion_motivo_consulta))),
                     "url_refraccion" => $nombrePdf,
                 ]);
@@ -595,9 +581,9 @@ class FormulaAnteojosController extends Controller
                     ], 404);
                 }
 
-                $motivo_consulta = Evolucion::select('id')->where(
+                $motivo_consulta = MotivoConsulta::select('id')->where(
                     [
-                        ['numero_evolucion', '=', $formulaAnteojos->numero_formula_anteojos],
+                        ['mc_consecutivo', '=', $formulaAnteojos->numero_formula_anteojos],
                         ['id_paciente'       , '=', $formulaAnteojos->id_paciente]
                     ]
                     )->first();
@@ -611,7 +597,7 @@ class FormulaAnteojosController extends Controller
                 if ($antecedente && $motivo_consulta) {
                     FormulaAnteojos::find($formulaAnteojos->id)->forceDelete();
                     Antecedente::find($antecedente->id)->forceDelete();
-                    Evolucion::find($motivo_consulta->id)->delete(); // este modelo no tiene SoftDeletes
+                    MotivoConsulta::find($motivo_consulta->id)->delete(); // este modelo no tiene SoftDeletes
                 }
 
             } catch (Exception $e) {
