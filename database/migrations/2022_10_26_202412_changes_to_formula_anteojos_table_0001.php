@@ -29,6 +29,12 @@ class ChangesToFormulaAnteojosTable0001 extends Migration
         DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_per TEXT NOT NULL COMMENT \"Fondo de ojo izquierdo periferia\"");
         DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_vre TEXT NOT NULL COMMENT \"Fondo de ojo izquierdo Vasos Retinales\"");
         DB::statement("ALTER TABLE formula_anteojos MODIFY fon_oi_retina TEXT NOT NULL COMMENT \"Fondo de ojo izquierdo retina\"");
+
+        // Examen Oftalmológico
+        DB::statement("ALTER TABLE formula_anteojos MODIFY ppc              TEXT NOT NULL COMMENT \"Punto Próximo de Convergencia\"");
+        DB::statement("ALTER TABLE formula_anteojos MODIFY motilidad_ocular TEXT NOT NULL COMMENT \"Motilidad ocular\"");
+        DB::statement("ALTER TABLE formula_anteojos MODIFY hirschberg       TEXT NOT NULL COMMENT \"hirschberg\"");
+        DB::statement("ALTER TABLE formula_anteojos MODIFY cover_test       TEXT NOT NULL COMMENT \"Cover Test\"");
     }
 
     /**
