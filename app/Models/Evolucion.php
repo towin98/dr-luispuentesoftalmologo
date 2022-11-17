@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
@@ -11,9 +12,6 @@ class Evolucion extends Model implements AuditableContract
 {
     use HasFactory, Auditable;
 
-    protected $table = 'evolucion';
-    protected $primaryKey = 'id';
-
     /**
      * {@inheritdoc}
      */
@@ -22,10 +20,28 @@ class Evolucion extends Model implements AuditableContract
         return ["EVOLUCION"];
     }
 
-    public function getUpdatedAtAttribute($value)
+    protected $table = 'evolucion_hc';
+    protected $primaryKey = 'evo_id';
+
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
     {
-        $date = date_create($value);
-        return date_format($date,"Y-m-d H:i:s");
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
@@ -34,12 +50,13 @@ class Evolucion extends Model implements AuditableContract
      * @var string[]
      */
     protected $fillable = [
-        'numero_evolucion',
-        'id_paciente',
-        'url_refraccion',
-        'fecha',
-        'hora',
-        'descripcion'
+        'evo_id_paciente',
+        'evo_id_historia_clinica',
+        'evo_consecutivo',
+        'evo_fecha_diligenciamiento',
+        'evo_descripcion_evolucion',
+        'evo_tratamiento',
+        'evo_orden_medica'
     ];
 
     /**
@@ -48,42 +65,41 @@ class Evolucion extends Model implements AuditableContract
      * @var array
      */
     protected $visible = [
-        'id',
-        'numero_evolucion',
-        'id_paciente',
-        'url_refraccion',
-        'fecha',
-        'hora',
-        'descripcion',
+        'evo_id',
+        'evo_id_paciente',
+        'evo_id_historia_clinica',
+        'evo_consecutivo',
+        'evo_fecha_diligenciamiento',
+        'evo_descripcion_evolucion',
+        'evo_tratamiento',
+        'evo_orden_medica',
         'updated_at',
         'getPaciente'
     ];
 
     static $messages = [
-        'numero_documento.required'  => 'El Número de Documento del paciente es requerido.',
-        'url_refraccion.required'    => 'La refracción es requerida.',
-        'url_refraccion.mimes'       => 'La refracción debe ser un archivo de tipo: jpg, jpeg, png.',
-        'fecha.required'             => 'La Fecha es requerida.',
-        'fecha.date_format'          => 'La fecha debe cumplir el formato: Y-m-d.',
-        'hora.required'              => 'La Hora es requerida.',
-        'hora.date_format'           => 'La Hora debe cumplir el formato: H:i.',
-        'descripcion.max'            => 'La descripción de la Historia Clinica no puede superar lo 255 carácteres.'
+        'numero_documento.required'                     => 'El Número de Documento del paciente es requerido.',
+        'evo_id_historia_clinica.required'              => 'El id de la historia clinica es requerido.',
+        'evo_fecha_diligenciamiento.required'           => 'La fecha de diligenciamiento de la evolución es requerida.',
+        'evo_fecha_diligenciamiento.date_format'        => 'La fecha de diligenciamiento de la evolución es debe ser ej: Y-m-d.',
+        'evo_descripcion_evolucion.required'            => 'La Descripción de la Evolución es requerida.'
     ];
 
     static $rulesStore = [
-        'numero_documento'  => 'required',
-        'fecha'             => 'required|date_format:Y-m-d',
-        'hora'              => 'required|date_format:H:i',
-        'descripcion'       => 'nullable|string|max:255'
+        'numero_documento'           => 'required',
+        'evo_id_historia_clinica'    => 'required',
+        'evo_fecha_diligenciamiento' => 'required|date_format:Y-m-d',
+        'evo_descripcion_evolucion'  => 'required|string',
+        'evo_tratamiento'            => 'nullable|string',
+        'evo_orden_medica'           => 'nullable|string',
     ];
 
-    static function fnRulesUpdate() {
-        return [
-            'fecha'             => 'required|date_format:Y-m-d',
-            'hora'              => 'required|date_format:H:i',
-            'descripcion'       => 'nullable|string|max:255'
-        ];
-    }
+    static $rulesUpdate = [
+        'evo_fecha_diligenciamiento' => 'required|date_format:Y-m-d',
+        'evo_descripcion_evolucion'  => 'required|string',
+        'evo_tratamiento'            => 'nullable|string',
+        'evo_orden_medica'           => 'nullable|string',
+    ];
 
     /**
      * Scope para realizar una búsqueda mixta.
@@ -95,9 +111,9 @@ class Evolucion extends Model implements AuditableContract
     public function scopeBuscar($query, $buscar) {
         if($buscar) {
             return $query
-                ->where('numero_evolucion', 'LIKE', "%$buscar%")
-                ->orWhere('fecha', 'LIKE', "%$buscar%")
-                ->orWhere('hora', 'LIKE', "%$buscar%")
+                ->where('evo_consecutivo', 'LIKE', "%$buscar%")
+                ->orWhere('evo_fecha_diligenciamiento', 'LIKE', "%$buscar%")
+                ->orWhere('evo_descripcion_evolucion', 'LIKE', "%$buscar%")
                 ->orWhere('updated_at', 'LIKE', "%$buscar%");
         }
     }
@@ -117,11 +133,11 @@ class Evolucion extends Model implements AuditableContract
     }
 
     /**
-     * Obtiene el registro paciente asociado a evolucion. Historia clinica
+     * Obtiene el registro paciente asociado a la evolucio. Historia clinica
      *
      * @return Illuminate\Support\Collection;
      */
     public function getPaciente(){
-        return $this->belongsTo(Paciente::class,'id_paciente', 'id');
+        return $this->belongsTo(Paciente::class,'evo_id_paciente', 'id');
     }
 }

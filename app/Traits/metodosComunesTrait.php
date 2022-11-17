@@ -2,11 +2,11 @@
 
 namespace App\Traits;
 
-use App\Models\alerta;
 use Throwable;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 
 trait metodosComunesTrait {
@@ -72,10 +72,10 @@ trait metodosComunesTrait {
      * Método que proceso imagenes subidas de refracciones y las agrega a un pdf.
      *
      * @param Request $request
-     * @param integer $numero_evolucion
+     * @param integer $mc_consecutivo
      * @return array Si es false el retorno es porque sucedio un error en el proceso.
      */
-    public function fnPdfRefracciones(Request $request, $numero_evolucion){
+    public function fnPdfRefracciones(Request $request, $mc_consecutivo){
         $html = "";
         $arrPathArchivos = [];
 
@@ -104,7 +104,7 @@ trait metodosComunesTrait {
             }
 
             $pdf = PDF::loadHTML($html)->output();
-            $nombrePdf  = date('YmdHis')."_refracciones_$numero_evolucion.pdf";
+            $nombrePdf  = date('YmdHis')."_refracciones_$mc_consecutivo.pdf";
             $vReturn[1] = $nombrePdf;
             file_put_contents(public_path('storage/refracciones/').$nombrePdf, $pdf);
 
@@ -129,6 +129,22 @@ trait metodosComunesTrait {
         if (!file_exists(public_path($path))) {
             File::makeDirectory(public_path($path), $permisos);
         }
+    }
+
+    /**
+     * Método que valida request.
+     *
+     * @param Request $request
+     * @param array $rules
+     * @param array $messages
+     * @return array de errores o string vacío
+     */
+    public function fnValidator(Request $request, $rules, $messages){
+        $validatorFormulaAnteojos = Validator::make($request->all(),$rules,$messages);
+        if ($validatorFormulaAnteojos->fails()) {
+            return $validatorFormulaAnteojos->errors();
+        }
+        return "";
     }
 }
 ?>

@@ -89,6 +89,6 @@ class Handler extends ExceptionHandler
 
         return response()->json(['errors' => 'Falla inesperada, intente luego', 'code' => 500], 500);
 
-        // return parent::render($request, $exception);
+        return parent::render($request, $exception);
     }
 }

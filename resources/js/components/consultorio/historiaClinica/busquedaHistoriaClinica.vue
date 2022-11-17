@@ -77,30 +77,12 @@
                     :sort-desc="true"
                     no-data-text="Sin registros"
                 >
-                    <template v-slot:item.motivoConsulta="{ item }">
-                        <router-link style="text-decoration: none;"
-                            title="Motivo Consulta (subir refracciones)"
-                            :to="{ path: `/consultorio/historia-clinica/motivo-consulta/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
-                            <v-icon color="primary">
-                                query_stats
-                            </v-icon>
-                        </router-link>
-                    </template>
                     <template v-slot:item.historia_clinica="{ item }">
                         <router-link style="text-decoration: none;"
                             title="Historia clinica"
                             :to="{ path: `/consultorio/historia-clinica/formula-anteojos/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
                             <v-icon color="light-green">
                                 fact_check
-                            </v-icon>
-                        </router-link>
-                    </template>
-                    <template v-slot:item.antecedentes="{ item }">
-                        <router-link style="text-decoration: none;"
-                            title="Antecedentes del Paciente"
-                            :to="{ path: `/consultorio/historia-clinica/antecedentes/${item.numero_documento}`, params: {numero_documento: item.numero_documento}}">
-                            <v-icon color="orange lighten-1">
-                                find_in_page
                             </v-icon>
                         </router-link>
                     </template>
@@ -163,9 +145,7 @@ export default {
                 { text: "Nombre Completo", value: "nombre" },
                 { text: "Apellido Completo", value: "apellido" },
                 { text: "Fecha Modificado", value: "updated_at" },
-                { text: "Motivo Consulta", value: "motivoConsulta", sortable: false, width:20 },
                 { text: "Historia Clinica", value: "historia_clinica", sortable: false, width:20 },
-                { text: "Antecedentes", value: "antecedentes", sortable: false, width:20 },
                 { text: "Cargar Archivo", value: "cargarArchivo", sortable: false, width:20 },
             ],
             dataSet: [],

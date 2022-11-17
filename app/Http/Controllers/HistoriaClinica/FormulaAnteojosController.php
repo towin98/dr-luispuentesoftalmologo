@@ -8,8 +8,12 @@ use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Models\FormulaAnteojos;
 use App\Http\Controllers\Controller;
+use App\Models\Antecedente;
+use App\Models\MotivoConsulta;
 use App\Traits\metodosComunesTrait;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class FormulaAnteojosController extends Controller
 {
@@ -53,7 +57,9 @@ class FormulaAnteojosController extends Controller
             'id',
             'numero_documento',
             'nombre',
-            'apellido'
+            'apellido',
+            'fecha_nacimiento',
+            'edad'
         ])
             ->where('numero_documento', $numero_documento)
             ->first();
@@ -65,47 +71,81 @@ class FormulaAnteojosController extends Controller
             ], 404);
         }
 
-        $formulaAnteojos = FormulaAnteojos::select([
-            'formula_anteojos.id',
-            'id_paciente',
-            'numero_formula_anteojos',
-            'fecha_formula',
-            'formula_anteojos.updated_at'
-        ])
-            ->where('id_paciente', $paciente->id)
-            ->Buscar($request->buscar)
-            ->Ordenamiento($request->orderColumn, $request->order)
-            ->with([
-                'getPaciente' => function ($query) {
-                    $query->select([
-                        'id',
-                        'numero_documento',
-                        'nombre',
-                        'apellido'
-                    ]);
-                }
-            ]);
+        $historiasClinicas = DB::table('formula_anteojos')
+        ->join('paciente', 'formula_anteojos.id_paciente', '=', 'paciente.id')
+
+        ->leftJoin('motivo_consulta', function($query){
+            $query->on('formula_anteojos.numero_formula_anteojos', '=', 'motivo_consulta.mc_consecutivo')
+                ->on('formula_anteojos.id_paciente', '=', 'motivo_consulta.id_paciente');
+        })
+        ->leftJoin('antecedentes', function($query){
+            $query->on('formula_anteojos.numero_formula_anteojos', '=', 'antecedentes.numero_antecedente')
+                ->on('formula_anteojos.id_paciente', '=', 'antecedentes.id_paciente');
+        })
+        ->where('formula_anteojos.id_paciente', $paciente->id);
+
+        $buscar = $request->buscar;
+        // Buscar
+        if($buscar){
+            $historiasClinicas = $historiasClinicas->where('formula_anteojos.numero_formula_anteojos', 'like', '%'.trim($buscar).'%')
+                        ->orWhere('formula_anteojos.fecha_formula', 'like', '%'.trim($buscar).'%')
+                        ->orWhere('formula_anteojos.updated_at', 'like', '%'.trim($buscar).'%')
+                        ->orWhere('paciente.numero_documento', 'LIKE', "%".trim($buscar)."%")
+                        ->orWhere('paciente.nombre', 'LIKE', "%".trim($buscar)."%")
+                        ->orWhere('paciente.apellido', 'LIKE', "%".trim($buscar)."%");
+        }
+
+        // ordenamiento
+        $columna = $request->orderColumn;
+        $orden   = $request->order;
+        if ($columna != "" && $orden != "") {
+            if (strtolower($orden) != "desc" && strtolower($orden) != "asc") {
+                $orden = "desc";
+            }
+            switch ($columna) {
+                case 'numero_formula_anteojos':
+                case 'fecha_formula':
+                case 'updated_at':
+                    $historiasClinicas = $historiasClinicas->orderBy("formula_anteojos.".$columna, $orden);
+                break;
+                case 'numero_documento':
+                case 'nombre':
+                case 'apellido':
+                    $historiasClinicas = $historiasClinicas->orderBy("paciente.".$columna, $orden);
+                break;
+            }
+        }
 
         // consulta para saber cuantos registros hay.
-        $totalRegistros = $formulaAnteojos->count();
+        $totalRegistros = $historiasClinicas->count();
 
         if ($totalRegistros == 0) {
             return response()->json([
                 'data'      => [
-                    ["get_paciente" => $paciente]
+                    $paciente
                 ],
                 'filtrados' => 0,
                 'total'     => 0,
             ], 200);
         }
-
-        $registros = $formulaAnteojos->skip($start)
+        $historiasClinicas = $historiasClinicas->select(
+            'paciente.nombre',
+            'paciente.apellido',
+            'paciente.numero_documento',
+            'paciente.fecha_nacimiento',
+            'paciente.edad',
+            'formula_anteojos.id',
+            'formula_anteojos.id_paciente',
+            'formula_anteojos.numero_formula_anteojos',
+            'formula_anteojos.fecha_formula',
+            'formula_anteojos.updated_at')
+            ->skip($start)
             ->take($length)
             ->get();
 
         return response()->json([
-            'data'      => $registros,
-            'filtrados' => $registros->count(),
+            'data'      => $historiasClinicas,
+            'filtrados' => $historiasClinicas->count(),
             'total'     => $totalRegistros,
         ], 200);
     }
@@ -119,12 +159,37 @@ class FormulaAnteojosController extends Controller
     public function store(Request $request)
     {
         $errores = [];
-        $validator = Validator::make(
-                                    $request->all(),
-                                    FormulaAnteojos::$rulesStore,
-                                    FormulaAnteojos::$messages);
-        if ($validator->fails()) {
-            $errores = $validator->errors();
+        // ====================== VALIDACIONES FORMULA ANTEOJOS ================
+        $validatorFormulaAnteojos = Validator::make($request->all(),FormulaAnteojos::$rulesStore,FormulaAnteojos::$messages);
+        if ($validatorFormulaAnteojos->fails()) {
+            $errores['erroresFormulaAnteojos'] = $validatorFormulaAnteojos->errors();
+        }
+
+        // ======================== VALIDACIONES MOTIVO CONSULTA ==================
+        $validatorMotivoConsulta = Validator::make($request->all(),MotivoConsulta::$rulesStore,MotivoConsulta::$messages);
+        if ($validatorMotivoConsulta->fails()) {
+            $errores['erroresMotivoConsulta'] = $validatorMotivoConsulta->errors();
+        }
+
+        if($request->hasFile('refracciones')){
+            foreach($request->file('refracciones') as $file){
+                $validatorMotivoConsultaRefraccion = Validator::make(["url_refraccion" => $file],['url_refraccion' => 'mimes:jpg,jpeg,png'],MotivoConsulta::$messages);
+                if ($validatorMotivoConsultaRefraccion->fails()) {
+                    $errores['erroresMotivoConsulta'] = $validatorMotivoConsultaRefraccion->errors();
+                }
+            }
+        }
+
+        // ======================== VALIDACIONES ANTECEDENTES ==================
+        $validatorAntecedentes = Validator::make($request->all(),Antecedente::$rulesStore,Antecedente::$messages);
+
+        if (!$request->filled('antecedentes') && !$request->filled('otro')) {
+            $validatorAntecedentes->after(function ($validatorAntecedentes) {
+                $validatorAntecedentes->errors()->add('sin_antecedentes', 'Debe marcar mimimo un Antecedente o ingresar antecedente en el campo Otro si no se encuentra.');
+            });
+        }
+        if ($validatorAntecedentes->fails()) {
+            $errores['erroresAntecedentes'] = $validatorAntecedentes->errors();
         }
 
         if (count($errores) > 0) {
@@ -144,32 +209,83 @@ class FormulaAnteojosController extends Controller
         }
 
         try {
-            $numeroFormulaAnteojos = $this->obtenerNumeroFormulaAnteojos($request->numero_documento);
+            // ======= GUARDAR FORMULA ANTEOJOS ==============
+            $consecutuvo = $this->obtenerNumeroFormulaAnteojos($request->numero_documento);
 
             $request->merge([
                 'id_paciente'               => $paciente->id,
-                'numero_formula_anteojos'   => $numeroFormulaAnteojos
+                'numero_formula_anteojos'   => $consecutuvo
             ]);
-            $input = $request->except(['numero_documento']);
-            $input = $request->collect();
 
-            $data = $input->map(function ($valor, $key) {
-
-                if ($valor == null) {
-                    $valor = "";
+            // Campos que no hacen parte de formula anteojos
+            $vRequestFormulaAnteojos = $request->except([
+                'numero_documento',
+                // Motivo consulta
+                'refracciones',
+                'descripcion_motivo_consulta',
+                // antecedentes
+                'antecedentes',
+                'otro'
+            ]);
+            foreach ($vRequestFormulaAnteojos as $key => $value) {
+                if ($value == null) {
+                    $vRequestFormulaAnteojos[$key] = "";
                 }
 
                 if ($key == "diagnostico" || $key == "tratamiento" || $key == "observacion" || $key == "orden_medica") {
-                    if ($valor != "") {
-                        $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
+                    if ($value != "") {
+                        $vRequestFormulaAnteojos[$key] = trim(strtoupper($this->fnEliminarTildes($value)));
                     }
-                }else if($valor != ""){
-                    $valor = trim($valor);
+                }else if($value != ""){
+                    $vRequestFormulaAnteojos[$key] = trim($value);
                 }
-                return $valor;
-            })->all();
+            }
 
-            FormulaAnteojos::create($data);
+            FormulaAnteojos::create($vRequestFormulaAnteojos);
+
+            // ======= GUARDAR MOTIVO CONSULTA ==============
+
+            if (!file_exists(public_path('storage/img-refracciones-temporal'))) {
+                File::makeDirectory(public_path('storage/img-refracciones-temporal'), 0777);
+            }
+            if (!file_exists(public_path('storage/refracciones'))) {
+                File::makeDirectory(public_path('storage/refracciones'), 0777);
+            }
+
+            $nombrePdf = null;
+
+            if($request->hasFile('refracciones')){
+
+                // Procesando imagenes para crear pdf con refracciones subida.
+                $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $consecutuvo);
+
+                if ($vReturnPdfRefracciones[0] == "false") {
+                    return response()->json([
+                        'message' => 'Error inesperado.',
+                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
+                    ], 500);
+                }else{
+                    $nombrePdf = $vReturnPdfRefracciones[1];
+                }
+
+            }
+
+            MotivoConsulta::create([
+                "id_paciente"       => $paciente->id,
+                "mc_consecutivo"  => $consecutuvo,
+                "url_refraccion"    => $nombrePdf,
+                "descripcion"       => trim(strtoupper($this->fnEliminarTildes($request->descripcion_motivo_consulta)))
+            ]);
+            // ======= GUARDAR MOTIVO CONSULTA ==============
+
+            // =========== GUARDAR ANTECEDENTES ======================
+            Antecedente::create([
+                'id_paciente'               => $paciente->id,
+                'numero_antecedente'        => $consecutuvo,
+                'antecedentes'              => $request->antecedentes,
+                'otro'                      => trim(strtoupper($this->fnEliminarTildes($request->otro)))
+            ]);
+            // =========== GUARDAR ANTECEDENTES ======================
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',
@@ -190,10 +306,30 @@ class FormulaAnteojosController extends Controller
      */
     public function show($id)
     {
-        $formulaAnteojos = FormulaAnteojos::findOrfail($id);
+        $historiasClinicas = DB::table('formula_anteojos')
+        ->join('paciente', 'formula_anteojos.id_paciente', '=', 'paciente.id')
+
+        ->leftJoin('motivo_consulta', function($query){
+            $query->on('formula_anteojos.numero_formula_anteojos', '=', 'motivo_consulta.mc_consecutivo')
+                ->on('formula_anteojos.id_paciente', '=', 'motivo_consulta.id_paciente');
+        })
+        ->leftJoin('antecedentes', function($query){
+            $query->on('formula_anteojos.numero_formula_anteojos', '=', 'antecedentes.numero_antecedente')
+                ->on('formula_anteojos.id_paciente', '=', 'antecedentes.id_paciente');
+        })
+        ->where('formula_anteojos.id',$id)
+        ->select(
+            'formula_anteojos.*',
+            'motivo_consulta.id as id_motivo_consulta',
+            'motivo_consulta.url_refraccion',
+            'motivo_consulta.descripcion as descripcion_motivo_consulta',
+            'antecedentes.id as id_antecedentes',
+            'antecedentes.antecedentes',
+            'antecedentes.otro')
+        ->first();
 
         return response()->json([
-            'data'      => $formulaAnteojos,
+            'data'      => $historiasClinicas,
         ], 200);
     }
 
@@ -207,13 +343,52 @@ class FormulaAnteojosController extends Controller
     public function update(Request $request, $id)
     {
         $errores = [];
-        $validator = Validator::make(
-                                    $request->all(),
-                                    FormulaAnteojos::$rulesStore,
-                                    FormulaAnteojos::$messages);
-        if ($validator->fails()) {
-            $errores = $validator->errors();
+        //=================== INICIO VALIDACIONES ======================//
+
+        // 1. FORMULA ANTEOJOS
+        $validatorFormulaAnteojos = Validator::make($request->all(),FormulaAnteojos::$rulesStore,FormulaAnteojos::$messages);
+        if ($validatorFormulaAnteojos->fails()) {
+            $errores['erroresFormulaAnteojos'] = $validatorFormulaAnteojos->errors();
         }
+        if (count($errores) > 0) {
+            return response()->json([
+                'message' => 'Error de Validación de Datos',
+                'errors' => $errores
+            ], 422);
+        }
+
+        // 2. VALIDANDO MOTIVO CONSULTA
+
+        $validatorMotivoConsulta = Validator::make($request->all(),MotivoConsulta::fnRulesUpdate(),MotivoConsulta::$messages);
+        if ($validatorMotivoConsulta->fails()) {
+            $errores['erroresMotivoConsulta'] = $validatorMotivoConsulta->errors();
+        }
+
+        // Validando refracciones.
+        if($request->hasFile('refracciones')){
+            foreach($request->file('refracciones') as $file){
+                $validatorMotivoConsultaFile = Validator::make(["url_refraccion" => $file],['url_refraccion' => 'mimes:jpg,jpeg,bmp,png'],MotivoConsulta::$messages);
+                if ($validatorMotivoConsultaFile->fails()) {
+                    $errores['erroresMotivoConsulta'] = $validatorMotivoConsultaFile->errors();
+                }
+            }
+        }
+
+        // 3. VALIDANDO ANTECEDENTES
+
+        $validatorAntecedentes = Validator::make($request->all(),Antecedente::$rulesStore,Antecedente::$messages);
+
+        if (!$request->filled('antecedentes') && !$request->filled('otro')) {
+            $validatorAntecedentes->after(function ($validatorAntecedentes) {
+                $validatorAntecedentes->errors()->add('sin_antecedentes', 'Debe marcar los Antecedentes o ingresar antecedente en el campo Otro si no se encuentra.');
+            });
+        }
+
+        if ($validatorAntecedentes->fails()) {
+            $errores['erroresAntecedentes'] = $validatorAntecedentes->errors();
+        }
+
+        // ================== FIN VALIDACIONES ======================//
 
         if (count($errores) > 0) {
             return response()->json([
@@ -221,6 +396,8 @@ class FormulaAnteojosController extends Controller
                 'errors' => $errores
             ], 422);
         }
+
+        // ====== UPDATE ==========//
 
         // consultando que exista el paciente
         $paciente = Paciente::select('id')->where('numero_documento', $request->numero_documento)->first();
@@ -231,7 +408,7 @@ class FormulaAnteojosController extends Controller
             ], 409);
         }
 
-        $formulaAnteojos = FormulaAnteojos::select('id')->where('id', $id)->first();
+        $formulaAnteojos = FormulaAnteojos::where('id', $id)->first();
         if (!$formulaAnteojos) {
             return response()->json([
                 'message' => 'Validación de Datos',
@@ -239,31 +416,131 @@ class FormulaAnteojosController extends Controller
             ], 404);
         }
 
-        try {
+        // 1. FORMULA ANTEOJOS
+        // Campos que no hacen parte de formula anteojos
+        $vRequestFormulaAnteojos = $request->except([
+            'id',
+            'numero_documento',
+            // Motivo consulta
+            'id_motivo_consulta',
+            'refracciones',
+            'descripcion_motivo_consulta',
+            // antecedentes
+            'id_antecedentes',
+            'antecedentes',
+            'otro'
+        ]);
+        foreach ($vRequestFormulaAnteojos as $key => $value) {
+            if ($value == null) {
+                $vRequestFormulaAnteojos[$key] = "";
+            }
 
-            $input = $request->except(['numero_documento']);
-            $input = $request->collect();
-
-            $data = $input->map(function ($valor, $key) {
-                if ($valor == null) {
-                    $valor = "";
+            if ($key == "diagnostico" || $key == "tratamiento" || $key == "observaciones2" || $key == "orden_medica") {
+                if ($value != "") {
+                    $vRequestFormulaAnteojos[$key] = trim(strtoupper($this->fnEliminarTildes($value)));
                 }
+            }else if($value != ""){
+                $vRequestFormulaAnteojos[$key] = trim($value);
+            }
+        }
 
-                if ($key == "diagnostico" || $key == "tratamiento" || $key == "observacion" || $key == "orden_medica") {
-                    if ($valor != "") {
-                        $valor = trim(strtoupper($this->fnEliminarTildes($valor)));
+        // 2. MOTIVO CONSULTA
+        $motivo_consulta = MotivoConsulta::where('id',$request->id_motivo_consulta)->first();
+        $nombrePdf = null; // Variable para guardar el nombre del archivo PDF.
+        if ($motivo_consulta) {
+
+            // Determina si el parametro está ausente.
+            if ($request->missing('refracciones')) {
+                $nombrePdf = $motivo_consulta->url_refraccion;
+            }else{
+
+                if($request->hasFile('refracciones')){
+
+                    // Eliminando PDF, porque se subieron refracciones nuevas.
+                    File::delete(public_path('storage/refracciones/').$motivo_consulta->url_refraccion);
+
+                    // Procesando imagenes para crear pdf con refracciones subida.
+                    $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $motivo_consulta->mc_consecutivo);
+
+                    if ($vReturnPdfRefracciones[0] == "false") {
+                        return response()->json([
+                            'message' => 'Error inesperado.',
+                            'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
+                        ], 500);
+                    }else{
+                        $nombrePdf = $vReturnPdfRefracciones[1];
                     }
-                }else if($valor != ""){
-                    $valor = trim($valor);
+                }else{
+                    try {
+                        // Eliminando PDF no se envío ninguna refracción
+                        File::delete(public_path('storage/refracciones/').$motivo_consulta->url_refraccion);
+                    } catch (Exception $e) {
+                        return response()->json([
+                            'message' => 'Error inesperado',
+                            'errors' => [
+                                'Error al eliminar PDF refracciones.'
+                            ]
+                        ], 500);
+                    }
                 }
-                return $valor;
-            })->all();
+            }
+        }else{
+            if($request->hasFile('refracciones')){
+
+                // Procesando imagenes para crear pdf con refracciones subida.
+                $vReturnPdfRefracciones = $this->fnPdfRefracciones($request, $formulaAnteojos->numero_formula_anteojos);
+
+                if ($vReturnPdfRefracciones[0] == "false") {
+                    return response()->json([
+                        'message' => 'Error inesperado.',
+                        'errors' => "Error al procesar archivos refracciones, por favor comuniquese con el area de Tecnología, Gracias.".$vReturnPdfRefracciones[2]
+                    ], 500);
+                }else{
+                    $nombrePdf = $vReturnPdfRefracciones[1];
+                }
+            }
+        }
+
+        try {
+            // FORMULA ANTEOJOS
+            FormulaAnteojos::find($id)->update($vRequestFormulaAnteojos);
+
+            // MOTIVO CONSULTA
+            if (!$motivo_consulta) {
+                // Crear motivo consulta.
+                MotivoConsulta::create([
+                    "id_paciente"       => $paciente->id,
+                    "mc_consecutivo"  => $formulaAnteojos->numero_formula_anteojos,
+                    "url_refraccion"    => $nombrePdf,
+                    "descripcion"       => trim(strtoupper($this->fnEliminarTildes($request->descripcion_motivo_consulta)))
+                ]);
+            }else{
+                // Actualizar motivo consulta.
+                $motivo_consulta->update([
+                    "descripcion"    => trim(strtoupper($this->fnEliminarTildes($request->descripcion_motivo_consulta))),
+                    "url_refraccion" => $nombrePdf,
+                ]);
+            }
+
+            // ANTECEDENTES
+            $antecedente = Antecedente::select('id')->where('id', $request->id_antecedentes)->first();
+            if (!$antecedente) {
+                // Crear antecedentes.
+                Antecedente::create([
+                    'id_paciente'               => $paciente->id,
+                    'numero_antecedente'        => $formulaAnteojos->numero_formula_anteojos,
+                    'antecedentes'              => $request->antecedentes,
+                    'otro'                      => trim(strtoupper($this->fnEliminarTildes($request->otro)))
+                ]);
+            }else{
+                // Actualizar antecedentes.
+                Antecedente::find($request->id_antecedentes)->update([
+                    'antecedentes' => $request->antecedentes,
+                    'otro'         => trim(strtoupper($this->fnEliminarTildes($request->otro))),
+                ]);
+            }
 
 
-            // var_dump($data);
-            // die();
-            FormulaAnteojos::find($id)->update($data);
-            // $formulaAnteojos->update($data);
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error inesperado',
@@ -291,16 +568,47 @@ class FormulaAnteojosController extends Controller
         if ($formulaAnteojos) {
             try {
                 // Eliminando
-                $formulaAnteojos->delete();
+                $antecedente = Antecedente::select('id')->where(
+                    [
+                        ['numero_antecedente', '=', $formulaAnteojos->numero_formula_anteojos],
+                        ['id_paciente'       , '=', $formulaAnteojos->id_paciente]
+                    ]
+                    )->first();
+                if (!$antecedente) {
+                    return response()->json([
+                        'message' => 'Error inesperado',
+                        'errors' => "No existe Antecedente."
+                    ], 404);
+                }
+
+                $motivo_consulta = MotivoConsulta::select('id')->where(
+                    [
+                        ['mc_consecutivo', '=', $formulaAnteojos->numero_formula_anteojos],
+                        ['id_paciente'       , '=', $formulaAnteojos->id_paciente]
+                    ]
+                    )->first();
+                if (!$motivo_consulta) {
+                    return response()->json([
+                        'message' => 'Error inesperado',
+                        'errors' => "No existe Motivo consulta."
+                    ], 404);
+                }
+
+                if ($antecedente && $motivo_consulta) {
+                    FormulaAnteojos::find($formulaAnteojos->id)->forceDelete();
+                    Antecedente::find($antecedente->id)->forceDelete();
+                    MotivoConsulta::find($motivo_consulta->id)->delete(); // este modelo no tiene SoftDeletes
+                }
+
             } catch (Exception $e) {
                 return response()->json([
                     'message' => 'Error inesperado en el Sistema',
-                    'errors' => "Error al eliminar Formula Anteojos No.$formulaAnteojos->numero_formula_anteojos"
+                    'errors' => "Error al eliminar Historia Clinica No.$formulaAnteojos->numero_formula_anteojos"
                 ], 500);
             }
 
             return response()->json([
-                'message' => "La Formula Anteojos No.$formulaAnteojos->numero_formula_anteojos ha sido eliminada.",
+                'message' => "La Historia Clinica No.$formulaAnteojos->numero_formula_anteojos ha sido eliminada.",
             ], 201);
         }else{
             return response()->json([
@@ -347,7 +655,7 @@ class FormulaAnteojosController extends Controller
     }
 
     /**
-     * Método que genera reporte en PDF de Formula Anteojos
+     * Método que genera reporte en PDF de Historia clinica.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

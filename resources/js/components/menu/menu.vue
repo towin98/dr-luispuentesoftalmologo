@@ -447,7 +447,6 @@ export default {
                 case 'historia-clinica':
                 case 'historia-clinica/motivo-consulta':
                 case 'historia-clinica/formula-anteojos':
-                case 'historia-clinica/antecedentes':
                 case 'historia-clinica/cargar-archivo':
                     this.pathPrevious = 'historia-clinica';
                     this.titleProceso = 'Historia Clinica';
@@ -477,7 +476,7 @@ export default {
 
         this.intervalId = setInterval(async () => {
             await this.informacionUsuario();
-        }, 28000);
+        }, 60000);
 
         switch (this.infoUser.rol) {
             case "SECRETARIA":

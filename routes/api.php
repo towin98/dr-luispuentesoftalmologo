@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HistoriaClinica\AntecedentesController;
 use App\Http\Controllers\HistoriaClinica\CargarArchivosController;
+use App\Http\Controllers\HistoriaClinica\EvolucionController;
 use App\Http\Controllers\HistoriaClinica\FormulaAnteojosController;
 use App\Http\Controllers\Paciente\PacienteController;
 use App\Http\Controllers\HistoriaClinica\HistoriaClinicaController;
@@ -49,31 +50,17 @@ Route::group(['prefix' => 'paciente', 'middleware' => 'auth:sanctum'] , function
 Route::group(['prefix' => 'historia-clinica', 'middleware' => 'auth:sanctum'] , function(){
     Route::get('/buscar', [HistoriaClinicaController::class, 'buscar']);
 
-    // Evolucion
-    Route::get('/buscar/evolucion/{numero_documento}', [HistoriaClinicaController::class, 'buscarEvolucion']);
-    Route::post('/guardar/evolucion', [HistoriaClinicaController::class, 'storeEvolucion']);
-    Route::get('/numero-evolucion/{id_paciente}', [HistoriaClinicaController::class, 'obtenerNumeroEvolucion']);
-    Route::get('/mostrar/evolucion/{id}', [HistoriaClinicaController::class, 'showEvolucion']);
+    // Motivo consulta
     Route::post('/descargar/evolucion/refracciones', [HistoriaClinicaController::class, 'descargar']);
-    Route::post('/actualizar/evolucion/{id}', [HistoriaClinicaController::class, 'updateEvolucion']);
-    Route::post('/delete/evolucion/{id}', [HistoriaClinicaController::class, 'destroyEvolucion']);
 
-    // Formula Anteojos
+    // Formula Anteojos - Historia Clinica
     Route::post('/guardar/formula-anteojos', [FormulaAnteojosController::class, 'store']);
-    Route::put('/actualizar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'update']);
+    Route::post('/actualizar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'update']);
     Route::get('/mostrar/formula-anteojos/{id}', [FormulaAnteojosController::class, 'show']);
     Route::post('/delete/formula-anteojos/{id}', [FormulaAnteojosController::class, 'destroy']);
     Route::get('/listar/formula-anteojos/{numero_documento}', [FormulaAnteojosController::class, 'listar']);
     Route::get('/cosecutivo-formula-anteojos/{id_paciente}', [FormulaAnteojosController::class, 'obtenerNumeroFormulaAnteojos']);
     Route::post('/pdf/formula-anteojos', [FormulaAnteojosController::class, 'reportePdf']);
-
-    // Antecedentes
-    Route::post('/guardar/antecedentes', [AntecedentesController::class, 'store']);
-    Route::put('/actualizar/antecedentes/{id}', [AntecedentesController::class, 'update']);
-    Route::get('/mostrar/antecedentes/{id}', [AntecedentesController::class, 'show']);
-    Route::post('/delete/antecedentes/{id}', [AntecedentesController::class, 'destroy']);
-    Route::get('/listar/antecedentes/{numero_documento}', [AntecedentesController::class, 'listar']);
-    Route::get('/cosecutivo-antecedentes/{id_paciente}', [AntecedentesController::class, 'obtenerNumeroAntecedente']);
 
     // cargar archivo
     Route::post('/guardar/cargar-archivo', [CargarArchivosController::class, 'store']);
@@ -83,6 +70,15 @@ Route::group(['prefix' => 'historia-clinica', 'middleware' => 'auth:sanctum'] , 
     Route::get('/listar/cargar-archivo/{numero_documento}', [CargarArchivosController::class, 'listar']);
     Route::get('/cosecutivo-cargar-archivo/{id_paciente}', [CargarArchivosController::class, 'obtenerConsecutivo']);
     Route::post('/descargar/archivo', [CargarArchivosController::class, 'descargar']);
+
+    // Rutas Evolucion
+    Route::get('/listar/evolucion/{numero_documento}', [EvolucionController::class, 'listar']);
+    Route::get('/mostrar/evolucion/{id}', [EvolucionController::class, 'show']);
+    Route::get('/consecutivo/evolucion/', [EvolucionController::class, 'obtenerConsecutivoEvolucion']);
+    Route::post('/guardar/evolucion', [EvolucionController::class, 'store']);
+    Route::post('/actualizar/evolucion/{id}', [EvolucionController::class, 'update']);
+    Route::post('/delete/evolucion/{id}', [EvolucionController::class, 'destroy']);
+    Route::post('/pdf/evolucion', [EvolucionController::class, 'reportePdfEvolucion']);
 });
 
 Route::group(['prefix' => 'agenda', 'middleware' => 'auth:sanctum'] , function(){

@@ -7,24 +7,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+// use OwenIt\Auditing\Auditable;
+// use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class User extends Authenticatable implements AuditableContract
+class User extends Authenticatable // implements AuditableContract
 {
     use HasApiTokens;
     use Notifiable;
     use HasRoles;
     use HasFactory;
-    use Auditable;
+    // use Auditable;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function generateTags(): array
-    {
-        return ["USUARIOS"];
-    }
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function generateTags(): array
+    // {
+    //     return ["USUARIOS"];
+    // }
 
     /**
      * The attributes that are mass assignable.

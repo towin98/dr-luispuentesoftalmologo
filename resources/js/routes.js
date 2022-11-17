@@ -13,9 +13,8 @@ import inicio from './components/consultorio/inicio.vue'
 import crearPaciente from './components/consultorio/ingresar/crearPaciente.vue'
 import busquedaHistoriaClinica from './components/consultorio/historiaClinica/busquedaHistoriaClinica.vue'
 import cargarArchivo from './components/consultorio/historiaClinica/cargarArchivo.vue'
-import motivoConsulta from './components/consultorio/historiaClinica/motivoConsulta.vue'
 import formulaAnteojos from './components/consultorio/historiaClinica/formulaAnteojos.vue'
-import antecedentes from './components/consultorio/historiaClinica/antecedentes.vue'
+import evolucion from './components/consultorio/historiaClinica/evolucion.vue'
 import citaCliente from './components/consultorio/agenda/citaCliente.vue'
 import informeCita from './components/consultorio/agenda/informeCita.vue'
 
@@ -65,24 +64,21 @@ const router = new VueRouter({
                     name: 'historia-clinica',
                 },
                 {
-                    path: 'historia-clinica/motivo-consulta/:numero_documento',
-                    component: motivoConsulta,
-                    name: 'historia-clinica/motivo-consulta',
-                },
-                {
                     path: 'historia-clinica/formula-anteojos/:numero_documento',
                     component: formulaAnteojos,
                     name: 'historia-clinica/formula-anteojos',
-                },
-                {
-                    path: 'historia-clinica/antecedentes/:numero_documento',
-                    component: antecedentes,
-                    name: 'historia-clinica/antecedentes',
+                    props : true
                 },
                 {
                     path: 'historia-clinica/cargar-archivo/:numero_documento',
                     component: cargarArchivo,
                     name: 'historia-clinica/cargar-archivo',
+                },
+                {
+                    path: 'historia-clinica/evolucion/:numero_documento/:consecutivo',
+                    component: evolucion,
+                    name: 'historia-clinica/evolucion',
+                    props : true
                 },
                 // Historia clinica FIN
 
