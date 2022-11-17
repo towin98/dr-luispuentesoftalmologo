@@ -827,32 +827,32 @@
             </v-row>
             <!-- Examen Oftalmológico end -->
 
-            <!-- En este DIV ira la firma del doctor, solo se permite visualizar al imprimir formulario. -->
-            <div style="padding-right: 20px;">
-                <div style=" display: flex; flex-direction: column; align-items: end;">
-                    <div style="margin-right: 45px;">
-                        <v-img src="/img/sistema/firma_medico.png" class="width-height-img-firma" alt="Firma"></v-img>
-                    </div>
-                    <div>
-                        <p class="font-size-firma">
-                            DR.  LUIS AUGUSTO PUENTES MILLAN <br>
-                            CC. 19.143.147 Bogotá D.C<br>
-                            Registro No. 8127/76
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <firmaFormulario/>
 
             <v-row class="pl-4 pr-4 parte1">
                 <!-- BOTONES ACCIONES  -->
                 <v-col cols="12" sm="6">
+                    <!-- Evolucioón  -->
+                    <v-btn
+                        type="button"
+                        small
+                        color="success"
+                        class="white--text text-none mb-2"
+                        tile
+                        v-on:click="fnAbrirEvolucion()"
+                        v-if="cAccion == 'Actualizar'"
+                    >
+                        Ir a Evolución
+                        <v-icon right> arrow_forward_ios </v-icon>
+                    </v-btn>
+                    <br>
                     <v-btn
                         type="submit"
                         small
                         color="red darken-4"
                         class="white--text text-none"
                         tile
-                        v-on:click="fnImprimir('formula')"
+                        v-on:click="fnDescargarPdfHistoriaClinica('formula')"
                         v-if="cAccion == 'Actualizar'"
                         :disabled="!$can(['EDITAR'])"
                     >
@@ -865,7 +865,7 @@
                         color="red darken-4"
                         class="white--text text-none"
                         tile
-                        v-on:click="modalImprimirOrdenMedica = true"
+                        v-on:click="fnAbrirModalImprimirOrdenMedica(true)"
                         v-if="cAccion == 'Actualizar'"
                         :disabled="!$can(['EDITAR'])"
                     >
@@ -878,7 +878,7 @@
                         color="red darken-4"
                         class="white--text text-none"
                         tile
-                        v-on:click="fnImprimir('rx')"
+                        v-on:click="fnDescargarPdfHistoriaClinica('rx')"
                         v-if="cAccion == 'Actualizar'"
                         :disabled="!$can(['EDITAR'])"
                     >
@@ -890,7 +890,7 @@
 
                     <!-- Descargar Refracción  -->
                     <v-btn
-                        type="submit"
+                        type="button"
                         small
                         color="red darken-4"
                         class="white--text text-none mt-1"
@@ -1000,30 +1000,25 @@
         </v-row>
         <!-- end Data table -->
 
-        <!-- Start Modal Orden Médica -->
-        <v-dialog v-model="modalImprimirOrdenMedica" persistent max-width="600px">
-            <v-card>
-                <v-toolbar color="grey lighten-2" >Eliga la dirección a incluir en la Orden Médica</v-toolbar>
-                <v-card-text class="mt-3">
-                    <v-btn dark small color="success" v-on:click="fnImprimir('orden_medica','centro_oftamologico')">Centro Oftamológico</v-btn>
-                    <v-btn dark small color="success" v-on:click="fnImprimir('orden_medica','oftamolaser_sa')">Oftamolaser SA</v-btn>
-                    <v-btn dark small color="red darken-4" v-on:click="fnImprimir('orden_medica')">Vacío (Sin datos)</v-btn>
-                </v-card-text>
-                <v-divider></v-divider>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn dark small @click="modalImprimirOrdenMedica = false">Cancelar</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-        <!-- end Modal Orden Médica -->
+        <modalOrdenMedicaPdf ref="modalOrdenMedicaPdfEtiqueta" @fnDescargarPdf="fnDescargarPdfHistoriaClinica"></modalOrdenMedicaPdf>
+
     </div>
 </template>
 <script>
 import loadingGeneral from "../../loadingGeneral/loadingGeneral.vue";
+import firmaFormulario from "../../commons/firma-formulario.vue";
+import modalOrdenMedicaPdf from "../../commons/modalOrdenMedicaPdf.vue";
 export default {
+    props: {
+        idHistoriaClinica: {
+            type: Number,
+            default: 0
+        },
+    },
     components: {
         loadingGeneral,
+        firmaFormulario,
+        modalOrdenMedicaPdf
     },
     data() {
         return {
@@ -1134,7 +1129,7 @@ export default {
             fecha_nacimiento : '',
             edad             : '',
 
-            modalImprimirOrdenMedica : false
+            // modalImprimirOrdenMedica : false
         }
     },
     watch: {
@@ -1149,12 +1144,12 @@ export default {
         filterSearch() {
             clearTimeout(this.debounce);
             this.debounce = setTimeout(() => {
-                this.fnBuscar(this.buscar);
+                this.fnBuscar();
             }, 600);
         },
         fnBuscar() {
 
-            // this.overlayLoading = true;
+            this.overlayLoading = true;
             this.loading = true;
 
             let { page, itemsPerPage, sortBy, sortDesc } = this.options;
@@ -1192,31 +1187,31 @@ export default {
                     this.dataSet = data;
 
                     this.loading = false;
-                    // this.overlayLoading = false;
-                    if (this.contador == 0) {
+                    if (this.contador == 0 && this.idHistoriaClinica == 0) {
                         this.contador++;
                         this.fnObtenerNumeroFormulaAnteojos();
                     }
+                    this.overlayLoading = false;
 
                 })
                 .catch((errors) => {
-                    // this.overlayLoading = false;
+                    this.overlayLoading = false;
                     this.loading = false;
                     this.dataSet = [];
                 });
         },
         fnObtenerNumeroFormulaAnteojos(){
             this.form.numero_documento = this.$route.params.numero_documento;
-            this.overlayLoading = true;
+            // this.overlayLoading = true;
             axios
                 .get(`/consultorio-oftamologico/historia-clinica/cosecutivo-formula-anteojos/${this.form.numero_documento}`)
                 .then((response) => {
                     this.numero_formula_anteojos = response.data;
-                    this.overlayLoading = false;
+                    // this.overlayLoading = false;
                 })
                 .catch((errores) => {
                     this.fnResponseError(errores);
-                    this.overlayLoading = false;
+                    // this.overlayLoading = false;
                 });
         },
         fnAccion(){
@@ -1374,8 +1369,8 @@ export default {
                 });
         },
         fnShow(id){
-            this.limpiarCampos();
             this.overlayLoading = true;
+            this.limpiarCampos();
             this.cAccion = "Actualizar";
             axios
                 .get(`/consultorio-oftamologico/historia-clinica/mostrar/formula-anteojos/${id}`)
@@ -1451,7 +1446,9 @@ export default {
             this.form.otro             = '';
 
             // Limpiando Variables formula anteojos
-            this.fnObtenerNumeroFormulaAnteojos();
+            if (this.idHistoriaClinica == 0 || this.cAccion == "Actualizar") {
+                this.fnObtenerNumeroFormulaAnteojos();
+            }
             this.cAccion                  = "Guardar";
             this.form.id                  = '';
             this.form.fecha_formula       = '';
@@ -1514,49 +1511,6 @@ export default {
             this.erroresFormulaAnteojos = "";
             this.erroresMotivoConsulta  = "";
         },
-        fnImprimir(reporte = '', info_centro = ''){
-
-            let data = {};
-
-            switch (reporte) {
-                case 'orden_medica':
-                    data.mostrar_info_centro = info_centro
-                    this.modalImprimirOrdenMedica = false;
-                break;
-            }
-
-            this.overlayLoading = true;
-
-            data.tipo_reporte    = reporte;
-            data.numero_documento= this.$route.params.numero_documento;
-            data.id_formula      = this.form.id;
-
-            axios
-                .post(`/consultorio-oftamologico/historia-clinica/pdf/formula-anteojos`,data,  {responseType: 'blob',})
-                .then((response) => {
-                    let hoy = new Date();
-                    let fecha = hoy.getDate() +""+ ( hoy.getMonth() + 1 ) +""+  hoy.getFullYear();
-                    let hora = hoy.getHours() +""+  hoy.getMinutes() +""+  hoy.getSeconds();
-                    const nombrePDF = reporte+"_"+fecha+""+hora+".pdf";
-
-                    const url = window.URL.createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href= url;
-                    link.setAttribute('download', nombrePDF);
-                    document.body.appendChild(link);
-                    link.click();
-
-                    this.overlayLoading = false;
-                })
-                .catch((errores) => {
-                    this.$swal({
-                        icon: 'error',
-                        title: ``,
-                        text: `Error inesperado al generar PDF.`,
-                    })
-                    this.overlayLoading = false;
-                });
-        },
         fnDescargarRefraccion(){
             this.overlayLoading = true;
             const data = {
@@ -1582,6 +1536,60 @@ export default {
         },
         fnImprimirFormulario(){
             window.print();
+        },
+        fnAbrirEvolucion(){
+            // Navegando hacia el mdodulo de evolución.
+            this.$router.push({name: "historia-clinica/evolucion", params: {idHistoriaClinica: this.form.id, consecutivo: this.form.numero_formula_anteojos, numero_documento: this.$route.params.numero_documento}});
+        },
+        fnDescargarPdfHistoriaClinica(reporte = '', info_centro = ''){
+            let data = {};
+
+            switch (reporte) {
+                case 'orden_medica':
+                    data.mostrar_info_centro = info_centro
+                    this.fnAbrirModalImprimirOrdenMedica(false)
+                break;
+            }
+
+            this.overlayLoading = true;
+
+            data.tipo_reporte    = reporte;
+            data.numero_documento= this.$route.params.numero_documento;
+            data.id_formula      = this.form.id;
+
+            axios
+                .post(`/consultorio-oftamologico/historia-clinica/pdf/formula-anteojos`,data,  {responseType: 'blob',})
+                .then((response) => {
+                    let hoy = new Date();
+                    let fecha = hoy.getDate() +""+ ( hoy.getMonth() + 1 ) +""+  hoy.getFullYear();
+                    let hora = hoy.getHours() +""+  hoy.getMinutes() +""+  hoy.getSeconds();
+                    const nombrePDF = reporte.toUpperCase()+"_"+fecha+""+hora+".pdf";
+
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href= url;
+                    link.setAttribute('download', nombrePDF);
+                    document.body.appendChild(link);
+                    link.click();
+
+                    this.overlayLoading = false;
+                })
+                .catch((errores) => {
+                    this.$swal({
+                        icon: 'error',
+                        title: ``,
+                        text: `Error inesperado al generar PDF.`,
+                    })
+                    this.overlayLoading = false;
+                });
+        },
+        fnAbrirModalImprimirOrdenMedica(val){
+            this.$refs.modalOrdenMedicaPdfEtiqueta.fnAbrirModalImprimirOrdenMedicaLocal(val);
+        }
+    },
+    mounted() {
+        if (this.idHistoriaClinica != 0) {
+            this.fnShow(this.idHistoriaClinica);
         }
     },
 }
@@ -1595,20 +1603,4 @@ export default {
     font-size: 13px !important;
 }
 
-.width-height-img-firma{
-    width: 0px;
-    height: 0px;
-}
-.font-size-firma{
-    font-size: 0px;
-}
-    @media print {
-        .width-height-img-firma{
-            width: 170px;
-            height: auto;
-        }
-        .font-size-firma{
-            font-size: 13px;
-        }
-    }
 </style>

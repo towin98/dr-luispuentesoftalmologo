@@ -655,7 +655,7 @@ class FormulaAnteojosController extends Controller
     }
 
     /**
-     * Método que genera reporte en PDF de Formula Anteojos
+     * Método que genera reporte en PDF de Historia clinica.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Models\alerta;
 use Throwable;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
