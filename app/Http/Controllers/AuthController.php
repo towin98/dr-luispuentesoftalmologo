@@ -39,11 +39,13 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => [
-                    'Las credenciales proporcionadas son incorrectas.'
-                ],
-            ],409);
+            return response()->json([
+                'errors'  => [
+                    'email' => [
+                        'Las credenciales proporcionadas son incorrectas.'
+                    ],
+                ]
+            ], 409);
         }else{
             if (count($user->tokens) > 0) {
                 if ($request->closeSesion != "SI") {
