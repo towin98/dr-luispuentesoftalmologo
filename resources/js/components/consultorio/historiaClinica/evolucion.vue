@@ -117,6 +117,15 @@
                 </v-col>
             </v-row>
 
+            <!-- START RX -->
+            <rxComponent
+                @on:rx="fnActualizarform"
+                :limpiarFormRx="limpiarFormRx"
+                :errors="errors"
+                :setFormRx="setFormRx">
+            </rxComponent>
+            <!-- END RX -->
+
             <firmaFormulario/>
 
             <v-row class="pl-4 pr-4 parte1">
@@ -150,11 +159,25 @@
                     </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6" class="d-flex justify-end">
+
+                    <v-btn
+                        type="button"
+                        small
+                        color="yellow darken-4"
+                        class="white--text text-none mr-3"
+                        tile
+                        v-on:click="$refs.isOpenModal.fnIsOpenModal(true);"
+                        :disabled="!$can(['EDITAR'])"
+                    >
+                        Reporte Evoluciones
+                        <v-icon right> picture_as_pdf </v-icon>
+                    </v-btn>
+
                     <v-btn
                         type="button"
                         small
                         color="grey"
-                        class="white--text mr-3"
+                        class="white--text text-none mr-3"
                         tile
                         v-on:click="fnImprimirFormulario()"
                         v-if="cAccion == 'Actualizar'"
@@ -246,12 +269,65 @@
         <!-- end Data table -->
 
         <modalOrdenMedicaPdf ref="modalOrdenMedicaPdfEtiqueta" @fnDescargarPdf="fnDescargarPdfEvolucion"></modalOrdenMedicaPdf>
+
+        <modal ref="isOpenModal" >
+            <template v-slot:header>
+                <h3>
+                    Reporte Evoluciones
+                </h3>
+            </template>
+            <template v-slot:body>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td>
+                            <v-subheader class="pr-0 pl-0">Del:</v-subheader>
+                        </td>
+                        <td>
+                            <v-text-field
+                                type="date"
+                                v-model="fechaDel"
+                                label="Fecha inicial"
+                                dense>
+                            </v-text-field>
+                        </td>
+                        <td>
+                            <v-subheader class="pr-0 pl-1">Al:</v-subheader>
+                        </td>
+                        <td>
+                            <v-text-field
+                                type="date"
+                                v-model="fechaAl"
+                                label="Fecha final"
+                                dense>
+                            </v-text-field>
+                        </td>
+                    </tr>
+                </table>
+            </template>
+            <template v-slot:footer>
+                <div>
+                    <v-btn
+                        type="button"
+                        small
+                        color="green"
+                        class="white--text text-none mr-1"
+                        :disabled="!$can(['EDITAR'])"
+                        v-on:click="fnDescargarPdfEvolucion('reporte_evoluciones')"
+                    >
+                        Generar
+                        <v-icon right> picture_as_pdf </v-icon>
+                    </v-btn>
+                </div>
+            </template>
+        </modal>
     </div>
 </template>
 <script>
 import loadingGeneral from "../../loadingGeneral/loadingGeneral.vue";
 import firmaFormulario from "../../commons/firma-formulario.vue";
 import modalOrdenMedicaPdf from "../../commons/modalOrdenMedicaPdf.vue";
+import rxComponent from "../../commons/rx.vue";
+import modal from "../../commons/modal.vue";
 export default {
     props: {
         idHistoriaClinica: {
@@ -266,7 +342,29 @@ export default {
     components: {
         loadingGeneral,
         firmaFormulario,
-        modalOrdenMedicaPdf
+        modalOrdenMedicaPdf,
+        rxComponent,
+        modal
+    },
+    watch: {
+        errors: {
+            deep: true, //  Vue observará todos los cambios en las propiedades anidadas del objeto en lugar de solo observar el objeto en sí mismo.
+            handler(errors) {
+                this.$emit('errors', errors)
+            }
+        },
+        limpiarFormRx: {
+            deep: true, //  Vue observará todos los cambios en las propiedades anidadas del objeto en lugar de solo observar el objeto en sí mismo.
+            handler(value) {
+                this.$emit('limpiarFormRx', value)
+            }
+        },
+        setFormRx: {
+            deep: true, //  Vue observará todos los cambios en las propiedades anidadas del objeto en lugar de solo observar el objeto en sí mismo.
+            handler(newValue) {
+                this.$emit('setFormRx', newValue)
+            }
+        },
     },
     data() {
         return {
@@ -313,6 +411,14 @@ export default {
             errors: "",
 
             overlayLoading: false,
+
+            // Variable para indicar si se debe limpiar formulario de rx
+            limpiarFormRx: 0,
+            setFormRx: {}, // Form RX
+
+            // Reporte Evoluciones
+            fechaDel: '',
+            fechaAl: ''
         };
     },
     methods: {
@@ -408,6 +514,15 @@ export default {
                     this.form.evo_descripcion_evolucion     = data.evo_descripcion_evolucion;
                     this.form.evo_tratamiento               = data.evo_tratamiento;
                     this.form.evo_orden_medica              = data.evo_orden_medica;
+
+                    this.setFormRx = {
+                        rx_od       : data.evo_rx_od,
+                        rx_oi       : data.evo_rx_oi,
+                        adicion     : data.evo_adicion,
+                        dp          : data.evo_dp,
+                        observacion : data.evo_observacion
+                    };
+                    this.fnActualizarform(this.setFormRx);
 
                     this.errors = "";
                     this.overlayLoading = false;
@@ -529,6 +644,20 @@ export default {
                     data.mostrar_info_centro = info_centro
                     this.fnAbrirModalImprimirOrdenMedica(false)
                 break;
+                case 'reporte_evoluciones':
+                    if (this.fechaAl == "" || this.fechaDel == "") {
+                        this.$swal({
+                            icon: 'error',
+                            title: `Validación Reporte Evoluciones`,
+                            text: `La fecha Al y Del no pueden ser vacías.`,
+                        })
+                        return;
+                    }
+                    data.fechaDel                   = this.fechaDel;
+                    data.fechaAl                    = this.fechaAl;
+                    data.evo_id_historia_clinica    = this.idHistoriaClinica
+                    data.consecutivoHistoriaClinica = this.consecutivoHistorialClinico
+                break;
             }
 
             this.overlayLoading = true;
@@ -552,14 +681,42 @@ export default {
                     document.body.appendChild(link);
                     link.click();
 
+                    switch (reporte) {
+                        case 'reporte_evoluciones':
+                            this.$refs.isOpenModal.fnIsOpenModal(false);
+                        break;
+                    }
+
                     this.overlayLoading = false;
                 })
                 .catch((errores) => {
-                    this.$swal({
-                        icon: 'error',
-                        title: ``,
-                        text: `Error inesperado al generar PDF.`,
-                    })
+                    switch (reporte) {
+                        case 'reporte_evoluciones':
+                            if (errores.response != undefined && errores.response.status == 422) {
+                                this.$swal({
+                                    icon: 'info',
+                                    title: `Por favor diligencie correctamente fechas Al y Del de Reporte Evoluciones.`,
+                                    text: ``,
+                                })
+                            }
+
+                            if (errores.response != undefined && errores.response.status == 404) {
+                                this.$swal({
+                                    icon: 'info',
+                                    title: `No se encontraron evoluciones para generar reporte, Intente nuevamente.`,
+                                    text: ``,
+                                })
+                            }
+                        break;
+                        default:
+                            this.$swal({
+                                icon: 'error',
+                                title: ``,
+                                text: `Error inesperado al generar PDF.`,
+                            })
+                        break;
+                    }
+
                     this.overlayLoading = false;
                 });
         },
@@ -574,10 +731,15 @@ export default {
             this.form.evo_descripcion_evolucion     = "";
             this.form.evo_tratamiento               = "";
             this.form.evo_orden_medica              = "";
+
+            this.limpiarFormRx++; // auto incremental para que se active el watch y limpie campos de rx, sin necesidad de estar asignando otros valores
         },
         fnImprimirFormulario(){
             window.print();
         },
+        fnActualizarform(formRx){
+            this.form = {...this.form,...formRx}
+        }
     },
     mounted() {
         this.consecutivoHistorialClinico = this.$route.params.consecutivo;

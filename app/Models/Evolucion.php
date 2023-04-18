@@ -56,7 +56,12 @@ class Evolucion extends Model implements AuditableContract
         'evo_fecha_diligenciamiento',
         'evo_descripcion_evolucion',
         'evo_tratamiento',
-        'evo_orden_medica'
+        'evo_orden_medica',
+        'evo_rx_od',
+        'evo_rx_oi',
+        'evo_adicion',
+        'evo_dp',
+        'evo_observacion'
     ];
 
     /**
@@ -73,6 +78,11 @@ class Evolucion extends Model implements AuditableContract
         'evo_descripcion_evolucion',
         'evo_tratamiento',
         'evo_orden_medica',
+        'evo_rx_od',
+        'evo_rx_oi',
+        'evo_adicion',
+        'evo_dp',
+        'evo_observacion',
         'updated_at',
         'getPaciente'
     ];
@@ -82,7 +92,21 @@ class Evolucion extends Model implements AuditableContract
         'evo_id_historia_clinica.required'              => 'El id de la historia clinica es requerido.',
         'evo_fecha_diligenciamiento.required'           => 'La fecha de diligenciamiento de la evolución es requerida.',
         'evo_fecha_diligenciamiento.date_format'        => 'La fecha de diligenciamiento de la evolución es debe ser ej: Y-m-d.',
-        'evo_descripcion_evolucion.required'            => 'La Descripción de la Evolución es requerida.'
+        'evo_descripcion_evolucion.required'            => 'La Descripción de la Evolución es requerida.',
+        'evo_rx_od.required'                            => 'El RX Ojo Derecho es requerido.',
+        'evo_rx_od.string'                              => 'El RX Ojo Derecho debe ser un string.',
+        'evo_rx_od.max'                                 => 'El RX Ojo Derecho es máximo 30 carácteres.',
+        'evo_rx_oi.required'                            => 'El RX Ojo Izquierdo es requerido.',
+        'evo_rx_oi.string'                              => 'El RX Ojo Izquierdo debe ser un string.',
+        'evo_rx_oi.max'                                 => 'El RX Ojo Izquierdo es máximo 30 carácteres.',
+        'evo_adicion.required'                          => 'La adicion es requerida.',
+        'evo_adicion.string'                            => 'La adicion debe ser un string.',
+        'evo_adicion.max'                               => 'La adicion es máximo 30 carácteres.',
+        'evo_dp.required'                               => 'La Distancia Pupilar es requerida.',
+        'evo_dp.string'                                 => 'La Distancia Pupilar debe ser un string.',
+        'evo_dp.max'                                    => 'La Distancia Pupilar es máximo 30 carácteres.',
+        'evo_observacion.required'                      => 'La Observacion es requerida.',
+        'evo_observacion.string'                        => 'La Observacion debe ser un string.'
     ];
 
     static $rulesStore = [
@@ -92,6 +116,11 @@ class Evolucion extends Model implements AuditableContract
         'evo_descripcion_evolucion'  => 'required|string',
         'evo_tratamiento'            => 'nullable|string',
         'evo_orden_medica'           => 'nullable|string',
+        'evo_rx_od'                  => 'nullable|string|max:30',
+        'evo_rx_oi'                  => 'nullable|string|max:30',
+        'evo_adicion'                => 'nullable|string|max:30',
+        'evo_dp'                     => 'nullable|string|max:30',
+        'evo_observacion'            => 'nullable|string',
     ];
 
     static $rulesUpdate = [
@@ -99,6 +128,11 @@ class Evolucion extends Model implements AuditableContract
         'evo_descripcion_evolucion'  => 'required|string',
         'evo_tratamiento'            => 'nullable|string',
         'evo_orden_medica'           => 'nullable|string',
+        'evo_rx_od'                  => 'nullable|string|max:30',
+        'evo_rx_oi'                  => 'nullable|string|max:30',
+        'evo_adicion'                => 'nullable|string|max:30',
+        'evo_dp'                     => 'nullable|string|max:30',
+        'evo_observacion'            => 'nullable|string',
     ];
 
     /**

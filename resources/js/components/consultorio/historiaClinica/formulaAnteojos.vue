@@ -250,68 +250,14 @@
                 </v-col>
             </v-row>
 
-            <v-row class="ml-2 mr-2 mb-4">
-                <v-col sm="6" cols="12" class="pt-0">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <tr>
-                            <td>
-                                <v-subheader class="pr-1 pl-1">OD*</v-subheader>
-                                <v-subheader class="pr-1 pl-1">OI*</v-subheader>
-                            </td>
-                            <td>
-                                <h5 class="">RX</h5>
-                                <v-text-field
-                                    v-model="form.rx_od"
-                                    :error-messages="erroresFormulaAnteojos.rx_od"
-                                    title="RX ojo derecho"
-                                    single-line
-                                    dense
-                                    solo
-                                    class="pr-1"
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="form.rx_oi"
-                                    :error-messages="erroresFormulaAnteojos.rx_oi"
-                                    title="RX ojo Izquierdo"
-                                    single-line
-                                    dense
-                                    solo
-                                    class="pr-1"
-                                ></v-text-field>
-                            </td>
-                            <td>
-                                <v-subheader class="pr-1 pl-1">Adicion</v-subheader>
-                                <v-subheader class="pr-1 pl-1">DP</v-subheader>
-                            </td>
-                            <td>
-                                <v-text-field
-                                    v-model="form.adicion"
-                                    :error-messages="erroresFormulaAnteojos.adicion"
-                                    title="Adición"
-                                    single-line
-                                    dense
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="form.dp"
-                                    :error-messages="erroresFormulaAnteojos.dp"
-                                    title="Distancia Pupilar"
-                                    single-line
-                                    dense
-                                ></v-text-field>
-                            </td>
-                        </tr>
-                    </table>
-                </v-col>
-                <v-col sm="6" cols="12">
-                    <v-textarea
-                        v-model="form.observacion"
-                        :error-messages="erroresFormulaAnteojos.observacion"
-                        rows="2"
-                        outlined
-                        label="Observación">
-                    </v-textarea>
-                </v-col>
-            </v-row>
+            <!-- START RX -->
+            <rxComponent
+                @on:rx="fnActualizarform"
+                :limpiarFormRx="limpiarFormRx"
+                :errors="erroresFormulaAnteojos"
+                :setFormRx="setFormRx">
+            </rxComponent>
+            <!-- END RX -->
 
             <!-- Examen Optométrico end -->
 
@@ -1008,6 +954,7 @@
 import loadingGeneral from "../../loadingGeneral/loadingGeneral.vue";
 import firmaFormulario from "../../commons/firma-formulario.vue";
 import modalOrdenMedicaPdf from "../../commons/modalOrdenMedicaPdf.vue";
+import rxComponent from "../../commons/rx.vue";
 export default {
     props: {
         idHistoriaClinica: {
@@ -1018,7 +965,8 @@ export default {
     components: {
         loadingGeneral,
         firmaFormulario,
-        modalOrdenMedicaPdf
+        modalOrdenMedicaPdf,
+        rxComponent
     },
     data() {
         return {
@@ -1130,6 +1078,10 @@ export default {
             edad             : '',
 
             // modalImprimirOrdenMedica : false
+
+            // Variable para indicar si se debe limpiar formulario de rx
+            limpiarFormRx: 0,
+            setFormRx: {} // Form RX
         }
     },
     watch: {
@@ -1139,6 +1091,27 @@ export default {
             },
         },
         deep: true,
+
+        // Variables watch para formulario RX.
+        erroresFormulaAnteojos: {
+            deep: true, //  Vue observará todos los cambios en las propiedades anidadas del objeto en lugar de solo observar el objeto en sí mismo.
+            handler(errors) {
+                this.$emit('errors', errors)
+            }
+        },
+        limpiarFormRx: {
+            deep: true, //  Vue observará todos los cambios en las propiedades anidadas del objeto en lugar de solo observar el objeto en sí mismo.
+            handler(value) {
+                this.$emit('limpiarFormRx', value)
+            }
+        },
+        setFormRx: {
+            deep: true, //  Vue observará todos los cambios en las propiedades anidadas del objeto en lugar de solo observar el objeto en sí mismo.
+            handler(newValue) {
+                this.$emit('setFormRx', newValue)
+            }
+        }
+
     },
     methods:{
         filterSearch() {
@@ -1276,7 +1249,7 @@ export default {
                         }
                     }
 
-                    let error = errores.response.data.errors;
+                    const error = errores.response.data.errors;
 
                     this.erroresAntecedentes    = error.erroresAntecedentes    != undefined ? error.erroresAntecedentes    : "";
                     this.erroresFormulaAnteojos = error.erroresFormulaAnteojos != undefined ? error.erroresFormulaAnteojos : "";
@@ -1386,6 +1359,15 @@ export default {
 
                     this.url_refraccion   = data.url_refraccion;
                     this.form = data;
+
+                    this.setFormRx = {
+                        rx_od       : data.rx_od,
+                        rx_oi       : data.rx_oi,
+                        adicion     : data.adicion,
+                        dp          : data.dp,
+                        observacion : data.observacion
+                    };
+                    this.fnActualizarform(this.setFormRx);
 
                     this.overlayLoading = false;
                 })
@@ -1505,6 +1487,8 @@ export default {
             this.form.tratamiento         = '';
             this.form.orden_medica        = '';
             this.form.observaciones2      = '';
+
+            this.limpiarFormRx++; // auto incremental para que se active el watch y limpie campos de rx, sin necesidad de estar asignando otros valores
         },
         fnLimpiarErrores(){
             this.erroresAntecedentes    = "";
@@ -1585,6 +1569,9 @@ export default {
         },
         fnAbrirModalImprimirOrdenMedica(val){
             this.$refs.modalOrdenMedicaPdfEtiqueta.fnAbrirModalImprimirOrdenMedicaLocal(val);
+        },
+        fnActualizarform(formRx){
+            this.form = {...this.form, ...formRx}
         }
     },
     mounted() {
