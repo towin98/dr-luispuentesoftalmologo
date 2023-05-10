@@ -71,7 +71,7 @@
             <br>
             <strong>EDAD:</strong>&nbsp;{{ $mData['data']['edad_fecha_nacimiento']}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <strong>CIUDAD:&nbsp;</strong>{{$mData['data']['ciudad']}}
             <br>
             <strong>TELEFONO:</strong>&nbsp;{{$mData['data']['telefono']}}
@@ -87,21 +87,44 @@
                         <strong> {{ $evolucion['evo_fecha_diligenciamiento'] }} </strong>
                     </p>
                     <p>
-                        DESCRIPCION EVOLUCION: {{ $evolucion['evo_tratamiento'] }}
-                        <br>
-                        TRATAMIENTO: {{ $evolucion['evo_tratamiento'] }}
-                        <br>
-                        ORDEN MEDICA: {{ $evolucion['evo_orden_medica'] }}
-                        <br>
-                        RX: OD: {{ $evolucion['evo_rx_od'] }}
-                        <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OI: {{ $evolucion['evo_rx_oi'] }}
-                        <br>
-                        ADICION: {{ $evolucion['evo_adicion'] }}
-                        <br>
-                        DP: {{ $evolucion['evo_dp'] }}
-                        <br>
-                        {{ $evolucion['evo_observacion'] }}
+                        @if ($evolucion['evo_descripcion_evolucion'] != "")
+                            DESCRIPCION EVOLUCION: {{ $evolucion['evo_descripcion_evolucion'] }}
+                            <br>
+                        @endif
+
+                        @if ($evolucion['evo_tratamiento'] != "")
+                            TRATAMIENTO: {{ $evolucion['evo_tratamiento'] }}
+                            <br>
+                        @endif
+
+                        @if ($evolucion['evo_orden_medica'] != "")
+                            ORDEN MEDICA: {{ $evolucion['evo_orden_medica'] }}
+                            <br>
+                        @endif
+
+                        @if ($evolucion['evo_rx_od'] != "")
+                            RX: OD: {{ $evolucion['evo_rx_od'] }}
+                            <br>
+                        @endif
+
+                        @if ($evolucion['evo_rx_oi'] != "")
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OI: {{ $evolucion['evo_rx_oi'] }}
+                            <br>
+                        @endif
+
+                        @if ($evolucion['evo_adicion'] != "")
+                            ADICION: {{ $evolucion['evo_adicion'] }}
+                            <br>
+                        @endif
+
+                        @if ($evolucion['evo_dp'] != "")
+                            DP: {{ $evolucion['evo_dp'] }}
+                            <br>
+                        @endif
+
+                        @if ($evolucion['evo_observacion'] != "")
+                            {{ $evolucion['evo_observacion'] }}
+                        @endif
                     </p>
                 @endforeach
 

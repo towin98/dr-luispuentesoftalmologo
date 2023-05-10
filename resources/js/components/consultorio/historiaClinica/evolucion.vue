@@ -672,7 +672,7 @@ export default {
                     let hoy = new Date();
                     let fecha = hoy.getDate() +""+ ( hoy.getMonth() + 1 ) +""+  hoy.getFullYear();
                     let hora = hoy.getHours() +""+  hoy.getMinutes() +""+  hoy.getSeconds();
-                    const nombrePDF = reporte.toUpperCase()+"_"+fecha+""+hora+".pdf";
+                    const nombrePDF = this.$route.params.numero_documento+"_"+reporte.toUpperCase()+"_"+fecha+""+hora+".pdf";
 
                     const url = window.URL.createObjectURL(new Blob([response.data]));
                     const link = document.createElement('a');
