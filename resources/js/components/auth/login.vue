@@ -83,7 +83,7 @@ export default {
             this.formData.closeSesion = closeSesion;
             this.overlayLoading = true;
             axios
-                .post("/consultorio-oftamologico/login", this.formData)
+                .post("/consultorio-oftalmologico/login", this.formData)
                 .then((response) => {
                     localStorage.setItem("token_Historial_Clinico_Oftamologico", response.data.access_token);
                     this.$router.push("/consultorio/inicio");

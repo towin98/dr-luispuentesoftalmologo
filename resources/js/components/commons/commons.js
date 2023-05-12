@@ -5,7 +5,7 @@ export const commons = {
         },
         async fnBuscarParametro(parametrica){
             try {
-                let response = await axios.get(`/consultorio-oftamologico/parametro/buscar?parametrica=${parametrica}`);
+                let response = await axios.get(`/consultorio-oftalmologico/parametro/buscar?parametrica=${parametrica}`);
                 let data = response.data.data;
                 for (let i = 0; i < data.length; i++) {
                     if (data[i].estado != "ACTIVO") {

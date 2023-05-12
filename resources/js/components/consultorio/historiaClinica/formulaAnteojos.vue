@@ -1144,7 +1144,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/historia-clinica/listar/formula-anteojos/${this.$route.params.numero_documento}?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
+                    `/consultorio-oftalmologico/historia-clinica/listar/formula-anteojos/${this.$route.params.numero_documento}?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
                 )
                 .then((response) => {
                     this.totalRegistros = response.data.total;
@@ -1177,7 +1177,7 @@ export default {
             this.form.numero_documento = this.$route.params.numero_documento;
             // this.overlayLoading = true;
             axios
-                .get(`/consultorio-oftamologico/historia-clinica/cosecutivo-formula-anteojos/${this.form.numero_documento}`)
+                .get(`/consultorio-oftalmologico/historia-clinica/cosecutivo-formula-anteojos/${this.form.numero_documento}`)
                 .then((response) => {
                     this.numero_formula_anteojos = response.data;
                     // this.overlayLoading = false;
@@ -1227,7 +1227,7 @@ export default {
             }
 
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/guardar/formula-anteojos`, formData, {
+                .post(`/consultorio-oftalmologico/historia-clinica/guardar/formula-anteojos`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1300,7 +1300,7 @@ export default {
             }
 
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/actualizar/formula-anteojos/${this.form.id}`, formData, {
+                .post(`/consultorio-oftalmologico/historia-clinica/actualizar/formula-anteojos/${this.form.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1346,7 +1346,7 @@ export default {
             this.limpiarCampos();
             this.cAccion = "Actualizar";
             axios
-                .get(`/consultorio-oftamologico/historia-clinica/mostrar/formula-anteojos/${id}`)
+                .get(`/consultorio-oftalmologico/historia-clinica/mostrar/formula-anteojos/${id}`)
                 .then((response) => {
                     let data = response.data.data;
                     this.numero_formula_anteojos = data.numero_formula_anteojos;
@@ -1390,7 +1390,7 @@ export default {
 
                     this.overlayLoading = true;
 
-                    axios.post(`/consultorio-oftamologico/historia-clinica/delete/formula-anteojos/${item.id}`)
+                    axios.post(`/consultorio-oftalmologico/historia-clinica/delete/formula-anteojos/${item.id}`)
                     .then((response) => {
                         this.errors = "";
                         this.$swal(
@@ -1502,7 +1502,7 @@ export default {
                 path: 'storage/refracciones/'
             };
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/descargar/evolucion/refracciones`,data,  {responseType: 'blob',})
+                .post(`/consultorio-oftalmologico/historia-clinica/descargar/evolucion/refracciones`,data,  {responseType: 'blob',})
                 .then((response) => {
                     const url = window.URL.createObjectURL(new Blob([response.data]))
                     const link = document.createElement('a')
@@ -1542,7 +1542,7 @@ export default {
             data.id_formula      = this.form.id;
 
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/pdf/formula-anteojos`,data,  {responseType: 'blob',})
+                .post(`/consultorio-oftalmologico/historia-clinica/pdf/formula-anteojos`,data,  {responseType: 'blob',})
                 .then((response) => {
                     let hoy = new Date();
                     let fecha = hoy.getDate() +""+ ( hoy.getMonth() + 1 ) +""+  hoy.getFullYear();

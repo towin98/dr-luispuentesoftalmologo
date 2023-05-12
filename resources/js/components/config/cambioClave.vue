@@ -92,7 +92,7 @@ export default {
         fnCambiarClave(){
             this.overlayLoading = true;
             axios
-                .post("/consultorio-oftamologico/password/change", this.form)
+                .post("/consultorio-oftalmologico/password/change", this.form)
                 .then((response) => {
                     this.overlayLoading = false;
                     this.$swal(

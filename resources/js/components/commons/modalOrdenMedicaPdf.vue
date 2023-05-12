@@ -11,7 +11,7 @@
                     small
                     color="success"
                     v-on:click="fnDescargarPdfHistoriaClinica('orden_medica', 'centro_oftamologico')"
-                    >Centro Oftamológico</v-btn
+                    >Centro Oftalmológico</v-btn
                 >
                 <v-btn
                     dark

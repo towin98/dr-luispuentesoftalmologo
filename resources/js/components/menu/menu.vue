@@ -289,7 +289,7 @@ export default {
         logout() {
             this.overlayLoading = true;
             axios
-                .post("/consultorio-oftamologico/logout")
+                .post("/consultorio-oftalmologico/logout")
                 .then((response) => {
                     clearInterval(this.intervalId);
                     clearInterval(this.intervalIdCantidadNotificacionesCitas);
@@ -310,7 +310,7 @@ export default {
         fnLeerNotitifacionCita(item, index){
             this.overlayLoading = true;
             axios
-                .post(`/consultorio-oftamologico/notificacion-citas/leer/${item.id_alerta_cita}`)
+                .post(`/consultorio-oftalmologico/notificacion-citas/leer/${item.id_alerta_cita}`)
                 .then((response) => {
                     this.itemsNotifiaciones[index].get_alerta_cita.leido = item.get_alerta_cita.leido == null ? 'SI' : null;
                 })
@@ -322,7 +322,7 @@ export default {
         fnSeguirPacienteCita(item, index){
             this.overlayLoading = true;
             axios
-                .post(`/consultorio-oftamologico/agenda/seguir-cita/${item.id}`)
+                .post(`/consultorio-oftalmologico/agenda/seguir-cita/${item.id}`)
                 .then((response) => {
                     this.itemsNotifiaciones[index].prioridad_aceptado = item.prioridad_aceptado == null ? 'SI' : null;
                 })
@@ -347,7 +347,7 @@ export default {
                 start  : limit == 0 ? this.itemsNotifiaciones.length      : 0
             };
             axios
-                .get(`/consultorio-oftamologico/notificacion-citas/listar-alertas-citas?start=${data.start}&length=${data.length}&listar=SI`)
+                .get(`/consultorio-oftalmologico/notificacion-citas/listar-alertas-citas?start=${data.start}&length=${data.length}&listar=SI`)
                 .then((response) => {
                     for (let i = 0; i < response.data.data.length; i++) {
                         if (listar == 'INI' || listar == 'FIN' && limit == 0) {
@@ -386,7 +386,7 @@ export default {
 
             if (this.contadorCitas > 0) {
                 axios
-                    .get(`/consultorio-oftamologico/notificacion-citas/listar-alertas-citas`)
+                    .get(`/consultorio-oftalmologico/notificacion-citas/listar-alertas-citas`)
                     .then((response) => {
                         // Si hay mas notificaciones de citas en BD que en el frontend se cargan
                         if (response.data.citasConNotificacion > this.citasConNotificacion) {
@@ -415,7 +415,7 @@ export default {
          */
         fnNotificacionCitasPrioritariasACeptadas(){
             axios
-                .get(`/consultorio-oftamologico/notificacion-citas/prioritarias-aceptadas`)
+                .get(`/consultorio-oftalmologico/notificacion-citas/prioritarias-aceptadas`)
                 .then((response) => {
                     const data = response.data.data;
                     for (let i = 0; i < response.data.data.length; i++) {

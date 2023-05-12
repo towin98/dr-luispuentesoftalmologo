@@ -459,7 +459,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/historia-clinica/listar/evolucion/${this.$route.params.numero_documento}?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}&evo_id_historia_clinica=${this.idHistoriaClinica}`
+                    `/consultorio-oftalmologico/historia-clinica/listar/evolucion/${this.$route.params.numero_documento}?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}&evo_id_historia_clinica=${this.idHistoriaClinica}`
                 )
                 .then((response) => {
                     this.totalRegistros = response.data.total;
@@ -503,7 +503,7 @@ export default {
             this.overlayLoading = true;
             this.cAccion = "Actualizar";
             axios
-                .get(`/consultorio-oftamologico/historia-clinica/mostrar/evolucion/${evo_id}`)
+                .get(`/consultorio-oftalmologico/historia-clinica/mostrar/evolucion/${evo_id}`)
                 .then((response) => {
                     let data = response.data.data;
 
@@ -545,7 +545,7 @@ export default {
 
             this.overlayLoading = true;
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/guardar/evolucion`, formData)
+                .post(`/consultorio-oftalmologico/historia-clinica/guardar/evolucion`, formData)
                 .then((response) => {
                     this.errors = "";
                     this.$swal(
@@ -566,7 +566,7 @@ export default {
             this.overlayLoading = true;
 
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/actualizar/evolucion/${this.form.evo_id}`, this.form)
+                .post(`/consultorio-oftalmologico/historia-clinica/actualizar/evolucion/${this.form.evo_id}`, this.form)
                 .then((response) => {
                     this.errors = "";
                     this.$swal(
@@ -595,7 +595,7 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.overlayLoading = true;
-                    axios.post(`/consultorio-oftamologico/historia-clinica/delete/evolucion/${item.evo_id}`)
+                    axios.post(`/consultorio-oftalmologico/historia-clinica/delete/evolucion/${item.evo_id}`)
                     .then((response) => {
                         this.errors = "";
                         this.$swal(
@@ -617,7 +617,7 @@ export default {
         fnConsecutivoEvolucion() {
             this.overlayLoading = true;
             axios
-                .get(`/consultorio-oftamologico/historia-clinica/consecutivo/evolucion?evo_id_paciente=${this.id_paciente}&evo_id_historia_clinica=${this.idHistoriaClinica}`)
+                .get(`/consultorio-oftalmologico/historia-clinica/consecutivo/evolucion?evo_id_paciente=${this.id_paciente}&evo_id_historia_clinica=${this.idHistoriaClinica}`)
                 .then((response) => {
                     this.evo_consecutivo = response.data;
                     this.overlayLoading = false;
@@ -667,7 +667,7 @@ export default {
             data.evo_id          = this.form.evo_id;
 
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/pdf/evolucion`,data,  {responseType: 'blob',})
+                .post(`/consultorio-oftalmologico/historia-clinica/pdf/evolucion`,data,  {responseType: 'blob',})
                 .then((response) => {
                     let hoy = new Date();
                     let fecha = hoy.getDate() +""+ ( hoy.getMonth() + 1 ) +""+  hoy.getFullYear();

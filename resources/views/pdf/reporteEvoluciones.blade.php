@@ -59,7 +59,7 @@
     <!-- Defina bloques de encabezado -->
     <header>
         <img src="{{ public_path('img/sistema/logo_centro_oftamologico.jpg') }}" alt="Logo no encontrado" style="margin-left: 15%; float: left; height: 80px; padding-top:0.5cm;">
-        <h1 style="float: right; margin-right: 15%; text-align: center;">Dr. Luís Augusto Puentes M. <br>Oftamólogo</h1>
+        <h1 style="float: right; margin-right: 15%; text-align: center;">Dr. Luís Augusto Puentes M. <br>Oftalmólogo</h1>
     </header>
 
     <!-- Envuelva el contenido de su PDF dentro de una etiqueta principal -->
