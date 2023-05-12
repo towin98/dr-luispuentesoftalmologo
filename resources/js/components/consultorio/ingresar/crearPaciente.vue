@@ -388,7 +388,7 @@ export default {
             }
 
             axios
-                .post(`/consultorio-oftamologico/paciente`, formData, {
+                .post(`/consultorio-oftalmologico/paciente`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Accept' : 'application/json'
@@ -431,7 +431,7 @@ export default {
             }
 
             axios
-                .post(`/consultorio-oftamologico/paciente/actualizar/${this.form.id}`, formData,{
+                .post(`/consultorio-oftalmologico/paciente/actualizar/${this.form.id}`, formData,{
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Accept' : 'application/json'
@@ -459,7 +459,7 @@ export default {
             this.overlayLoading = true;
             this.accion = "Actualizar";
             axios
-                .get(`/consultorio-oftamologico/paciente/mostrar/${id}`)
+                .get(`/consultorio-oftalmologico/paciente/mostrar/${id}`)
                 .then((response) => {
                     let data = response.data.data;
 
@@ -541,7 +541,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/paciente/listar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
+                    `/consultorio-oftalmologico/paciente/listar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
                 )
                 .then((response) => {
                     this.loading = false;
@@ -630,7 +630,7 @@ export default {
 
                         this.overlayLoading = true;
 
-                        axios.post(`/consultorio-oftamologico/paciente/delete/${item.id}`)
+                        axios.post(`/consultorio-oftalmologico/paciente/delete/${item.id}`)
                         .then((response) => {
                             this.errors = "";
                             this.$swal(

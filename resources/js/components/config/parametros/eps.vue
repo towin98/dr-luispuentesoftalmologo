@@ -201,7 +201,7 @@ export default {
         fnStore() {
             this.overlayLoading = true;
             axios
-                .post(`/consultorio-oftamologico/parametro`, this.form)
+                .post(`/consultorio-oftalmologico/parametro`, this.form)
                 .then((response) => {
                     this.errors = "";
                     this.$swal(response.data.message, "", "success");
@@ -221,7 +221,7 @@ export default {
             this.Accion = "ACTUALIZAR";
 
             axios
-                .get(`/consultorio-oftamologico/parametro/${this.form.parametrica}/${id}`)
+                .get(`/consultorio-oftalmologico/parametro/${this.form.parametrica}/${id}`)
                 .then((response) => {
                     this.dialogParametro = true;
                     let data = response.data.data;
@@ -243,7 +243,7 @@ export default {
             this.overlayLoading = true;
 
             axios
-                .put(`/consultorio-oftamologico/parametro/${this.form.id}`, this.form)
+                .put(`/consultorio-oftalmologico/parametro/${this.form.id}`, this.form)
                 .then((response) => {
                     this.errors = "";
                     this.$swal(
@@ -284,7 +284,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/parametro/buscar?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}&parametrica=${this.form.parametrica}`
+                    `/consultorio-oftalmologico/parametro/buscar?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}&parametrica=${this.form.parametrica}`
                 )
                 .then((response) => {
                     this.loading = false;

@@ -76,7 +76,7 @@ export default {
         fnRecuperarPass(){
             this.overlayLoading = true;
             axios
-                .post("/consultorio-oftamologico/password/email", this.form)
+                .post("/consultorio-oftalmologico/password/email", this.form)
                 .then((response) => {
                     this.overlayLoading = false;
                     this.$swal(

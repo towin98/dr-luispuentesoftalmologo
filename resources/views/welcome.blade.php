@@ -7,7 +7,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-        <title>HISTORIAL CLINICO OFTAMOLOGICO</title>
+        <title>HISTORIAL CLINICO OFTALMOLOGICO</title>
 
         <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
         <!-- Fonts -->

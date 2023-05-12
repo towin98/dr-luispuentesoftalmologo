@@ -143,7 +143,7 @@ export default {
             if (loading == true )this.overlayLoading = true;
 
             axios
-                .post(`/consultorio-oftamologico/agenda/informe-cita/listar`,data)
+                .post(`/consultorio-oftalmologico/agenda/informe-cita/listar`,data)
                 .then((response) => {
                     this.dataReporteCitas = response.data.data;
                     this.fnSumarTotalRecaudado();
@@ -177,7 +177,7 @@ export default {
             this.overlayLoading = true;
             axios
                 .post(
-                    `/consultorio-oftamologico/agenda/informe-cita/marcar/${item.id}`, {tipo_marcacion: 'ASISTIOCITA'}
+                    `/consultorio-oftalmologico/agenda/informe-cita/marcar/${item.id}`, {tipo_marcacion: 'ASISTIOCITA'}
                 )
                 .then((response) => {
                     this.dataReporteCitas[index].asistio = item.asistio == 'SI' ? 'NO' : 'SI';
@@ -202,7 +202,7 @@ export default {
             }
 
             axios
-                .post(`/consultorio-oftamologico/agenda/informe-cita/marcar/${item.id}`, data)
+                .post(`/consultorio-oftalmologico/agenda/informe-cita/marcar/${item.id}`, data)
                 .then((response) => {
                     const valorCitaPrioritaria = item.prioridad == 'SI' ? 'NO' : 'SI';
                     if (valorCitaPrioritaria == "SI") {
@@ -240,7 +240,7 @@ export default {
             let id_mensaje_valor = document.getElementById('id_mensaje_valor_'+id);
 
             axios
-                .post(`/consultorio-oftamologico/agenda/informe-cita/valor-cita/${id}`, {valor: valorCita})
+                .post(`/consultorio-oftalmologico/agenda/informe-cita/valor-cita/${id}`, {valor: valorCita})
                 .then((response) => {
                     if (id_mensaje_valor) {
                         id_mensaje_valor.remove();

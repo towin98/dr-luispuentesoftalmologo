@@ -183,7 +183,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/config/auditing-buscar?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
+                    `/consultorio-oftalmologico/config/auditing-buscar?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
                 )
                 .then((response) => {
                     this.loading = false;

@@ -183,7 +183,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/historia-clinica/buscar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}${dataRequest}`
+                    `/consultorio-oftalmologico/historia-clinica/buscar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}${dataRequest}`
                 )
                 .then((response) => {
                     this.loading = false;
@@ -229,7 +229,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/historia-clinica/buscar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}${dataRequest}`
+                    `/consultorio-oftalmologico/historia-clinica/buscar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}${dataRequest}`
                 )
                 .then((response) => {
                     this.loading = false;
