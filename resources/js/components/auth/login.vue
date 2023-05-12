@@ -15,6 +15,7 @@
                                     label="Usuario"
                                     :error-messages="errors.email"
                                     type="text"
+                                    title="Usuario"
                                 ></v-text-field>
 
                                 <v-text-field
