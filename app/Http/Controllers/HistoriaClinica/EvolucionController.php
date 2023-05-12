@@ -164,7 +164,12 @@ class EvolucionController extends Controller
                 'evo_fecha_diligenciamiento'    => $request->evo_fecha_diligenciamiento,
                 'evo_descripcion_evolucion'     => trim(strtoupper($this->fnEliminarTildes($request->evo_descripcion_evolucion))),
                 'evo_tratamiento'               => trim(strtoupper($this->fnEliminarTildes($request->evo_tratamiento))),
-                'evo_orden_medica'              => trim(strtoupper($this->fnEliminarTildes($request->evo_orden_medica)))
+                'evo_orden_medica'              => trim(strtoupper($this->fnEliminarTildes($request->evo_orden_medica))),
+                'evo_rx_od'                     => trim(strtoupper($this->fnEliminarTildes($request->rx_od))),
+                'evo_rx_oi'                     => trim(strtoupper($this->fnEliminarTildes($request->rx_oi))),
+                'evo_adicion'                   => trim(strtoupper($this->fnEliminarTildes($request->adicion))),
+                'evo_dp'                        => trim(strtoupper($this->fnEliminarTildes($request->dp))),
+                'evo_observacion'               => trim(strtoupper($this->fnEliminarTildes($request->observacion)))
             ]);
 
         } catch (Exception $e) {
@@ -212,7 +217,12 @@ class EvolucionController extends Controller
                 'evo_fecha_diligenciamiento'    => $request->evo_fecha_diligenciamiento,
                 'evo_descripcion_evolucion'     => trim(strtoupper($this->fnEliminarTildes($request->evo_descripcion_evolucion))),
                 'evo_tratamiento'               => trim(strtoupper($this->fnEliminarTildes($request->evo_tratamiento))),
-                'evo_orden_medica'              => trim(strtoupper($this->fnEliminarTildes($request->evo_orden_medica)))
+                'evo_orden_medica'              => trim(strtoupper($this->fnEliminarTildes($request->evo_orden_medica))),
+                'evo_rx_od'                     => trim(strtoupper($this->fnEliminarTildes($request->rx_od))),
+                'evo_rx_oi'                     => trim(strtoupper($this->fnEliminarTildes($request->rx_oi))),
+                'evo_adicion'                   => trim(strtoupper($this->fnEliminarTildes($request->adicion))),
+                'evo_dp'                        => trim(strtoupper($this->fnEliminarTildes($request->dp))),
+                'evo_observacion'               => trim(strtoupper($this->fnEliminarTildes($request->observacion)))
             ]);
 
         } catch (Exception $e) {
@@ -290,6 +300,11 @@ class EvolucionController extends Controller
             'numero_documento',
             'nombre',
             'apellido',
+            'celular',
+            'departamento',
+            'municipio',
+            'edad',
+            'fecha_nacimiento'
         ])
         ->where('numero_documento', $request->numero_documento)
         ->first();
@@ -301,10 +316,10 @@ class EvolucionController extends Controller
             ], 404);
         }
 
-        $evolucion = Evolucion::findOrFail($request->evo_id);
-
+        $data = [];
         switch ($request->tipo_reporte) {
             case 'formula':
+                $evolucion = Evolucion::findOrFail($request->evo_id);
                 $mData['tipo_rerporte'] = 'formula';
                 $mData['mostrar_info_centro'] = "";
                 $data = [
@@ -312,9 +327,10 @@ class EvolucionController extends Controller
                     "pacienteCc"        => $paciente->numero_documento,
                     "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido
                 ];
-                $mData['data'] = $data;
+                $pathViewPdf = "pdf.formulaAnteojos";
             break;
             case 'orden_medica':
+                $evolucion = Evolucion::findOrFail($request->evo_id);
                 $mData['tipo_rerporte']       = 'orden_medica';
                 $mData['mostrar_info_centro'] = $request->mostrar_info_centro;
                 $data = [
@@ -322,8 +338,85 @@ class EvolucionController extends Controller
                     "pacienteCc"        => $paciente->numero_documento,
                     "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido
                 ];
-                $mData['data'] = $data;
+                $pathViewPdf = "pdf.formulaAnteojos";
             break;
+            case 'reporte_evoluciones':
+
+                $errores = [];
+                $validator = Validator::make(
+                                            $request->all(),
+                                            [
+                                                'fechaDel' => 'required|date_format:Y-m-d',
+                                                'fechaAl'  => 'required|date_format:Y-m-d'
+                                            ],
+                                            [
+                                                'fechaDel.required'          => 'La fecha Del es requerida.',
+                                                'fechaDel.date_format'       => 'La fecha Del debe ser ej: Y-m-d.',
+                                                'fechaAl.required'           => 'La fecha Al es requerida.',
+                                                'fechaAl.date_format'        => 'La fecha Al debe ser ej: Y-m-d.'
+                                            ]);
+                if ($validator->fails()) {
+                    $errores = $validator->errors();
+                }
+
+                if (count($errores) > 0) {
+                    return response()->json([
+                        'message' => 'Error de Validación de Datos',
+                        'errors' => $errores
+                    ], 422);
+                }
+
+                $data = [
+                    "pacienteCc"                    => $paciente->numero_documento,
+                    "nombrePaciente"                => $paciente->nombre." ".$paciente->apellido,
+                    "edad_fecha_nacimiento"         => $paciente->edad." ".$paciente->fecha_nacimiento,
+                    "ciudad"                        => $paciente->ciudad,
+                    "telefono"                      => $paciente->telefono,
+                    "consecutivo_historia_clinica"  => $request->consecutivoHistoriaClinica,
+                    'tipo_rerporte'                 => 'reporte_evoluciones'
+                ];
+
+                $evolucionesPaciente = Evolucion::select([
+                        'evo_fecha_diligenciamiento',
+                        'evo_tratamiento',
+                        'evo_orden_medica',
+                        'evo_descripcion_evolucion',
+                        'evo_rx_od',
+                        'evo_rx_oi',
+                        'evo_adicion',
+                        'evo_dp',
+                        'evo_observacion'
+                    ])
+                    ->where('evo_id_paciente', $paciente->id)
+                    ->where('evo_id_historia_clinica', $request->evo_id_historia_clinica)
+                    ->whereDate('evo_fecha_diligenciamiento', '>=', $request->fechaDel)
+                    ->whereDate('evo_fecha_diligenciamiento', '<=', $request->fechaAl)
+                    ->orderBy('evo_fecha_diligenciamiento','ASC')
+                    ->get();
+
+                if (count($evolucionesPaciente) == 0) {
+                    return response()->json([
+                        'message' => 'Validación de Datos',
+                        'errors' => "No se encontraron evoluciones para generar reporte, Intente nuevamente."
+                    ], 404);
+                }
+
+                $evoluciones = [];
+                for ($i=0; $i < count($evolucionesPaciente); $i++) {
+                    $evoluciones[$i]['evo_fecha_diligenciamiento'] = $evolucionesPaciente[$i]['evo_fecha_diligenciamiento'];
+                    $evoluciones[$i]['evo_tratamiento']            = $evolucionesPaciente[$i]['evo_tratamiento'];
+                    $evoluciones[$i]['evo_orden_medica']           = $evolucionesPaciente[$i]['evo_orden_medica'];
+                    $evoluciones[$i]['evo_descripcion_evolucion']  = $evolucionesPaciente[$i]['evo_descripcion_evolucion'];
+                    $evoluciones[$i]['evo_rx_od']                  = $evolucionesPaciente[$i]['evo_rx_od'];
+                    $evoluciones[$i]['evo_rx_oi']                  = $evolucionesPaciente[$i]['evo_rx_oi'];
+                    $evoluciones[$i]['evo_adicion']                = $evolucionesPaciente[$i]['evo_adicion'];
+                    $evoluciones[$i]['evo_dp']                     = $evolucionesPaciente[$i]['evo_dp'];
+                    $evoluciones[$i]['evo_observacion']            = $evolucionesPaciente[$i]['evo_observacion'];
+                }
+
+                $data['evoluciones'] = $evoluciones;
+                $pathViewPdf = "pdf.reporteEvoluciones";
+                break;
             default:
                 return response()->json([
                     'message' => 'Validación de Datos',
@@ -331,7 +424,9 @@ class EvolucionController extends Controller
                 ], 404);
             break;
         }
-        $pdf = PDF::loadView('pdf.formulaAnteojos', ['mData' => $mData]);
+
+        $mData['data'] = $data;
+        $pdf = PDF::loadView($pathViewPdf, ['mData' => $mData]);
         return $pdf->output();
     }
 }

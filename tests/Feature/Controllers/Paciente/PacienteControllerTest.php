@@ -32,7 +32,7 @@ class PacienteControllerTest extends TestCase
         Paciente::factory(5)->create();
 
         // Creando registros temporales en memoria para realizar consulta.
-        $response = $this->get('/consultorio-oftamologico/paciente/listar');
+        $response = $this->get('/consultorio-oftalmologico/paciente/listar');
 
         $response->assertJsonStructure([
             'data'=> [
@@ -62,7 +62,7 @@ class PacienteControllerTest extends TestCase
             "estado" => "ACTIVO"
         ]);
 
-        $response = $this->post('consultorio-oftamologico/paciente',[
+        $response = $this->post('consultorio-oftalmologico/paciente',[
             'tipo_documento'    => 'CC',
             'numero_documento'  => '728232',
             'nombre'            => 'cristian',

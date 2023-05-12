@@ -73,7 +73,7 @@ export default {
                 { text: "Editar", value: "editar", sortable: false },
                 { text: "Ver", value: "ver", sortable: false },
             ],
-            url_buscar: "/consultorio-oftamologico/rol-permisos/roles-buscar",
+            url_buscar: "/consultorio-oftalmologico/rol-permisos/roles-buscar",
             permisos : [],
 
             // Variables modal
@@ -117,7 +117,7 @@ export default {
         fnConsultarPermisos(data, accion){
             this.overlayLoading = true;
             axios
-                .get(`/consultorio-oftamologico/rol-permisos/listar-permisos`)
+                .get(`/consultorio-oftalmologico/rol-permisos/listar-permisos`)
                 .then((response) => {
                     this.listaPermisos = response.data.data;
                     this.fnConsultarPermisosRol(data.data.id, accion);
@@ -131,7 +131,7 @@ export default {
         fnConsultarPermisosRol(id, accion){
             this.overlayLoading = true;
             axios
-                .get(`/consultorio-oftamologico/rol-permisos/listar-permisos-rol/${id}`)
+                .get(`/consultorio-oftalmologico/rol-permisos/listar-permisos-rol/${id}`)
                 .then((response) => {
                     this.itemsPermisosRol = response.data.data;
                     for (let i = 0; i < this.listaPermisos.length; i++) {
@@ -159,7 +159,7 @@ export default {
         fnGuardar(){
             this.overlayLoading = true;
             axios
-                .post(`/consultorio-oftamologico/rol-permisos/guardar`, this.form)
+                .post(`/consultorio-oftalmologico/rol-permisos/guardar`, this.form)
                 .then((response) => {
                     this.dialogRolPermisos = false;
                     this.$swal(

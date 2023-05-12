@@ -5,7 +5,7 @@ export default {
         async informacionUsuario() {
             try {
 
-                let response = await axios.get("/consultorio-oftamologico/informacion-usuario");
+                let response = await axios.get("/consultorio-oftalmologico/informacion-usuario");
                 let data = response.data.data;
                 this.infoUser.rol  = data.roles[0].name; // Nombre de rol
                 this.infoUser.name = data.name; // Nombre de usuario.
@@ -49,7 +49,7 @@ export default {
          */
         async $fnConsultaPermisosUsuario(){
             try {
-                let response = await axios.get("/consultorio-oftamologico/permisos-usuario");
+                let response = await axios.get("/consultorio-oftalmologico/permisos-usuario");
                 arrPermisos = response.data.data;
             } catch (error) {
                 // console.log(error);

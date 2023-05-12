@@ -160,7 +160,7 @@ class AuthController extends Controller
             ]);
 
             return response()->json([
-                "message" => "Se envío información importante a su correo en relación con los datos de acceso a la plataforma de CONSULTORIO OFTAMOLOGICO LUIS PUENTES."
+                "message" => "Se envío información importante a su correo en relación con los datos de acceso a la plataforma de CONSULTORIO OFTALMOLOGICO LUIS PUENTES."
             ], 200);
 
         } catch (Exception $e) {

@@ -387,7 +387,7 @@ export default {
                 this.overlayLoading = true;
                 this.isLoading = true;
                 axios
-                    .post(`/consultorio-oftamologico/agenda/cita-cliente/busqueda-paciente-autocomplete`, {valor: val })
+                    .post(`/consultorio-oftalmologico/agenda/cita-cliente/busqueda-paciente-autocomplete`, {valor: val })
                     .then((response) => {
                         this.pacienteData = response.data.data;
                         this.errors = "";
@@ -440,7 +440,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/agenda/cita-cliente/listar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
+                    `/consultorio-oftalmologico/agenda/cita-cliente/listar?length=${this.length}&start=${this.start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
                 )
                 .then((response) => {
                     let data         = response.data.data;
@@ -481,7 +481,7 @@ export default {
             }
             this.numero_documento_readonly = true;
             axios
-                .get(`/consultorio-oftamologico/agenda/cita-cliente/cargar-informacion-paciente?numero_documento=${this.autocomplete_numero_documento}`)
+                .get(`/consultorio-oftalmologico/agenda/cita-cliente/cargar-informacion-paciente?numero_documento=${this.autocomplete_numero_documento}`)
                 .then((response) => {
                     const data = response.data.data;
                     this.tipo_documento   = data.tipo_documento;
@@ -514,7 +514,7 @@ export default {
             }// ?
 
             axios
-                .post(`/consultorio-oftamologico/agenda/cita-cliente/guardar`, this.form)
+                .post(`/consultorio-oftalmologico/agenda/cita-cliente/guardar`, this.form)
                 .then((response) => {
                     this.$swal(
                         response.data.message,
@@ -566,7 +566,7 @@ export default {
             this.overlayLoading = true;
             this.accion = "Editar_Cita";
             axios
-                .get(`/consultorio-oftamologico/agenda/cita-cliente/mostrar/${id}`)
+                .get(`/consultorio-oftalmologico/agenda/cita-cliente/mostrar/${id}`)
                 .then((response) => {
                     const data = response.data.data;
                     // Solo se busca info en el autocomplete de paciente si se selecciona un paciente diferente.
@@ -598,7 +598,7 @@ export default {
             this.form.numero_documento = this.autocomplete_numero_documento;
             this.form.hora_cita        = this.form.hora_cita.substr(0,5); // Recortando Hora, formato aceptado H:i
             axios
-                .put(`/consultorio-oftamologico/agenda/cita-cliente/actualizar/${this.id_cita}`, this.form)
+                .put(`/consultorio-oftalmologico/agenda/cita-cliente/actualizar/${this.id_cita}`, this.form)
                 .then((response) => {
                     this.errors = "";
                     this.$swal(
@@ -630,7 +630,7 @@ export default {
 
                     this.overlayLoading = true;
 
-                    axios.post(`/consultorio-oftamologico/agenda/cita-cliente/delete/${item.id}`)
+                    axios.post(`/consultorio-oftalmologico/agenda/cita-cliente/delete/${item.id}`)
                     .then((response) => {
                         this.errors = "";
                         this.$swal(
@@ -675,7 +675,7 @@ export default {
 
                 axios
                     .post(
-                        `/consultorio-oftamologico/agenda/cita-cliente/horas-disponible-citas`, data
+                        `/consultorio-oftalmologico/agenda/cita-cliente/horas-disponible-citas`, data
                     )
                     .then((response) => {
                         this.horasCitaItems = response.data;

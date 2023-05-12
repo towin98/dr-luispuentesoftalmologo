@@ -248,7 +248,7 @@ export default {
 
             axios
                 .get(
-                    `/consultorio-oftamologico/historia-clinica/listar/cargar-archivo/${this.$route.params.numero_documento}?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
+                    `/consultorio-oftalmologico/historia-clinica/listar/cargar-archivo/${this.$route.params.numero_documento}?length=${length}&start=${start}&orderColumn=${sortBy}&order=${sortDesc}&buscar=${this.buscar}`
                 )
                 .then((response) => {
                     this.loading = false;
@@ -290,7 +290,7 @@ export default {
             this.form.numero_documento = this.$route.params.numero_documento;
             this.overlayLoading        = true;
             axios
-                .get(`/consultorio-oftamologico/historia-clinica/cosecutivo-cargar-archivo/${this.form.numero_documento}`)
+                .get(`/consultorio-oftalmologico/historia-clinica/cosecutivo-cargar-archivo/${this.form.numero_documento}`)
                 .then((response) => {
                     this.consecutivo_archivo = response.data;
                     this.overlayLoading      = false;
@@ -324,7 +324,7 @@ export default {
             formData.append('numero_documento', this.$route.params.numero_documento);
 
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/guardar/cargar-archivo`,formData,{
+                .post(`/consultorio-oftalmologico/historia-clinica/guardar/cargar-archivo`,formData,{
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Accept' : 'application/json'
@@ -365,7 +365,7 @@ export default {
             formData.append('numero_documento', this.$route.params.numero_documento);
 
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/actualizar/cargar-archivo/${this.form.id}`, formData, {
+                .post(`/consultorio-oftalmologico/historia-clinica/actualizar/cargar-archivo/${this.form.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Accept' : 'application/json'
@@ -391,7 +391,7 @@ export default {
             this.overlayLoading = true;
             this.cAccion = "Actualizar";
             axios
-                .get(`/consultorio-oftamologico/historia-clinica/mostrar/cargar-archivo/${id}`)
+                .get(`/consultorio-oftalmologico/historia-clinica/mostrar/cargar-archivo/${id}`)
                 .then((response) => {
                     let data = response.data.data;
 
@@ -420,7 +420,7 @@ export default {
 
                     this.overlayLoading = true;
 
-                    axios.post(`/consultorio-oftamologico/historia-clinica/delete/cargar-archivo/${item.id}`)
+                    axios.post(`/consultorio-oftalmologico/historia-clinica/delete/cargar-archivo/${item.id}`)
                     .then((response) => {
                         this.errors = "";
                         this.$swal(
@@ -453,7 +453,7 @@ export default {
                 nombreArchivo : cNombreArchivo
             };
             axios
-                .post(`/consultorio-oftamologico/historia-clinica/descargar/archivo`,data,  {responseType: 'blob',})
+                .post(`/consultorio-oftalmologico/historia-clinica/descargar/archivo`,data,  {responseType: 'blob',})
                 .then((response) => {
                     const url = window.URL.createObjectURL(new Blob([response.data]))
                     const link = document.createElement('a')

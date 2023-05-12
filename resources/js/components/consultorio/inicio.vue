@@ -41,7 +41,7 @@ export default {
 
             axios
                 .post(
-                    `/consultorio-oftamologico/agenda/informe-cita/listar`,
+                    `/consultorio-oftalmologico/agenda/informe-cita/listar`,
                     data
                 )
                 .then((response) => {
