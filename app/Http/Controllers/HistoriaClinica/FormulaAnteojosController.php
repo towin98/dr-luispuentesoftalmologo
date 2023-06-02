@@ -681,6 +681,7 @@ class FormulaAnteojosController extends Controller
 
         $formulaAnteojos = FormulaAnteojos::findOrFail($request->id_formula);
 
+        $mData['titulo'] =  'HISTORIA CLINICA - '.$formulaAnteojos->numero_formula_anteojos;
         switch ($request->tipo_reporte) {
             case 'formula':
                 $mData['tipo_rerporte'] = 'formula';
@@ -690,7 +691,6 @@ class FormulaAnteojosController extends Controller
                     "pacienteCc"        => $paciente->numero_documento,
                     "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido
                 ];
-                $mData['data'] = $data;
             break;
             case 'orden_medica':
                 $mData['tipo_rerporte']       = 'orden_medica';
@@ -700,7 +700,6 @@ class FormulaAnteojosController extends Controller
                     "pacienteCc"        => $paciente->numero_documento,
                     "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido
                 ];
-                $mData['data'] = $data;
             break;
             case 'rx':
                 $mData['tipo_rerporte'] = 'rx';
@@ -714,15 +713,15 @@ class FormulaAnteojosController extends Controller
                     "dp"                => $formulaAnteojos->dp,
                     "observacion"       => $formulaAnteojos->observacion
                 ];
-                $mData['data'] = $data;
-            break;
-            default:
+                break;
+                default:
                 return response()->json([
                     'message' => 'Validación de Datos',
                     'errors' => "No se encontro parámetrizado el tipo de reporte."
                 ], 404);
-            break;
-        }
+                break;
+            }
+        $mData['data'] = $data;
         $pdf = PDF::loadView('pdf.formulaAnteojos', ['mData' => $mData]);
         return $pdf->output();
     }

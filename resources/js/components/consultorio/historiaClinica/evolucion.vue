@@ -157,6 +157,19 @@
                         Imprimir Orden Medica
                         <v-icon right> picture_as_pdf </v-icon>
                     </v-btn>
+                    <v-btn
+                        type="submit"
+                        small
+                        color="red darken-4"
+                        class="white--text text-none"
+                        tile
+                        v-on:click="fnDescargarPdfEvolucion('rx')"
+                        v-if="cAccion == 'Actualizar'"
+                        :disabled="!$can(['EDITAR'])"
+                    >
+                        Imprimir RX
+                        <v-icon right> picture_as_pdf </v-icon>
+                    </v-btn>
                 </v-col>
                 <v-col cols="12" sm="6" class="d-flex justify-end">
 
@@ -656,15 +669,15 @@ export default {
                     data.fechaDel                   = this.fechaDel;
                     data.fechaAl                    = this.fechaAl;
                     data.evo_id_historia_clinica    = this.idHistoriaClinica
-                    data.consecutivoHistoriaClinica = this.consecutivoHistorialClinico
                 break;
             }
 
             this.overlayLoading = true;
 
-            data.tipo_reporte    = reporte;
-            data.numero_documento= this.$route.params.numero_documento;
-            data.evo_id          = this.form.evo_id;
+            data.consecutivoHistoriaClinica = this.consecutivoHistorialClinico
+            data.tipo_reporte               = reporte;
+            data.numero_documento           = this.$route.params.numero_documento;
+            data.evo_id                     = this.form.evo_id;
 
             axios
                 .post(`/consultorio-oftalmologico/historia-clinica/pdf/evolucion`,data,  {responseType: 'blob',})
