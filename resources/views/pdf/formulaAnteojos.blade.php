@@ -71,9 +71,17 @@
             PACIENTE: {{ $mData['data']['nombrePaciente'] }}</strong><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <strong>C.C:</strong> {{ $mData['data']['pacienteCc'] }}
-        </p><br> <br>
+        </p>
+
+        <!-- Titulo -->
+        <h4 style="text-align: center;">{{ $mData['titulo'] }}</h4>
 
         <!--DATA CUERPO -->
+
+        @isset($mData['data']['fecha_diligenciamiento'])
+            <h4>{{ $mData['data']['fecha_diligenciamiento']}}</h4>
+        @endisset
+
         @switch($mData['tipo_rerporte'])
             @case('formula')
                 <p style="white-space: pre-wrap;">TRATAMIENTO: {{ $mData['data']['tratamiento'] }} </p>

@@ -320,23 +320,44 @@ class EvolucionController extends Controller
         switch ($request->tipo_reporte) {
             case 'formula':
                 $evolucion = Evolucion::findOrFail($request->evo_id);
+                $mData['titulo']              =  'HISTORIA CLINICA - '.$request->consecutivoHistoriaClinica.' > EVOLUCION - '.$evolucion->evo_consecutivo;
                 $mData['tipo_rerporte'] = 'formula';
                 $mData['mostrar_info_centro'] = "";
                 $data = [
-                    "tratamiento"       => $evolucion->evo_tratamiento,
-                    "pacienteCc"        => $paciente->numero_documento,
-                    "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido
+                    "tratamiento"            => $evolucion->evo_tratamiento,
+                    "pacienteCc"             => $paciente->numero_documento,
+                    "nombrePaciente"         => $paciente->nombre." ".$paciente->apellido,
+                    "fecha_diligenciamiento" => $evolucion->evo_fecha_diligenciamiento
                 ];
                 $pathViewPdf = "pdf.formulaAnteojos";
             break;
             case 'orden_medica':
                 $evolucion = Evolucion::findOrFail($request->evo_id);
+                $mData['titulo']              =  'HISTORIA CLINICA - '.$request->consecutivoHistoriaClinica.' > EVOLUCION - '.$evolucion->evo_consecutivo;
                 $mData['tipo_rerporte']       = 'orden_medica';
                 $mData['mostrar_info_centro'] = $request->mostrar_info_centro;
                 $data = [
-                    "orden_medica"      => $evolucion->evo_orden_medica,
-                    "pacienteCc"        => $paciente->numero_documento,
-                    "nombrePaciente"    => $paciente->nombre." ".$paciente->apellido
+                    "orden_medica"           => $evolucion->evo_orden_medica,
+                    "pacienteCc"             => $paciente->numero_documento,
+                    "nombrePaciente"         => $paciente->nombre." ".$paciente->apellido,
+                    "fecha_diligenciamiento" => $evolucion->evo_fecha_diligenciamiento
+                ];
+                $pathViewPdf = "pdf.formulaAnteojos";
+            break;
+            case 'rx':
+                $evolucion = Evolucion::findOrFail($request->evo_id);
+                $mData['titulo']              =  'HISTORIA CLINICA - '.$request->consecutivoHistoriaClinica.' > EVOLUCION - '.$evolucion->evo_consecutivo;
+                $mData['tipo_rerporte']       = 'rx';
+                $mData['mostrar_info_centro'] = '';
+                $data = [
+                    "pacienteCc"             => $paciente->numero_documento,
+                    "nombrePaciente"         => $paciente->nombre." ".$paciente->apellido,
+                    "fecha_diligenciamiento" => $evolucion->evo_fecha_diligenciamiento,
+                    "rx_od"                  => $evolucion->evo_rx_od,
+                    "rx_oi"                  => $evolucion->evo_rx_oi,
+                    "adicion"                => $evolucion->evo_adicion,
+                    "dp"                     => $evolucion->evo_dp,
+                    "observacion"            => $evolucion->evo_observacion
                 ];
                 $pathViewPdf = "pdf.formulaAnteojos";
             break;
