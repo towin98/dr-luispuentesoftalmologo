@@ -190,15 +190,13 @@ export default {
         fnCitaPrioritaria(item, index) {
             this.overlayLoading = true;
             let data = {};
-            if (item.id_alerta == null || item.id_alerta == "") {
-                data = {
-                    tipo_alerta   : 'PRIORITARIA', // DATA PARA ALERTA
-                    tipo_marcacion: 'PRIORITARIA'
-                };
-            }else{
-                data = {
-                    tipo_marcacion: 'PRIORITARIA'
-                };
+            data = {
+                tipo_marcacion: 'PRIORITARIA'
+            };
+
+            // id_alerta_cita igual a null si el paciente no tiene cita
+            if (item.id_alerta_cita == null || item.id_alerta_cita == "") {
+                data.tipo_alerta = 'PRIORITARIA'; // DATA PARA ALERTA
             }
 
             axios
@@ -230,7 +228,7 @@ export default {
         fnActivarSetIntervalBuscarCitar(){
             this.intervalIdBuscarCitas = setInterval(() => {
                 this.fnBuscarCitas(false);
-            }, 4000);
+            }, 90000); // 1.5 min
         },
         fnValorCita(id){
             this.overlayLoading = true;
@@ -297,9 +295,6 @@ export default {
         }
     },
     async created(){
-        this.overlayLoading = true;
-        await this.$fnConsultaPermisosUsuario();
-        this.overlayLoading = false;
     },
     destroyed() {
         clearInterval(this.intervalIdBuscarCitas);
