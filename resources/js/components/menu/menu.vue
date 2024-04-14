@@ -378,9 +378,6 @@ export default {
          * Método con el objtivo de consultar notificaciones Sin Leer y citas Con Notificacion
          */
         fnCantidadNotificacionesCitas(){
-
-            if (this.infoUser.rol != "MEDICO") return;
-
             // Listar notificaciones citas
             if (this.contadorCitas == 0) {this.fnListarNotificacionesCitas('INI');}
 
@@ -411,7 +408,7 @@ export default {
         },
         /**
          * Método que consulta las citas prioritarias aceptadas por un rango de fecha (entre 20 segundos), esto con el fin de hacer
-         * solicitudes cada 20 segundos para simular tiempo real y generar notificaciones.
+         * solicitudes cada 60 segundos para simular tiempo real y generar notificaciones.
          */
         fnNotificacionCitasPrioritariasACeptadas(){
             axios
@@ -458,8 +455,7 @@ export default {
         }
 
         switch (this.$route.name) {
-            case 'agenda/informe-cita':
-            // case 'roles-permisos':
+            case 'roles-permisos':
                 // Para esta vista no se consulta porque ya tiene el metodo $fnConsultaPermisosUsuario()
             break;
             default:
@@ -476,7 +472,7 @@ export default {
 
         this.intervalId = setInterval(async () => {
             await this.informacionUsuario();
-        }, 60000);
+        }, 870000); // 14.5 min
 
         switch (this.infoUser.rol) {
             case "SECRETARIA":
@@ -494,7 +490,7 @@ export default {
                 this.overlayLoading = true;
                 this.intervalIdFnNotificacionCitasPrioritariasACeptadas = setInterval(() => {
                     this.fnNotificacionCitasPrioritariasACeptadas();
-                }, 20000);
+                }, 60000); // 60 s
                 this.overlayLoading = false;
 
                 break;
@@ -511,6 +507,9 @@ export default {
                 /* fin Variables de configuracion del sistema */
 
                 this.fnCantidadNotificacionesCitas();
+                this.intervalIdCantidadNotificacionesCitas = setInterval(() => {
+                    this.fnCantidadNotificacionesCitas();
+                }, 60000); // 60 s
             break;
             case "ADMINISTRADOR":
                 this.moduloRolesPermisos          = true;
@@ -518,9 +517,6 @@ export default {
         }
     },
     mounted(){
-        this.intervalIdCantidadNotificacionesCitas = setInterval(() => {
-            this.fnCantidadNotificacionesCitas();
-        }, 10000);
     },
 };
 </script>
