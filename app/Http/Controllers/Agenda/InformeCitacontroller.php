@@ -157,7 +157,7 @@ class InformeCitacontroller extends Controller
      *
      * @param Request $request
      * @param CitaPaciente $cita
-     * @return void
+     * @return array
      */
     public function notificacion($tipo_alerta)
     {
